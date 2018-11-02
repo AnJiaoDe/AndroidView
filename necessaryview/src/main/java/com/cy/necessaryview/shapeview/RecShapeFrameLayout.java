@@ -30,50 +30,50 @@ public class RecShapeFrameLayout extends FrameLayout {
         super(context, attrs);
 
 
-        TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.ShapeDrawableView);
+        TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.RecShapeFrameLayout);
 
 
-        heightWidthRatio = arr.getFloat(R.styleable.ShapeDrawableView_shape_heightWidthRatio, 0F);
-        baseOnWidthOrHeight = arr.getBoolean(R.styleable.ShapeDrawableView_shape_baseOnWidthOrHeight, true);
+        heightWidthRatio = arr.getFloat(R.styleable.RecShapeFrameLayout_heightWidthRatio, 0F);
+        baseOnWidthOrHeight = arr.getBoolean(R.styleable.RecShapeFrameLayout_baseOnWidthOrHeight, true);
 
         //水波纹的颜色,默认是0x66000000，建议自定义水波纹颜色的时候，用argb,rgb都设置为0，a可随意，调整透明度为了水波纹看起来更美观
-        int colorRipple = arr.getColor(R.styleable.ShapeDrawableView_shape_colorRipple, 0x66000000);
-        boolean havaRipple = arr.getBoolean(R.styleable.ShapeDrawableView_shape_haveRipple, true);//设置是否有水波纹点击效果，默认有
+        int colorRipple = arr.getColor(R.styleable.RecShapeFrameLayout_colorRipple, 0x66000000);
+        boolean havaRipple = arr.getBoolean(R.styleable.RecShapeFrameLayout_haveRipple, true);//设置是否有水波纹点击效果，默认有
 
-        int radiusCorner = arr.getDimensionPixelSize(R.styleable.ShapeDrawableView_radiusCorner, 0);//圆角半径
-        int radiusTopLeft = arr.getDimensionPixelSize(R.styleable.ShapeDrawableView_radiusTopLeft, 0);//左上角圆角半径
-        int radiusTopRight = arr.getDimensionPixelSize(R.styleable.ShapeDrawableView_radiusTopRight, 0);//右上角圆角半径
-        int radiusBottomRight = arr.getDimensionPixelSize(R.styleable.ShapeDrawableView_radiusBottomRight, 0);//右下角圆角半径
-        int radiusBottomLeft = arr.getDimensionPixelSize(R.styleable.ShapeDrawableView_radiusBottomLeft, 0);//左下角圆角半径
-        int colorFill = arr.getColor(R.styleable.ShapeDrawableView_colorFill, 0x00000000);//填充色
+        int radiusCorner = arr.getDimensionPixelSize(R.styleable.RecShapeFrameLayout_radiusCorner, 0);//圆角半径
+        int radiusTopLeft = arr.getDimensionPixelSize(R.styleable.RecShapeFrameLayout_radiusTopLeft, 0);//左上角圆角半径
+        int radiusTopRight = arr.getDimensionPixelSize(R.styleable.RecShapeFrameLayout_radiusTopRight, 0);//右上角圆角半径
+        int radiusBottomRight = arr.getDimensionPixelSize(R.styleable.RecShapeFrameLayout_radiusBottomRight, 0);//右下角圆角半径
+        int radiusBottomLeft = arr.getDimensionPixelSize(R.styleable.RecShapeFrameLayout_radiusBottomLeft, 0);//左下角圆角半径
+        int colorFill = arr.getColor(R.styleable.RecShapeFrameLayout_colorFill, 0x00000000);//填充色
 
         //渐变相关
-        int radiusGradient = arr.getDimensionPixelSize(R.styleable.ShapeDrawableView_radiusGradient, 0);//渐变半径
-        int colorStart = arr.getColor(R.styleable.ShapeDrawableView_colorStart, 0x00000000);//渐变开始颜色
-        int colorCenter = arr.getColor(R.styleable.ShapeDrawableView_colorCenter, 0x00000000);///渐变中间颜色
-        int colorEnd = arr.getColor(R.styleable.ShapeDrawableView_colorEnd, 0x00000000);//渐变结束颜色
-        int orientationGradient = arr.getInt(R.styleable.ShapeDrawableView_orientationGradient, 6);//渐变方向，默认从左到右
-        int gradientType = arr.getInt(R.styleable.ShapeDrawableView_gradientType, 0);//渐变类型,默认线性渐变
-        float centerX = arr.getFloat(R.styleable.ShapeDrawableView_centerX, 0.5f);//渐变，相对于控件的中心点x坐标
-        float centerY = arr.getFloat(R.styleable.ShapeDrawableView_centerY, 0.5f);//渐变，相对于控件的中心点y坐标
-        int angle = arr.getInt(R.styleable.ShapeDrawableView_angle, 0);//渐变方向,默认从左到右
+        int radiusGradient = arr.getDimensionPixelSize(R.styleable.RecShapeFrameLayout_radiusGradient, 0);//渐变半径
+        int colorStart = arr.getColor(R.styleable.RecShapeFrameLayout_colorStart, 0x00000000);//渐变开始颜色
+        int colorCenter = arr.getColor(R.styleable.RecShapeFrameLayout_colorCenter, 0x00000000);///渐变中间颜色
+        int colorEnd = arr.getColor(R.styleable.RecShapeFrameLayout_colorEnd, 0x00000000);//渐变结束颜色
+        int orientationGradient = arr.getInt(R.styleable.RecShapeFrameLayout_orientationGradient, 6);//渐变方向，默认从左到右
+        int gradientType = arr.getInt(R.styleable.RecShapeFrameLayout_gradientType, 0);//渐变类型,默认线性渐变
+        float centerX = arr.getFloat(R.styleable.RecShapeFrameLayout_centerX, 0.5f);//渐变，相对于控件的中心点x坐标
+        float centerY = arr.getFloat(R.styleable.RecShapeFrameLayout_centerY, 0.5f);//渐变，相对于控件的中心点y坐标
+        int angle = arr.getInt(R.styleable.RecShapeFrameLayout_angle, 0);//渐变方向,默认从左到右
 
         //stroke，描边相关
-        int strokeWidth = arr.getDimensionPixelSize(R.styleable.ShapeDrawableView_strokeWidth, 0);//描边粗细，宽度
-        int strokeColor = arr.getColor(R.styleable.ShapeDrawableView_strokeColor, 0x00000000);//描边颜色
-        int strokeDashWidth = arr.getDimensionPixelSize(R.styleable.ShapeDrawableView_strokeDashWidth, 0);//描边虚线宽度
-        int strokeDashGap = arr.getDimensionPixelSize(R.styleable.ShapeDrawableView_strokeDashGap, 0);//描边虚线间隔
+        int strokeWidth = arr.getDimensionPixelSize(R.styleable.RecShapeFrameLayout_strokeWidth, 0);//描边粗细，宽度
+        int strokeColor = arr.getColor(R.styleable.RecShapeFrameLayout_strokeColor, 0x00000000);//描边颜色
+        int strokeDashWidth = arr.getDimensionPixelSize(R.styleable.RecShapeFrameLayout_strokeDashWidth, 0);//描边虚线宽度
+        int strokeDashGap = arr.getDimensionPixelSize(R.styleable.RecShapeFrameLayout_strokeDashGap, 0);//描边虚线间隔
         //描边左边padding,用于控制左边描边的粗细和有无
-        int strokePaddingLeft = arr.getDimensionPixelSize(R.styleable.ShapeDrawableView_strokePaddingLeft, 0);
+        int strokePaddingLeft = arr.getDimensionPixelSize(R.styleable.RecShapeFrameLayout_strokePaddingLeft, 0);
         //描边上边padding,用于控制上边描边的粗细和有无
-        int strokePaddingTop = arr.getDimensionPixelSize(R.styleable.ShapeDrawableView_strokePaddingTop, 0);
+        int strokePaddingTop = arr.getDimensionPixelSize(R.styleable.RecShapeFrameLayout_strokePaddingTop, 0);
         //描边右边padding,用于控制右描边的粗细和有无
-        int strokePaddingRight = arr.getDimensionPixelSize(R.styleable.ShapeDrawableView_strokePaddingRight, 0);
+        int strokePaddingRight = arr.getDimensionPixelSize(R.styleable.RecShapeFrameLayout_strokePaddingRight, 0);
         //描边下边padding,用于控制下描边的粗细和有无
-        int strokePaddingBottom = arr.getDimensionPixelSize(R.styleable.ShapeDrawableView_strokePaddingBottom, 0);
+        int strokePaddingBottom = arr.getDimensionPixelSize(R.styleable.RecShapeFrameLayout_strokePaddingBottom, 0);
 
         //形状类型,默认矩形
-        int shapeType = arr.getInt(R.styleable.ShapeDrawableView_shapeType, 0);
+        int shapeType = arr.getInt(R.styleable.RecShapeFrameLayout_shapeType, 0);
         arr.recycle();
 
 //        //设置了填充色或者设置了渐变色的开始和结束，或者设置了描边颜色，才会设置drawable

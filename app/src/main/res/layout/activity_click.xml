@@ -36,7 +36,7 @@
         android:padding="10dp"
         android:scaleType="centerInside"
         android:src="@drawable/after_sale_icon"
-        app:iv_haveRipple="true" />
+        app:haveRipple="true" />
 
     <!--设置imageview水波纹，设置不超过边界-->
     <com.cy.necessaryview.rippleview.ClickImageView
@@ -47,7 +47,7 @@
         android:padding="10dp"
         android:scaleType="centerInside"
         android:src="@drawable/after_sale_icon"
-        app:iv_haveRipple="true"
+        app:haveRipple="true"
         app:rippleOver="false" />
     <!--imageview,点击效果默认是滤镜-->
     <com.cy.necessaryview.rippleview.ClickImageView

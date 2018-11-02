@@ -29,25 +29,25 @@ public class SelectorRadioButton extends AppCompatRadioButton {
         super(context, attrs);
 
 
-        TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.SelectorCheckBox);
+        TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.SelectorRadioButton);
 
-        backgroundID = arr.getResourceId(R.styleable.SelectorCheckBox_backgroundUnChecked, -1);//未选中的背景资源
-        backgroundCheckedID = arr.getResourceId(R.styleable.SelectorCheckBox_backgroundChecked, -1);//选中的背景资源
+        backgroundID = arr.getResourceId(R.styleable.SelectorRadioButton_backgroundUnChecked, -1);//未选中的背景资源
+        backgroundCheckedID = arr.getResourceId(R.styleable.SelectorRadioButton_backgroundChecked, -1);//选中的背景资源
 
         if (backgroundID == -1) {
-            bg_color = arr.getColor(R.styleable.SelectorCheckBox_backgroundUnChecked, 0x00000000);//未选中的背景颜色
+            bg_color = arr.getColor(R.styleable.SelectorRadioButton_backgroundUnChecked, 0x00000000);//未选中的背景颜色
 
         }
         if (backgroundCheckedID == -1) {
-            bg_checked_color = arr.getColor(R.styleable.SelectorCheckBox_backgroundChecked, 0x00000000);//选中的背景颜色
+            bg_checked_color = arr.getColor(R.styleable.SelectorRadioButton_backgroundChecked, 0x00000000);//选中的背景颜色
 
         }
 
-        buttonRes = arr.getResourceId(R.styleable.SelectorCheckBox_buttonUnChecked, -1);//未选中的按钮资源
-        buttonCheckedRes = arr.getResourceId(R.styleable.SelectorCheckBox_buttonChecked, -1);//选中的按钮资源
+        buttonRes = arr.getResourceId(R.styleable.SelectorRadioButton_buttonUnChecked, -1);//未选中的按钮资源
+        buttonCheckedRes = arr.getResourceId(R.styleable.SelectorRadioButton_buttonChecked, -1);//选中的按钮资源
 
-        textColorID = arr.getColor(R.styleable.SelectorCheckBox_textColorUnChecked, getCurrentTextColor());//未选中的文字颜色
-        textColorCheckedID = arr.getColor(R.styleable.SelectorCheckBox_textColorChecked, getCurrentTextColor());//选中的文字颜色
+        textColorID = arr.getColor(R.styleable.SelectorRadioButton_textColorUnChecked, getCurrentTextColor());//未选中的文字颜色
+        textColorCheckedID = arr.getColor(R.styleable.SelectorRadioButton_textColorChecked, getCurrentTextColor());//选中的文字颜色
         arr.recycle();
 
         if (isChecked()) {

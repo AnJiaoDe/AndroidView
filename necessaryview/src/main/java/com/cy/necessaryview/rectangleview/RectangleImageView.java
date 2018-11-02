@@ -23,9 +23,9 @@ public class RectangleImageView extends ClickImageView{
 
     public RectangleImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.RectangleView);
-        heightWidthRatio = arr.getFloat(R.styleable.RectangleView_heightWidthRatio, 1F);
-        baseOnWidthOrHeight = arr.getBoolean(R.styleable.RectangleView_baseOnWidthOrHeight, true);
+        TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.RectangleImageView);
+        heightWidthRatio = arr.getFloat(R.styleable.RectangleImageView_heightWidthRatio, 1F);
+        baseOnWidthOrHeight = arr.getBoolean(R.styleable.RectangleImageView_baseOnWidthOrHeight, true);
         arr.recycle();
     }
 

@@ -23,9 +23,9 @@ public class RectangleFrameLayout extends ClickFrameLayout {
 
     public RectangleFrameLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.RectangleView);
-        heightWidthRatio = arr.getFloat(R.styleable.RectangleView_heightWidthRatio, 1F);
-        baseOnWidthOrHeight = arr.getBoolean(R.styleable.RectangleView_baseOnWidthOrHeight, true);
+        TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.RectangleFrameLayout);
+        heightWidthRatio = arr.getFloat(R.styleable.RectangleFrameLayout_heightWidthRatio, 1F);
+        baseOnWidthOrHeight = arr.getBoolean(R.styleable.RectangleFrameLayout_baseOnWidthOrHeight, true);
         arr.recycle();
 
     }

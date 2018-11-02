@@ -23,9 +23,9 @@ public class RectangleRelativeLayout extends ClickRelativeLayout {
 
     public RectangleRelativeLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.RectangleView);
-        heightWidthRatio = arr.getFloat(R.styleable.RectangleView_heightWidthRatio, 1F);
-        baseOnWidthOrHeight = arr.getBoolean(R.styleable.RectangleView_baseOnWidthOrHeight, true);
+        TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.RectangleRelativeLayout);
+        heightWidthRatio = arr.getFloat(R.styleable.RectangleRelativeLayout_heightWidthRatio, 1F);
+        baseOnWidthOrHeight = arr.getBoolean(R.styleable.RectangleRelativeLayout_baseOnWidthOrHeight, true);
         arr.recycle();
 
     }

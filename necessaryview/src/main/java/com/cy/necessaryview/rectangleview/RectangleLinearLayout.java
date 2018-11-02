@@ -23,9 +23,9 @@ public class RectangleLinearLayout extends ClickLinearLayout {
 
     public RectangleLinearLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.RectangleView);
-        heightWidthRatio = arr.getFloat(R.styleable.RectangleView_heightWidthRatio, 1F);
-        baseOnWidthOrHeight = arr.getBoolean(R.styleable.RectangleView_baseOnWidthOrHeight, true);
+        TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.RectangleLinearLayout);
+        heightWidthRatio = arr.getFloat(R.styleable.RectangleLinearLayout_heightWidthRatio, 1F);
+        baseOnWidthOrHeight = arr.getBoolean(R.styleable.RectangleLinearLayout_baseOnWidthOrHeight, true);
         arr.recycle();
 
     }

@@ -22,10 +22,10 @@ public class ClickRelativeLayout extends RelativeLayout {
 
     public ClickRelativeLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.RippleView);
+        TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.ClickRelativeLayout);
         //水波纹的颜色,默认是0x66000000，建议自定义水波纹颜色的时候，用argb,rgb都设置为0，a可随意，调整透明度为了水波纹看起来更美观
-        int colorRipple = arr.getColor(R.styleable.RippleView_colorRipple, 0x66000000);
-        boolean havaRipple = arr.getBoolean(R.styleable.RippleView_haveRipple, true);//设置是否有水波纹点击效果，默认有
+        int colorRipple = arr.getColor(R.styleable.ClickRelativeLayout_colorRipple, 0x66000000);
+        boolean havaRipple = arr.getBoolean(R.styleable.ClickRelativeLayout_haveRipple, true);//设置是否有水波纹点击效果，默认有
         arr.recycle();
         //5.0以上才有效,
         if (havaRipple&&android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {

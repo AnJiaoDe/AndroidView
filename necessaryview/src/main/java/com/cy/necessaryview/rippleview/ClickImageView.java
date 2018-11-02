@@ -48,19 +48,19 @@ public class ClickImageView extends ImageView {
 
     public ClickImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.RippleImageView);
+        TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.ClickImageView);
         //水波纹的颜色,默认是0x66000000，建议自定义水波纹颜色的时候，用argb,rgb都设置为0，a可随意，调整透明度为了水波纹看起来更美观
-        int colorRipple = arr.getColor(R.styleable.RippleImageView_iv_colorRipple, 0x66000000);
-        havaFilter = arr.getBoolean(R.styleable.RippleImageView_haveFilter, true);//设置是否有滤镜点击效果，默认有
+        int colorRipple = arr.getColor(R.styleable.ClickImageView_colorRipple, 0x66000000);
+        havaFilter = arr.getBoolean(R.styleable.ClickImageView_haveFilter, true);//设置是否有滤镜点击效果，默认有
         //设置是否有水波纹点击效果，默认无,优先级比haveFilter高
-        haveRipple = arr.getBoolean(R.styleable.RippleImageView_iv_haveRipple, false);
-        boolean rippleOver=arr.getBoolean(R.styleable.RippleImageView_rippleOver, true);//波纹是否超过边界
+        haveRipple = arr.getBoolean(R.styleable.ClickImageView_haveRipple, false);
+        boolean rippleOver=arr.getBoolean(R.styleable.ClickImageView_rippleOver, true);//波纹是否超过边界
         //设置点击效果：颜色滤镜，还是波纹（波纹效果，只有在图片没有将控件全部填充的时候有效），默认是颜色滤镜
 
 //        //(具体小编也不是很清楚，这个概念，小编也很模糊)，
 //        int rippleMaskSize = arr.getDimensionPixelSize(R.styleable.RippleView_rippleMaskSize, 100);
         //设置滤镜，变亮还是变暗，默认变暗
-        boolean filterLightOrDark = arr.getBoolean(R.styleable.RippleImageView_filterLightOrDark, false);
+        boolean filterLightOrDark = arr.getBoolean(R.styleable.ClickImageView_filterLightOrDark, false);
 
 
         if (haveRipple) {
@@ -79,7 +79,7 @@ public class ClickImageView extends ImageView {
             }
         } else {
             //滤镜，变暗或者变亮，负数，变暗(值越大则效果越深)，正数，变亮
-            float filterLight = arr.getFloat(R.styleable.RippleImageView_filterLightNumber, filterLightOrDark ? 30 : -30);
+            float filterLight = arr.getFloat(R.styleable.ClickImageView_filterLightNumber, filterLightOrDark ? 30 : -30);
             filters[4] = filterLight;
             filters[9] = filterLight;
             filters[14] = filterLight;
