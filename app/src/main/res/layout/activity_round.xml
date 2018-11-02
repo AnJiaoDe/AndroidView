@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_round"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eee"
+    android:orientation="horizontal"
+    android:padding="5dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--圆角+填充色-->
+        <com.cy.necessaryview.shapeview.RecShapeFrameLayout
+            android:layout_width="100dp"
+            android:id="@+id/rsf"
+            android:layout_height="40dp"
+            app:colorFill="#fff"
+            app:radiusCorner="18dp">
+
+        </com.cy.necessaryview.shapeview.RecShapeFrameLayout>
+
+        <!--设置了background,没有设置填充色，圆角失效-->
+        <com.cy.necessaryview.shapeview.RecShapeFrameLayout
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="5dp"
+            android:background="#678798"
+            app:radiusCorner="5dp">
+
+        </com.cy.necessaryview.shapeview.RecShapeFrameLayout>
+
+
+        <!--设置填充色，圆角才生效-->
+        <com.cy.necessaryview.shapeview.RecShapeFrameLayout
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:background="#f00"
+
+            app:colorFill="#956890"
+            app:radiusCorner="5dp">
+
+        </com.cy.necessaryview.shapeview.RecShapeFrameLayout>
+
+        <!--四个角的弧度-->
+        <com.cy.necessaryview.shapeview.RecShapeFrameLayout
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            app:colorFill="#456440"
+            app:radiusBottomLeft="40dp"
+            app:radiusBottomRight="30dp"
+
+            app:radiusTopLeft="10dp"
+            app:radiusTopRight="20dp">
+
+        </com.cy.necessaryview.shapeview.RecShapeFrameLayout>
+
+        <!--设置了4个圆角弧度，设置了radiusCorner，radiusCorner优先级更高-->
+        <com.cy.necessaryview.shapeview.RecShapeFrameLayout
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            app:colorFill="#943440"
+            app:radiusBottomLeft="40dp"
+            app:radiusBottomRight="30dp"
+
+            app:radiusCorner="5dp"
+            app:radiusTopLeft="10dp"
+            app:radiusTopRight="20dp">
+
+        </com.cy.necessaryview.shapeview.RecShapeFrameLayout>
+
+        <!--线性渐变,默认从左到右-->
+        <com.cy.necessaryview.shapeview.RecShapeFrameLayout
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            app:colorCenter="#aaFF3C4D"
+            app:colorEnd="#ff0000"
+            app:colorStart="#33FF7580"
+            app:radiusBottomLeft="40dp"
+            app:radiusBottomRight="30dp"
+
+            app:radiusCorner="10dp"
+            app:radiusTopLeft="10dp"
+            app:radiusTopRight="20dp">
+
+        </com.cy.necessaryview.shapeview.RecShapeFrameLayout>
+
+        <!--设置某个角有弧度,线性渐变，TR_BL从右上角到左下角-->
+        <com.cy.necessaryview.shapeview.RecShapeFrameLayout
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            app:colorCenter="#aaFF3C4D"
+            app:colorEnd="#ff0000"
+            app:colorStart="#33FF7580"
+            app:orientationGradient="tr_bl"
+            app:radiusTopLeft="10dp"
+            app:radiusTopRight="10dp">
+
+        </com.cy.necessaryview.shapeview.RecShapeFrameLayout>
+
+        <!--扫描渐变，中心点默认控件中心位置-->
+        <com.cy.necessaryview.shapeview.RecShapeFrameLayout
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            app:colorCenter="#aaFF3C4D"
+            app:colorEnd="#ff0000"
+            app:colorStart="#33FF7580"
+            app:gradientType="sweep_gradient"
+            app:radiusBottomLeft="40dp"
+            app:radiusBottomRight="30dp"
+            app:radiusCorner="5dp"
+            app:radiusTopLeft="10dp"
+            app:radiusTopRight="20dp">
+
+        </com.cy.necessaryview.shapeview.RecShapeFrameLayout>
+
+        <!--扫描渐变，中心点在控件水平30%位置，控件竖直30%位置-->
+        <com.cy.necessaryview.shapeview.RecShapeFrameLayout
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            app:centerX="0.3"
+            app:centerY="0.3"
+            app:colorCenter="#aaFF3C4D"
+            app:colorEnd="#ff0000"
+            app:colorStart="#33FF7580"
+            app:gradientType="sweep_gradient"
+
+            app:radiusBottomLeft="40dp"
+            app:radiusBottomRight="30dp"
+            app:radiusCorner="5dp"
+            app:radiusTopLeft="10dp"
+            app:radiusTopRight="20dp">
+
+        </com.cy.necessaryview.shapeview.RecShapeFrameLayout>
+
+        <!--辐射渐变，，中心点默认控件中心位置-->
+        <com.cy.necessaryview.shapeview.RecShapeFrameLayout
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            app:colorCenter="#77ff0000"
+            app:colorEnd="#66ff0000"
+            app:colorStart="#88ff0000"
+            app:gradientType="radial_gradient"
+            app:radiusCorner="50dp"
+            app:radiusGradient="20dp"></com.cy.necessaryview.shapeview.RecShapeFrameLayout>
+
+        <!--辐射渐变，中心点在控件水平30%位置，控件竖直30%位置-->
+
+        <com.cy.necessaryview.shapeview.RecShapeFrameLayout
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            app:centerX="0.3"
+
+            app:centerY="0.3"
+            app:colorCenter="#99ff0000"
+            app:colorEnd="#66ff0000"
+            app:colorStart="#ff0000"
+            app:gradientType="radial_gradient"
+            app:radiusCorner="50dp"
+            app:radiusGradient="20dp"></com.cy.necessaryview.shapeview.RecShapeFrameLayout>
+
+        <!--辐射渐变，中心点在控件水平70%位置，控件竖直50%位置-->
+
+        <com.cy.necessaryview.shapeview.RecShapeFrameLayout
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            app:centerX="0.7"
+
+            app:centerY="0.5"
+            app:colorCenter="#99ff0000"
+            app:colorEnd="#66ff0000"
+            app:colorStart="#ff0000"
+            app:gradientType="radial_gradient"
+            app:radiusCorner="50dp"
+            app:radiusGradient="10dp">
+
+        </com.cy.necessaryview.shapeview.RecShapeFrameLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:orientation="vertical">
+
+        <!--描边-->
+        <com.cy.necessaryview.shapeview.RecShapeFrameLayout
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+
+            app:colorFill="#f00"
+            app:radiusCorner="5dp"
+            app:strokeColor="#FF979797"
+            app:strokeWidth="2dp">
+
+        </com.cy.necessaryview.shapeview.RecShapeFrameLayout>
+        <!--描边-->
+        <com.cy.necessaryview.shapeview.RecShapeFrameLayout
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            app:radiusCorner="5dp"
+            app:strokeColor="#FF979797"
+
+            app:strokeWidth="1dp">
+
+        </com.cy.necessaryview.shapeview.RecShapeFrameLayout>
+
+        <!--虚线框,strokeDashWidth:虚线长度，strokeDashGap：虚线间隔-->
+        <com.cy.necessaryview.shapeview.RecShapeFrameLayout
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="5dp"
+            app:radiusCorner="4dp"
+            app:strokeColor="#FF979797"
+            app:strokeDashGap="4dp"
+            app:strokeDashWidth="4dp"
+            app:strokeWidth="2dp">
+
+        </com.cy.necessaryview.shapeview.RecShapeFrameLayout>
+
+
+        <!--椭圆-->
+        <com.cy.necessaryview.shapeview.RecShapeFrameLayout
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            app:colorFill="#f00"
+            app:shapeType="oval">
+
+        </com.cy.necessaryview.shapeview.RecShapeFrameLayout>
+
+        <!--椭圆，辐射渐变,描边-->
+        <com.cy.necessaryview.shapeview.RecShapeFrameLayout
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            app:colorCenter="#99ff0000"
+            app:colorEnd="#66ff0000"
+            app:colorStart="#ff0000"
+            app:gradientType="radial_gradient"
+            app:radiusGradient="20dp"
+            app:shapeType="oval"
+            app:strokeColor="#88454545"
+            app:strokeWidth="2dp">
+
+        </com.cy.necessaryview.shapeview.RecShapeFrameLayout>
+        <!--圆形,辐射渐变,描边-->
+        <com.cy.necessaryview.shapeview.RecShapeFrameLayout
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="5dp"
+            app:colorCenter="#aaFF3C4D"
+            app:colorEnd="#ff0000"
+            app:colorStart="#33FF7580"
+            app:gradientType="sweep_gradient"
+            app:radiusGradient="20dp"
+            app:shapeType="oval">
+
+        </com.cy.necessaryview.shapeview.RecShapeFrameLayout>
+
+
+        <!--控件下画线,不画线的方向，需要padding,strokeWidth的2倍-->
+        <com.cy.necessaryview.shapeview.RecShapeTextView
+            android:id="@+id/recShapeTextView"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:text="控件下画线"
+            android:textSize="14sp"
+            app:strokeColor="#454545"
+            app:strokePaddingLeft="-2dp"
+            app:strokePaddingRight="-2dp"
+            app:strokePaddingTop="-2dp"
+            app:strokeWidth="1dp" />
+        <!--控件右画线,不画线的方向，需要padding,strokeWidth的2倍-->
+        <com.cy.necessaryview.shapeview.RecShapeTextView
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+
+            android:gravity="center"
+            android:text="控件右画线"
+            android:textSize="14sp"
+            app:strokeColor="#454545"
+            app:strokePaddingBottom="-2dp"
+            app:strokePaddingLeft="-2dp"
+            app:strokePaddingTop="-2dp"
+            app:strokeWidth="1dp" />
+        <!--控件画线,画线粗细可以不一致-->
+
+        <com.cy.necessaryview.shapeview.RecShapeTextView
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+
+            android:gravity="center"
+            android:text="画线粗细可以不一致"
+            android:textSize="10sp"
+            app:strokeColor="#454545"
+            app:strokePaddingBottom="-2dp"
+            app:strokePaddingLeft="-4dp"
+            app:strokePaddingTop="-4dp"
+            app:strokeWidth="2dp" />
+
+        <!--使用比例，控制为正方形,圆角+填充色-->
+        <com.cy.necessaryview.shapeview.RecShapeTextView
+            android:layout_width="90dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="RecShapeTextView\n带shape的正方形textView"
+            android:textColor="#fff"
+            android:textSize="10sp"
+            app:colorFill="#f00"
+            app:radiusCorner="18dp"
+            app:shape_heightWidthRatio="1" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eee"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+
+    <Button
+        android:id="@+id/btn_click"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="clickView" />
+
+    <Button
+        android:id="@+id/btn_rectangle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="rectangleView" />
+
+    <Button
+        android:id="@+id/btn_shape"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="shapeView" />
+
+    <Button
+        android:id="@+id/btn_roundiv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="roundImageView" />
+
+    <Button
+        android:id="@+id/btn_selector"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="selectorView" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/search" />
+</LinearLayout>

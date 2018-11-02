@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_click"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eee"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <com.cy.necessaryview.selectorview.SelectorCheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dp"
+        android:text="selectoreCheckBox"
+        android:textSize="16sp"
+        app:buttonChecked="@drawable/cb_zuji_selected"
+        app:buttonUnChecked="@drawable/cb_zuji_normal" />
+
+    <com.cy.necessaryview.selectorview.SelectorCheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dp"
+        android:text="selectoreCheckBox"
+        android:textSize="16sp"
+        app:buttonChecked="@drawable/cb_zuji_selected"
+        app:buttonUnChecked="@drawable/cb_zuji_normal"
+        app:textColorChecked="#ff0000"
+        app:textColorUnChecked="#454545" />
+
+    <com.cy.necessaryview.selectorview.SelectorCheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dp"
+        android:text="selectoreCheckBox"
+        android:textSize="16sp"
+        app:backgroundChecked="#33ff0000"
+        app:backgroundUnChecked="#fff"
+        app:buttonChecked="@drawable/cb_zuji_selected"
+        app:buttonUnChecked="@drawable/cb_zuji_normal"
+        app:textColorChecked="#ff0000"
+        app:textColorUnChecked="#454545" />
+
+    <com.cy.necessaryview.selectorview.SelectorCheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:button="@null"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dp"
+        android:text="selectoreCheckBox"
+        android:textSize="16sp"
+        app:backgroundChecked="#33ff0000"
+        app:backgroundUnChecked="#fff"
+        app:textColorChecked="#ff0000"
+        app:textColorUnChecked="#454545" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <com.cy.necessaryview.selectorview.SelectorRadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="SelectorRadioButton"
+            android:textSize="14sp"
+            app:buttonChecked="@drawable/cb_zuji_selected"
+            app:buttonUnChecked="@drawable/cb_zuji_normal" />
+
+        <com.cy.necessaryview.selectorview.SelectorRadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+
+            android:text="SelectorRadioButton"
+            android:textSize="14sp"
+            app:buttonChecked="@drawable/cb_zuji_selected"
+            app:buttonUnChecked="@drawable/cb_zuji_normal" />
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SelectorImageView"/>
+    <com.cy.necessaryview.selectorview.SelectorImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        app:srcChecked="@drawable/cb_zuji_selected"
+        app:srcUnChecked="@drawable/cb_zuji_normal" />
+
+    <com.cy.necessaryview.selectorview.SelectorImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        app:bgChecked="@drawable/hg"
+        app:bgUnChecked="#f00" />
+
+</LinearLayout>

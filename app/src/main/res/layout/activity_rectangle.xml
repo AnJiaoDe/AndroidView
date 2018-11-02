@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_rectangle"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+    <com.cy.necessaryview.rectangleview.RectangleImageView
+        android:id="@+id/riv"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/hg" />
+
+    <com.cy.necessaryview.rectangleview.RectangleLinearLayout
+
+        android:layout_width="100dp"
+        android:layout_height="100000dp"
+        android:layout_marginTop="10dp"
+        android:background="#f00">
+
+    </com.cy.necessaryview.rectangleview.RectangleLinearLayout>
+
+    <com.cy.necessaryview.rectangleview.RectangleRelativeLayout
+
+        android:layout_width="50dp"
+        android:layout_height="100000dp"
+        android:layout_marginTop="10dp"
+        android:background="#f78900"
+        app:heightWidthRatio="1.7">
+
+    </com.cy.necessaryview.rectangleview.RectangleRelativeLayout>
+
+
+    <com.cy.necessaryview.rectangleview.RectangleLinearLayout
+
+        android:layout_width="wrap_content"
+        android:layout_height="10000dp"
+        android:layout_marginTop="10dp"
+
+        android:background="#ff0">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="即热晶体管" />
+    </com.cy.necessaryview.rectangleview.RectangleLinearLayout>
+
+    <!--上面全是以宽为基准，下面全是以高为基准-->
+    <com.cy.necessaryview.rectangleview.RectangleFrameLayout
+
+        android:id="@+id/rfl"
+        android:layout_width="103330dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+
+        android:background="#ff6990"
+        app:baseOnWidthOrHeight="false">
+
+    </com.cy.necessaryview.rectangleview.RectangleFrameLayout>
+
+    <com.cy.necessaryview.rectangleview.RectangleLinearLayout
+
+        android:layout_width="10000dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+
+        android:background="#00789f"
+
+        app:baseOnWidthOrHeight="false">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="即热晶\n体管\n近日刚进\n入提\n货价h\nit\n\n好几天假hi" />
+    </com.cy.necessaryview.rectangleview.RectangleLinearLayout>
+</LinearLayout>

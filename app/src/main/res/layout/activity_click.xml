@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_click"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eee"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <!--默认水波纹-->
+
+    <com.cy.necessaryview.rippleview.ClickFrameLayout
+        android:id="@+id/rpfl"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#fff" />
+
+    <!--自定义水波纹颜色-->
+    <com.cy.necessaryview.rippleview.ClickFrameLayout
+        android:id="@+id/rpfl2"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:background="#99ff0000"
+
+        app:colorRipple="#fff" />
+
+    <!--设置imageview水波纹，默认是超过边界-->
+    <com.cy.necessaryview.rippleview.ClickImageView
+        android:id="@+id/civ1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/after_sale_icon"
+        app:iv_haveRipple="true" />
+
+    <!--设置imageview水波纹，设置不超过边界-->
+    <com.cy.necessaryview.rippleview.ClickImageView
+        android:id="@+id/civ2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/after_sale_icon"
+        app:iv_haveRipple="true"
+        app:rippleOver="false" />
+    <!--imageview,点击效果默认是滤镜-->
+    <com.cy.necessaryview.rippleview.ClickImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/after_sale_icon" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <!--imageview,默认滤镜效果-->
+        <com.cy.necessaryview.rippleview.ClickImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/hg" />
+
+        <!--imageview，自定义亮度-->
+        <com.cy.necessaryview.rippleview.ClickImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/hg"
+            app:filterLightNumber="100" />
+
+        <!--imageview，这是点击变亮-->
+        <com.cy.necessaryview.rippleview.ClickImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+
+            android:scaleType="centerCrop"
+            android:src="@drawable/hg"
+            app:filterLightOrDark="true" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,14 @@
+<resources>
+
+
+    <style name="ripple_click">
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <!--<style name="ripple_click_border">-->
+    <!--<item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>-->
+    <!--<item name="android:clickable">true</item>-->
+    <!--</style>-->
+
+</resources>
