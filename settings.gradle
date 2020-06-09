@@ -1,1 +1,1 @@
-include ':app', ':necessaryview'
+include ':app', ':androidview'

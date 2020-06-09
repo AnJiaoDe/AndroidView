@@ -3,7 +3,7 @@ package com.cy.necessaryviewmaster;
 import android.os.Bundle;
 import android.view.View;
 
-public class SelectorActivity extends com.cy.necessaryviewmaster.BaseActivity {
+public class SelectorActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
