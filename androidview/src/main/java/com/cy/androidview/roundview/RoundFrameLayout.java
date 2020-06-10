@@ -34,7 +34,7 @@ public class RoundFrameLayout extends FrameLayoutClick {
 
     private Paint roundPaint;
     private Paint imagePaint;
-    private float heightWidthRatio = 1; //高 / 宽（默认是高/宽），或者宽/高 比例
+    private float heightWidthRatio = 0; //高 / 宽（默认是高/宽），或者宽/高 比例
     private boolean baseOnWidthOrHeight = true;//默认true，即默认基于宽
 
     public RoundFrameLayout(Context context) {
@@ -46,7 +46,7 @@ public class RoundFrameLayout extends FrameLayoutClick {
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.RoundFrameLayout);
 
-        heightWidthRatio = typedArray.getFloat(R.styleable.ButtonRecShape_heightWidthRatio, 1F);
+        heightWidthRatio = typedArray.getFloat(R.styleable.ButtonRecShape_heightWidthRatio, heightWidthRatio);
         baseOnWidthOrHeight = typedArray.getBoolean(R.styleable.ButtonRecShape_baseOnWidthOrHeight, true);
 
 
@@ -182,6 +182,7 @@ public class RoundFrameLayout extends FrameLayoutClick {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        if(heightWidthRatio==0)return;
         //默认基于宽，即高会和宽度一致，高由宽决定
         if (baseOnWidthOrHeight) {
             int widthSize = getMeasuredWidth();

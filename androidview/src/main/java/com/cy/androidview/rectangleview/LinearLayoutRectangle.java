@@ -32,6 +32,7 @@ public class LinearLayoutRectangle extends LinearLayoutClick {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec,heightMeasureSpec);
         //默认基于宽，即高会和宽度一致，高由宽决定
         if (baseOnWidthOrHeight) {
             int widthSize = getMeasuredWidth();

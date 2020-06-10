@@ -19,7 +19,7 @@ import com.cy.androidview.rippleview.FrameLayoutClick;
  */
 
 public class FrameLayoutRecShape extends FrameLayoutClick {
-    private float heightWidthRatio = 1; //高 / 宽（默认是高/宽），或者宽/高 比例
+    private float heightWidthRatio = 0; //高 / 宽（默认是高/宽），或者宽/高 比例
     private boolean baseOnWidthOrHeight = true;//默认true，即默认基于宽
     public FrameLayoutRecShape(Context context) {
         this(context, null);
@@ -33,7 +33,7 @@ public class FrameLayoutRecShape extends FrameLayoutClick {
         TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.FrameLayoutRecShape);
 
 
-        heightWidthRatio = arr.getFloat(R.styleable.FrameLayoutRecShape_heightWidthRatio, 1F);
+        heightWidthRatio = arr.getFloat(R.styleable.FrameLayoutRecShape_heightWidthRatio, heightWidthRatio);
         baseOnWidthOrHeight = arr.getBoolean(R.styleable.FrameLayoutRecShape_baseOnWidthOrHeight, true);
 
         //水波纹的颜色,默认是0x66000000，建议自定义水波纹颜色的时候，用argb,rgb都设置为0，a可随意，调整透明度为了水波纹看起来更美观
@@ -188,6 +188,8 @@ public class FrameLayoutRecShape extends FrameLayoutClick {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        if(heightWidthRatio==0)return;
+
         //默认基于宽，即高会和宽度一致，高由宽决定
         if (baseOnWidthOrHeight) {
             int widthSize = getMeasuredWidth();

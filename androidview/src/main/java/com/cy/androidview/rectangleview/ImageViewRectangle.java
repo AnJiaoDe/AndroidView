@@ -24,8 +24,8 @@ public class ImageViewRectangle extends ImageViewClick {
     public ImageViewRectangle(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.ImageViewRectangle);
-        heightWidthRatio = arr.getFloat(R.styleable.ImageViewRectangle_heightWidthRatio, 1F);
-        baseOnWidthOrHeight = arr.getBoolean(R.styleable.ImageViewRectangle_baseOnWidthOrHeight, true);
+        heightWidthRatio = arr.getFloat(R.styleable.ImageViewRectangle_heightWidthRatio, heightWidthRatio);
+        baseOnWidthOrHeight = arr.getBoolean(R.styleable.ImageViewRectangle_baseOnWidthOrHeight, baseOnWidthOrHeight);
         arr.recycle();
     }
 

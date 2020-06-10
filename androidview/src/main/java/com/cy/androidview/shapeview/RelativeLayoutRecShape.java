@@ -19,7 +19,7 @@ import com.cy.androidview.rippleview.RelativeLayoutClick;
  */
 
 public class RelativeLayoutRecShape extends RelativeLayoutClick {
-    private float heightWidthRatio = 1; //高 / 宽（默认是高/宽），或者宽/高 比例
+    private float heightWidthRatio = 0; //高 / 宽（默认是高/宽），或者宽/高 比例
     private boolean baseOnWidthOrHeight = true;//默认true，即默认基于宽
     public RelativeLayoutRecShape(Context context) {
         this(context, null);
@@ -29,7 +29,7 @@ public class RelativeLayoutRecShape extends RelativeLayoutClick {
         super(context, attrs);
 
         TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.RelativeLayoutRecShape);
-        heightWidthRatio = arr.getFloat(R.styleable.RelativeLayoutRecShape_heightWidthRatio, 1F);
+        heightWidthRatio = arr.getFloat(R.styleable.RelativeLayoutRecShape_heightWidthRatio, heightWidthRatio);
         baseOnWidthOrHeight = arr.getBoolean(R.styleable.RelativeLayoutRecShape_baseOnWidthOrHeight, true);
         //水波纹的颜色,默认是0x66000000，建议自定义水波纹颜色的时候，用argb,rgb都设置为0，a可随意，调整透明度为了水波纹看起来更美观
         int colorRipple = arr.getColor(R.styleable.RelativeLayoutRecShape_colorRipple, 0x66000000);
@@ -183,6 +183,7 @@ public class RelativeLayoutRecShape extends RelativeLayoutClick {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        if(heightWidthRatio==0)return;
         //默认基于宽，即高会和宽度一致，高由宽决定
         if (baseOnWidthOrHeight) {
             int widthSize = getMeasuredWidth();
