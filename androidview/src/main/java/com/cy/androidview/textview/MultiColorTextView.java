@@ -6,12 +6,14 @@ import android.util.AttributeSet;
 
 import androidx.appcompat.widget.AppCompatTextView;
 
+import com.cy.androidview.rippleview.TextViewClick;
+
 
 /**
  * Created by lenovo on 2017/8/12.
  */
 
-public class MultiColorTextView extends AppCompatTextView {
+public class MultiColorTextView extends TextViewClick {
     private StringBuilder stringBuilder;
 
     public MultiColorTextView(Context context) {
