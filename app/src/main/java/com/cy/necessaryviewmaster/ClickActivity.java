@@ -14,10 +14,10 @@ public class ClickActivity extends com.cy.necessaryviewmaster.BaseActivity {
         findViewById(R.id.rpfl2).setOnClickListener(this);
         findViewById(R.id.civ1).setOnClickListener(this);
         findViewById(R.id.civ2).setOnClickListener(this);
+        findViewById(R.id.civ3).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-
     }
 }

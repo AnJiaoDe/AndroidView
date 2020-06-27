@@ -11,46 +11,23 @@
 
     <!--默认水波纹-->
 
-    <com.cy.androidview.rippleview.FrameLayoutClick
+    <com.cy.androidview.rippleview.FrameLayoutRipple
         android:id="@+id/rpfl"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="#fff" />
 
     <!--自定义水波纹颜色-->
-    <com.cy.androidview.rippleview.FrameLayoutClick
+    <com.cy.androidview.rippleview.FrameLayoutRipple
         android:id="@+id/rpfl2"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginTop="10dp"
         android:background="#99ff0000"
-
         app:colorRipple="#fff" />
 
-    <!--设置imageview水波纹，默认是超过边界-->
-    <com.cy.androidview.rippleview.ImageViewClick
+    <com.cy.androidview.rippleview.ImageViewRipple
         android:id="@+id/civ1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:padding="10dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/after_sale_icon"
-        app:haveRipple="true" />
-
-    <!--设置imageview水波纹，设置不超过边界-->
-    <com.cy.androidview.rippleview.ImageViewClick
-        android:id="@+id/civ2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:padding="10dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/after_sale_icon"
-        app:haveRipple="true"
-        app:rippleOver="false" />
-    <!--imageview,点击效果默认是滤镜-->
-    <com.cy.androidview.rippleview.ImageViewClick
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -58,12 +35,38 @@
         android:scaleType="centerInside"
         android:src="@drawable/after_sale_icon" />
 
+    <com.cy.androidview.colorfilterview.ImageViewColorFilter
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/after_sale_icon" />
+    <com.cy.androidview.colorfilterview.ImageViewColorFilter
+        android:id="@+id/civ2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:scaleType="centerInside"
+        app:lightNumber="-100"
+        android:src="@drawable/after_sale_icon" />
+    <com.cy.androidview.colorfilterview.ImageViewColorFilter
+        android:layout_width="wrap_content"
+        android:id="@+id/civ3"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/after_sale_icon"
+        app:lightOrDark="true"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <!--imageview,默认滤镜效果-->
-        <com.cy.androidview.rippleview.ImageViewClick
+        <com.cy.androidview.colorfilterview.ImageViewColorFilter
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginTop="10dp"
@@ -71,17 +74,17 @@
             android:src="@drawable/hg" />
 
         <!--imageview，自定义亮度-->
-        <com.cy.androidview.rippleview.ImageViewClick
+        <com.cy.androidview.colorfilterview.ImageViewColorFilter
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:scaleType="centerCrop"
             android:src="@drawable/hg"
-            app:filterLightNumber="100" />
+            app:lightNumber="100" />
 
         <!--imageview，这是点击变亮-->
-        <com.cy.androidview.rippleview.ImageViewClick
+        <com.cy.androidview.colorfilterview.ImageViewColorFilter
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginLeft="10dp"
@@ -89,7 +92,7 @@
 
             android:scaleType="centerCrop"
             android:src="@drawable/hg"
-            app:filterLightOrDark="true" />
+            app:lightOrDark="true" />
     </LinearLayout>
 
 </LinearLayout>

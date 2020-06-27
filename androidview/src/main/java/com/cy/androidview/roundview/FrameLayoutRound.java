@@ -10,10 +10,9 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.widget.FrameLayout;
 
 import com.cy.androidview.R;
-import com.cy.androidview.rippleview.FrameLayoutClick;
+import com.cy.androidview.rippleview.FrameLayoutRipple;
 
 
 /**
@@ -25,7 +24,7 @@ import com.cy.androidview.rippleview.FrameLayoutClick;
  * @UpdateRemark:
  * @Version:
  */
-public class RoundFrameLayout extends FrameLayoutClick {
+public class FrameLayoutRound extends FrameLayoutRipple {
     private float radius = 20;
     private float topLeftRadius = 20;
     private float topRightRadius = 20;
@@ -37,24 +36,24 @@ public class RoundFrameLayout extends FrameLayoutClick {
     private float heightWidthRatio = 0; //高 / 宽（默认是高/宽），或者宽/高 比例
     private boolean baseOnWidthOrHeight = true;//默认true，即默认基于宽
 
-    public RoundFrameLayout(Context context) {
+    public FrameLayoutRound(Context context) {
         this(context, null);
     }
 
-    public RoundFrameLayout(Context context, AttributeSet attrs) {
+    public FrameLayoutRound(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.RoundFrameLayout);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.FrameLayoutRound);
 
-        heightWidthRatio = typedArray.getFloat(R.styleable.ButtonRecShape_heightWidthRatio, heightWidthRatio);
-        baseOnWidthOrHeight = typedArray.getBoolean(R.styleable.ButtonRecShape_baseOnWidthOrHeight, true);
+        heightWidthRatio = typedArray.getFloat(R.styleable.FrameLayoutRound_heightWidthRatio, heightWidthRatio);
+        baseOnWidthOrHeight = typedArray.getBoolean(R.styleable.FrameLayoutRound_baseOnWidthOrHeight, true);
 
 
-        radius = typedArray.getDimension(R.styleable.RoundFrameLayout_radius, radius);
-        topLeftRadius = typedArray.getDimension(R.styleable.RoundFrameLayout_topLeftRadius, radius);
-        topRightRadius = typedArray.getDimension(R.styleable.RoundFrameLayout_topRightRadius, radius);
-        bottomLeftRadius = typedArray.getDimension(R.styleable.RoundFrameLayout_bottomLeftRadius, radius);
-        bottomRightRadius = typedArray.getDimension(R.styleable.RoundFrameLayout_bottomRightRadius, radius);
+        radius = typedArray.getDimension(R.styleable.FrameLayoutRound_radius, radius);
+        topLeftRadius = typedArray.getDimension(R.styleable.FrameLayoutRound_topLeftRadius, radius);
+        topRightRadius = typedArray.getDimension(R.styleable.FrameLayoutRound_topRightRadius, radius);
+        bottomLeftRadius = typedArray.getDimension(R.styleable.FrameLayoutRound_bottomLeftRadius, radius);
+        bottomRightRadius = typedArray.getDimension(R.styleable.FrameLayoutRound_bottomRightRadius, radius);
         typedArray.recycle();
         roundPaint = new Paint();
         roundPaint.setColor(Color.WHITE);

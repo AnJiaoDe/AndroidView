@@ -14,7 +14,7 @@
         android:id="@+id/btn_click"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="clickView" />
+        android:text="ripple_color_filter_View" />
 
     <Button
         android:id="@+id/btn_rectangle"
@@ -46,7 +46,7 @@
         android:padding="10dp"
         android:scaleType="centerInside"
         android:src="@drawable/search" />
-    <com.cy.androidview.roundview.RoundFrameLayout
+    <com.cy.androidview.roundview.FrameLayoutRound
         android:layout_width="100dp"
         android:layout_height="100dp">
         <ImageView
@@ -54,5 +54,5 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:src="@drawable/hg"/>
-    </com.cy.androidview.roundview.RoundFrameLayout>
+    </com.cy.androidview.roundview.FrameLayoutRound>
 </LinearLayout>

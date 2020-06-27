@@ -117,7 +117,7 @@ dependencies {
             android:layout_marginTop="10dp"
             android:scaleType="centerCrop"
             android:src="@drawable/hg"
-            app:filterLightNumber="100" />
+            app:lightNumber="100" />
 
         <!--imageview，这是点击变亮-->
         <com.cy.necessaryview.rippleview.ClickImageView
@@ -128,7 +128,7 @@ dependencies {
 
             android:scaleType="centerCrop"
             android:src="@drawable/hg"
-            app:filterLightOrDark="true" />
+            app:lightOrDark="true" />
     </LinearLayout>
 
 </LinearLayout>

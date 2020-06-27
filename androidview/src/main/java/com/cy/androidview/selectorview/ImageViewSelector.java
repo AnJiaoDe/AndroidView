@@ -3,18 +3,19 @@ package com.cy.androidview.selectorview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
+
+import androidx.appcompat.widget.AppCompatImageView;
 
 import com.cy.androidview.R;
-import com.cy.androidview.rippleview.ImageViewClick;
 
 
 /**
  * Created by lenovo on 2017/8/30.
  */
 
-public class ImageViewSelector extends ImageViewClick {
+public class ImageViewSelector extends AppCompatImageView {
     private int backgroundID, backgroundCheckedID, bg_color, bg_checked_color,
             srcCheckedID, srcUncheckedID;
 
@@ -62,9 +63,9 @@ public class ImageViewSelector extends ImageViewClick {
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("onClick","+++++++++++++++++");
                 setChecked(!isChecked);
                 if (onCheckedChangeListener != null) {
-
                     onCheckedChangeListener.onCheckedChanged(ImageViewSelector.this, isChecked);
                 }
             }
@@ -76,7 +77,6 @@ public class ImageViewSelector extends ImageViewClick {
     @Override
     public void setOnClickListener(OnClickListener l) {
         if (isMyListener) {
-
             super.setOnClickListener(l);
             isMyListener = false;
         }
@@ -123,7 +123,6 @@ public class ImageViewSelector extends ImageViewClick {
     //设置未选中时的背景，Src等
     private void setResOnUnChecked() {
         if (backgroundID != -1) {
-
             setBackgroundResource(backgroundID);
         } else {
             setBackgroundColor(bg_color);
