@@ -32,7 +32,7 @@
         android:id="@+id/btn_roundiv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="roundImageView" />
+        android:text="roundView" />
 
     <Button
         android:id="@+id/btn_selector"
@@ -46,13 +46,9 @@
         android:padding="10dp"
         android:scaleType="centerInside"
         android:src="@drawable/search" />
-    <com.cy.androidview.roundview.FrameLayoutRound
-        android:layout_width="100dp"
-        android:layout_height="100dp">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <com.cy.androidview.roundview.ImageViewRound
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:scaleType="centerCrop"
             android:src="@drawable/hg"/>
-    </com.cy.androidview.roundview.FrameLayoutRound>
 </LinearLayout>

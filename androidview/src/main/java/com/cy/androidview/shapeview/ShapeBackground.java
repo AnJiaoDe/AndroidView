@@ -196,7 +196,7 @@ public class ShapeBackground {
      * @param index
      */
     public ShapeBackground setColorEnd(@StyleableRes int index) {
-        this.colorEnd = typedArray.getDimensionPixelSize(index, colorEnd);
+        this.colorEnd = typedArray.getColor(index, colorEnd);
         return this;
 
     }
@@ -300,7 +300,7 @@ public class ShapeBackground {
      * @param index
      */
     public ShapeBackground setStrokeColor(@StyleableRes int index) {
-        this.strokeColor = typedArray.getDimensionPixelSize(index, strokeColor);
+        this.strokeColor = typedArray.getColor(index, strokeColor);
         return this;
     }
 
@@ -398,7 +398,7 @@ public class ShapeBackground {
      * @param index
      */
     public ShapeBackground setShapeType(@StyleableRes int index) {
-        this.shapeType = typedArray.getDimensionPixelSize(index, shapeType);
+        this.shapeType = typedArray.getInt(index, shapeType);
         return this;
     }
 //

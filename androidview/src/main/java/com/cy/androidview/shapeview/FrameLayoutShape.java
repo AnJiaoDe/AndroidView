@@ -48,7 +48,7 @@ public class FrameLayoutShape extends FrameLayout implements IShape, IRectangle,
     public RectangleRatio rectangle(TypedArray typedArray) {
         return new RectangleRatio(this,typedArray)
                 .setBaseOnWidthOrHeight(R.styleable.FrameLayoutShape_baseOnWidthOrHeight)
-                .setHeightWidthRatio(R.styleable.FrameLayoutShape_heightWidthRatio);
+                .setHeightWidthRatio(R.styleable.FrameLayoutShape_heightWidthRatio,0);
     }
 
     @Override

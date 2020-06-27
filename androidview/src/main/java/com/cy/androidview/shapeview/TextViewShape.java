@@ -50,7 +50,7 @@ public class TextViewShape extends AppCompatTextView implements IShape, IRectang
     public RectangleRatio rectangle(TypedArray typedArray) {
         return new RectangleRatio(this,typedArray)
                 .setBaseOnWidthOrHeight(R.styleable.TextViewShape_baseOnWidthOrHeight)
-                .setHeightWidthRatio(R.styleable.TextViewShape_heightWidthRatio);
+                .setHeightWidthRatio(R.styleable.TextViewShape_heightWidthRatio,0);
     }
 
     @Override

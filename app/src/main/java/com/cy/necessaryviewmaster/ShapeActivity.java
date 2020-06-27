@@ -8,7 +8,7 @@ public class ShapeActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_round);
+        setContentView(R.layout.activity_shape);
 
         findViewById(R.id.rsf).setOnClickListener(this);
     }

@@ -9,6 +9,6 @@ public class RoundedIVActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rounded_iv);
+        setContentView(R.layout.activity_round);
     }
 }

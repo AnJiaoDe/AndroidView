@@ -48,7 +48,7 @@ public class RelativeLayoutShape extends RelativeLayout implements IShape, IRect
     public RectangleRatio rectangle(TypedArray typedArray) {
         return new RectangleRatio(this,typedArray)
                 .setBaseOnWidthOrHeight(R.styleable.RelativeLayoutShape_baseOnWidthOrHeight)
-                .setHeightWidthRatio(R.styleable.RelativeLayoutShape_heightWidthRatio);
+                .setHeightWidthRatio(R.styleable.RelativeLayoutShape_heightWidthRatio,0);
     }
 
     @Override

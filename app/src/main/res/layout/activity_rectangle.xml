@@ -66,9 +66,7 @@
         android:layout_width="10000dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-
         android:background="#00789f"
-
         app:baseOnWidthOrHeight="false">
 
         <TextView

@@ -34,6 +34,11 @@ public class RectangleRatio {
         return this;
     }
 
+    public RectangleRatio setHeightWidthRatio(@StyleableRes int index,int defaultValue) {
+        heightWidthRatio = typedArray.getFloat(index, defaultValue);
+        return this;
+    }
+
     public RectangleRatio setBaseOnWidthOrHeight(@StyleableRes int index) {
         baseOnWidthOrHeight = typedArray.getBoolean(index, baseOnWidthOrHeight);
         return this;

@@ -168,13 +168,71 @@
     <!--SelectorView???????????????????????????????????????????????????????????-->
 
     <declare-styleable name="FrameLayoutRound">
+        <attr name="colorRipple" />
+        <attr name="haveRipple" />
         <attr name="heightWidthRatio" />
         <attr name="baseOnWidthOrHeight" />
-        <attr name="radius" format="dimension" />
-        <attr name="topLeftRadius" format="dimension" />
-        <attr name="topRightRadius" format="dimension" />
-        <attr name="bottomLeftRadius" format="dimension" />
-        <attr name="bottomRightRadius" format="dimension" />
+        <attr name="radiusCorner" />
+        <attr name="radiusTopLeft" />
+        <attr name="radiusTopRight" />
+        <attr name="radiusBottomRight" />
+        <attr name="radiusBottomLeft" />
+    </declare-styleable>
+
+    <declare-styleable name="ImageViewRound">
+        <attr name="colorRipple" />
+        <attr name="haveRipple" />
+        <attr name="heightWidthRatio" />
+        <attr name="baseOnWidthOrHeight" />
+        <attr name="radiusCorner" />
+        <attr name="radiusTopLeft" />
+        <attr name="radiusTopRight" />
+        <attr name="radiusBottomRight" />
+        <attr name="radiusBottomLeft" />
+    </declare-styleable>
+    <declare-styleable name="LinearLayoutRound">
+        <attr name="colorRipple" />
+        <attr name="haveRipple" />
+        <attr name="heightWidthRatio" />
+        <attr name="baseOnWidthOrHeight" />
+        <attr name="radiusCorner" />
+        <attr name="radiusTopLeft" />
+        <attr name="radiusTopRight" />
+        <attr name="radiusBottomRight" />
+        <attr name="radiusBottomLeft" />
+    </declare-styleable>
+    <declare-styleable name="RelativeLayoutRound">
+        <attr name="colorRipple" />
+        <attr name="haveRipple" />
+        <attr name="heightWidthRatio" />
+        <attr name="baseOnWidthOrHeight" />
+        <attr name="radiusCorner" />
+        <attr name="radiusTopLeft" />
+        <attr name="radiusTopRight" />
+        <attr name="radiusBottomRight" />
+        <attr name="radiusBottomLeft" />
+    </declare-styleable>
+    <declare-styleable name="TextViewRound">
+        <attr name="colorRipple" />
+        <attr name="haveRipple" />
+        <attr name="heightWidthRatio" />
+        <attr name="baseOnWidthOrHeight" />
+        <attr name="radiusCorner" />
+        <attr name="radiusTopLeft" />
+        <attr name="radiusTopRight" />
+        <attr name="radiusBottomRight" />
+        <attr name="radiusBottomLeft" />
+    </declare-styleable>
+    <declare-styleable name="ButtonRound">
+        <attr name="colorRipple" />
+        <attr name="haveRipple" />
+        <attr name="heightWidthRatio" />
+        <attr name="baseOnWidthOrHeight" />
+        <attr name="radiusCorner" />
+        <attr name="radiusTopLeft" />
+        <attr name="radiusTopRight" />
+        <attr name="radiusBottomRight" />
+        <attr name="radiusBottomLeft" />
     </declare-styleable>
     <declare-styleable name="ButtonShape">
         <attr name="heightWidthRatio" />

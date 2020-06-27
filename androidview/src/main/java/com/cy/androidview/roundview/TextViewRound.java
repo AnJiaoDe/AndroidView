@@ -3,23 +3,16 @@ package com.cy.androidview.roundview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
+
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.cy.androidview.R;
 import com.cy.androidview.rectangleview.IRectangle;
 import com.cy.androidview.rectangleview.RectangleRatio;
-import com.cy.androidview.rippleview.FrameLayoutRipple;
 import com.cy.androidview.rippleview.IRipple;
 import com.cy.androidview.rippleview.Ripple;
-import com.cy.androidview.shapeview.IShape;
-import com.cy.androidview.shapeview.ShapeBackground;
 
 
 /**
@@ -31,18 +24,18 @@ import com.cy.androidview.shapeview.ShapeBackground;
  * @UpdateRemark:
  * @Version:
  */
-public class FrameLayoutRound extends FrameLayout implements IRound, IRectangle, IRipple {
+public class TextViewRound extends AppCompatTextView implements IRound, IRectangle, IRipple {
 
 
     private RectangleRatio rectangleRatio;
     private Round round;
-    public FrameLayoutRound(Context context) {
+    public TextViewRound(Context context) {
         this(context, null);
     }
 
-    public FrameLayoutRound(Context context, AttributeSet attrs) {
+    public TextViewRound(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.FrameLayoutRound);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TextViewRound);
         ripple(typedArray);
         round=round(typedArray);
         rectangleRatio = rectangle(typedArray);
@@ -78,25 +71,25 @@ public class FrameLayoutRound extends FrameLayout implements IRound, IRectangle,
     @Override
     public Round round(TypedArray typedArray) {
         return new Round(this,typedArray)
-                .setRadius(R.styleable.FrameLayoutRound_radiusCorner)
-                .setTopLeftRadius(R.styleable.FrameLayoutRound_radiusTopLeft)
-                .setTopRightRadius(R.styleable.FrameLayoutRound_radiusTopRight)
-                .setBottomLeftRadius(R.styleable.FrameLayoutRound_radiusBottomLeft)
-                .setBottomRightRadius(R.styleable.FrameLayoutRound_radiusBottomRight);
+                .setRadius(R.styleable.TextViewRound_radiusCorner)
+                .setTopLeftRadius(R.styleable.TextViewRound_radiusTopLeft)
+                .setTopRightRadius(R.styleable.TextViewRound_radiusTopRight)
+                .setBottomLeftRadius(R.styleable.TextViewRound_radiusBottomLeft)
+                .setBottomRightRadius(R.styleable.TextViewRound_radiusBottomRight);
     }
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {
         return new RectangleRatio(this,typedArray)
-                .setBaseOnWidthOrHeight(R.styleable.FrameLayoutRound_baseOnWidthOrHeight)
-                .setHeightWidthRatio(R.styleable.FrameLayoutRound_heightWidthRatio,0);
+                .setBaseOnWidthOrHeight(R.styleable.TextViewRound_baseOnWidthOrHeight)
+                .setHeightWidthRatio(R.styleable.TextViewRound_heightWidthRatio,0);
     }
 
 
     @Override
     public Ripple ripple(TypedArray typedArray) {
         return new Ripple(this, typedArray)
-                .setColorRipple(R.styleable.FrameLayoutRound_colorRipple)
-                .setHavaRipple(R.styleable.FrameLayoutRound_haveRipple).ripple();
+                .setColorRipple(R.styleable.TextViewRound_colorRipple)
+                .setHavaRipple(R.styleable.TextViewRound_haveRipple).ripple();
     }
 
 

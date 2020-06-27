@@ -43,7 +43,7 @@ public class ButtonShape extends AppCompatButton implements IShape, IRectangle, 
     public RectangleRatio rectangle(TypedArray typedArray) {
         return new RectangleRatio(this,typedArray)
                 .setBaseOnWidthOrHeight(R.styleable.ButtonShape_baseOnWidthOrHeight)
-                .setHeightWidthRatio(R.styleable.ButtonShape_heightWidthRatio);
+                .setHeightWidthRatio(R.styleable.ButtonShape_heightWidthRatio,0);
     }
 
     @Override

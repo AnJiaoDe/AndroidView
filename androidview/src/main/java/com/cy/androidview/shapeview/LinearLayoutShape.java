@@ -48,7 +48,7 @@ public class LinearLayoutShape extends LinearLayout implements IShape, IRectangl
     public RectangleRatio rectangle(TypedArray typedArray) {
         return new RectangleRatio(this,typedArray)
                 .setBaseOnWidthOrHeight(R.styleable.LinearLayoutShape_baseOnWidthOrHeight)
-                .setHeightWidthRatio(R.styleable.LinearLayoutShape_heightWidthRatio);
+                .setHeightWidthRatio(R.styleable.LinearLayoutShape_heightWidthRatio,0);
     }
 
     @Override

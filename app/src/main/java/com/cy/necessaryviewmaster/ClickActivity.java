@@ -9,7 +9,7 @@ public class ClickActivity extends com.cy.necessaryviewmaster.BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_click);
+        setContentView(R.layout.activity_ripple_color_filter);
         findViewById(R.id.rpfl).setOnClickListener(this);
         findViewById(R.id.rpfl2).setOnClickListener(this);
         findViewById(R.id.civ1).setOnClickListener(this);

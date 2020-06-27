@@ -3,23 +3,16 @@ package com.cy.androidview.roundview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
+
+import androidx.appcompat.widget.AppCompatImageView;
 
 import com.cy.androidview.R;
 import com.cy.androidview.rectangleview.IRectangle;
 import com.cy.androidview.rectangleview.RectangleRatio;
-import com.cy.androidview.rippleview.FrameLayoutRipple;
 import com.cy.androidview.rippleview.IRipple;
 import com.cy.androidview.rippleview.Ripple;
-import com.cy.androidview.shapeview.IShape;
-import com.cy.androidview.shapeview.ShapeBackground;
 
 
 /**
@@ -31,18 +24,18 @@ import com.cy.androidview.shapeview.ShapeBackground;
  * @UpdateRemark:
  * @Version:
  */
-public class FrameLayoutRound extends FrameLayout implements IRound, IRectangle, IRipple {
+public class ImageViewRound extends AppCompatImageView implements IRound, IRectangle, IRipple {
 
 
     private RectangleRatio rectangleRatio;
     private Round round;
-    public FrameLayoutRound(Context context) {
+    public ImageViewRound(Context context) {
         this(context, null);
     }
 
-    public FrameLayoutRound(Context context, AttributeSet attrs) {
+    public ImageViewRound(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.FrameLayoutRound);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ImageViewRound);
         ripple(typedArray);
         round=round(typedArray);
         rectangleRatio = rectangle(typedArray);
@@ -64,7 +57,7 @@ public class FrameLayoutRound extends FrameLayout implements IRound, IRectangle,
         super.dispatchDraw(canvas);
         round.round(canvas);
     }
-
+    
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -78,25 +71,25 @@ public class FrameLayoutRound extends FrameLayout implements IRound, IRectangle,
     @Override
     public Round round(TypedArray typedArray) {
         return new Round(this,typedArray)
-                .setRadius(R.styleable.FrameLayoutRound_radiusCorner)
-                .setTopLeftRadius(R.styleable.FrameLayoutRound_radiusTopLeft)
-                .setTopRightRadius(R.styleable.FrameLayoutRound_radiusTopRight)
-                .setBottomLeftRadius(R.styleable.FrameLayoutRound_radiusBottomLeft)
-                .setBottomRightRadius(R.styleable.FrameLayoutRound_radiusBottomRight);
+                .setRadius(R.styleable.ImageViewRound_radiusCorner)
+                .setTopLeftRadius(R.styleable.ImageViewRound_radiusTopLeft)
+                .setTopRightRadius(R.styleable.ImageViewRound_radiusTopRight)
+                .setBottomLeftRadius(R.styleable.ImageViewRound_radiusBottomLeft)
+                .setBottomRightRadius(R.styleable.ImageViewRound_radiusBottomRight);
     }
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {
         return new RectangleRatio(this,typedArray)
-                .setBaseOnWidthOrHeight(R.styleable.FrameLayoutRound_baseOnWidthOrHeight)
-                .setHeightWidthRatio(R.styleable.FrameLayoutRound_heightWidthRatio,0);
+                .setBaseOnWidthOrHeight(R.styleable.ImageViewRound_baseOnWidthOrHeight)
+                .setHeightWidthRatio(R.styleable.ImageViewRound_heightWidthRatio,0);
     }
 
 
     @Override
     public Ripple ripple(TypedArray typedArray) {
         return new Ripple(this, typedArray)
-                .setColorRipple(R.styleable.FrameLayoutRound_colorRipple)
-                .setHavaRipple(R.styleable.FrameLayoutRound_haveRipple).ripple();
+                .setColorRipple(R.styleable.ImageViewRound_colorRipple)
+                .setHavaRipple(R.styleable.ImageViewRound_haveRipple).ripple();
     }
 
 
