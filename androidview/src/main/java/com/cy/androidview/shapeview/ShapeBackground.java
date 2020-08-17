@@ -51,6 +51,7 @@ public class ShapeBackground {
     private int strokePaddingRight = 0;
     private int strokePaddingBottom = 0;
     private int shapeType = 0;
+    private GradientDrawable gradientDrawable;
 
     public ShapeBackground(View view,TypedArray typedArray) {
         this.view = view;
@@ -421,7 +422,8 @@ public class ShapeBackground {
         if (colorFill == 0x00000000 && strokeColor == 0x00000000 && (colorStart == 0x00000000 || colorEnd == 0x00000000))
             return this;
 
-        GradientDrawable gradientDrawable = new GradientDrawable();//创建背景drawable
+        //创建背景drawable
+        gradientDrawable = new GradientDrawable();
         //形状类型
         switch (shapeType) {
             case 0:
@@ -514,5 +516,9 @@ public class ShapeBackground {
          */
         view.setBackground(layerDrawable);
         return this;
+    }
+
+    public GradientDrawable getGradientDrawable() {
+        return gradientDrawable;
     }
 }

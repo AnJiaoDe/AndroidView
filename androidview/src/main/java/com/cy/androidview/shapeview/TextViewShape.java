@@ -26,11 +26,13 @@ import com.cy.androidview.rippleview.TextViewRipple;
 
 public class TextViewShape extends AppCompatTextView implements IShape, IRectangle, IRipple {
     private RectangleRatio rectangleRatio;
+    private ShapeBackground shapeBackground;
+
     public TextViewShape(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TextViewShape);
         ripple(typedArray);
-        shape(typedArray);
+        shapeBackground = shape(typedArray);
         rectangleRatio = rectangle(typedArray);
         typedArray.recycle();
     }
@@ -48,9 +50,9 @@ public class TextViewShape extends AppCompatTextView implements IShape, IRectang
 
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {
-        return new RectangleRatio(this,typedArray)
+        return new RectangleRatio(this, typedArray)
                 .setBaseOnWidthOrHeight(R.styleable.TextViewShape_baseOnWidthOrHeight)
-                .setHeightWidthRatio(R.styleable.TextViewShape_heightWidthRatio,0);
+                .setHeightWidthRatio(R.styleable.TextViewShape_heightWidthRatio, 0);
     }
 
     @Override
@@ -62,7 +64,7 @@ public class TextViewShape extends AppCompatTextView implements IShape, IRectang
 
     @Override
     public ShapeBackground shape(TypedArray typedArray) {
-        return new ShapeBackground(this,typedArray)
+        return new ShapeBackground(this, typedArray)
                 .setAngle(R.styleable.TextViewShape_angle)
                 .setCenterX(R.styleable.TextViewShape_centerX)
                 .setCenterY(R.styleable.TextViewShape_centerY)
@@ -88,5 +90,9 @@ public class TextViewShape extends AppCompatTextView implements IShape, IRectang
                 .setStrokePaddingTop(R.styleable.TextViewShape_strokePaddingTop)
                 .setStrokeWidth(R.styleable.TextViewShape_strokeWidth)
                 .shape();
+    }
+
+    public ShapeBackground getShapeBackground() {
+        return shapeBackground;
     }
 }

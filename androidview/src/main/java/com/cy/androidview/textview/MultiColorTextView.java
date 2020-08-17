@@ -23,12 +23,13 @@ public class MultiColorTextView extends AppCompatTextView {
         stringBuilder = new StringBuilder();
     }
 
-    public MultiColorTextView add(String text,int color) {
+    public MultiColorTextView addText(String text,int color) {
         stringBuilder.append(String.format("<font color=\""+color+"\">%s", text));
         return this;
     }
 
     public void setText() {
         setText(Html.fromHtml(stringBuilder.toString()));
+        stringBuilder.delete(0,stringBuilder.length()-1);
     }
 }

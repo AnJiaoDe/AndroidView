@@ -6,7 +6,6 @@ import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
 import com.cy.androidview.R;
-import com.cy.androidview.rippleview.FrameLayoutRipple;
 import com.cy.androidview.rippleview.IRipple;
 import com.cy.androidview.rippleview.Ripple;
 
