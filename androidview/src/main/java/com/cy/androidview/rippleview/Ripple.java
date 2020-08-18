@@ -38,8 +38,18 @@ public class Ripple {
         return this;
     }
 
+    public Ripple setColorRipple_(int color) {
+        colorRipple = color;
+        return this;
+    }
+
     public Ripple setHavaRipple(@StyleableRes int index) {
         havaRipple = typedArray.getBoolean(index, true);
+        return this;
+    }
+
+    public Ripple setHavaRipple_(boolean havaRipple) {
+        this.havaRipple = havaRipple;
         return this;
     }
 
@@ -50,20 +60,6 @@ public class Ripple {
     public boolean isHavaRipple() {
         return havaRipple;
     }
-
-//    public Ripple recycle() {
-//        try {
-//            typedArray.recycle();
-//        } catch (Exception e) {
-//            Log.e(getClass().getName() + "Exception:", e.getMessage());
-//        }
-//        return this;
-//    }
-//
-//    public Ripple rippleAndRecycle() {
-//        recycle();
-//        return ripple();
-//    }
 
     public Ripple ripple() {
         //5.0以上才有效,

@@ -17,11 +17,12 @@ import com.cy.androidview.rippleview.Ripple;
  */
 public class FrameLayoutRectangle extends FrameLayout implements IRectangle, IRipple {
     private RectangleRatio rectangleRatio;
+    private Ripple ripple;
 
     public FrameLayoutRectangle(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.FrameLayoutRectangle);
-        ripple(typedArray);
+        ripple = ripple(typedArray);
         rectangleRatio = rectangle(typedArray);
         typedArray.recycle();
     }
@@ -39,7 +40,7 @@ public class FrameLayoutRectangle extends FrameLayout implements IRectangle, IRi
 
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {
-        return new RectangleRatio(this,typedArray)
+        return new RectangleRatio(this, typedArray)
                 .setBaseOnWidthOrHeight(R.styleable.FrameLayoutRectangle_baseOnWidthOrHeight)
                 .setHeightWidthRatio(R.styleable.FrameLayoutRectangle_heightWidthRatio);
     }
@@ -49,5 +50,15 @@ public class FrameLayoutRectangle extends FrameLayout implements IRectangle, IRi
         return new Ripple(this, typedArray)
                 .setColorRipple(R.styleable.FrameLayoutRectangle_colorRipple)
                 .setHavaRipple(R.styleable.FrameLayoutRectangle_haveRipple).ripple();
+    }
+
+    @Override
+    public Ripple getRipple() {
+        return ripple;
+    }
+
+    @Override
+    public RectangleRatio getRectangleRatio() {
+        return rectangleRatio;
     }
 }

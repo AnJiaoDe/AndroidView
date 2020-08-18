@@ -24,18 +24,14 @@ import com.cy.androidview.rippleview.Ripple;
  * @Version:
  */
 public class LinearLayoutRound extends LinearLayout implements IRound, IRectangle, IRipple {
-
-
+    private Ripple ripple;
     private RectangleRatio rectangleRatio;
     private Round round;
-    public LinearLayoutRound(Context context) {
-        this(context, null);
-    }
 
     public LinearLayoutRound(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.LinearLayoutRound);
-        ripple(typedArray);
+        ripple=ripple(typedArray);
         round=round(typedArray);
         rectangleRatio = rectangle(typedArray);
         typedArray.recycle();
@@ -91,5 +87,18 @@ public class LinearLayoutRound extends LinearLayout implements IRound, IRectangl
                 .setHavaRipple(R.styleable.LinearLayoutRound_haveRipple).ripple();
     }
 
+    @Override
+    public RectangleRatio getRectangleRatio() {
+        return rectangleRatio;
+    }
 
+    @Override
+    public Ripple getRipple() {
+        return ripple;
+    }
+
+    @Override
+    public Round getRound() {
+        return round;
+    }
 }

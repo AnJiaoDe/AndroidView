@@ -1,20 +1,9 @@
 package com.cy.androidview.colorfilterview;
 
-import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.RippleDrawable;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.StyleableRes;
-
-import com.cy.androidview.LogUtils;
-import com.cy.androidview.R;
-import com.cy.androidview.rippleview.Ripple;
 
 /**
  * @Description:
@@ -25,7 +14,7 @@ import com.cy.androidview.rippleview.Ripple;
  * @UpdateRemark:
  * @Version: 1.0
  */
-public class ColorFilter {
+public class ColorFilterCy {
 
     //正数，变亮
 //    public float[] BT_SELECTED_LIGHT = new float[]{
@@ -44,20 +33,26 @@ public class ColorFilter {
     private View view;
     private boolean havaFilter = true;
     private boolean lightOrDark = false;
-    private float lightNumber=-50;
+    private float lightNumber = -50;
     //负数，变暗(三个-30，值越大则效果越深)
     private float[] filters = new float[]{
             1, 0, 0, 0, 0,
             0, 1, 0, 0, 0,
             0, 0, 1, 0, 0,
             0, 0, 0, 1, 0};
-    public ColorFilter(View view,TypedArray typedArray) {
+
+    public ColorFilterCy(View view, TypedArray typedArray) {
         this.view = view;
         this.typedArray = typedArray;
     }
 
-    public ColorFilter setHavaFilter(@StyleableRes int index) {
+    public ColorFilterCy setHavaFilter(@StyleableRes int index) {
         havaFilter = typedArray.getBoolean(index, havaFilter);//设置是否有滤镜点击效果，默认有
+        return this;
+    }
+
+    public ColorFilterCy setHavaFilter_(boolean havaFilter) {
+        this.havaFilter = havaFilter;//设置是否有滤镜点击效果，默认有
         return this;
     }
 
@@ -68,13 +63,21 @@ public class ColorFilter {
      * @param index
      * @return
      */
-    public ColorFilter setLightOrDark(@StyleableRes int index) {
+    public ColorFilterCy setLightOrDark(@StyleableRes int index) {
         lightOrDark = typedArray.getBoolean(index, lightOrDark);
         return this;
     }
+    public ColorFilterCy setLightOrDark_(boolean lightOrDark) {
+        this.lightOrDark=lightOrDark;
+        return this;
+    }
 
-    public ColorFilter setLightNumber(@StyleableRes int index) {
-        lightNumber = typedArray.getFloat(index, lightOrDark?-lightNumber:lightNumber);
+    public ColorFilterCy setLightNumber(@StyleableRes int index) {
+        lightNumber = typedArray.getFloat(index, lightOrDark ? -lightNumber : lightNumber);
+        return this;
+    }
+    public ColorFilterCy setLightNumber_(float lightNumber) {
+       this.lightNumber=lightNumber;
         return this;
     }
 
@@ -95,22 +98,9 @@ public class ColorFilter {
         return filters;
     }
 
-//    public ColorFilter recycle() {
-//        try {
-//            typedArray.recycle();
-//        } catch (Exception e) {
-//            Log.e(getClass().getName() + "Exception:", e.getMessage());
-//        }
-//        return this;
-//    }
-//
-//    public ColorFilter colorFilterAndRecycle() {
-//        recycle();
-//        return colorFilter();
-//    }
 
-    public ColorFilter colorFilter() {
-        if(!havaFilter)return this;
+    public ColorFilterCy colorFilter() {
+        if (!havaFilter) return this;
         //滤镜，变暗或者变亮，负数，变暗(值越大则效果越深)，正数，变亮
         filters[4] = lightNumber;
         filters[9] = lightNumber;

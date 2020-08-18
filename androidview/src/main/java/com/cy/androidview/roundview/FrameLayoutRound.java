@@ -36,14 +36,12 @@ public class FrameLayoutRound extends FrameLayout implements IRound, IRectangle,
 
     private RectangleRatio rectangleRatio;
     private Round round;
-    public FrameLayoutRound(Context context) {
-        this(context, null);
-    }
+    private Ripple ripple;
 
     public FrameLayoutRound(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.FrameLayoutRound);
-        ripple(typedArray);
+        ripple=ripple(typedArray);
         round=round(typedArray);
         rectangleRatio = rectangle(typedArray);
         typedArray.recycle();
@@ -99,5 +97,18 @@ public class FrameLayoutRound extends FrameLayout implements IRound, IRectangle,
                 .setHavaRipple(R.styleable.FrameLayoutRound_haveRipple).ripple();
     }
 
+    @Override
+    public Round getRound() {
+        return round;
+    }
 
+    @Override
+    public Ripple getRipple() {
+        return ripple;
+    }
+
+    @Override
+    public RectangleRatio getRectangleRatio() {
+        return rectangleRatio;
+    }
 }

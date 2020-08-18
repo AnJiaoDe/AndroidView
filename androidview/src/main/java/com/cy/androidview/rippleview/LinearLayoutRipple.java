@@ -16,10 +16,11 @@ import com.cy.androidview.R;
  */
 
 public class LinearLayoutRipple extends LinearLayout implements IRipple {
+    private Ripple ripple;
     public LinearLayoutRipple(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.LinearLayoutRipple);
-        ripple(typedArray);
+        ripple=ripple(typedArray);
         typedArray.recycle();
     }
 
@@ -28,5 +29,10 @@ public class LinearLayoutRipple extends LinearLayout implements IRipple {
         return new Ripple(this, typedArray)
                 .setColorRipple(R.styleable.LinearLayoutRipple_colorRipple)
                 .setHavaRipple(R.styleable.LinearLayoutRipple_haveRipple).ripple();
+    }
+
+    @Override
+    public Ripple getRipple() {
+        return ripple;
     }
 }

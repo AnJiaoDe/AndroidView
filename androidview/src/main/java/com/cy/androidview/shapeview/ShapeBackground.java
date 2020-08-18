@@ -69,6 +69,10 @@ public class ShapeBackground {
         this.radiusCorner = typedArray.getDimensionPixelSize(index, radiusCorner);
         return this;
     }
+    public ShapeBackground setRadiusCorner_(int radiusCorner) {
+        this.radiusCorner = radiusCorner;
+        return this;
+    }
 
     public int getRadiusTopLeft() {
         return radiusTopLeft;
@@ -79,6 +83,11 @@ public class ShapeBackground {
      */
     public ShapeBackground setRadiusTopLeft(@StyleableRes int index) {
         this.radiusTopLeft = typedArray.getDimensionPixelSize(index, radiusTopLeft);
+        return this;
+
+    }
+    public ShapeBackground setRadiusTopLeft_(int radiusTopLeft) {
+        this.radiusTopLeft = radiusTopLeft;
         return this;
 
     }
@@ -97,6 +106,11 @@ public class ShapeBackground {
         return this;
 
     }
+    public ShapeBackground setRadiusTopRight_(int radiusTopRight) {
+        this.radiusTopRight = radiusTopRight;
+        return this;
+
+    }
 
     public int getRadiusBottomRight() {
         return radiusBottomRight;
@@ -109,6 +123,11 @@ public class ShapeBackground {
      */
     public ShapeBackground setRadiusBottomRight(@StyleableRes int index) {
         this.radiusBottomRight = typedArray.getDimensionPixelSize(index, radiusBottomRight);
+        return this;
+
+    }
+    public ShapeBackground setRadiusBottomRight_(int radiusBottomRight) {
+        this.radiusBottomRight = radiusBottomRight;
         return this;
 
     }
@@ -127,6 +146,11 @@ public class ShapeBackground {
         return this;
 
     }
+    public ShapeBackground setRadiusBottomLeft_(int radiusBottomLeft ) {
+        this.radiusBottomLeft = radiusBottomLeft;
+        return this;
+
+    }
 
     public int getColorFill() {
         return colorFill;
@@ -139,6 +163,11 @@ public class ShapeBackground {
      */
     public ShapeBackground setColorFill(@StyleableRes int index) {
         this.colorFill = typedArray.getColor(index, colorFill);
+        return this;
+
+    }
+    public ShapeBackground setColorFill_(int colorFill) {
+        this.colorFill = colorFill;
         return this;
 
     }
@@ -158,6 +187,11 @@ public class ShapeBackground {
         return this;
 
     }
+    public ShapeBackground setRadiusGradient_(int radiusGradient) {
+        this.radiusGradient = radiusGradient;
+        return this;
+
+    }
 
     public int getColorStart() {
         return colorStart;
@@ -169,6 +203,11 @@ public class ShapeBackground {
      */
     public ShapeBackground setColorStart(@StyleableRes int index) {
         this.colorStart = typedArray.getColor(index, colorStart);
+        return this;
+
+    }
+    public ShapeBackground setColorStart_(int colorStart) {
+        this.colorStart =colorStart;
         return this;
 
     }
@@ -187,6 +226,11 @@ public class ShapeBackground {
         return this;
 
     }
+    public ShapeBackground setColorCenter_(int colorCenter) {
+        this.colorCenter =colorCenter;
+        return this;
+
+    }
 
     public int getColorEnd() {
         return colorEnd;
@@ -198,6 +242,11 @@ public class ShapeBackground {
      */
     public ShapeBackground setColorEnd(@StyleableRes int index) {
         this.colorEnd = typedArray.getColor(index, colorEnd);
+        return this;
+
+    }
+    public ShapeBackground setColorEnd_(int colorEnd) {
+        this.colorEnd = colorEnd;
         return this;
 
     }
@@ -216,6 +265,11 @@ public class ShapeBackground {
         return this;
 
     }
+    public ShapeBackground setOrientationGradient_(int orientationGradient) {
+        this.orientationGradient = orientationGradient;
+        return this;
+
+    }
 
     public int getGradientType() {
         return gradientType;
@@ -228,6 +282,11 @@ public class ShapeBackground {
      */
     public ShapeBackground setGradientType(@StyleableRes int index) {
         this.gradientType = typedArray.getInt(index, gradientType);
+        return this;
+
+    }
+    public ShapeBackground setGradientType_(int gradientType) {
+        this.gradientType = gradientType;
         return this;
 
     }
@@ -246,6 +305,11 @@ public class ShapeBackground {
         return this;
 
     }
+    public ShapeBackground setCenterX_(int centerX ) {
+        this.centerX = centerX;
+        return this;
+
+    }
 
     public float getCenterY() {
         return centerY;
@@ -258,6 +322,11 @@ public class ShapeBackground {
      */
     public ShapeBackground setCenterY(@StyleableRes int index) {
         this.centerY = typedArray.getFloat(index, centerY);
+        return this;
+
+    }
+    public ShapeBackground setCenterY_(int centerY) {
+        this.centerY = centerY;
         return this;
 
     }
@@ -275,6 +344,10 @@ public class ShapeBackground {
         this.angle = typedArray.getInt(index, angle);
         return this;
     }
+    public ShapeBackground setAngle_(int angle) {
+        this.angle = angle;
+        return this;
+    }
 
     public int getStrokeWidth() {
         return strokeWidth;
@@ -288,6 +361,10 @@ public class ShapeBackground {
      */
     public ShapeBackground setStrokeWidth(@StyleableRes int index) {
         this.strokeWidth = typedArray.getDimensionPixelSize(index, strokeWidth);
+        return this;
+    }
+    public ShapeBackground setStrokeWidth_(int strokeWidth) {
+        this.strokeWidth = strokeWidth;
         return this;
     }
 
@@ -304,6 +381,10 @@ public class ShapeBackground {
         this.strokeColor = typedArray.getColor(index, strokeColor);
         return this;
     }
+    public ShapeBackground setStrokeColor_(int strokeColor) {
+        this.strokeColor = strokeColor;
+        return this;
+    }
 
     public int getStrokeDashWidth() {
         return strokeDashWidth;
@@ -316,6 +397,10 @@ public class ShapeBackground {
      */
     public ShapeBackground setStrokeDashWidth(@StyleableRes int index) {
         this.strokeDashWidth = typedArray.getDimensionPixelSize(index, strokeDashWidth);
+        return this;
+    }
+    public ShapeBackground setStrokeDashWidth_(int strokeDashWidth) {
+        this.strokeDashWidth =strokeDashWidth;
         return this;
     }
 
@@ -332,6 +417,10 @@ public class ShapeBackground {
         this.strokeDashGap = typedArray.getDimensionPixelSize(index, strokeDashGap);
         return this;
     }
+    public ShapeBackground setStrokeDashGap_(int strokeDashGap) {
+        this.strokeDashGap = strokeDashGap;
+        return this;
+    }
 
     public int getStrokePaddingLeft() {
         return strokePaddingLeft;
@@ -344,6 +433,10 @@ public class ShapeBackground {
      */
     public ShapeBackground setStrokePaddingLeft(@StyleableRes int index) {
         this.strokePaddingLeft = typedArray.getDimensionPixelSize(index, strokePaddingLeft);
+        return this;
+    }
+    public ShapeBackground setStrokePaddingLeft_(int strokePaddingLeft) {
+        this.strokePaddingLeft = strokePaddingLeft;
         return this;
     }
 
@@ -360,6 +453,10 @@ public class ShapeBackground {
         this.strokePaddingTop = typedArray.getDimensionPixelSize(index, strokePaddingTop);
         return this;
     }
+    public ShapeBackground setStrokePaddingTop_(int strokePaddingTop) {
+        this.strokePaddingTop =strokePaddingTop;
+        return this;
+    }
 
     public int getStrokePaddingRight() {
         return strokePaddingRight;
@@ -372,6 +469,10 @@ public class ShapeBackground {
      */
     public ShapeBackground setStrokePaddingRight(@StyleableRes int index) {
         this.strokePaddingRight = typedArray.getDimensionPixelSize(index, strokePaddingRight);
+        return this;
+    }
+    public ShapeBackground setStrokePaddingRight_(int strokePaddingRight) {
+        this.strokePaddingRight = strokePaddingRight;
         return this;
     }
 
@@ -388,6 +489,10 @@ public class ShapeBackground {
         this.strokePaddingBottom = typedArray.getDimensionPixelSize(index, strokePaddingBottom);
         return this;
     }
+    public ShapeBackground setStrokePaddingBottom_(int strokePaddingBottom) {
+        this.strokePaddingBottom = strokePaddingBottom;
+        return this;
+    }
 
     public int getShapeType() {
         return shapeType;
@@ -402,20 +507,10 @@ public class ShapeBackground {
         this.shapeType = typedArray.getInt(index, shapeType);
         return this;
     }
-//
-//    public ShapeBackground recycle() {
-//        try {
-//            typedArray.recycle();
-//        } catch (Exception e) {
-//            Log.e(getClass().getName() + "Exception:", e.getMessage());
-//        }
-//        return this;
-//    }
-//
-//    public ShapeBackground shapeAndRecycle() {
-//        recycle();
-//        return shape();
-//    }
+    public ShapeBackground setShapeType_(int shapeType) {
+        this.shapeType = shapeType;
+        return this;
+    }
 
     public ShapeBackground shape() {
 //        //设置了填充色或者设置了渐变色的开始和结束，或者设置了描边颜色，才会设置drawable

@@ -29,14 +29,12 @@ public class ButtonRound extends AppCompatButton implements IRound, IRectangle, 
 
     private RectangleRatio rectangleRatio;
     private Round round;
-    public ButtonRound(Context context) {
-        this(context, null);
-    }
+    private Ripple ripple;
 
     public ButtonRound(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ButtonRound);
-        ripple(typedArray);
+        ripple=ripple(typedArray);
         round=round(typedArray);
         rectangleRatio = rectangle(typedArray);
         typedArray.recycle();
@@ -92,5 +90,18 @@ public class ButtonRound extends AppCompatButton implements IRound, IRectangle, 
                 .setHavaRipple(R.styleable.ButtonRound_haveRipple).ripple();
     }
 
+    @Override
+    public Ripple getRipple() {
+        return ripple;
+    }
 
+    @Override
+    public RectangleRatio getRectangleRatio() {
+        return rectangleRatio;
+    }
+
+    @Override
+    public Round getRound() {
+        return round;
+    }
 }

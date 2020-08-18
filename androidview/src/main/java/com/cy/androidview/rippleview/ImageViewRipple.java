@@ -20,10 +20,11 @@ import com.cy.androidview.R;
  */
 
 public class ImageViewRipple extends AppCompatImageView implements IRipple {
+    private Ripple ripple;
     public ImageViewRipple(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ImageViewRipple);
-        ripple(typedArray);
+        ripple=ripple(typedArray);
         typedArray.recycle();
     }
 
@@ -32,5 +33,10 @@ public class ImageViewRipple extends AppCompatImageView implements IRipple {
         return new Ripple(this, typedArray)
                 .setColorRipple(R.styleable.ImageViewRipple_colorRipple)
                 .setHavaRipple(R.styleable.ImageViewRipple_haveRipple).ripple();
+    }
+
+    @Override
+    public Ripple getRipple() {
+        return ripple;
     }
 }

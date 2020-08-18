@@ -24,11 +24,13 @@ import com.cy.androidview.rippleview.Ripple;
 
 public class FrameLayoutShape extends FrameLayout implements IShape, IRectangle, IRipple {
     private RectangleRatio rectangleRatio;
+    private Ripple ripple;
+    private ShapeBackground shapeBackground;
     public FrameLayoutShape(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.FrameLayoutShape);
-        ripple(typedArray);
-        shape(typedArray);
+        ripple=ripple(typedArray);
+        shapeBackground=shape(typedArray);
         rectangleRatio = rectangle(typedArray);
         typedArray.recycle();
     }
@@ -86,5 +88,20 @@ public class FrameLayoutShape extends FrameLayout implements IShape, IRectangle,
                 .setStrokePaddingTop(R.styleable.FrameLayoutShape_strokePaddingTop)
                 .setStrokeWidth(R.styleable.FrameLayoutShape_strokeWidth)
                 .shape();
+    }
+
+    @Override
+    public RectangleRatio getRectangleRatio() {
+        return rectangleRatio;
+    }
+
+    @Override
+    public Ripple getRipple() {
+        return ripple;
+    }
+
+    @Override
+    public ShapeBackground getShapeBackground() {
+        return shapeBackground;
     }
 }

@@ -19,11 +19,13 @@ import com.cy.androidview.rippleview.Ripple;
 
 public class ButtonShape extends AppCompatButton implements IShape, IRectangle, IRipple {
     private RectangleRatio rectangleRatio;
+    private Ripple ripple;
+    private ShapeBackground shapeBackground;
     public ButtonShape(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ButtonShape);
-        ripple(typedArray);
-        shape(typedArray);
+        ripple=ripple(typedArray);
+        shapeBackground=shape(typedArray);
         rectangleRatio = rectangle(typedArray);
         typedArray.recycle();
     }
@@ -81,5 +83,20 @@ public class ButtonShape extends AppCompatButton implements IShape, IRectangle, 
                 .setStrokePaddingTop(R.styleable.ButtonShape_strokePaddingTop)
                 .setStrokeWidth(R.styleable.ButtonShape_strokeWidth)
                 .shape();
+    }
+
+    @Override
+    public Ripple getRipple() {
+        return ripple;
+    }
+
+    @Override
+    public ShapeBackground getShapeBackground() {
+        return shapeBackground;
+    }
+
+    @Override
+    public RectangleRatio getRectangleRatio() {
+        return rectangleRatio;
     }
 }

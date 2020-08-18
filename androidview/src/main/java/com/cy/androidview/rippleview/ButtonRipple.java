@@ -17,11 +17,12 @@ import com.cy.androidview.R;
  */
 
 public class ButtonRipple extends AppCompatButton implements IRipple {
+    private Ripple ripple;
 
     public ButtonRipple(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ButtonRipple);
-        ripple(typedArray);
+        ripple = ripple(typedArray);
         typedArray.recycle();
     }
 
@@ -30,5 +31,10 @@ public class ButtonRipple extends AppCompatButton implements IRipple {
         return new Ripple(this, typedArray)
                 .setColorRipple(R.styleable.ButtonRipple_colorRipple)
                 .setHavaRipple(R.styleable.ButtonRipple_haveRipple).ripple();
+    }
+
+    @Override
+    public Ripple getRipple() {
+        return ripple;
     }
 }

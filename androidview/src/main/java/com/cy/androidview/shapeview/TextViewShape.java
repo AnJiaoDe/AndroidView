@@ -27,11 +27,11 @@ import com.cy.androidview.rippleview.TextViewRipple;
 public class TextViewShape extends AppCompatTextView implements IShape, IRectangle, IRipple {
     private RectangleRatio rectangleRatio;
     private ShapeBackground shapeBackground;
-
+    private Ripple ripple;
     public TextViewShape(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TextViewShape);
-        ripple(typedArray);
+        ripple=ripple(typedArray);
         shapeBackground = shape(typedArray);
         rectangleRatio = rectangle(typedArray);
         typedArray.recycle();
@@ -94,5 +94,15 @@ public class TextViewShape extends AppCompatTextView implements IShape, IRectang
 
     public ShapeBackground getShapeBackground() {
         return shapeBackground;
+    }
+
+    @Override
+    public Ripple getRipple() {
+        return ripple;
+    }
+
+    @Override
+    public RectangleRatio getRectangleRatio() {
+        return rectangleRatio;
     }
 }

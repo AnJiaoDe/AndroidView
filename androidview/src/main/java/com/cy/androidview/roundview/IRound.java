@@ -15,5 +15,5 @@ import com.cy.androidview.shapeview.ShapeBackground;
  */
 public interface IRound {
     public Round round(TypedArray typedArray);
-
+    public Round getRound();
 }

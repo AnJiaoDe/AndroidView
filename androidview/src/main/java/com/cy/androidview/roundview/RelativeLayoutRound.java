@@ -28,14 +28,12 @@ public class RelativeLayoutRound extends RelativeLayout implements IRound, IRect
 
     private RectangleRatio rectangleRatio;
     private Round round;
-    public RelativeLayoutRound(Context context) {
-        this(context, null);
-    }
+    private Ripple ripple;
 
     public RelativeLayoutRound(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.RelativeLayoutRound);
-        ripple(typedArray);
+        ripple=ripple(typedArray);
         round=round(typedArray);
         rectangleRatio = rectangle(typedArray);
         typedArray.recycle();
@@ -91,5 +89,18 @@ public class RelativeLayoutRound extends RelativeLayout implements IRound, IRect
                 .setHavaRipple(R.styleable.RelativeLayoutRound_haveRipple).ripple();
     }
 
+    @Override
+    public Ripple getRipple() {
+        return ripple;
+    }
 
+    @Override
+    public RectangleRatio getRectangleRatio() {
+        return rectangleRatio;
+    }
+
+    @Override
+    public Round getRound() {
+        return round;
+    }
 }

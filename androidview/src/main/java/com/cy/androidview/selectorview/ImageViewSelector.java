@@ -24,10 +24,6 @@ public class ImageViewSelector extends AppCompatImageView {
 
     private boolean isMyListener = true;
 
-    public ImageViewSelector(Context context) {
-        this(context, null);
-    }
-
 
     public ImageViewSelector(Context context, AttributeSet attrs) {
         super(context, attrs);

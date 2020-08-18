@@ -17,10 +17,11 @@ import com.cy.androidview.R;
  */
 
 public class FrameLayoutRipple extends FrameLayout implements IRipple {
+    private Ripple ripple;
     public FrameLayoutRipple(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.FrameLayoutRipple);
-        ripple(typedArray);
+        ripple=ripple(typedArray);
         typedArray.recycle();
     }
 
@@ -29,5 +30,10 @@ public class FrameLayoutRipple extends FrameLayout implements IRipple {
         return new Ripple(this, typedArray)
                 .setColorRipple(R.styleable.FrameLayoutRipple_colorRipple)
                 .setHavaRipple(R.styleable.FrameLayoutRipple_haveRipple).ripple();
+    }
+
+    @Override
+    public Ripple getRipple() {
+        return ripple;
     }
 }

@@ -19,12 +19,12 @@ import com.cy.androidview.rippleview.Ripple;
  */
 public class ButtonRectangle extends AppCompatButton implements IRectangle, IRipple {
     private RectangleRatio rectangleRatio;
-
+    private Ripple ripple;
     public ButtonRectangle(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ButtonRectangle);
-        ripple(typedArray);
-        rectangleRatio = rectangle(typedArray);
+        ripple=ripple(typedArray);
+        rectangleRatio=rectangle(typedArray);
         typedArray.recycle();
     }
 
@@ -41,7 +41,7 @@ public class ButtonRectangle extends AppCompatButton implements IRectangle, IRip
 
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {
-        return new RectangleRatio(this,typedArray)
+        return new RectangleRatio(this, typedArray)
                 .setBaseOnWidthOrHeight(R.styleable.ButtonRectangle_baseOnWidthOrHeight)
                 .setHeightWidthRatio(R.styleable.ButtonRectangle_heightWidthRatio);
     }
@@ -51,5 +51,15 @@ public class ButtonRectangle extends AppCompatButton implements IRectangle, IRip
         return new Ripple(this, typedArray)
                 .setColorRipple(R.styleable.ButtonRectangle_colorRipple)
                 .setHavaRipple(R.styleable.ButtonRectangle_haveRipple).ripple();
+    }
+
+    @Override
+    public Ripple getRipple() {
+        return ripple;
+    }
+
+    @Override
+    public RectangleRatio getRectangleRatio() {
+        return rectangleRatio;
     }
 }

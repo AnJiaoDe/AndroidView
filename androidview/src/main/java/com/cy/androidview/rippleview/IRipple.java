@@ -15,4 +15,5 @@ import android.util.AttributeSet;
  */
 public interface IRipple {
     public Ripple ripple(TypedArray typedArray);
+    public Ripple getRipple();
 }

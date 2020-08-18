@@ -34,6 +34,11 @@ public class RectangleRatio {
         return this;
     }
 
+    public RectangleRatio setHeightWidthRatio_(float heightWidthRatio) {
+        this.heightWidthRatio = heightWidthRatio;
+        return this;
+    }
+
     public RectangleRatio setHeightWidthRatio(@StyleableRes int index,int defaultValue) {
         heightWidthRatio = typedArray.getFloat(index, defaultValue);
         return this;
@@ -41,6 +46,11 @@ public class RectangleRatio {
 
     public RectangleRatio setBaseOnWidthOrHeight(@StyleableRes int index) {
         baseOnWidthOrHeight = typedArray.getBoolean(index, baseOnWidthOrHeight);
+        return this;
+    }
+
+    public RectangleRatio setBaseOnWidthOrHeight_(boolean baseOnWidthOrHeight) {
+        this.baseOnWidthOrHeight = baseOnWidthOrHeight;
         return this;
     }
 
@@ -52,20 +62,8 @@ public class RectangleRatio {
         return baseOnWidthOrHeight;
     }
 
-//    public RectangleRatio recycle(){
-//        try {
-//            typedArray.recycle();
-//        } catch (Exception e) {
-//            Log.e(getClass().getName() + "Exception:", e.getMessage());
-//        }
-//        return this;
-//    }
-//    public RectangleRatio rectangleAndRecycle(MeasureSizeCallback measureSizeCallback) {
-//        recycle();
-//        return rectangle(measureSizeCallback);
-//    }
     public RectangleRatio rectangle(MeasureSizeCallback measureSizeCallback) {
-        if(heightWidthRatio==0)return this;
+        if (heightWidthRatio == 0) return this;
         //默认基于宽，即高会和宽度一致，高由宽决定
         if (baseOnWidthOrHeight) {
             int widthSize = view.getMeasuredWidth();

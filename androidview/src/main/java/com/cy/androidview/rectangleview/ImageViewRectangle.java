@@ -10,11 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 
 import com.cy.androidview.R;
-import com.cy.androidview.colorfilterview.ColorFilter;
+import com.cy.androidview.colorfilterview.ColorFilterCy;
 import com.cy.androidview.colorfilterview.IColorFilter;
-import com.cy.androidview.rippleview.IRipple;
-import com.cy.androidview.rippleview.ImageViewRipple;
-import com.cy.androidview.rippleview.Ripple;
 
 
 /**
@@ -24,7 +21,7 @@ import com.cy.androidview.rippleview.Ripple;
  */
 public class ImageViewRectangle extends AppCompatImageView implements IRectangle, IColorFilter {
     private RectangleRatio rectangleRatio;
-    private ColorFilter colorFilter;
+    private ColorFilterCy colorFilter;
     private OnClickListener onClickListener;
     public ImageViewRectangle(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -72,11 +69,21 @@ public class ImageViewRectangle extends AppCompatImageView implements IRectangle
     }
 
     @Override
-    public ColorFilter colorFilter(TypedArray typedArray) {
-        return new ColorFilter(this, typedArray)
+    public ColorFilterCy colorFilter(TypedArray typedArray) {
+        return new ColorFilterCy(this, typedArray)
                 .setHavaFilter(R.styleable.ImageViewColorFilter_haveFilter)
                 .setLightOrDark(R.styleable.ImageViewColorFilter_lightOrDark)
                 .setLightNumber(R.styleable.ImageViewColorFilter_lightNumber)
                 .colorFilter();
+    }
+
+    @Override
+    public RectangleRatio getRectangleRatio() {
+        return rectangleRatio;
+    }
+
+    @Override
+    public ColorFilterCy getColorFilterCy() {
+        return colorFilter;
     }
 }

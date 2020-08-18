@@ -14,4 +14,5 @@ import android.content.res.TypedArray;
  */
 public interface IRectangle {
     public RectangleRatio rectangle(TypedArray typedArray);
+    public RectangleRatio getRectangleRatio();
 }

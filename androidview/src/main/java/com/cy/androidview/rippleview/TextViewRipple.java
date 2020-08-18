@@ -17,10 +17,11 @@ import com.cy.androidview.R;
  */
 
 public class TextViewRipple extends AppCompatTextView implements IRipple {
+    private Ripple ripple;
     public TextViewRipple(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TextViewRipple);
-        ripple(typedArray);
+        ripple=ripple(typedArray);
         typedArray.recycle();
     }
 
@@ -29,5 +30,10 @@ public class TextViewRipple extends AppCompatTextView implements IRipple {
         return new Ripple(this, typedArray)
                 .setColorRipple(R.styleable.TextViewRipple_colorRipple)
                 .setHavaRipple(R.styleable.TextViewRipple_haveRipple).ripple();
+    }
+
+    @Override
+    public Ripple getRipple() {
+        return ripple;
     }
 }

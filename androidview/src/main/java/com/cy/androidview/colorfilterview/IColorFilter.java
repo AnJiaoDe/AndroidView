@@ -12,5 +12,6 @@ import android.content.res.TypedArray;
  * @Version: 1.0
  */
 public interface IColorFilter {
-    public ColorFilter colorFilter(TypedArray typedArray);
+    public ColorFilterCy colorFilter(TypedArray typedArray);
+    public ColorFilterCy getColorFilterCy();
 }

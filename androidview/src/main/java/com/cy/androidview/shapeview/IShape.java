@@ -16,5 +16,5 @@ import com.cy.androidview.rippleview.Ripple;
  */
 public interface IShape {
     public ShapeBackground shape(TypedArray typedArray);
-
+    public ShapeBackground getShapeBackground();
 }

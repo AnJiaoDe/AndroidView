@@ -19,11 +19,11 @@ import com.cy.androidview.rippleview.TextViewRipple;
  */
 public class TextViewRectangle extends AppCompatTextView implements IRectangle, IRipple {
     private RectangleRatio rectangleRatio;
-
+    private Ripple ripple;
     public TextViewRectangle(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TextViewRectangle);
-        ripple(typedArray);
+        ripple=ripple(typedArray);
         rectangleRatio = rectangle(typedArray);
         typedArray.recycle();
     }
@@ -51,5 +51,15 @@ public class TextViewRectangle extends AppCompatTextView implements IRectangle, 
         return new Ripple(this, typedArray)
                 .setColorRipple(R.styleable.TextViewRectangle_colorRipple)
                 .setHavaRipple(R.styleable.TextViewRectangle_haveRipple).ripple();
+    }
+
+    @Override
+    public Ripple getRipple() {
+        return ripple;
+    }
+
+    @Override
+    public RectangleRatio getRectangleRatio() {
+        return rectangleRatio;
     }
 }

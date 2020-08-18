@@ -22,9 +22,6 @@ public class CheckBoxSelector extends AppCompatCheckBox {
 
     private boolean myListener = true;
 
-    public CheckBoxSelector(Context context) {
-        this(context, null);
-    }
 
     public CheckBoxSelector(Context context, AttributeSet attrs) {
         super(context, attrs);

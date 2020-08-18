@@ -29,14 +29,12 @@ public class TextViewRound extends AppCompatTextView implements IRound, IRectang
 
     private RectangleRatio rectangleRatio;
     private Round round;
-    public TextViewRound(Context context) {
-        this(context, null);
-    }
+    private Ripple ripple;
 
     public TextViewRound(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TextViewRound);
-        ripple(typedArray);
+        ripple=ripple(typedArray);
         round=round(typedArray);
         rectangleRatio = rectangle(typedArray);
         typedArray.recycle();
@@ -92,5 +90,18 @@ public class TextViewRound extends AppCompatTextView implements IRound, IRectang
                 .setHavaRipple(R.styleable.TextViewRound_haveRipple).ripple();
     }
 
+    @Override
+    public Ripple getRipple() {
+        return ripple;
+    }
 
+    @Override
+    public Round getRound() {
+        return round;
+    }
+
+    @Override
+    public RectangleRatio getRectangleRatio() {
+        return rectangleRatio;
+    }
 }

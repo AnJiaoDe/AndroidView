@@ -18,11 +18,11 @@ import com.cy.androidview.rippleview.Ripple;
  */
 public class LinearLayoutRectangle extends LinearLayout implements IRectangle, IRipple {
     private RectangleRatio rectangleRatio;
-
+    private Ripple ripple;
     public LinearLayoutRectangle(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.LinearLayoutRectangle);
-        ripple(typedArray);
+        ripple=ripple(typedArray);
         rectangleRatio = rectangle(typedArray);
         typedArray.recycle();
     }
@@ -50,5 +50,15 @@ public class LinearLayoutRectangle extends LinearLayout implements IRectangle, I
         return new Ripple(this, typedArray)
                 .setColorRipple(R.styleable.LinearLayoutRectangle_colorRipple)
                 .setHavaRipple(R.styleable.LinearLayoutRectangle_haveRipple).ripple();
+    }
+
+    @Override
+    public Ripple getRipple() {
+        return ripple;
+    }
+
+    @Override
+    public RectangleRatio getRectangleRatio() {
+        return rectangleRatio;
     }
 }

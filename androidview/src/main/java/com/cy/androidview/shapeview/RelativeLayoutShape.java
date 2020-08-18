@@ -24,11 +24,13 @@ import com.cy.androidview.rippleview.Ripple;
 
 public class RelativeLayoutShape extends RelativeLayout implements IShape, IRectangle, IRipple {
     private RectangleRatio rectangleRatio;
+    private Ripple ripple;
+    private ShapeBackground shapeBackground;
     public RelativeLayoutShape(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.RelativeLayoutShape);
-        ripple(typedArray);
-        shape(typedArray);
+        ripple=ripple(typedArray);
+        shapeBackground=shape(typedArray);
         rectangleRatio = rectangle(typedArray);
         typedArray.recycle();
     }
@@ -86,5 +88,20 @@ public class RelativeLayoutShape extends RelativeLayout implements IShape, IRect
                 .setStrokePaddingTop(R.styleable.RelativeLayoutShape_strokePaddingTop)
                 .setStrokeWidth(R.styleable.RelativeLayoutShape_strokeWidth)
                 .shape();
+    }
+
+    @Override
+    public Ripple getRipple() {
+        return ripple;
+    }
+
+    @Override
+    public RectangleRatio getRectangleRatio() {
+        return rectangleRatio;
+    }
+
+    @Override
+    public ShapeBackground getShapeBackground() {
+        return shapeBackground;
     }
 }

@@ -22,10 +22,6 @@ public class RadioButtonSelector extends AppCompatRadioButton {
 
     private boolean myListener = true;
 
-    public RadioButtonSelector(Context context) {
-        this(context, null);
-    }
-
     public RadioButtonSelector(Context context, AttributeSet attrs) {
         super(context, attrs);
 
