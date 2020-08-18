@@ -30,6 +30,6 @@ public class MultiColorTextView extends AppCompatTextView {
 
     public void setText() {
         setText(Html.fromHtml(stringBuilder.toString()));
-        stringBuilder.delete(0,stringBuilder.length()-1);
+        stringBuilder.delete(0,stringBuilder.length());
     }
 }
