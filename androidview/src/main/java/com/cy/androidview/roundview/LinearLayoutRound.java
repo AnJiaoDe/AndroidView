@@ -52,7 +52,6 @@ public class LinearLayoutRound extends LinearLayout implements IRound, IRectangl
         super.dispatchDraw(canvas);
         round.round(canvas);
     }
-
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -60,6 +59,7 @@ public class LinearLayoutRound extends LinearLayout implements IRound, IRectangl
             @Override
             public void setMeasuredSize(int measuredWidth, int measuredHeight) {
                 setMeasuredDimension(measuredWidth, measuredHeight);
+                measureChildren(MeasureSpec.makeMeasureSpec(measuredWidth, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(measuredHeight, MeasureSpec.EXACTLY));
             }
         });
     }

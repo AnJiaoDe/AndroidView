@@ -41,11 +41,12 @@ public class FrameLayoutRound extends FrameLayout implements IRound, IRectangle,
     public FrameLayoutRound(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.FrameLayoutRound);
-        ripple=ripple(typedArray);
-        round=round(typedArray);
+        ripple = ripple(typedArray);
+        round = round(typedArray);
         rectangleRatio = rectangle(typedArray);
         typedArray.recycle();
     }
+
     @Override
     public void setBackgroundColor(int color) {
         super.setBackgroundColor(0x00000000);
@@ -70,23 +71,26 @@ public class FrameLayoutRound extends FrameLayout implements IRound, IRectangle,
             @Override
             public void setMeasuredSize(int measuredWidth, int measuredHeight) {
                 setMeasuredDimension(measuredWidth, measuredHeight);
+                measureChildren(MeasureSpec.makeMeasureSpec(measuredWidth, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(measuredHeight, MeasureSpec.EXACTLY));
             }
         });
     }
+
     @Override
     public Round round(TypedArray typedArray) {
-        return new Round(this,typedArray)
+        return new Round(this, typedArray)
                 .setRadius(R.styleable.FrameLayoutRound_radiusCorner)
                 .setTopLeftRadius(R.styleable.FrameLayoutRound_radiusTopLeft)
                 .setTopRightRadius(R.styleable.FrameLayoutRound_radiusTopRight)
                 .setBottomLeftRadius(R.styleable.FrameLayoutRound_radiusBottomLeft)
                 .setBottomRightRadius(R.styleable.FrameLayoutRound_radiusBottomRight);
     }
+
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {
-        return new RectangleRatio(this,typedArray)
+        return new RectangleRatio(this, typedArray)
                 .setBaseOnWidthOrHeight(R.styleable.FrameLayoutRound_baseOnWidthOrHeight)
-                .setHeightWidthRatio(R.styleable.FrameLayoutRound_heightWidthRatio,0);
+                .setHeightWidthRatio(R.styleable.FrameLayoutRound_heightWidthRatio, 0);
     }
 
 
