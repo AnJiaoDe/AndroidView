@@ -43,6 +43,10 @@ public class Round {
 
     public Round setRadius(@StyleableRes int index) {
         radius = typedArray.getDimensionPixelSize(index, radius);
+        topLeftRadius=radius;
+        topRightRadius=radius;
+        bottomLeftRadius=radius;
+        bottomRightRadius=radius;
         return this;
     }
 
