@@ -52,6 +52,10 @@ public class Round {
 
     public Round setRadius_(int radius) {
         this.radius = radius;
+        topLeftRadius=radius;
+        topRightRadius=radius;
+        bottomLeftRadius=radius;
+        bottomRightRadius=radius;
         return this;
     }
 
