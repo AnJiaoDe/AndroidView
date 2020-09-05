@@ -26,7 +26,6 @@ public class LinearLayoutRectangle extends LinearLayout implements IRectangle, I
         rectangleRatio = rectangle(typedArray);
         typedArray.recycle();
     }
-
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -34,6 +33,7 @@ public class LinearLayoutRectangle extends LinearLayout implements IRectangle, I
             @Override
             public void setMeasuredSize(int measuredWidth, int measuredHeight) {
                 setMeasuredDimension(measuredWidth, measuredHeight);
+                measureChildren(MeasureSpec.makeMeasureSpec(measuredWidth,MeasureSpec.EXACTLY),MeasureSpec.makeMeasureSpec(measuredHeight,MeasureSpec.EXACTLY));
             }
         });
     }
