@@ -24,12 +24,16 @@ public class FrameLayoutRipple extends FrameLayout implements IRipple {
         ripple=ripple(typedArray);
         typedArray.recycle();
     }
-
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
+        ripple.ripple();
+    }
     @Override
     public Ripple ripple(TypedArray typedArray) {
         return new Ripple(this, typedArray)
                 .setColorRipple(R.styleable.FrameLayoutRipple_colorRipple)
-                .setHavaRipple(R.styleable.FrameLayoutRipple_haveRipple).ripple();
+                .setHavaRipple(R.styleable.FrameLayoutRipple_haveRipple);
     }
 
     @Override

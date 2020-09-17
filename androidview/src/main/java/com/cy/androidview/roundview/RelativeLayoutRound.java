@@ -67,6 +67,11 @@ public class RelativeLayoutRound extends RelativeLayout implements IRound, IRect
         });
     }
     @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
+        ripple.ripple();
+    }
+    @Override
     public Round round(TypedArray typedArray) {
         return new Round(this,typedArray)
                 .setRadius(R.styleable.RelativeLayoutRound_radiusCorner)
@@ -87,7 +92,7 @@ public class RelativeLayoutRound extends RelativeLayout implements IRound, IRect
     public Ripple ripple(TypedArray typedArray) {
         return new Ripple(this, typedArray)
                 .setColorRipple(R.styleable.RelativeLayoutRound_colorRipple)
-                .setHavaRipple(R.styleable.RelativeLayoutRound_haveRipple).ripple();
+                .setHavaRipple(R.styleable.RelativeLayoutRound_haveRipple);
     }
 
     @Override

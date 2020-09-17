@@ -41,7 +41,6 @@ public class ImageViewRectangle extends AppCompatImageView implements IRectangle
             }
         });
     }
-
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {
         return new RectangleRatio(this,typedArray)

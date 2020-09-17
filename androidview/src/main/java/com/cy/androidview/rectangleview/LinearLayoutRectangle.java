@@ -37,7 +37,11 @@ public class LinearLayoutRectangle extends LinearLayout implements IRectangle, I
             }
         });
     }
-
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
+        ripple.ripple();
+    }
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {
         return new RectangleRatio(this,typedArray)
@@ -49,7 +53,7 @@ public class LinearLayoutRectangle extends LinearLayout implements IRectangle, I
     public Ripple ripple(TypedArray typedArray) {
         return new Ripple(this, typedArray)
                 .setColorRipple(R.styleable.LinearLayoutRectangle_colorRipple)
-                .setHavaRipple(R.styleable.LinearLayoutRectangle_haveRipple).ripple();
+                .setHavaRipple(R.styleable.LinearLayoutRectangle_haveRipple);
     }
 
     @Override

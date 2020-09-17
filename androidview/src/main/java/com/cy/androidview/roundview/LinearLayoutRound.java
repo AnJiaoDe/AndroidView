@@ -64,6 +64,11 @@ public class LinearLayoutRound extends LinearLayout implements IRound, IRectangl
         });
     }
     @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
+        ripple.ripple();
+    }
+    @Override
     public Round round(TypedArray typedArray) {
         return new Round(this,typedArray)
                 .setRadius(R.styleable.LinearLayoutRound_radiusCorner)
@@ -84,7 +89,7 @@ public class LinearLayoutRound extends LinearLayout implements IRound, IRectangl
     public Ripple ripple(TypedArray typedArray) {
         return new Ripple(this, typedArray)
                 .setColorRipple(R.styleable.LinearLayoutRound_colorRipple)
-                .setHavaRipple(R.styleable.LinearLayoutRound_haveRipple).ripple();
+                .setHavaRipple(R.styleable.LinearLayoutRound_haveRipple);
     }
 
     @Override

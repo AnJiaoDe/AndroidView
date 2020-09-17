@@ -11,11 +11,11 @@
 
     <!--默认水波纹-->
 
-    <com.cy.androidview.rippleview.FrameLayoutRipple
+    <com.cy.androidview.rippleview.LinearLayoutRipple
         android:id="@+id/rpfl"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#fff" />
+        android:background="#fff"
+        android:layout_height="40dp" />
 
     <!--自定义水波纹颜色-->
     <com.cy.androidview.rippleview.FrameLayoutRipple

@@ -38,7 +38,11 @@ public class ButtonRectangle extends AppCompatButton implements IRectangle, IRip
             }
         });
     }
-
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
+        ripple.ripple();
+    }
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {
         return new RectangleRatio(this, typedArray)
@@ -50,7 +54,7 @@ public class ButtonRectangle extends AppCompatButton implements IRectangle, IRip
     public Ripple ripple(TypedArray typedArray) {
         return new Ripple(this, typedArray)
                 .setColorRipple(R.styleable.ButtonRectangle_colorRipple)
-                .setHavaRipple(R.styleable.ButtonRectangle_haveRipple).ripple();
+                .setHavaRipple(R.styleable.ButtonRectangle_haveRipple);
     }
 
     @Override

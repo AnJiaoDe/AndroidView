@@ -24,12 +24,16 @@ public class TextViewRipple extends AppCompatTextView implements IRipple {
         ripple=ripple(typedArray);
         typedArray.recycle();
     }
-
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
+        ripple.ripple();
+    }
     @Override
     public Ripple ripple(TypedArray typedArray) {
         return new Ripple(this, typedArray)
                 .setColorRipple(R.styleable.TextViewRipple_colorRipple)
-                .setHavaRipple(R.styleable.TextViewRipple_haveRipple).ripple();
+                .setHavaRipple(R.styleable.TextViewRipple_haveRipple);
     }
 
     @Override

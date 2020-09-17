@@ -67,6 +67,11 @@ public class TextViewRound extends AppCompatTextView implements IRound, IRectang
         });
     }
     @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
+        ripple.ripple();
+    }
+    @Override
     public Round round(TypedArray typedArray) {
         return new Round(this,typedArray)
                 .setRadius(R.styleable.TextViewRound_radiusCorner)
@@ -87,7 +92,7 @@ public class TextViewRound extends AppCompatTextView implements IRound, IRectang
     public Ripple ripple(TypedArray typedArray) {
         return new Ripple(this, typedArray)
                 .setColorRipple(R.styleable.TextViewRound_colorRipple)
-                .setHavaRipple(R.styleable.TextViewRound_haveRipple).ripple();
+                .setHavaRipple(R.styleable.TextViewRound_haveRipple);
     }
 
     @Override

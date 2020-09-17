@@ -4,10 +4,12 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.StyleableRes;
 
 import com.cy.androidview.LogUtils;
@@ -23,7 +25,7 @@ import com.cy.androidview.R;
  * @Version: 1.0
  */
 public class Ripple {
-    private int colorRipple = 0x66000000;
+    private int colorRipple = 0x11000000;
     private boolean havaRipple = true;
     private TypedArray typedArray;
     private View view;
@@ -64,9 +66,17 @@ public class Ripple {
     public Ripple ripple() {
         //5.0以上才有效,
         if (havaRipple && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            RippleDrawable rippleDrawable;
             Drawable drawable = view.getBackground();
-            //当控件设置了点击监听器，并且控件点击有效，时，才能产生水波纹
-            RippleDrawable rippleDrawable = new RippleDrawable(ColorStateList.valueOf(colorRipple), drawable, null);
+            if (drawable == null) {
+                ShapeDrawable shapeDrawable = new ShapeDrawable();
+                shapeDrawable.setAlpha(0);
+                shapeDrawable.setBounds(view.getLeft(), view.getTop(), view.getRight(), view.getBottom());
+                //当控件设置了点击监听器，并且控件点击有效，时，才能产生水波纹
+                rippleDrawable = new RippleDrawable(ColorStateList.valueOf(colorRipple), shapeDrawable, null);
+            } else {
+                rippleDrawable = new RippleDrawable(ColorStateList.valueOf(colorRipple), drawable, null);
+            }
             view.setBackground(rippleDrawable);
         }
         return this;
