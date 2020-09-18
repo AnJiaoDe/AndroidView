@@ -83,26 +83,26 @@ public class FrameLayoutRound extends FrameLayout implements IRound, IRectangle,
     @Override
     public Round round(TypedArray typedArray) {
         return new Round(this, typedArray)
-                .setRadius(R.styleable.FrameLayoutRound_radiusCorner)
-                .setTopLeftRadius(R.styleable.FrameLayoutRound_radiusTopLeft)
-                .setTopRightRadius(R.styleable.FrameLayoutRound_radiusTopRight)
-                .setBottomLeftRadius(R.styleable.FrameLayoutRound_radiusBottomLeft)
-                .setBottomRightRadius(R.styleable.FrameLayoutRound_radiusBottomRight);
+                .setRadius(R.styleable.FrameLayoutRound_cy_radiusCorner)
+                .setTopLeftRadius(R.styleable.FrameLayoutRound_cy_radiusTopLeft)
+                .setTopRightRadius(R.styleable.FrameLayoutRound_cy_radiusTopRight)
+                .setBottomLeftRadius(R.styleable.FrameLayoutRound_cy_radiusBottomLeft)
+                .setBottomRightRadius(R.styleable.FrameLayoutRound_cy_radiusBottomRight);
     }
 
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {
         return new RectangleRatio(this, typedArray)
-                .setBaseOnWidthOrHeight(R.styleable.FrameLayoutRound_baseOnWidthOrHeight)
-                .setHeightWidthRatio(R.styleable.FrameLayoutRound_heightWidthRatio, 0);
+                .setBaseOnWidthOrHeight(R.styleable.FrameLayoutRound_cy_baseOnWidthOrHeight)
+                .setHeightWidthRatio(R.styleable.FrameLayoutRound_cy_heightWidthRatio, 0);
     }
 
 
     @Override
     public Ripple ripple(TypedArray typedArray) {
         return new Ripple(this, typedArray)
-                .setColorRipple(R.styleable.FrameLayoutRound_colorRipple)
-                .setHavaRipple(R.styleable.FrameLayoutRound_haveRipple);
+                .setColorRipple(R.styleable.FrameLayoutRound_cy_colorRipple)
+                .setHavaRipple(R.styleable.FrameLayoutRound_cy_haveRipple);
     }
 
     @Override

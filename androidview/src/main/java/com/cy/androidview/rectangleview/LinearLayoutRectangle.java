@@ -45,15 +45,15 @@ public class LinearLayoutRectangle extends LinearLayout implements IRectangle, I
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {
         return new RectangleRatio(this,typedArray)
-                .setBaseOnWidthOrHeight(R.styleable.LinearLayoutRectangle_baseOnWidthOrHeight)
-                .setHeightWidthRatio(R.styleable.LinearLayoutRectangle_heightWidthRatio);
+                .setBaseOnWidthOrHeight(R.styleable.LinearLayoutRectangle_cy_baseOnWidthOrHeight)
+                .setHeightWidthRatio(R.styleable.LinearLayoutRectangle_cy_heightWidthRatio);
     }
 
     @Override
     public Ripple ripple(TypedArray typedArray) {
         return new Ripple(this, typedArray)
-                .setColorRipple(R.styleable.LinearLayoutRectangle_colorRipple)
-                .setHavaRipple(R.styleable.LinearLayoutRectangle_haveRipple);
+                .setColorRipple(R.styleable.LinearLayoutRectangle_cy_colorRipple)
+                .setHavaRipple(R.styleable.LinearLayoutRectangle_cy_haveRipple);
     }
 
     @Override

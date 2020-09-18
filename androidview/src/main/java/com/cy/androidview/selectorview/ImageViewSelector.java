@@ -29,22 +29,21 @@ public class ImageViewSelector extends AppCompatImageView {
         super(context, attrs);
 
         TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.ImageViewSelector);
-        backgroundID = arr.getResourceId(R.styleable.ImageViewSelector_bgUnChecked, -1);//未选中时的背景
-        backgroundCheckedID = arr.getResourceId(R.styleable.ImageViewSelector_bgChecked, -1);//选中时的背景
+        backgroundID = arr.getResourceId(R.styleable.ImageViewSelector_cy_bgUnChecked, -1);//未选中时的背景
+        backgroundCheckedID = arr.getResourceId(R.styleable.ImageViewSelector_cy_bgChecked, -1);//选中时的背景
 
         if (backgroundID == -1) {
-            bg_color = arr.getColor(R.styleable.ImageViewSelector_bgUnChecked, 0x00000000);//未选中时的背景颜色
+            bg_color = arr.getColor(R.styleable.ImageViewSelector_cy_bgUnChecked, 0x00000000);//未选中时的背景颜色
 
         }
         if (backgroundCheckedID == -1) {
-            bg_checked_color = arr.getColor(R.styleable.ImageViewSelector_bgChecked, 0x00000000);//选中时的背景颜色
+            bg_checked_color = arr.getColor(R.styleable.ImageViewSelector_cy_bgChecked, 0x00000000);//选中时的背景颜色
 
         }
 
-        srcCheckedID = arr.getResourceId(R.styleable.ImageViewSelector_srcChecked, -1);//未选中时的src
-        srcUncheckedID = arr.getResourceId(R.styleable.ImageViewSelector_srcUnChecked, -1);//选中时的src
-
-        isChecked = arr.getBoolean(R.styleable.ImageViewSelector_checked, false);//是否选中
+        srcCheckedID = arr.getResourceId(R.styleable.ImageViewSelector_cy_srcChecked, -1);//未选中时的src
+        srcUncheckedID = arr.getResourceId(R.styleable.ImageViewSelector_cy_srcUnChecked, -1);//选中时的src
+        isChecked = arr.getBoolean(R.styleable.ImageViewSelector_cy_checked, false);//是否选中
 
 
         if (isChecked()) {

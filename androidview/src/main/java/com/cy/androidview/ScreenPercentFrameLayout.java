@@ -22,8 +22,8 @@ public class ScreenPercentFrameLayout extends FrameLayoutRipple {
     public ScreenPercentFrameLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray typedArray=context.obtainStyledAttributes(attrs,R.styleable.ScreenPercentFrameLayout);
-        width_percent=typedArray.getFloat(R.styleable.ScreenPercentFrameLayout_width_percent,width_percent);
-        height_percent=typedArray.getFloat(R.styleable.ScreenPercentFrameLayout_height_percent,height_percent);
+        width_percent=typedArray.getFloat(R.styleable.ScreenPercentFrameLayout_cy_width_percent,width_percent);
+        height_percent=typedArray.getFloat(R.styleable.ScreenPercentFrameLayout_cy_height_percent,height_percent);
     }
 
     @Override

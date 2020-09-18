@@ -33,8 +33,8 @@ public class LinearLayoutRipple extends LinearLayout implements IRipple {
     @Override
     public Ripple ripple(TypedArray typedArray) {
         return new Ripple(this, typedArray)
-                .setColorRipple(R.styleable.LinearLayoutRipple_colorRipple)
-                .setHavaRipple(R.styleable.LinearLayoutRipple_haveRipple);
+                .setColorRipple(R.styleable.LinearLayoutRipple_cy_colorRipple)
+                .setHavaRipple(R.styleable.LinearLayoutRipple_cy_haveRipple);
     }
 
     @Override

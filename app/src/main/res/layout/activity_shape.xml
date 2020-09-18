@@ -19,8 +19,8 @@
             android:layout_width="100dp"
             android:id="@+id/rsf"
             android:layout_height="40dp"
-            app:colorFill="#fff"
-            app:radiusCorner="18dp">
+            app:cy_colorFill="#fff"
+            app:cy_radiusCorner="18dp">
 
         </com.cy.androidview.shapeview.FrameLayoutShape>
 
@@ -29,8 +29,8 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginTop="5dp"
-            app:colorFill="#678798"
-            app:radiusCorner="5dp">
+            app:cy_colorFill="#678798"
+            app:cy_radiusCorner="5dp">
 
         </com.cy.androidview.shapeview.FrameLayoutShape>
 
@@ -42,8 +42,8 @@
             android:layout_marginTop="5dp"
             android:background="#f00"
 
-            app:colorFill="#956890"
-            app:radiusCorner="5dp">
+            app:cy_colorFill="#956890"
+            app:cy_radiusCorner="5dp">
 
         </com.cy.androidview.shapeview.FrameLayoutShape>
 
@@ -52,12 +52,12 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="5dp"
-            app:colorFill="#456440"
-            app:radiusBottomLeft="40dp"
-            app:radiusBottomRight="30dp"
+            app:cy_colorFill="#456440"
+            app:cy_radiusBottomLeft="40dp"
+            app:cy_radiusBottomRight="30dp"
 
-            app:radiusTopLeft="10dp"
-            app:radiusTopRight="20dp">
+            app:cy_radiusTopLeft="10dp"
+            app:cy_radiusTopRight="20dp">
 
         </com.cy.androidview.shapeview.FrameLayoutShape>
 
@@ -66,13 +66,13 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="5dp"
-            app:colorFill="#943440"
-            app:radiusBottomLeft="40dp"
-            app:radiusBottomRight="30dp"
+            app:cy_colorFill="#943440"
+            app:cy_radiusBottomLeft="40dp"
+            app:cy_radiusBottomRight="30dp"
 
-            app:radiusCorner="5dp"
-            app:radiusTopLeft="10dp"
-            app:radiusTopRight="20dp">
+            app:cy_radiusCorner="5dp"
+            app:cy_radiusTopLeft="10dp"
+            app:cy_radiusTopRight="20dp">
 
         </com.cy.androidview.shapeview.FrameLayoutShape>
 
@@ -81,15 +81,15 @@
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_marginTop="5dp"
-            app:colorCenter="#aaFF3C4D"
-            app:colorEnd="#ff0000"
-            app:colorStart="#33FF7580"
-            app:radiusBottomLeft="40dp"
-            app:radiusBottomRight="30dp"
+            app:cy_colorCenter="#aaFF3C4D"
+            app:cy_colorEnd="#ff0000"
+            app:cy_colorStart="#33FF7580"
+            app:cy_radiusBottomLeft="40dp"
+            app:cy_radiusBottomRight="30dp"
 
-            app:radiusCorner="10dp"
-            app:radiusTopLeft="10dp"
-            app:radiusTopRight="20dp">
+            app:cy_radiusCorner="10dp"
+            app:cy_radiusTopLeft="10dp"
+            app:cy_radiusTopRight="20dp">
 
         </com.cy.androidview.shapeview.FrameLayoutShape>
 
@@ -98,12 +98,12 @@
             android:layout_width="140dp"
             android:layout_height="40dp"
             android:layout_marginTop="5dp"
-            app:colorCenter="#aaFF3C4D"
-            app:colorEnd="#ff0000"
-            app:colorStart="#33FF7580"
-            app:orientationGradient="tr_bl"
-            app:radiusTopLeft="10dp"
-            app:radiusTopRight="10dp">
+            app:cy_colorCenter="#aaFF3C4D"
+            app:cy_colorEnd="#ff0000"
+            app:cy_colorStart="#33FF7580"
+            app:cy_orientationGradient="tr_bl"
+            app:cy_radiusTopLeft="10dp"
+            app:cy_radiusTopRight="10dp">
 
         </com.cy.androidview.shapeview.FrameLayoutShape>
 
@@ -112,15 +112,15 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="5dp"
-            app:colorCenter="#aaFF3C4D"
-            app:colorEnd="#ff0000"
-            app:colorStart="#33FF7580"
-            app:gradientType="sweep_gradient"
-            app:radiusBottomLeft="40dp"
-            app:radiusBottomRight="30dp"
-            app:radiusCorner="5dp"
-            app:radiusTopLeft="10dp"
-            app:radiusTopRight="20dp">
+            app:cy_colorCenter="#aaFF3C4D"
+            app:cy_colorEnd="#ff0000"
+            app:cy_colorStart="#33FF7580"
+            app:cy_gradientType="sweep_gradient"
+            app:cy_radiusBottomLeft="40dp"
+            app:cy_radiusBottomRight="30dp"
+            app:cy_radiusCorner="5dp"
+            app:cy_radiusTopLeft="10dp"
+            app:cy_radiusTopRight="20dp">
 
         </com.cy.androidview.shapeview.FrameLayoutShape>
 
@@ -129,18 +129,18 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="5dp"
-            app:centerX="0.3"
-            app:centerY="0.3"
-            app:colorCenter="#aaFF3C4D"
-            app:colorEnd="#ff0000"
-            app:colorStart="#33FF7580"
-            app:gradientType="sweep_gradient"
+            app:cy_centerX="0.3"
+            app:cy_centerY="0.3"
+            app:cy_colorCenter="#aaFF3C4D"
+            app:cy_colorEnd="#ff0000"
+            app:cy_colorStart="#33FF7580"
+            app:cy_gradientType="sweep_gradient"
 
-            app:radiusBottomLeft="40dp"
-            app:radiusBottomRight="30dp"
-            app:radiusCorner="5dp"
-            app:radiusTopLeft="10dp"
-            app:radiusTopRight="20dp">
+            app:cy_radiusBottomLeft="40dp"
+            app:cy_radiusBottomRight="30dp"
+            app:cy_radiusCorner="5dp"
+            app:cy_radiusTopLeft="10dp"
+            app:cy_radiusTopRight="20dp">
 
         </com.cy.androidview.shapeview.FrameLayoutShape>
 
@@ -149,12 +149,12 @@
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_marginTop="5dp"
-            app:colorCenter="#77ff0000"
-            app:colorEnd="#66ff0000"
-            app:colorStart="#88ff0000"
-            app:gradientType="radial_gradient"
-            app:radiusCorner="50dp"
-            app:radiusGradient="20dp">
+            app:cy_colorCenter="#77ff0000"
+            app:cy_colorEnd="#66ff0000"
+            app:cy_colorStart="#88ff0000"
+            app:cy_gradientType="radial_gradient"
+            app:cy_radiusCorner="50dp"
+            app:cy_radiusGradient="20dp">
 
         </com.cy.androidview.shapeview.FrameLayoutShape>
 
@@ -164,14 +164,14 @@
             android:layout_width="150dp"
             android:layout_height="40dp"
             android:layout_marginTop="5dp"
-            app:centerX="0.3"
-            app:centerY="0.3"
-            app:colorCenter="#99ff0000"
-            app:colorEnd="#66ff0000"
-            app:colorStart="#ff0000"
-            app:gradientType="radial_gradient"
-            app:radiusCorner="50dp"
-            app:radiusGradient="20dp">
+            app:cy_centerX="0.3"
+            app:cy_centerY="0.3"
+            app:cy_colorCenter="#99ff0000"
+            app:cy_colorEnd="#66ff0000"
+            app:cy_colorStart="#ff0000"
+            app:cy_gradientType="radial_gradient"
+            app:cy_radiusCorner="50dp"
+            app:cy_radiusGradient="20dp">
 
         </com.cy.androidview.shapeview.FrameLayoutShape>
 
@@ -181,15 +181,15 @@
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_marginTop="5dp"
-            app:centerX="0.7"
+            app:cy_centerX="0.7"
 
-            app:centerY="0.5"
-            app:colorCenter="#99ff0000"
-            app:colorEnd="#66ff0000"
-            app:colorStart="#ff0000"
-            app:gradientType="radial_gradient"
-            app:radiusCorner="50dp"
-            app:radiusGradient="10dp">
+            app:cy_centerY="0.5"
+            app:cy_colorCenter="#99ff0000"
+            app:cy_colorEnd="#66ff0000"
+            app:cy_colorStart="#ff0000"
+            app:cy_gradientType="radial_gradient"
+            app:cy_radiusCorner="50dp"
+            app:cy_radiusGradient="10dp">
 
         </com.cy.androidview.shapeview.FrameLayoutShape>
 
@@ -206,10 +206,10 @@
             android:layout_width="100dp"
             android:layout_height="40dp"
 
-            app:colorFill="#f00"
-            app:radiusCorner="5dp"
-            app:strokeColor="#FF979797"
-            app:strokeWidth="2dp">
+            app:cy_colorFill="#f00"
+            app:cy_radiusCorner="5dp"
+            app:cy_strokeColor="#FF979797"
+            app:cy_strokeWidth="2dp">
 
         </com.cy.androidview.shapeview.FrameLayoutShape>
         <!--描边-->
@@ -217,10 +217,10 @@
             android:layout_width="50dp"
             android:layout_height="40dp"
             android:layout_marginTop="5dp"
-            app:radiusCorner="5dp"
-            app:strokeColor="#FF979797"
+            app:cy_radiusCorner="5dp"
+            app:cy_strokeColor="#FF979797"
 
-            app:strokeWidth="1dp">
+            app:cy_strokeWidth="1dp">
 
         </com.cy.androidview.shapeview.FrameLayoutShape>
 
@@ -229,11 +229,11 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="5dp"
-            app:radiusCorner="4dp"
-            app:strokeColor="#FF979797"
-            app:strokeDashGap="4dp"
-            app:strokeDashWidth="4dp"
-            app:strokeWidth="2dp">
+            app:cy_radiusCorner="4dp"
+            app:cy_strokeColor="#FF979797"
+            app:cy_strokeDashGap="4dp"
+            app:cy_strokeDashWidth="4dp"
+            app:cy_strokeWidth="2dp">
 
         </com.cy.androidview.shapeview.FrameLayoutShape>
 
@@ -243,8 +243,8 @@
             android:layout_width="60dp"
             android:layout_height="40dp"
             android:layout_marginTop="5dp"
-            app:colorFill="#f00"
-            app:shapeType="oval">
+            app:cy_colorFill="#f00"
+            app:cy_shapeType="oval">
 
         </com.cy.androidview.shapeview.FrameLayoutShape>
 
@@ -253,14 +253,14 @@
             android:layout_width="60dp"
             android:layout_height="40dp"
             android:layout_marginTop="5dp"
-            app:colorCenter="#99ff0000"
-            app:colorEnd="#66ff0000"
-            app:colorStart="#ff0000"
-            app:gradientType="radial_gradient"
-            app:radiusGradient="20dp"
-            app:shapeType="oval"
-            app:strokeColor="#88454545"
-            app:strokeWidth="2dp">
+            app:cy_colorCenter="#99ff0000"
+            app:cy_colorEnd="#66ff0000"
+            app:cy_colorStart="#ff0000"
+            app:cy_gradientType="radial_gradient"
+            app:cy_radiusGradient="20dp"
+            app:cy_shapeType="oval"
+            app:cy_strokeColor="#88454545"
+            app:cy_strokeWidth="2dp">
 
         </com.cy.androidview.shapeview.FrameLayoutShape>
         <!--圆形,辐射渐变,描边-->
@@ -268,12 +268,12 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="5dp"
-            app:colorCenter="#aaFF3C4D"
-            app:colorEnd="#ff0000"
-            app:colorStart="#33FF7580"
-            app:gradientType="sweep_gradient"
-            app:radiusGradient="20dp"
-            app:shapeType="oval">
+            app:cy_colorCenter="#aaFF3C4D"
+            app:cy_colorEnd="#ff0000"
+            app:cy_colorStart="#33FF7580"
+            app:cy_gradientType="sweep_gradient"
+            app:cy_radiusGradient="20dp"
+            app:cy_shapeType="oval">
 
         </com.cy.androidview.shapeview.FrameLayoutShape>
 
@@ -288,11 +288,11 @@
             android:gravity="center"
             android:text="控件下画线"
             android:textSize="14sp"
-            app:strokeColor="#454545"
-            app:strokePaddingLeft="-2dp"
-            app:strokePaddingRight="-2dp"
-            app:strokePaddingTop="-2dp"
-            app:strokeWidth="1dp" />
+            app:cy_strokeColor="#454545"
+            app:cy_strokePaddingLeft="-2dp"
+            app:cy_strokePaddingRight="-2dp"
+            app:cy_strokePaddingTop="-2dp"
+            app:cy_strokeWidth="1dp" />
         <!--控件右画线,不画线的方向，需要padding,strokeWidth的2倍-->
         <com.cy.androidview.shapeview.TextViewShape
             android:layout_width="150dp"
@@ -302,11 +302,11 @@
             android:gravity="center"
             android:text="控件右画线"
             android:textSize="14sp"
-            app:strokeColor="#454545"
-            app:strokePaddingBottom="-2dp"
-            app:strokePaddingLeft="-2dp"
-            app:strokePaddingTop="-2dp"
-            app:strokeWidth="1dp" />
+            app:cy_strokeColor="#454545"
+            app:cy_strokePaddingBottom="-2dp"
+            app:cy_strokePaddingLeft="-2dp"
+            app:cy_strokePaddingTop="-2dp"
+            app:cy_strokeWidth="1dp" />
         <!--控件画线,画线粗细可以不一致-->
 
         <com.cy.androidview.shapeview.TextViewShape
@@ -317,11 +317,11 @@
             android:gravity="center"
             android:text="画线粗细可以不一致"
             android:textSize="10sp"
-            app:strokeColor="#454545"
-            app:strokePaddingBottom="-2dp"
-            app:strokePaddingLeft="-4dp"
-            app:strokePaddingTop="-4dp"
-            app:strokeWidth="2dp" />
+            app:cy_strokeColor="#454545"
+            app:cy_strokePaddingBottom="-2dp"
+            app:cy_strokePaddingLeft="-4dp"
+            app:cy_strokePaddingTop="-4dp"
+            app:cy_strokeWidth="2dp" />
 
         <!--使用比例，控制为正方形,圆角+填充色-->
         <com.cy.androidview.shapeview.TextViewShape
@@ -333,8 +333,8 @@
             android:text="ShapeTextView\n带shape的正方形textView"
             android:textColor="#fff"
             android:textSize="10sp"
-            app:colorFill="#f00"
-            app:heightWidthRatio="1"
-            app:radiusCorner="18dp" />
+            app:cy_colorFill="#f00"
+            app:cy_heightWidthRatio="1"
+            app:cy_radiusCorner="18dp" />
     </LinearLayout>
 </LinearLayout>

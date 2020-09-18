@@ -31,8 +31,8 @@ public class RelativeLayoutRipple extends RelativeLayout implements IRipple {
     @Override
     public Ripple ripple(TypedArray typedArray) {
         return new Ripple(this, typedArray)
-                .setColorRipple(R.styleable.RelativeLayoutRipple_colorRipple)
-                .setHavaRipple(R.styleable.RelativeLayoutRipple_haveRipple);
+                .setColorRipple(R.styleable.RelativeLayoutRipple_cy_colorRipple)
+                .setHavaRipple(R.styleable.RelativeLayoutRipple_cy_haveRipple);
     }
 
     @Override

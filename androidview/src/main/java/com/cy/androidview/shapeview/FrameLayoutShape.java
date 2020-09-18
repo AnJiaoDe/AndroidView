@@ -54,44 +54,44 @@ public class FrameLayoutShape extends FrameLayout implements IShape, IRectangle,
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {
         return new RectangleRatio(this,typedArray)
-                .setBaseOnWidthOrHeight(R.styleable.FrameLayoutShape_baseOnWidthOrHeight)
-                .setHeightWidthRatio(R.styleable.FrameLayoutShape_heightWidthRatio,0);
+                .setBaseOnWidthOrHeight(R.styleable.FrameLayoutShape_cy_baseOnWidthOrHeight)
+                .setHeightWidthRatio(R.styleable.FrameLayoutShape_cy_heightWidthRatio,0);
     }
 
     @Override
     public Ripple ripple(TypedArray typedArray) {
         return new Ripple(this, typedArray)
-                .setColorRipple(R.styleable.FrameLayoutShape_colorRipple)
-                .setHavaRipple(R.styleable.FrameLayoutShape_haveRipple);
+                .setColorRipple(R.styleable.FrameLayoutShape_cy_colorRipple)
+                .setHavaRipple(R.styleable.FrameLayoutShape_cy_haveRipple);
     }
 
     @Override
     public ShapeBackground shape(TypedArray typedArray) {
         return new ShapeBackground(this,typedArray)
-                .setAngle(R.styleable.FrameLayoutShape_angle)
-                .setCenterX(R.styleable.FrameLayoutShape_centerX)
-                .setCenterY(R.styleable.FrameLayoutShape_centerY)
-                .setColorCenter(R.styleable.FrameLayoutShape_colorCenter)
-                .setColorEnd(R.styleable.FrameLayoutShape_colorEnd)
-                .setColorFill(R.styleable.FrameLayoutShape_colorFill)
-                .setColorStart(R.styleable.FrameLayoutShape_colorStart)
-                .setGradientType(R.styleable.FrameLayoutShape_gradientType)
-                .setOrientationGradient(R.styleable.FrameLayoutShape_orientationGradient)
-                .setRadiusBottomLeft(R.styleable.FrameLayoutShape_radiusBottomLeft)
-                .setRadiusBottomRight(R.styleable.FrameLayoutShape_radiusBottomRight)
-                .setRadiusCorner(R.styleable.FrameLayoutShape_radiusCorner)
-                .setRadiusGradient(R.styleable.FrameLayoutShape_radiusGradient)
-                .setRadiusTopLeft(R.styleable.FrameLayoutShape_radiusTopLeft)
-                .setRadiusTopRight(R.styleable.FrameLayoutShape_radiusTopRight)
-                .setShapeType(R.styleable.FrameLayoutShape_shapeType)
-                .setStrokeColor(R.styleable.FrameLayoutShape_strokeColor)
-                .setStrokeDashGap(R.styleable.FrameLayoutShape_strokeDashGap)
-                .setStrokeDashWidth(R.styleable.FrameLayoutShape_strokeDashWidth)
-                .setStrokePaddingBottom(R.styleable.FrameLayoutShape_strokePaddingBottom)
-                .setStrokePaddingLeft(R.styleable.FrameLayoutShape_strokePaddingLeft)
-                .setStrokePaddingRight(R.styleable.FrameLayoutShape_strokePaddingRight)
-                .setStrokePaddingTop(R.styleable.FrameLayoutShape_strokePaddingTop)
-                .setStrokeWidth(R.styleable.FrameLayoutShape_strokeWidth)
+                .setAngle(R.styleable.FrameLayoutShape_cy_angle)
+                .setCenterX(R.styleable.FrameLayoutShape_cy_centerX)
+                .setCenterY(R.styleable.FrameLayoutShape_cy_centerY)
+                .setColorCenter(R.styleable.FrameLayoutShape_cy_colorCenter)
+                .setColorEnd(R.styleable.FrameLayoutShape_cy_colorEnd)
+                .setColorFill(R.styleable.FrameLayoutShape_cy_colorFill)
+                .setColorStart(R.styleable.FrameLayoutShape_cy_colorStart)
+                .setGradientType(R.styleable.FrameLayoutShape_cy_gradientType)
+                .setOrientationGradient(R.styleable.FrameLayoutShape_cy_orientationGradient)
+                .setRadiusBottomLeft(R.styleable.FrameLayoutShape_cy_radiusBottomLeft)
+                .setRadiusBottomRight(R.styleable.FrameLayoutShape_cy_radiusBottomRight)
+                .setRadiusCorner(R.styleable.FrameLayoutShape_cy_radiusCorner)
+                .setRadiusGradient(R.styleable.FrameLayoutShape_cy_radiusGradient)
+                .setRadiusTopLeft(R.styleable.FrameLayoutShape_cy_radiusTopLeft)
+                .setRadiusTopRight(R.styleable.FrameLayoutShape_cy_radiusTopRight)
+                .setShapeType(R.styleable.FrameLayoutShape_cy_shapeType)
+                .setStrokeColor(R.styleable.FrameLayoutShape_cy_strokeColor)
+                .setStrokeDashGap(R.styleable.FrameLayoutShape_cy_strokeDashGap)
+                .setStrokeDashWidth(R.styleable.FrameLayoutShape_cy_strokeDashWidth)
+                .setStrokePaddingBottom(R.styleable.FrameLayoutShape_cy_strokePaddingBottom)
+                .setStrokePaddingLeft(R.styleable.FrameLayoutShape_cy_strokePaddingLeft)
+                .setStrokePaddingRight(R.styleable.FrameLayoutShape_cy_strokePaddingRight)
+                .setStrokePaddingTop(R.styleable.FrameLayoutShape_cy_strokePaddingTop)
+                .setStrokeWidth(R.styleable.FrameLayoutShape_cy_strokeWidth)
                 .shape();
     }
 

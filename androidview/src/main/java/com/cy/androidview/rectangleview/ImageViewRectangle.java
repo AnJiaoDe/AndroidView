@@ -44,8 +44,8 @@ public class ImageViewRectangle extends AppCompatImageView implements IRectangle
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {
         return new RectangleRatio(this,typedArray)
-                .setBaseOnWidthOrHeight(R.styleable.ImageViewRectangle_baseOnWidthOrHeight)
-                .setHeightWidthRatio(R.styleable.ImageViewRectangle_heightWidthRatio);
+                .setBaseOnWidthOrHeight(R.styleable.ImageViewRectangle_cy_baseOnWidthOrHeight)
+                .setHeightWidthRatio(R.styleable.ImageViewRectangle_cy_heightWidthRatio);
     }
     @Override
     public void setOnClickListener(@Nullable OnClickListener l) {
@@ -70,9 +70,9 @@ public class ImageViewRectangle extends AppCompatImageView implements IRectangle
     @Override
     public ColorFilterCy colorFilter(TypedArray typedArray) {
         return new ColorFilterCy(this, typedArray)
-                .setHavaFilter(R.styleable.ImageViewColorFilter_haveFilter)
-                .setLightOrDark(R.styleable.ImageViewColorFilter_lightOrDark)
-                .setLightNumber(R.styleable.ImageViewColorFilter_lightNumber)
+                .setHavaFilter(R.styleable.ImageViewColorFilter_cy_haveFilter)
+                .setLightOrDark(R.styleable.ImageViewColorFilter_cy_lightOrDark)
+                .setLightNumber(R.styleable.ImageViewColorFilter_cy_lightNumber)
                 .colorFilter();
     }
 

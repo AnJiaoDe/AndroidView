@@ -45,15 +45,15 @@ public class RelativeLayoutRectangle extends RelativeLayout implements IRectangl
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {
         return new RectangleRatio(this, typedArray)
-                .setBaseOnWidthOrHeight(R.styleable.RelativeLayoutRectangle_baseOnWidthOrHeight)
-                .setHeightWidthRatio(R.styleable.RelativeLayoutRectangle_heightWidthRatio);
+                .setBaseOnWidthOrHeight(R.styleable.RelativeLayoutRectangle_cy_baseOnWidthOrHeight)
+                .setHeightWidthRatio(R.styleable.RelativeLayoutRectangle_cy_heightWidthRatio);
     }
 
     @Override
     public Ripple ripple(TypedArray typedArray) {
         return new Ripple(this, typedArray)
-                .setColorRipple(R.styleable.RelativeLayoutRectangle_colorRipple)
-                .setHavaRipple(R.styleable.RelativeLayoutRectangle_haveRipple);
+                .setColorRipple(R.styleable.RelativeLayoutRectangle_cy_colorRipple)
+                .setHavaRipple(R.styleable.RelativeLayoutRectangle_cy_haveRipple);
     }
 
     @Override

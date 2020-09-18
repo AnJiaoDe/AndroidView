@@ -74,25 +74,25 @@ public class ButtonRound extends AppCompatButton implements IRound, IRectangle, 
     @Override
     public Round round(TypedArray typedArray) {
         return new Round(this,typedArray)
-                .setRadius(R.styleable.ButtonRound_radiusCorner)
-                .setTopLeftRadius(R.styleable.ButtonRound_radiusTopLeft)
-                .setTopRightRadius(R.styleable.ButtonRound_radiusTopRight)
-                .setBottomLeftRadius(R.styleable.ButtonRound_radiusBottomLeft)
-                .setBottomRightRadius(R.styleable.ButtonRound_radiusBottomRight);
+                .setRadius(R.styleable.ButtonRound_cy_radiusCorner)
+                .setTopLeftRadius(R.styleable.ButtonRound_cy_radiusTopLeft)
+                .setTopRightRadius(R.styleable.ButtonRound_cy_radiusTopRight)
+                .setBottomLeftRadius(R.styleable.ButtonRound_cy_radiusBottomLeft)
+                .setBottomRightRadius(R.styleable.ButtonRound_cy_radiusBottomRight);
     }
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {
         return new RectangleRatio(this,typedArray)
-                .setBaseOnWidthOrHeight(R.styleable.ButtonRound_baseOnWidthOrHeight)
-                .setHeightWidthRatio(R.styleable.ButtonRound_heightWidthRatio,0);
+                .setBaseOnWidthOrHeight(R.styleable.ButtonRound_cy_baseOnWidthOrHeight)
+                .setHeightWidthRatio(R.styleable.ButtonRound_cy_heightWidthRatio,0);
     }
 
 
     @Override
     public Ripple ripple(TypedArray typedArray) {
         return new Ripple(this, typedArray)
-                .setColorRipple(R.styleable.ButtonRound_colorRipple)
-                .setHavaRipple(R.styleable.ButtonRound_haveRipple);
+                .setColorRipple(R.styleable.ButtonRound_cy_colorRipple)
+                .setHavaRipple(R.styleable.ButtonRound_cy_haveRipple);
     }
 
     @Override

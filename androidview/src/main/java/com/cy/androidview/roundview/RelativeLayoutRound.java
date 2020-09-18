@@ -74,25 +74,25 @@ public class RelativeLayoutRound extends RelativeLayout implements IRound, IRect
     @Override
     public Round round(TypedArray typedArray) {
         return new Round(this,typedArray)
-                .setRadius(R.styleable.RelativeLayoutRound_radiusCorner)
-                .setTopLeftRadius(R.styleable.RelativeLayoutRound_radiusTopLeft)
-                .setTopRightRadius(R.styleable.RelativeLayoutRound_radiusTopRight)
-                .setBottomLeftRadius(R.styleable.RelativeLayoutRound_radiusBottomLeft)
-                .setBottomRightRadius(R.styleable.RelativeLayoutRound_radiusBottomRight);
+                .setRadius(R.styleable.RelativeLayoutRound_cy_radiusCorner)
+                .setTopLeftRadius(R.styleable.RelativeLayoutRound_cy_radiusTopLeft)
+                .setTopRightRadius(R.styleable.RelativeLayoutRound_cy_radiusTopRight)
+                .setBottomLeftRadius(R.styleable.RelativeLayoutRound_cy_radiusBottomLeft)
+                .setBottomRightRadius(R.styleable.RelativeLayoutRound_cy_radiusBottomRight);
     }
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {
         return new RectangleRatio(this,typedArray)
-                .setBaseOnWidthOrHeight(R.styleable.RelativeLayoutRound_baseOnWidthOrHeight)
-                .setHeightWidthRatio(R.styleable.RelativeLayoutRound_heightWidthRatio,0);
+                .setBaseOnWidthOrHeight(R.styleable.RelativeLayoutRound_cy_baseOnWidthOrHeight)
+                .setHeightWidthRatio(R.styleable.RelativeLayoutRound_cy_heightWidthRatio,0);
     }
 
 
     @Override
     public Ripple ripple(TypedArray typedArray) {
         return new Ripple(this, typedArray)
-                .setColorRipple(R.styleable.RelativeLayoutRound_colorRipple)
-                .setHavaRipple(R.styleable.RelativeLayoutRound_haveRipple);
+                .setColorRipple(R.styleable.RelativeLayoutRound_cy_colorRipple)
+                .setHavaRipple(R.styleable.RelativeLayoutRound_cy_haveRipple);
     }
 
     @Override

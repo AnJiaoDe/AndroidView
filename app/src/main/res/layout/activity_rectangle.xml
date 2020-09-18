@@ -30,7 +30,7 @@
         android:layout_height="100000dp"
         android:layout_marginTop="10dp"
         android:background="#f78900"
-        app:heightWidthRatio="1.7">
+        app:cy_heightWidthRatio="1.7">
 
     </com.cy.androidview.rectangleview.RelativeLayoutRectangle>
 
@@ -41,7 +41,7 @@
         android:layout_height="10000dp"
         android:layout_marginTop="10dp"
         android:background="#ff0"
-        app:heightWidthRatio="0.4">
+        app:cy_heightWidthRatio="0.4">
 
         <TextView
             android:layout_width="match_parent"
@@ -57,7 +57,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
         android:background="#ff6990"
-        app:baseOnWidthOrHeight="false">
+        app:cy_baseOnWidthOrHeight="false">
 
     </com.cy.androidview.rectangleview.FrameLayoutRectangle>
 
@@ -67,7 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="#00789f"
-        app:baseOnWidthOrHeight="false">
+        app:cy_baseOnWidthOrHeight="false">
 
         <TextView
             android:layout_width="match_parent"

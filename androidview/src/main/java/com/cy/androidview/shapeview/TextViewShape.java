@@ -55,44 +55,44 @@ public class TextViewShape extends AppCompatTextView implements IShape, IRectang
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {
         return new RectangleRatio(this, typedArray)
-                .setBaseOnWidthOrHeight(R.styleable.TextViewShape_baseOnWidthOrHeight)
-                .setHeightWidthRatio(R.styleable.TextViewShape_heightWidthRatio, 0);
+                .setBaseOnWidthOrHeight(R.styleable.TextViewShape_cy_baseOnWidthOrHeight)
+                .setHeightWidthRatio(R.styleable.TextViewShape_cy_heightWidthRatio, 0);
     }
 
     @Override
     public Ripple ripple(TypedArray typedArray) {
         return new Ripple(this, typedArray)
-                .setColorRipple(R.styleable.TextViewShape_colorRipple)
-                .setHavaRipple(R.styleable.TextViewShape_haveRipple);
+                .setColorRipple(R.styleable.TextViewShape_cy_colorRipple)
+                .setHavaRipple(R.styleable.TextViewShape_cy_haveRipple);
     }
 
     @Override
     public ShapeBackground shape(TypedArray typedArray) {
         return new ShapeBackground(this, typedArray)
-                .setAngle(R.styleable.TextViewShape_angle)
-                .setCenterX(R.styleable.TextViewShape_centerX)
-                .setCenterY(R.styleable.TextViewShape_centerY)
-                .setColorCenter(R.styleable.TextViewShape_colorCenter)
-                .setColorEnd(R.styleable.TextViewShape_colorEnd)
-                .setColorFill(R.styleable.TextViewShape_colorFill)
-                .setColorStart(R.styleable.TextViewShape_colorStart)
-                .setGradientType(R.styleable.TextViewShape_gradientType)
-                .setOrientationGradient(R.styleable.TextViewShape_orientationGradient)
-                .setRadiusBottomLeft(R.styleable.TextViewShape_radiusBottomLeft)
-                .setRadiusBottomRight(R.styleable.TextViewShape_radiusBottomRight)
-                .setRadiusCorner(R.styleable.TextViewShape_radiusCorner)
-                .setRadiusGradient(R.styleable.TextViewShape_radiusGradient)
-                .setRadiusTopLeft(R.styleable.TextViewShape_radiusTopLeft)
-                .setRadiusTopRight(R.styleable.TextViewShape_radiusTopRight)
-                .setShapeType(R.styleable.TextViewShape_shapeType)
-                .setStrokeColor(R.styleable.TextViewShape_strokeColor)
-                .setStrokeDashGap(R.styleable.TextViewShape_strokeDashGap)
-                .setStrokeDashWidth(R.styleable.TextViewShape_strokeDashWidth)
-                .setStrokePaddingBottom(R.styleable.TextViewShape_strokePaddingBottom)
-                .setStrokePaddingLeft(R.styleable.TextViewShape_strokePaddingLeft)
-                .setStrokePaddingRight(R.styleable.TextViewShape_strokePaddingRight)
-                .setStrokePaddingTop(R.styleable.TextViewShape_strokePaddingTop)
-                .setStrokeWidth(R.styleable.TextViewShape_strokeWidth)
+                .setAngle(R.styleable.TextViewShape_cy_angle)
+                .setCenterX(R.styleable.TextViewShape_cy_centerX)
+                .setCenterY(R.styleable.TextViewShape_cy_centerY)
+                .setColorCenter(R.styleable.TextViewShape_cy_colorCenter)
+                .setColorEnd(R.styleable.TextViewShape_cy_colorEnd)
+                .setColorFill(R.styleable.TextViewShape_cy_colorFill)
+                .setColorStart(R.styleable.TextViewShape_cy_colorStart)
+                .setGradientType(R.styleable.TextViewShape_cy_gradientType)
+                .setOrientationGradient(R.styleable.TextViewShape_cy_orientationGradient)
+                .setRadiusBottomLeft(R.styleable.TextViewShape_cy_radiusBottomLeft)
+                .setRadiusBottomRight(R.styleable.TextViewShape_cy_radiusBottomRight)
+                .setRadiusCorner(R.styleable.TextViewShape_cy_radiusCorner)
+                .setRadiusGradient(R.styleable.TextViewShape_cy_radiusGradient)
+                .setRadiusTopLeft(R.styleable.TextViewShape_cy_radiusTopLeft)
+                .setRadiusTopRight(R.styleable.TextViewShape_cy_radiusTopRight)
+                .setShapeType(R.styleable.TextViewShape_cy_shapeType)
+                .setStrokeColor(R.styleable.TextViewShape_cy_strokeColor)
+                .setStrokeDashGap(R.styleable.TextViewShape_cy_strokeDashGap)
+                .setStrokeDashWidth(R.styleable.TextViewShape_cy_strokeDashWidth)
+                .setStrokePaddingBottom(R.styleable.TextViewShape_cy_strokePaddingBottom)
+                .setStrokePaddingLeft(R.styleable.TextViewShape_cy_strokePaddingLeft)
+                .setStrokePaddingRight(R.styleable.TextViewShape_cy_strokePaddingRight)
+                .setStrokePaddingTop(R.styleable.TextViewShape_cy_strokePaddingTop)
+                .setStrokeWidth(R.styleable.TextViewShape_cy_strokeWidth)
                 .shape();
     }
 

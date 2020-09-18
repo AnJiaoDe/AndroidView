@@ -32,8 +32,8 @@ public class TextViewRipple extends AppCompatTextView implements IRipple {
     @Override
     public Ripple ripple(TypedArray typedArray) {
         return new Ripple(this, typedArray)
-                .setColorRipple(R.styleable.TextViewRipple_colorRipple)
-                .setHavaRipple(R.styleable.TextViewRipple_haveRipple);
+                .setColorRipple(R.styleable.TextViewRipple_cy_colorRipple)
+                .setHavaRipple(R.styleable.TextViewRipple_cy_haveRipple);
     }
 
     @Override

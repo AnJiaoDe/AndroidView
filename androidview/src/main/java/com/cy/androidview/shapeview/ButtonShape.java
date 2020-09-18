@@ -48,44 +48,44 @@ public class ButtonShape extends AppCompatButton implements IShape, IRectangle, 
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {
         return new RectangleRatio(this,typedArray)
-                .setBaseOnWidthOrHeight(R.styleable.ButtonShape_baseOnWidthOrHeight)
-                .setHeightWidthRatio(R.styleable.ButtonShape_heightWidthRatio,0);
+                .setBaseOnWidthOrHeight(R.styleable.ButtonShape_cy_baseOnWidthOrHeight)
+                .setHeightWidthRatio(R.styleable.ButtonShape_cy_heightWidthRatio,0);
     }
 
     @Override
     public Ripple ripple(TypedArray typedArray) {
         return new Ripple(this, typedArray)
-                .setColorRipple(R.styleable.ButtonShape_colorRipple)
-                .setHavaRipple(R.styleable.ButtonShape_haveRipple);
+                .setColorRipple(R.styleable.ButtonShape_cy_colorRipple)
+                .setHavaRipple(R.styleable.ButtonShape_cy_haveRipple);
     }
 
     @Override
     public ShapeBackground shape(TypedArray typedArray) {
         return new ShapeBackground(this,typedArray)
-                .setAngle(R.styleable.ButtonShape_angle)
-                .setCenterX(R.styleable.ButtonShape_centerX)
-                .setCenterY(R.styleable.ButtonShape_centerY)
-                .setColorCenter(R.styleable.ButtonShape_colorCenter)
-                .setColorEnd(R.styleable.ButtonShape_colorEnd)
-                .setColorFill(R.styleable.ButtonShape_colorFill)
-                .setColorStart(R.styleable.ButtonShape_colorStart)
-                .setGradientType(R.styleable.ButtonShape_gradientType)
-                .setOrientationGradient(R.styleable.ButtonShape_orientationGradient)
-                .setRadiusBottomLeft(R.styleable.ButtonShape_radiusBottomLeft)
-                .setRadiusBottomRight(R.styleable.ButtonShape_radiusBottomRight)
-                .setRadiusCorner(R.styleable.ButtonShape_radiusCorner)
-                .setRadiusGradient(R.styleable.ButtonShape_radiusGradient)
-                .setRadiusTopLeft(R.styleable.ButtonShape_radiusTopLeft)
-                .setRadiusTopRight(R.styleable.ButtonShape_radiusTopRight)
-                .setShapeType(R.styleable.ButtonShape_shapeType)
-                .setStrokeColor(R.styleable.ButtonShape_strokeColor)
-                .setStrokeDashGap(R.styleable.ButtonShape_strokeDashGap)
-                .setStrokeDashWidth(R.styleable.ButtonShape_strokeDashWidth)
-                .setStrokePaddingBottom(R.styleable.ButtonShape_strokePaddingBottom)
-                .setStrokePaddingLeft(R.styleable.ButtonShape_strokePaddingLeft)
-                .setStrokePaddingRight(R.styleable.ButtonShape_strokePaddingRight)
-                .setStrokePaddingTop(R.styleable.ButtonShape_strokePaddingTop)
-                .setStrokeWidth(R.styleable.ButtonShape_strokeWidth)
+                .setAngle(R.styleable.ButtonShape_cy_angle)
+                .setCenterX(R.styleable.ButtonShape_cy_centerX)
+                .setCenterY(R.styleable.ButtonShape_cy_centerY)
+                .setColorCenter(R.styleable.ButtonShape_cy_colorCenter)
+                .setColorEnd(R.styleable.ButtonShape_cy_colorEnd)
+                .setColorFill(R.styleable.ButtonShape_cy_colorFill)
+                .setColorStart(R.styleable.ButtonShape_cy_colorStart)
+                .setGradientType(R.styleable.ButtonShape_cy_gradientType)
+                .setOrientationGradient(R.styleable.ButtonShape_cy_orientationGradient)
+                .setRadiusBottomLeft(R.styleable.ButtonShape_cy_radiusBottomLeft)
+                .setRadiusBottomRight(R.styleable.ButtonShape_cy_radiusBottomRight)
+                .setRadiusCorner(R.styleable.ButtonShape_cy_radiusCorner)
+                .setRadiusGradient(R.styleable.ButtonShape_cy_radiusGradient)
+                .setRadiusTopLeft(R.styleable.ButtonShape_cy_radiusTopLeft)
+                .setRadiusTopRight(R.styleable.ButtonShape_cy_radiusTopRight)
+                .setShapeType(R.styleable.ButtonShape_cy_shapeType)
+                .setStrokeColor(R.styleable.ButtonShape_cy_strokeColor)
+                .setStrokeDashGap(R.styleable.ButtonShape_cy_strokeDashGap)
+                .setStrokeDashWidth(R.styleable.ButtonShape_cy_strokeDashWidth)
+                .setStrokePaddingBottom(R.styleable.ButtonShape_cy_strokePaddingBottom)
+                .setStrokePaddingLeft(R.styleable.ButtonShape_cy_strokePaddingLeft)
+                .setStrokePaddingRight(R.styleable.ButtonShape_cy_strokePaddingRight)
+                .setStrokePaddingTop(R.styleable.ButtonShape_cy_strokePaddingTop)
+                .setStrokeWidth(R.styleable.ButtonShape_cy_strokeWidth)
                 .shape();
     }
 

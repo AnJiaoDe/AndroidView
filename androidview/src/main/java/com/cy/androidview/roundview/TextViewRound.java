@@ -74,25 +74,25 @@ public class TextViewRound extends AppCompatTextView implements IRound, IRectang
     @Override
     public Round round(TypedArray typedArray) {
         return new Round(this,typedArray)
-                .setRadius(R.styleable.TextViewRound_radiusCorner)
-                .setTopLeftRadius(R.styleable.TextViewRound_radiusTopLeft)
-                .setTopRightRadius(R.styleable.TextViewRound_radiusTopRight)
-                .setBottomLeftRadius(R.styleable.TextViewRound_radiusBottomLeft)
-                .setBottomRightRadius(R.styleable.TextViewRound_radiusBottomRight);
+                .setRadius(R.styleable.TextViewRound_cy_radiusCorner)
+                .setTopLeftRadius(R.styleable.TextViewRound_cy_radiusTopLeft)
+                .setTopRightRadius(R.styleable.TextViewRound_cy_radiusTopRight)
+                .setBottomLeftRadius(R.styleable.TextViewRound_cy_radiusBottomLeft)
+                .setBottomRightRadius(R.styleable.TextViewRound_cy_radiusBottomRight);
     }
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {
         return new RectangleRatio(this,typedArray)
-                .setBaseOnWidthOrHeight(R.styleable.TextViewRound_baseOnWidthOrHeight)
-                .setHeightWidthRatio(R.styleable.TextViewRound_heightWidthRatio,0);
+                .setBaseOnWidthOrHeight(R.styleable.TextViewRound_cy_baseOnWidthOrHeight)
+                .setHeightWidthRatio(R.styleable.TextViewRound_cy_heightWidthRatio,0);
     }
 
 
     @Override
     public Ripple ripple(TypedArray typedArray) {
         return new Ripple(this, typedArray)
-                .setColorRipple(R.styleable.TextViewRound_colorRipple)
-                .setHavaRipple(R.styleable.TextViewRound_haveRipple);
+                .setColorRipple(R.styleable.TextViewRound_cy_colorRipple)
+                .setHavaRipple(R.styleable.TextViewRound_cy_haveRipple);
     }
 
     @Override

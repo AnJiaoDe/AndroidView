@@ -33,8 +33,8 @@ public class ButtonRipple extends AppCompatButton implements IRipple {
     @Override
     public Ripple ripple(TypedArray typedArray) {
         return new Ripple(this, typedArray)
-                .setColorRipple(R.styleable.ButtonRipple_colorRipple)
-                .setHavaRipple(R.styleable.ButtonRipple_haveRipple);
+                .setColorRipple(R.styleable.ButtonRipple_cy_colorRipple)
+                .setHavaRipple(R.styleable.ButtonRipple_cy_haveRipple);
     }
 
     @Override

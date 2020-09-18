@@ -46,15 +46,15 @@ public class FrameLayoutRectangle extends FrameLayout implements IRectangle, IRi
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {
         return new RectangleRatio(this, typedArray)
-                .setBaseOnWidthOrHeight(R.styleable.FrameLayoutRectangle_baseOnWidthOrHeight)
-                .setHeightWidthRatio(R.styleable.FrameLayoutRectangle_heightWidthRatio);
+                .setBaseOnWidthOrHeight(R.styleable.FrameLayoutRectangle_cy_baseOnWidthOrHeight)
+                .setHeightWidthRatio(R.styleable.FrameLayoutRectangle_cy_heightWidthRatio);
     }
 
     @Override
     public Ripple ripple(TypedArray typedArray) {
         return new Ripple(this, typedArray)
-                .setColorRipple(R.styleable.FrameLayoutRectangle_colorRipple)
-                .setHavaRipple(R.styleable.FrameLayoutRectangle_haveRipple);
+                .setColorRipple(R.styleable.FrameLayoutRectangle_cy_colorRipple)
+                .setHavaRipple(R.styleable.FrameLayoutRectangle_cy_haveRipple);
     }
 
     @Override

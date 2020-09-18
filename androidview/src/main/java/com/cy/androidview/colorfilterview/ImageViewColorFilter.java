@@ -51,9 +51,9 @@ public class ImageViewColorFilter extends AppCompatImageView implements IColorFi
     @Override
     public ColorFilterCy colorFilter(TypedArray typedArray) {
         return new ColorFilterCy(this, typedArray)
-                .setHavaFilter(R.styleable.ImageViewColorFilter_haveFilter)
-                .setLightOrDark(R.styleable.ImageViewColorFilter_lightOrDark)
-                .setLightNumber(R.styleable.ImageViewColorFilter_lightNumber)
+                .setHavaFilter(R.styleable.ImageViewColorFilter_cy_haveFilter)
+                .setLightOrDark(R.styleable.ImageViewColorFilter_cy_lightOrDark)
+                .setLightNumber(R.styleable.ImageViewColorFilter_cy_lightNumber)
                 .colorFilter();
     }
 

@@ -42,7 +42,7 @@
 
     <com.cy.androidview.ScreenPercentFrameLayout
         android:layout_width="wrap_content"
-        app:width_percent="0.8"
+        app:cy_width_percent="0.8"
         android:layout_height="wrap_content">
         <TextView
             android:layout_width="match_parent"

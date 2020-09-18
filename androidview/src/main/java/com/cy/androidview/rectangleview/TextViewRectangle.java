@@ -46,15 +46,15 @@ public class TextViewRectangle extends AppCompatTextView implements IRectangle, 
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {
         return new RectangleRatio(this, typedArray)
-                .setBaseOnWidthOrHeight(R.styleable.TextViewRectangle_baseOnWidthOrHeight)
-                .setHeightWidthRatio(R.styleable.TextViewRectangle_heightWidthRatio);
+                .setBaseOnWidthOrHeight(R.styleable.TextViewRectangle_cy_baseOnWidthOrHeight)
+                .setHeightWidthRatio(R.styleable.TextViewRectangle_cy_heightWidthRatio);
     }
 
     @Override
     public Ripple ripple(TypedArray typedArray) {
         return new Ripple(this, typedArray)
-                .setColorRipple(R.styleable.TextViewRectangle_colorRipple)
-                .setHavaRipple(R.styleable.TextViewRectangle_haveRipple);
+                .setColorRipple(R.styleable.TextViewRectangle_cy_colorRipple)
+                .setHavaRipple(R.styleable.TextViewRectangle_cy_haveRipple);
     }
 
     @Override

@@ -16,8 +16,8 @@
         android:paddingLeft="5dp"
         android:text="selectoreCheckBox"
         android:textSize="16sp"
-        app:buttonChecked="@drawable/cb_zuji_selected"
-        app:buttonUnChecked="@drawable/cb_zuji_normal" />
+        app:cy_buttonChecked="@drawable/cb_zuji_selected"
+        app:cy_buttonUnChecked="@drawable/cb_zuji_normal" />
 
     <com.cy.androidview.selectorview.CheckBoxSelector
         android:layout_width="wrap_content"
@@ -26,10 +26,10 @@
         android:paddingLeft="5dp"
         android:text="selectorCheckBox"
         android:textSize="16sp"
-        app:buttonChecked="@drawable/cb_zuji_selected"
-        app:buttonUnChecked="@drawable/cb_zuji_normal"
-        app:textColorChecked="#ff0000"
-        app:textColorUnChecked="#454545" />
+        app:cy_buttonChecked="@drawable/cb_zuji_selected"
+        app:cy_buttonUnChecked="@drawable/cb_zuji_normal"
+        app:cy_textColorChecked="#ff0000"
+        app:cy_textColorUnChecked="#454545" />
 
     <com.cy.androidview.selectorview.CheckBoxSelector
         android:layout_width="wrap_content"
@@ -38,12 +38,12 @@
         android:paddingLeft="5dp"
         android:text="selectoreCheckBox"
         android:textSize="16sp"
-        app:backgroundChecked="#33ff0000"
-        app:backgroundUnChecked="#fff"
-        app:buttonChecked="@drawable/cb_zuji_selected"
-        app:buttonUnChecked="@drawable/cb_zuji_normal"
-        app:textColorChecked="#ff0000"
-        app:textColorUnChecked="#454545" />
+        app:cy_backgroundChecked="#33ff0000"
+        app:cy_backgroundUnChecked="#fff"
+        app:cy_buttonChecked="@drawable/cb_zuji_selected"
+        app:cy_buttonUnChecked="@drawable/cb_zuji_normal"
+        app:cy_textColorChecked="#ff0000"
+        app:cy_textColorUnChecked="#454545" />
 
     <com.cy.androidview.selectorview.CheckBoxSelector
         android:layout_width="wrap_content"
@@ -54,10 +54,10 @@
         android:paddingLeft="5dp"
         android:text="selectoreCheckBox"
         android:textSize="16sp"
-        app:backgroundChecked="#33ff0000"
-        app:backgroundUnChecked="#fff"
-        app:textColorChecked="#ff0000"
-        app:textColorUnChecked="#454545" />
+        app:cy_backgroundChecked="#33ff0000"
+        app:cy_backgroundUnChecked="#fff"
+        app:cy_textColorChecked="#ff0000"
+        app:cy_textColorUnChecked="#454545" />
 
     <RadioGroup
         android:layout_width="match_parent"
@@ -71,8 +71,8 @@
             android:gravity="center_vertical"
             android:text="SelectorRadioButton"
             android:textSize="14sp"
-            app:buttonChecked="@drawable/cb_zuji_selected"
-            app:buttonUnChecked="@drawable/cb_zuji_normal" />
+            app:cy_buttonChecked="@drawable/cb_zuji_selected"
+            app:cy_buttonUnChecked="@drawable/cb_zuji_normal" />
 
         <com.cy.androidview.selectorview.RadioButtonSelector
             android:layout_width="wrap_content"
@@ -81,8 +81,8 @@
 
             android:text="SelectorRadioButton"
             android:textSize="14sp"
-            app:buttonChecked="@drawable/cb_zuji_selected"
-            app:buttonUnChecked="@drawable/cb_zuji_normal" />
+            app:cy_buttonChecked="@drawable/cb_zuji_selected"
+            app:cy_buttonUnChecked="@drawable/cb_zuji_normal" />
     </RadioGroup>
 
     <TextView
@@ -93,14 +93,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        app:srcChecked="@drawable/cb_zuji_selected"
-        app:srcUnChecked="@drawable/cb_zuji_normal" />
+        app:cy_srcChecked="@drawable/cb_zuji_selected"
+        app:cy_srcUnChecked="@drawable/cb_zuji_normal" />
 
     <com.cy.androidview.selectorview.ImageViewSelector
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
-        app:bgChecked="@drawable/hg"
-        app:bgUnChecked="#f00" />
+        app:cy_bgChecked="@drawable/hg"
+        app:cy_bgUnChecked="#f00" />
 
 </LinearLayout>

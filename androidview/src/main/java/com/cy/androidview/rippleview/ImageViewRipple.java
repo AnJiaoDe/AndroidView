@@ -35,8 +35,8 @@ public class ImageViewRipple extends AppCompatImageView implements IRipple {
     @Override
     public Ripple ripple(TypedArray typedArray) {
         return new Ripple(this, typedArray)
-                .setColorRipple(R.styleable.ImageViewRipple_colorRipple)
-                .setHavaRipple(R.styleable.ImageViewRipple_haveRipple);
+                .setColorRipple(R.styleable.ImageViewRipple_cy_colorRipple)
+                .setHavaRipple(R.styleable.ImageViewRipple_cy_haveRipple);
     }
 
     @Override

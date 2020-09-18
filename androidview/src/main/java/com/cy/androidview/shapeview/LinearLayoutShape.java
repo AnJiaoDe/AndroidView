@@ -53,44 +53,44 @@ public class LinearLayoutShape extends LinearLayout implements IShape, IRectangl
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {
         return new RectangleRatio(this,typedArray)
-                .setBaseOnWidthOrHeight(R.styleable.LinearLayoutShape_baseOnWidthOrHeight)
-                .setHeightWidthRatio(R.styleable.LinearLayoutShape_heightWidthRatio,0);
+                .setBaseOnWidthOrHeight(R.styleable.LinearLayoutShape_cy_baseOnWidthOrHeight)
+                .setHeightWidthRatio(R.styleable.LinearLayoutShape_cy_heightWidthRatio,0);
     }
 
     @Override
     public Ripple ripple(TypedArray typedArray) {
         return new Ripple(this, typedArray)
-                .setColorRipple(R.styleable.LinearLayoutShape_colorRipple)
-                .setHavaRipple(R.styleable.LinearLayoutShape_haveRipple);
+                .setColorRipple(R.styleable.LinearLayoutShape_cy_colorRipple)
+                .setHavaRipple(R.styleable.LinearLayoutShape_cy_haveRipple);
     }
 
     @Override
     public ShapeBackground shape(TypedArray typedArray) {
         return new ShapeBackground(this,typedArray)
-                .setAngle(R.styleable.LinearLayoutShape_angle)
-                .setCenterX(R.styleable.LinearLayoutShape_centerX)
-                .setCenterY(R.styleable.LinearLayoutShape_centerY)
-                .setColorCenter(R.styleable.LinearLayoutShape_colorCenter)
-                .setColorEnd(R.styleable.LinearLayoutShape_colorEnd)
-                .setColorFill(R.styleable.LinearLayoutShape_colorFill)
-                .setColorStart(R.styleable.LinearLayoutShape_colorStart)
-                .setGradientType(R.styleable.LinearLayoutShape_gradientType)
-                .setOrientationGradient(R.styleable.LinearLayoutShape_orientationGradient)
-                .setRadiusBottomLeft(R.styleable.LinearLayoutShape_radiusBottomLeft)
-                .setRadiusBottomRight(R.styleable.LinearLayoutShape_radiusBottomRight)
-                .setRadiusCorner(R.styleable.LinearLayoutShape_radiusCorner)
-                .setRadiusGradient(R.styleable.LinearLayoutShape_radiusGradient)
-                .setRadiusTopLeft(R.styleable.LinearLayoutShape_radiusTopLeft)
-                .setRadiusTopRight(R.styleable.LinearLayoutShape_radiusTopRight)
-                .setShapeType(R.styleable.LinearLayoutShape_shapeType)
-                .setStrokeColor(R.styleable.LinearLayoutShape_strokeColor)
-                .setStrokeDashGap(R.styleable.LinearLayoutShape_strokeDashGap)
-                .setStrokeDashWidth(R.styleable.LinearLayoutShape_strokeDashWidth)
-                .setStrokePaddingBottom(R.styleable.LinearLayoutShape_strokePaddingBottom)
-                .setStrokePaddingLeft(R.styleable.LinearLayoutShape_strokePaddingLeft)
-                .setStrokePaddingRight(R.styleable.LinearLayoutShape_strokePaddingRight)
-                .setStrokePaddingTop(R.styleable.LinearLayoutShape_strokePaddingTop)
-                .setStrokeWidth(R.styleable.LinearLayoutShape_strokeWidth)
+                .setAngle(R.styleable.LinearLayoutShape_cy_angle)
+                .setCenterX(R.styleable.LinearLayoutShape_cy_centerX)
+                .setCenterY(R.styleable.LinearLayoutShape_cy_centerY)
+                .setColorCenter(R.styleable.LinearLayoutShape_cy_colorCenter)
+                .setColorEnd(R.styleable.LinearLayoutShape_cy_colorEnd)
+                .setColorFill(R.styleable.LinearLayoutShape_cy_colorFill)
+                .setColorStart(R.styleable.LinearLayoutShape_cy_colorStart)
+                .setGradientType(R.styleable.LinearLayoutShape_cy_gradientType)
+                .setOrientationGradient(R.styleable.LinearLayoutShape_cy_orientationGradient)
+                .setRadiusBottomLeft(R.styleable.LinearLayoutShape_cy_radiusBottomLeft)
+                .setRadiusBottomRight(R.styleable.LinearLayoutShape_cy_radiusBottomRight)
+                .setRadiusCorner(R.styleable.LinearLayoutShape_cy_radiusCorner)
+                .setRadiusGradient(R.styleable.LinearLayoutShape_cy_radiusGradient)
+                .setRadiusTopLeft(R.styleable.LinearLayoutShape_cy_radiusTopLeft)
+                .setRadiusTopRight(R.styleable.LinearLayoutShape_cy_radiusTopRight)
+                .setShapeType(R.styleable.LinearLayoutShape_cy_shapeType)
+                .setStrokeColor(R.styleable.LinearLayoutShape_cy_strokeColor)
+                .setStrokeDashGap(R.styleable.LinearLayoutShape_cy_strokeDashGap)
+                .setStrokeDashWidth(R.styleable.LinearLayoutShape_cy_strokeDashWidth)
+                .setStrokePaddingBottom(R.styleable.LinearLayoutShape_cy_strokePaddingBottom)
+                .setStrokePaddingLeft(R.styleable.LinearLayoutShape_cy_strokePaddingLeft)
+                .setStrokePaddingRight(R.styleable.LinearLayoutShape_cy_strokePaddingRight)
+                .setStrokePaddingTop(R.styleable.LinearLayoutShape_cy_strokePaddingTop)
+                .setStrokeWidth(R.styleable.LinearLayoutShape_cy_strokeWidth)
                 .shape();
     }
 
