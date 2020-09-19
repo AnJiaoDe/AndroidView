@@ -7,6 +7,7 @@ import android.view.View;
 
 import androidx.annotation.StyleableRes;
 
+import com.cy.androidview.R;
 import com.cy.androidview.rippleview.Ripple;
 
 /**
@@ -27,12 +28,10 @@ public class RectangleRatio {
     public RectangleRatio(View view, TypedArray typedArray) {
         this.view = view;
         this.typedArray = typedArray;
+        heightWidthRatio = typedArray.getFloat(R.styleable.AttrsRectangle_cy_heightWidthRatio, heightWidthRatio);
+        baseOnWidthOrHeight = typedArray.getBoolean(R.styleable.AttrsRectangle_cy_baseOnWidthOrHeight, baseOnWidthOrHeight);
     }
 
-    public RectangleRatio setHeightWidthRatio(@StyleableRes int index) {
-        heightWidthRatio = typedArray.getFloat(index, heightWidthRatio);
-        return this;
-    }
 
     public RectangleRatio setHeightWidthRatio_(float heightWidthRatio) {
         this.heightWidthRatio = heightWidthRatio;
@@ -41,11 +40,6 @@ public class RectangleRatio {
 
     public RectangleRatio setHeightWidthRatio(@StyleableRes int index,int defaultValue) {
         heightWidthRatio = typedArray.getFloat(index, defaultValue);
-        return this;
-    }
-
-    public RectangleRatio setBaseOnWidthOrHeight(@StyleableRes int index) {
-        baseOnWidthOrHeight = typedArray.getBoolean(index, baseOnWidthOrHeight);
         return this;
     }
 
@@ -76,8 +70,6 @@ public class RectangleRatio {
         return this;
     }
 
-    public static interface MeasureSizeCallback {
-        public void setMeasuredSize(int measuredWidth, int measuredHeight);
-    }
+
 
 }

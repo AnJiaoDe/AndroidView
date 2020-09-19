@@ -21,7 +21,7 @@ public class ButtonRipple extends AppCompatButton implements IRipple {
 
     public ButtonRipple(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ButtonRipple);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AttrsRipple);
         ripple = ripple(typedArray);
         typedArray.recycle();
     }
@@ -32,9 +32,7 @@ public class ButtonRipple extends AppCompatButton implements IRipple {
     }
     @Override
     public Ripple ripple(TypedArray typedArray) {
-        return new Ripple(this, typedArray)
-                .setColorRipple(R.styleable.ButtonRipple_cy_colorRipple)
-                .setHavaRipple(R.styleable.ButtonRipple_cy_haveRipple);
+        return new Ripple(this, typedArray);
     }
 
     @Override

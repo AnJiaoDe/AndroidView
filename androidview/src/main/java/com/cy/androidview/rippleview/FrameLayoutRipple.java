@@ -20,7 +20,7 @@ public class FrameLayoutRipple extends FrameLayout implements IRipple {
     private Ripple ripple;
     public FrameLayoutRipple(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.FrameLayoutRipple);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AttrsRipple);
         ripple=ripple(typedArray);
         typedArray.recycle();
     }
@@ -31,9 +31,7 @@ public class FrameLayoutRipple extends FrameLayout implements IRipple {
     }
     @Override
     public Ripple ripple(TypedArray typedArray) {
-        return new Ripple(this, typedArray)
-                .setColorRipple(R.styleable.FrameLayoutRipple_cy_colorRipple)
-                .setHavaRipple(R.styleable.FrameLayoutRipple_cy_haveRipple);
+        return new Ripple(this, typedArray);
     }
 
     @Override

@@ -19,7 +19,7 @@ public class RelativeLayoutRipple extends RelativeLayout implements IRipple {
     private Ripple ripple;
     public RelativeLayoutRipple(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.RelativeLayoutRipple);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AttrsRipple);
         ripple=ripple(typedArray);
         typedArray.recycle();
     }
@@ -30,9 +30,7 @@ public class RelativeLayoutRipple extends RelativeLayout implements IRipple {
     }
     @Override
     public Ripple ripple(TypedArray typedArray) {
-        return new Ripple(this, typedArray)
-                .setColorRipple(R.styleable.RelativeLayoutRipple_cy_colorRipple)
-                .setHavaRipple(R.styleable.RelativeLayoutRipple_cy_haveRipple);
+        return new Ripple(this, typedArray);
     }
 
     @Override

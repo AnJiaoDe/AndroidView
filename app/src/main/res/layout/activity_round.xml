@@ -8,38 +8,49 @@
     android:orientation="vertical"
     android:padding="10dp">
 
-    <com.makeramen.roundedimageview.RoundedImageView
+    <com.cy.androidview.roundview.ImageViewRound
         android:layout_width="70dp"
         android:layout_height="70dp"
 
         android:layout_marginTop="10dp"
         android:scaleType="centerCrop"
         android:src="@drawable/hg"
-        app:riv_corner_radius="10dp" />
-
-    <com.makeramen.roundedimageview.RoundedImageView
+        app:cy_radiusCorner="10dp" />
+    <com.cy.androidview.roundview.RelativeLayoutRound
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:scaleType="centerCrop"
-
-
-        android:src="@drawable/hg"
-
-        app:riv_oval="true" />
-
-    <com.makeramen.roundedimageview.RoundedImageView
+        app:cy_radiusCorner="10dp" >
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/hg"/>
+    </com.cy.androidview.roundview.RelativeLayoutRound>
+    <com.cy.androidview.roundview.LinearLayoutRound
         android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        android:background="#eee"
+        app:cy_radiusCorner="10dp" >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/hg"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:text="视频"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_height="40dp"/>
+    </com.cy.androidview.roundview.LinearLayoutRound>
+    <com.cy.androidview.roundview.ImageViewRound
+        android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:scaleType="centerCrop"
-
         android:src="@drawable/hg"
-
-        app:riv_border_width="2dp"
-        app:riv_border_color="#f00"
-
-        app:riv_oval="true" />
+        app:cy_round_as_circle="true"/>
 </LinearLayout>

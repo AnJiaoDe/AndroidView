@@ -30,7 +30,7 @@ import android.view.MotionEvent;
 import android.widget.Checkable;
 
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.AppCompatImageView;
 
 import com.cy.androidview.R;
 import com.cy.androidview.rectangleview.IRectangle;
@@ -42,20 +42,20 @@ import com.cy.androidview.roundview.helper.RCAttrs;
 import com.cy.androidview.roundview.helper.RCHelper;
 
 
-public class TextViewRound extends AppCompatTextView implements Checkable, RCAttrs , IRectangle, IRipple {
+public class ImageViewRound extends AppCompatImageView implements Checkable, RCAttrs , IRectangle, IRipple {
 
     RCHelper mRCHelper;
     private RectangleRatio rectangleRatio;
     private Ripple ripple;
-    public TextViewRound(Context context) {
+    public ImageViewRound(Context context) {
         this(context, null);
     }
 
-    public TextViewRound(Context context, AttributeSet attrs) {
+    public ImageViewRound(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public TextViewRound(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ImageViewRound(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AttrsRound);
         mRCHelper = new RCHelper();

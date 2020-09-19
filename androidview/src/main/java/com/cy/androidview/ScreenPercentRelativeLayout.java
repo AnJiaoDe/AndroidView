@@ -15,15 +15,15 @@ import com.cy.androidview.rippleview.FrameLayoutRipple;
  * @UpdateRemark:
  * @Version:
  */
-public class ScreenPercentFrameLayout extends FrameLayoutRipple {
+public class ScreenPercentRelativeLayout extends FrameLayoutRipple {
     private float width_percent=0;
     private float height_percent=0;
 
-    public ScreenPercentFrameLayout(Context context, AttributeSet attrs) {
+    public ScreenPercentRelativeLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray typedArray=context.obtainStyledAttributes(attrs,R.styleable.ScreenPercentFrameLayout);
-        width_percent=typedArray.getFloat(R.styleable.ScreenPercentFrameLayout_cy_width_percent,width_percent);
-        height_percent=typedArray.getFloat(R.styleable.ScreenPercentFrameLayout_cy_height_percent,height_percent);
+        TypedArray typedArray=context.obtainStyledAttributes(attrs,R.styleable.ScreenPercentRelativeLayout);
+        width_percent=typedArray.getFloat(R.styleable.ScreenPercentRelativeLayout_cy_width_percent,width_percent);
+        height_percent=typedArray.getFloat(R.styleable.ScreenPercentRelativeLayout_cy_height_percent,height_percent);
     }
 
     @Override

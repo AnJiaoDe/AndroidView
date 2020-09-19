@@ -33,11 +33,8 @@ public class Ripple {
     public Ripple(View view, TypedArray typedArray) {
         this.view = view;
         this.typedArray = typedArray;
-    }
-
-    public Ripple setColorRipple(@StyleableRes int index) {
-        colorRipple = typedArray.getColor(index, colorRipple);
-        return this;
+        colorRipple = typedArray.getColor(R.styleable.AttrsRipple_cy_colorRipple, colorRipple);
+        havaRipple = typedArray.getBoolean(R.styleable.AttrsRipple_cy_haveRipple, true);
     }
 
     public Ripple setColorRipple_(int color) {
@@ -45,10 +42,6 @@ public class Ripple {
         return this;
     }
 
-    public Ripple setHavaRipple(@StyleableRes int index) {
-        havaRipple = typedArray.getBoolean(index, true);
-        return this;
-    }
 
     public Ripple setHavaRipple_(boolean havaRipple) {
         this.havaRipple = havaRipple;

@@ -56,19 +56,36 @@ public class ShapeBackground {
     public ShapeBackground(View view,TypedArray typedArray) {
         this.view = view;
         this.typedArray = typedArray;
+        this.radiusCorner = typedArray.getDimensionPixelSize(R.styleable.AttrsShape_cy_radiusCorner, radiusCorner);
+        this.radiusTopLeft = typedArray.getDimensionPixelSize(R.styleable.AttrsShape_cy_radiusTopLeft, radiusTopLeft);
+        this.radiusTopRight = typedArray.getDimensionPixelSize(R.styleable.AttrsShape_cy_radiusTopRight, radiusTopRight);
+        this.radiusBottomRight = typedArray.getDimensionPixelSize(R.styleable.AttrsShape_cy_radiusBottomRight, radiusBottomRight);
+        this.radiusBottomLeft = typedArray.getDimensionPixelSize(R.styleable.AttrsShape_cy_radiusBottomLeft, radiusBottomLeft);
+        this.colorFill = typedArray.getColor(R.styleable.AttrsShape_cy_colorFill, colorFill);
+        this.colorStart = typedArray.getColor(R.styleable.AttrsShape_cy_colorStart, colorStart);
+        this.colorCenter = typedArray.getColor(R.styleable.AttrsShape_cy_colorCenter, colorCenter);
+        this.colorEnd = typedArray.getColor(R.styleable.AttrsShape_cy_colorEnd, colorEnd);
+        this.orientationGradient = typedArray.getInt(R.styleable.AttrsShape_cy_orientationGradient, orientationGradient);
+        this.gradientType = typedArray.getInt(R.styleable.AttrsShape_cy_gradientType, gradientType);
+        this.centerX = typedArray.getFloat(R.styleable.AttrsShape_cy_centerX, centerX);
+        this.centerY = typedArray.getFloat(R.styleable.AttrsShape_cy_centerY, centerY);
+        this.angle = typedArray.getInt(R.styleable.AttrsShape_cy_angle, angle);
+        this.strokeWidth = typedArray.getDimensionPixelSize(R.styleable.AttrsShape_cy_strokeWidth, strokeWidth);
+        this.strokeColor = typedArray.getColor(R.styleable.AttrsShape_cy_strokeColor, strokeColor);
+        this.strokeDashWidth = typedArray.getDimensionPixelSize(R.styleable.AttrsShape_cy_strokeDashWidth, strokeDashWidth);
+        this.strokeDashGap = typedArray.getDimensionPixelSize(R.styleable.AttrsShape_cy_strokeDashGap, strokeDashGap);
+        this.strokePaddingLeft = typedArray.getDimensionPixelSize(R.styleable.AttrsShape_cy_strokePaddingLeft, strokePaddingLeft);
+        this.strokePaddingTop = typedArray.getDimensionPixelSize(R.styleable.AttrsShape_cy_strokePaddingTop, strokePaddingTop);
+        this.strokePaddingRight = typedArray.getDimensionPixelSize(R.styleable.AttrsShape_cy_strokePaddingRight, strokePaddingRight);
+        this.strokePaddingBottom = typedArray.getDimensionPixelSize(R.styleable.AttrsShape_cy_strokePaddingBottom, strokePaddingBottom);
+        this.shapeType = typedArray.getInt(R.styleable.AttrsShape_cy_shapeType, shapeType);
+
     }
 
     public int getRadiusCorner() {
         return radiusCorner;
     }
 
-    /**
-     * //圆角半径
-     */
-    public ShapeBackground setRadiusCorner(@StyleableRes int index) {
-        this.radiusCorner = typedArray.getDimensionPixelSize(index, radiusCorner);
-        return this;
-    }
     public ShapeBackground setRadiusCorner_(int radiusCorner) {
         this.radiusCorner = radiusCorner;
         return this;
@@ -78,14 +95,6 @@ public class ShapeBackground {
         return radiusTopLeft;
     }
 
-    /**
-     * //左上角圆角半径
-     */
-    public ShapeBackground setRadiusTopLeft(@StyleableRes int index) {
-        this.radiusTopLeft = typedArray.getDimensionPixelSize(index, radiusTopLeft);
-        return this;
-
-    }
     public ShapeBackground setRadiusTopLeft_(int radiusTopLeft) {
         this.radiusTopLeft = radiusTopLeft;
         return this;
@@ -96,16 +105,6 @@ public class ShapeBackground {
         return radiusTopRight;
     }
 
-    /**
-     * //右上角圆角半径
-     *
-     * @param index
-     */
-    public ShapeBackground setRadiusTopRight(@StyleableRes int index) {
-        this.radiusTopRight = typedArray.getDimensionPixelSize(index, radiusTopRight);
-        return this;
-
-    }
     public ShapeBackground setRadiusTopRight_(int radiusTopRight) {
         this.radiusTopRight = radiusTopRight;
         return this;
@@ -116,16 +115,6 @@ public class ShapeBackground {
         return radiusBottomRight;
     }
 
-    /**
-     * //右下角圆角半径
-     *
-     * @param index
-     */
-    public ShapeBackground setRadiusBottomRight(@StyleableRes int index) {
-        this.radiusBottomRight = typedArray.getDimensionPixelSize(index, radiusBottomRight);
-        return this;
-
-    }
     public ShapeBackground setRadiusBottomRight_(int radiusBottomRight) {
         this.radiusBottomRight = radiusBottomRight;
         return this;
@@ -136,16 +125,6 @@ public class ShapeBackground {
         return radiusBottomLeft;
     }
 
-    /**
-     * //左下角圆角半径
-     *
-     * @param index
-     */
-    public ShapeBackground setRadiusBottomLeft(@StyleableRes int index) {
-        this.radiusBottomLeft = typedArray.getDimensionPixelSize(index, radiusBottomLeft);
-        return this;
-
-    }
     public ShapeBackground setRadiusBottomLeft_(int radiusBottomLeft ) {
         this.radiusBottomLeft = radiusBottomLeft;
         return this;
@@ -154,17 +133,6 @@ public class ShapeBackground {
 
     public int getColorFill() {
         return colorFill;
-    }
-
-    /**
-     * //填充色
-     *
-     * @param index
-     */
-    public ShapeBackground setColorFill(@StyleableRes int index) {
-        this.colorFill = typedArray.getColor(index, colorFill);
-        return this;
-
     }
     public ShapeBackground setColorFill_(int colorFill) {
         this.colorFill = colorFill;
@@ -176,17 +144,6 @@ public class ShapeBackground {
         return radiusGradient;
     }
 
-    /**
-     * //渐变相关
-     * //渐变半径
-     *
-     * @param index
-     */
-    public ShapeBackground setRadiusGradient(@StyleableRes int index) {
-        this.radiusGradient = typedArray.getDimensionPixelSize(index, radiusGradient);
-        return this;
-
-    }
     public ShapeBackground setRadiusGradient_(int radiusGradient) {
         this.radiusGradient = radiusGradient;
         return this;
@@ -197,15 +154,6 @@ public class ShapeBackground {
         return colorStart;
     }
 
-    /*
-     //渐变开始颜色
-     * @param index
-     */
-    public ShapeBackground setColorStart(@StyleableRes int index) {
-        this.colorStart = typedArray.getColor(index, colorStart);
-        return this;
-
-    }
     public ShapeBackground setColorStart_(int colorStart) {
         this.colorStart =colorStart;
         return this;
@@ -216,16 +164,6 @@ public class ShapeBackground {
         return colorCenter;
     }
 
-    /**
-     * ///渐变中间颜色
-     *
-     * @param index
-     */
-    public ShapeBackground setColorCenter(@StyleableRes int index) {
-        this.colorCenter = typedArray.getColor(index, colorCenter);
-        return this;
-
-    }
     public ShapeBackground setColorCenter_(int colorCenter) {
         this.colorCenter =colorCenter;
         return this;
@@ -236,15 +174,6 @@ public class ShapeBackground {
         return colorEnd;
     }
 
-    /*
-     //渐变结束颜色
-     * @param index
-     */
-    public ShapeBackground setColorEnd(@StyleableRes int index) {
-        this.colorEnd = typedArray.getColor(index, colorEnd);
-        return this;
-
-    }
     public ShapeBackground setColorEnd_(int colorEnd) {
         this.colorEnd = colorEnd;
         return this;
@@ -255,16 +184,6 @@ public class ShapeBackground {
         return orientationGradient;
     }
 
-    /**
-     * //渐变方向，默认从左到右
-     *
-     * @param index
-     */
-    public ShapeBackground setOrientationGradient(@StyleableRes int index) {
-        this.orientationGradient = typedArray.getInt(index, orientationGradient);
-        return this;
-
-    }
     public ShapeBackground setOrientationGradient_(int orientationGradient) {
         this.orientationGradient = orientationGradient;
         return this;
@@ -273,17 +192,6 @@ public class ShapeBackground {
 
     public int getGradientType() {
         return gradientType;
-    }
-
-    /**
-     * //渐变类型,默认线性渐变
-     *
-     * @param index
-     */
-    public ShapeBackground setGradientType(@StyleableRes int index) {
-        this.gradientType = typedArray.getInt(index, gradientType);
-        return this;
-
     }
     public ShapeBackground setGradientType_(int gradientType) {
         this.gradientType = gradientType;
@@ -295,16 +203,6 @@ public class ShapeBackground {
         return centerX;
     }
 
-    /**
-     * //渐变，相对于控件的中心点x坐标
-     *
-     * @param index
-     */
-    public ShapeBackground setCenterX(@StyleableRes int index) {
-        this.centerX = typedArray.getFloat(index, centerX);
-        return this;
-
-    }
     public ShapeBackground setCenterX_(int centerX ) {
         this.centerX = centerX;
         return this;
@@ -315,16 +213,6 @@ public class ShapeBackground {
         return centerY;
     }
 
-    /**
-     * //渐变，相对于控件的中心点y坐标
-     *
-     * @param index
-     */
-    public ShapeBackground setCenterY(@StyleableRes int index) {
-        this.centerY = typedArray.getFloat(index, centerY);
-        return this;
-
-    }
     public ShapeBackground setCenterY_(int centerY) {
         this.centerY = centerY;
         return this;
@@ -333,16 +221,6 @@ public class ShapeBackground {
 
     public int getAngle() {
         return angle;
-    }
-
-    /**
-     * //渐变方向,默认从左到右
-     *
-     * @param index
-     */
-    public ShapeBackground setAngle(@StyleableRes int index) {
-        this.angle = typedArray.getInt(index, angle);
-        return this;
     }
     public ShapeBackground setAngle_(int angle) {
         this.angle = angle;
@@ -353,16 +231,6 @@ public class ShapeBackground {
         return strokeWidth;
     }
 
-    /**
-     * //stroke，描边相关
-     * //描边粗细，宽度
-     *
-     * @param index
-     */
-    public ShapeBackground setStrokeWidth(@StyleableRes int index) {
-        this.strokeWidth = typedArray.getDimensionPixelSize(index, strokeWidth);
-        return this;
-    }
     public ShapeBackground setStrokeWidth_(int strokeWidth) {
         this.strokeWidth = strokeWidth;
         return this;
@@ -372,15 +240,6 @@ public class ShapeBackground {
         return strokeColor;
     }
 
-    /**
-     * //描边颜色
-     *
-     * @param index
-     */
-    public ShapeBackground setStrokeColor(@StyleableRes int index) {
-        this.strokeColor = typedArray.getColor(index, strokeColor);
-        return this;
-    }
     public ShapeBackground setStrokeColor_(int strokeColor) {
         this.strokeColor = strokeColor;
         return this;
@@ -390,15 +249,6 @@ public class ShapeBackground {
         return strokeDashWidth;
     }
 
-    /**
-     * //描边虚线宽度
-     *
-     * @param index
-     */
-    public ShapeBackground setStrokeDashWidth(@StyleableRes int index) {
-        this.strokeDashWidth = typedArray.getDimensionPixelSize(index, strokeDashWidth);
-        return this;
-    }
     public ShapeBackground setStrokeDashWidth_(int strokeDashWidth) {
         this.strokeDashWidth =strokeDashWidth;
         return this;
@@ -408,15 +258,6 @@ public class ShapeBackground {
         return strokeDashGap;
     }
 
-    /**
-     * //描边虚线间隔
-     *
-     * @param index
-     */
-    public ShapeBackground setStrokeDashGap(@StyleableRes int index) {
-        this.strokeDashGap = typedArray.getDimensionPixelSize(index, strokeDashGap);
-        return this;
-    }
     public ShapeBackground setStrokeDashGap_(int strokeDashGap) {
         this.strokeDashGap = strokeDashGap;
         return this;
@@ -426,15 +267,6 @@ public class ShapeBackground {
         return strokePaddingLeft;
     }
 
-    /**
-     * //描边左边padding,用于控制左边描边的粗细和有无
-     *
-     * @param index
-     */
-    public ShapeBackground setStrokePaddingLeft(@StyleableRes int index) {
-        this.strokePaddingLeft = typedArray.getDimensionPixelSize(index, strokePaddingLeft);
-        return this;
-    }
     public ShapeBackground setStrokePaddingLeft_(int strokePaddingLeft) {
         this.strokePaddingLeft = strokePaddingLeft;
         return this;
@@ -444,15 +276,6 @@ public class ShapeBackground {
         return strokePaddingTop;
     }
 
-    /**
-     * //描边上边padding,用于控制上边描边的粗细和有无
-     *
-     * @param index
-     */
-    public ShapeBackground setStrokePaddingTop(@StyleableRes int index) {
-        this.strokePaddingTop = typedArray.getDimensionPixelSize(index, strokePaddingTop);
-        return this;
-    }
     public ShapeBackground setStrokePaddingTop_(int strokePaddingTop) {
         this.strokePaddingTop =strokePaddingTop;
         return this;
@@ -462,15 +285,6 @@ public class ShapeBackground {
         return strokePaddingRight;
     }
 
-    /**
-     * //描边右边padding,用于控制右描边的粗细和有无
-     *
-     * @param index
-     */
-    public ShapeBackground setStrokePaddingRight(@StyleableRes int index) {
-        this.strokePaddingRight = typedArray.getDimensionPixelSize(index, strokePaddingRight);
-        return this;
-    }
     public ShapeBackground setStrokePaddingRight_(int strokePaddingRight) {
         this.strokePaddingRight = strokePaddingRight;
         return this;
@@ -480,15 +294,6 @@ public class ShapeBackground {
         return strokePaddingBottom;
     }
 
-    /**
-     * //描边下边padding,用于控制下描边的粗细和有无
-     *
-     * @param index
-     */
-    public ShapeBackground setStrokePaddingBottom(@StyleableRes int index) {
-        this.strokePaddingBottom = typedArray.getDimensionPixelSize(index, strokePaddingBottom);
-        return this;
-    }
     public ShapeBackground setStrokePaddingBottom_(int strokePaddingBottom) {
         this.strokePaddingBottom = strokePaddingBottom;
         return this;
@@ -498,15 +303,6 @@ public class ShapeBackground {
         return shapeType;
     }
 
-    /**
-     * //形状类型,默认矩形
-     *
-     * @param index
-     */
-    public ShapeBackground setShapeType(@StyleableRes int index) {
-        this.shapeType = typedArray.getInt(index, shapeType);
-        return this;
-    }
     public ShapeBackground setShapeType_(int shapeType) {
         this.shapeType = shapeType;
         return this;

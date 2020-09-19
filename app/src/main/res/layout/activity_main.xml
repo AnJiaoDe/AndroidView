@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:text="selectorView" />
 
-    <com.cy.androidview.ScreenPercentFrameLayout
+    <com.cy.androidview.ScreenPercentRelativeLayout
         android:layout_width="wrap_content"
         app:cy_width_percent="0.8"
         android:layout_height="wrap_content">
@@ -48,5 +48,5 @@
             android:layout_width="match_parent"
             android:text="瓜皮"
             android:layout_height="wrap_content"/>
-    </com.cy.androidview.ScreenPercentFrameLayout>
+    </com.cy.androidview.ScreenPercentRelativeLayout>
 </LinearLayout>

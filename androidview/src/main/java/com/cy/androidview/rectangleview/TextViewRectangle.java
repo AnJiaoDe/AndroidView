@@ -22,7 +22,7 @@ public class TextViewRectangle extends AppCompatTextView implements IRectangle, 
     private Ripple ripple;
     public TextViewRectangle(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TextViewRectangle);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AttrsRectangle);
         ripple=ripple(typedArray);
         rectangleRatio = rectangle(typedArray);
         typedArray.recycle();
@@ -31,7 +31,7 @@ public class TextViewRectangle extends AppCompatTextView implements IRectangle, 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        rectangleRatio.rectangle(new RectangleRatio.MeasureSizeCallback() {
+        rectangleRatio.rectangle(new MeasureSizeCallback() {
             @Override
             public void setMeasuredSize(int measuredWidth, int measuredHeight) {
                 setMeasuredDimension(measuredWidth, measuredHeight);
@@ -45,16 +45,12 @@ public class TextViewRectangle extends AppCompatTextView implements IRectangle, 
     }
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {
-        return new RectangleRatio(this, typedArray)
-                .setBaseOnWidthOrHeight(R.styleable.TextViewRectangle_cy_baseOnWidthOrHeight)
-                .setHeightWidthRatio(R.styleable.TextViewRectangle_cy_heightWidthRatio);
+        return new RectangleRatio(this, typedArray);
     }
 
     @Override
     public Ripple ripple(TypedArray typedArray) {
-        return new Ripple(this, typedArray)
-                .setColorRipple(R.styleable.TextViewRectangle_cy_colorRipple)
-                .setHavaRipple(R.styleable.TextViewRectangle_cy_haveRipple);
+        return new Ripple(this, typedArray);
     }
 
     @Override

@@ -20,7 +20,7 @@ public class TextViewRipple extends AppCompatTextView implements IRipple {
     private Ripple ripple;
     public TextViewRipple(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TextViewRipple);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AttrsRipple);
         ripple=ripple(typedArray);
         typedArray.recycle();
     }
@@ -31,9 +31,7 @@ public class TextViewRipple extends AppCompatTextView implements IRipple {
     }
     @Override
     public Ripple ripple(TypedArray typedArray) {
-        return new Ripple(this, typedArray)
-                .setColorRipple(R.styleable.TextViewRipple_cy_colorRipple)
-                .setHavaRipple(R.styleable.TextViewRipple_cy_haveRipple);
+        return new Ripple(this, typedArray);
     }
 
     @Override

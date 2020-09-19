@@ -23,7 +23,7 @@ public class ImageViewRipple extends AppCompatImageView implements IRipple {
     private Ripple ripple;
     public ImageViewRipple(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ImageViewRipple);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AttrsRipple);
         ripple=ripple(typedArray);
         typedArray.recycle();
     }
@@ -34,9 +34,7 @@ public class ImageViewRipple extends AppCompatImageView implements IRipple {
     }
     @Override
     public Ripple ripple(TypedArray typedArray) {
-        return new Ripple(this, typedArray)
-                .setColorRipple(R.styleable.ImageViewRipple_cy_colorRipple)
-                .setHavaRipple(R.styleable.ImageViewRipple_cy_haveRipple);
+        return new Ripple(this, typedArray);
     }
 
     @Override

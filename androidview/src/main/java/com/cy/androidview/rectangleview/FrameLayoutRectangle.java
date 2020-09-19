@@ -21,7 +21,7 @@ public class FrameLayoutRectangle extends FrameLayout implements IRectangle, IRi
 
     public FrameLayoutRectangle(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.FrameLayoutRectangle);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AttrsRectangle);
         ripple = ripple(typedArray);
         rectangleRatio = rectangle(typedArray);
         typedArray.recycle();
@@ -30,7 +30,7 @@ public class FrameLayoutRectangle extends FrameLayout implements IRectangle, IRi
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        rectangleRatio.rectangle(new RectangleRatio.MeasureSizeCallback() {
+        rectangleRatio.rectangle(new MeasureSizeCallback() {
             @Override
             public void setMeasuredSize(int measuredWidth, int measuredHeight) {
                 setMeasuredDimension(measuredWidth, measuredHeight);
@@ -45,16 +45,12 @@ public class FrameLayoutRectangle extends FrameLayout implements IRectangle, IRi
     }
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {
-        return new RectangleRatio(this, typedArray)
-                .setBaseOnWidthOrHeight(R.styleable.FrameLayoutRectangle_cy_baseOnWidthOrHeight)
-                .setHeightWidthRatio(R.styleable.FrameLayoutRectangle_cy_heightWidthRatio);
+        return new RectangleRatio(this, typedArray);
     }
 
     @Override
     public Ripple ripple(TypedArray typedArray) {
-        return new Ripple(this, typedArray)
-                .setColorRipple(R.styleable.FrameLayoutRectangle_cy_colorRipple)
-                .setHavaRipple(R.styleable.FrameLayoutRectangle_cy_haveRipple);
+        return new Ripple(this, typedArray);
     }
 
     @Override

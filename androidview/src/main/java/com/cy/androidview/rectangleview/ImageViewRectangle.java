@@ -25,7 +25,7 @@ public class ImageViewRectangle extends AppCompatImageView implements IRectangle
     private OnClickListener onClickListener;
     public ImageViewRectangle(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ImageViewRectangle);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AttrsRectangle);
         colorFilter=colorFilter(typedArray);
         rectangleRatio = rectangle(typedArray);
         typedArray.recycle();
@@ -34,7 +34,7 @@ public class ImageViewRectangle extends AppCompatImageView implements IRectangle
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        rectangleRatio.rectangle(new RectangleRatio.MeasureSizeCallback() {
+        rectangleRatio.rectangle(new MeasureSizeCallback() {
             @Override
             public void setMeasuredSize(int measuredWidth, int measuredHeight) {
                 setMeasuredDimension(measuredWidth, measuredHeight);
@@ -43,9 +43,7 @@ public class ImageViewRectangle extends AppCompatImageView implements IRectangle
     }
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {
-        return new RectangleRatio(this,typedArray)
-                .setBaseOnWidthOrHeight(R.styleable.ImageViewRectangle_cy_baseOnWidthOrHeight)
-                .setHeightWidthRatio(R.styleable.ImageViewRectangle_cy_heightWidthRatio);
+        return new RectangleRatio(this,typedArray);
     }
     @Override
     public void setOnClickListener(@Nullable OnClickListener l) {

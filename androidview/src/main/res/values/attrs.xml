@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="cy_round_as_circle" format="boolean" />
+    <!--全部圆角半径-->
+
+    <!--描边颜色／半径-->
+    <attr name="cy_stroke_color" format="color|reference" />
+    <attr name="cy_stroke_width" format="integer|dimension" />
+
+    <!-- 是否剪裁 RCLayout 的背景 -->
+    <attr name="cy_clip_background" format="boolean" />
+
+
+
     <!-- RectangleView???????????????????????????????????????????????????-->
     <attr name="cy_heightWidthRatio" format="float|reference" />
     <attr name="cy_baseOnWidthOrHeight" format="boolean" />
@@ -114,6 +126,12 @@
         <attr name="cy_heightWidthRatio" />
         <attr name="cy_baseOnWidthOrHeight" />
     </declare-styleable>
+    <declare-styleable name="AttrsRectangle">
+        <attr name="cy_colorRipple" />
+        <attr name="cy_haveRipple" />
+        <attr name="cy_heightWidthRatio" />
+        <attr name="cy_baseOnWidthOrHeight" />
+    </declare-styleable>
     <!--????????????????????????????????????????????????????????????????????-->
     <declare-styleable name="TextViewRectangle">
         <attr name="cy_colorRipple" />
@@ -127,9 +145,13 @@
         <attr name="cy_colorRipple" />
         <attr name="cy_haveRipple" />
     </declare-styleable>
+    <declare-styleable name="AttrsRipple">
+        <attr name="cy_colorRipple" />
+        <attr name="cy_haveRipple" />
+    </declare-styleable>
     <!--????????????????????????????????????????????????????????????????????-->
 
-    <declare-styleable name="ScreenPercentFrameLayout">
+    <declare-styleable name="ScreenPercentRelativeLayout">
         <attr name="cy_colorRipple" />
         <attr name="cy_haveRipple" />
         <attr name="cy_width_percent" format="float" />
@@ -174,6 +196,21 @@
     <!--SelectorView???????????????????????????????????????????????????????????-->
 
 
+    <declare-styleable name="AttrsRound">
+        <attr name="cy_colorRipple" />
+        <attr name="cy_haveRipple" />
+        <attr name="cy_heightWidthRatio" />
+        <attr name="cy_baseOnWidthOrHeight" />
+        <attr name="cy_radiusCorner" />
+        <attr name="cy_radiusTopLeft" />
+        <attr name="cy_radiusTopRight" />
+        <attr name="cy_radiusBottomRight" />
+        <attr name="cy_radiusBottomLeft" />
+        <attr name="cy_round_as_circle"  />
+        <attr name="cy_stroke_color"  />
+        <attr name="cy_stroke_width"  />
+        <attr name="cy_clip_background" />
+    </declare-styleable>
     <declare-styleable name="FrameLayoutRound">
         <attr name="cy_colorRipple" />
         <attr name="cy_haveRipple" />
@@ -184,6 +221,10 @@
         <attr name="cy_radiusTopRight" />
         <attr name="cy_radiusBottomRight" />
         <attr name="cy_radiusBottomLeft" />
+        <attr name="cy_round_as_circle"  />
+        <attr name="cy_stroke_color"  />
+        <attr name="cy_stroke_width"  />
+        <attr name="cy_clip_background" />
     </declare-styleable>
 
     <declare-styleable name="ImageViewRound">
@@ -196,6 +237,10 @@
         <attr name="cy_radiusTopRight" />
         <attr name="cy_radiusBottomRight" />
         <attr name="cy_radiusBottomLeft" />
+        <attr name="cy_round_as_circle"  />
+        <attr name="cy_stroke_color"  />
+        <attr name="cy_stroke_width"  />
+        <attr name="cy_clip_background" />
     </declare-styleable>
     <declare-styleable name="LinearLayoutRound">
         <attr name="cy_colorRipple" />
@@ -207,8 +252,12 @@
         <attr name="cy_radiusTopRight" />
         <attr name="cy_radiusBottomRight" />
         <attr name="cy_radiusBottomLeft" />
+        <attr name="cy_round_as_circle"  />
+        <attr name="cy_stroke_color"  />
+        <attr name="cy_stroke_width"  />
+        <attr name="cy_clip_background" />
     </declare-styleable>
-    <declare-styleable name="RelativeLayoutRound">
+    <declare-styleable name="RelativeLayoutRound" >
         <attr name="cy_colorRipple" />
         <attr name="cy_haveRipple" />
         <attr name="cy_heightWidthRatio" />
@@ -218,6 +267,10 @@
         <attr name="cy_radiusTopRight" />
         <attr name="cy_radiusBottomRight" />
         <attr name="cy_radiusBottomLeft" />
+        <attr name="cy_round_as_circle"  />
+        <attr name="cy_stroke_color"  />
+        <attr name="cy_stroke_width"  />
+        <attr name="cy_clip_background" />
     </declare-styleable>
     <declare-styleable name="TextViewRound">
         <attr name="cy_colorRipple" />
@@ -229,6 +282,10 @@
         <attr name="cy_radiusTopRight" />
         <attr name="cy_radiusBottomRight" />
         <attr name="cy_radiusBottomLeft" />
+        <attr name="cy_round_as_circle"  />
+        <attr name="cy_stroke_color"  />
+        <attr name="cy_stroke_width"  />
+        <attr name="cy_clip_background" />
     </declare-styleable>
     <declare-styleable name="ButtonRound">
         <attr name="cy_colorRipple" />
@@ -240,8 +297,49 @@
         <attr name="cy_radiusTopRight" />
         <attr name="cy_radiusBottomRight" />
         <attr name="cy_radiusBottomLeft" />
+        <attr name="cy_round_as_circle"  />
+        <attr name="cy_stroke_color"  />
+        <attr name="cy_stroke_width"  />
+        <attr name="cy_clip_background" />
     </declare-styleable>
     <declare-styleable name="ButtonShape">
+        <attr name="cy_heightWidthRatio" />
+        <attr name="cy_baseOnWidthOrHeight" />
+        <attr name="cy_colorRipple" />
+        <attr name="cy_haveRipple" />
+
+        <!--???????????????????????????????????????????????????????????????-->
+        <attr name="cy_colorFill" />
+        <attr name="cy_radiusCorner" />
+        <attr name="cy_radiusTopLeft" />
+        <attr name="cy_radiusTopRight" />
+        <attr name="cy_radiusBottomRight" />
+        <attr name="cy_radiusBottomLeft" />
+        <attr name="cy_radiusGradient" />
+        <!--??????????????????????????????????????????????????????????????-->
+        <attr name="cy_colorStart" />
+        <attr name="cy_colorCenter" />
+        <attr name="cy_colorEnd" />
+        <attr name="cy_centerX" />
+        <attr name="cy_centerY" />
+        <attr name="cy_angle" />
+        <!--??????????????????????????????????????????????????????????-->
+        <attr name="cy_strokeWidth" />
+        <attr name="cy_strokePaddingLeft" />
+        <attr name="cy_strokePaddingTop" />
+        <attr name="cy_strokePaddingRight" />
+        <attr name="cy_strokePaddingBottom" />
+        <attr name="cy_strokeColor" />
+        <attr name="cy_strokeDashWidth" />
+        <attr name="cy_strokeDashGap" />
+        <!--????????????????????????????????????????????????????????????????????-->
+
+        <attr name="cy_orientationGradient" />
+        <attr name="cy_gradientType" />
+        <attr name="cy_shapeType" />
+
+    </declare-styleable>
+    <declare-styleable name="AttrsShape">
         <attr name="cy_heightWidthRatio" />
         <attr name="cy_baseOnWidthOrHeight" />
         <attr name="cy_colorRipple" />
@@ -427,6 +525,14 @@
 
     </declare-styleable>
     <declare-styleable name="CheckBoxSelector">
+        <attr name="cy_backgroundUnChecked" />
+        <attr name="cy_backgroundChecked" />
+        <attr name="cy_textColorUnChecked" />
+        <attr name="cy_textColorChecked" />
+        <attr name="cy_buttonUnChecked" />
+        <attr name="cy_buttonChecked" />
+    </declare-styleable>
+    <declare-styleable name="AttrsSelector">
         <attr name="cy_backgroundUnChecked" />
         <attr name="cy_backgroundChecked" />
         <attr name="cy_textColorUnChecked" />

@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.cy.androidview.R;
 import com.cy.androidview.rectangleview.IRectangle;
+import com.cy.androidview.rectangleview.MeasureSizeCallback;
 import com.cy.androidview.rectangleview.RectangleRatio;
 import com.cy.androidview.rippleview.IRipple;
 import com.cy.androidview.rippleview.RelativeLayoutRipple;
@@ -28,7 +29,7 @@ public class RelativeLayoutShape extends RelativeLayout implements IShape, IRect
     private ShapeBackground shapeBackground;
     public RelativeLayoutShape(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.RelativeLayoutShape);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AttrsShape);
         ripple=ripple(typedArray);
         shapeBackground=shape(typedArray);
         rectangleRatio = rectangle(typedArray);
@@ -38,7 +39,7 @@ public class RelativeLayoutShape extends RelativeLayout implements IShape, IRect
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        rectangleRatio.rectangle(new RectangleRatio.MeasureSizeCallback() {
+        rectangleRatio.rectangle(new MeasureSizeCallback() {
             @Override
             public void setMeasuredSize(int measuredWidth, int measuredHeight) {
                 setMeasuredDimension(measuredWidth, measuredHeight);
@@ -55,44 +56,17 @@ public class RelativeLayoutShape extends RelativeLayout implements IShape, IRect
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {
         return new RectangleRatio(this,typedArray)
-                .setBaseOnWidthOrHeight(R.styleable.RelativeLayoutShape_cy_baseOnWidthOrHeight)
-                .setHeightWidthRatio(R.styleable.RelativeLayoutShape_cy_heightWidthRatio,0);
+                .setHeightWidthRatio(R.styleable.AttrsShape_cy_heightWidthRatio,0);
     }
 
     @Override
     public Ripple ripple(TypedArray typedArray) {
-        return new Ripple(this, typedArray)
-                .setColorRipple(R.styleable.RelativeLayoutShape_cy_colorRipple)
-                .setHavaRipple(R.styleable.RelativeLayoutShape_cy_haveRipple);
+        return new Ripple(this, typedArray);
     }
 
     @Override
     public ShapeBackground shape(TypedArray typedArray) {
         return new ShapeBackground(this,typedArray)
-                .setAngle(R.styleable.RelativeLayoutShape_cy_angle)
-                .setCenterX(R.styleable.RelativeLayoutShape_cy_centerX)
-                .setCenterY(R.styleable.RelativeLayoutShape_cy_centerY)
-                .setColorCenter(R.styleable.RelativeLayoutShape_cy_colorCenter)
-                .setColorEnd(R.styleable.RelativeLayoutShape_cy_colorEnd)
-                .setColorFill(R.styleable.RelativeLayoutShape_cy_colorFill)
-                .setColorStart(R.styleable.RelativeLayoutShape_cy_colorStart)
-                .setGradientType(R.styleable.RelativeLayoutShape_cy_gradientType)
-                .setOrientationGradient(R.styleable.RelativeLayoutShape_cy_orientationGradient)
-                .setRadiusBottomLeft(R.styleable.RelativeLayoutShape_cy_radiusBottomLeft)
-                .setRadiusBottomRight(R.styleable.RelativeLayoutShape_cy_radiusBottomRight)
-                .setRadiusCorner(R.styleable.RelativeLayoutShape_cy_radiusCorner)
-                .setRadiusGradient(R.styleable.RelativeLayoutShape_cy_radiusGradient)
-                .setRadiusTopLeft(R.styleable.RelativeLayoutShape_cy_radiusTopLeft)
-                .setRadiusTopRight(R.styleable.RelativeLayoutShape_cy_radiusTopRight)
-                .setShapeType(R.styleable.RelativeLayoutShape_cy_shapeType)
-                .setStrokeColor(R.styleable.RelativeLayoutShape_cy_strokeColor)
-                .setStrokeDashGap(R.styleable.RelativeLayoutShape_cy_strokeDashGap)
-                .setStrokeDashWidth(R.styleable.RelativeLayoutShape_cy_strokeDashWidth)
-                .setStrokePaddingBottom(R.styleable.RelativeLayoutShape_cy_strokePaddingBottom)
-                .setStrokePaddingLeft(R.styleable.RelativeLayoutShape_cy_strokePaddingLeft)
-                .setStrokePaddingRight(R.styleable.RelativeLayoutShape_cy_strokePaddingRight)
-                .setStrokePaddingTop(R.styleable.RelativeLayoutShape_cy_strokePaddingTop)
-                .setStrokeWidth(R.styleable.RelativeLayoutShape_cy_strokeWidth)
                 .shape();
     }
 
