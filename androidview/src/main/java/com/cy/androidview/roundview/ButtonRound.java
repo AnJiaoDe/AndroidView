@@ -251,7 +251,7 @@ public class ButtonRound extends AppCompatButton implements Checkable, RCAttrs ,
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {
         return new RectangleRatio(this,typedArray)
-                .setHeightWidthRatio(R.styleable.AttrsShape_cy_heightWidthRatio,0);
+                .setHeightWidthRatio(R.styleable.AttrsRound_cy_heightWidthRatio,0);
     }
 
     @Override

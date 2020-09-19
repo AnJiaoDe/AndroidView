@@ -46,6 +46,25 @@
             android:gravity="center"
             android:layout_height="40dp"/>
     </com.cy.androidview.roundview.LinearLayoutRound>
+    <com.cy.androidview.roundview.LinearLayoutRound
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        android:background="#eee"
+        app:cy_round_as_circle="true">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/hg"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:text="视频"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_height="40dp"/>
+    </com.cy.androidview.roundview.LinearLayoutRound>
     <com.cy.androidview.roundview.ImageViewRound
         android:layout_width="70dp"
         android:layout_height="70dp"
@@ -53,4 +72,12 @@
         android:scaleType="centerCrop"
         android:src="@drawable/hg"
         app:cy_round_as_circle="true"/>
+    <com.cy.androidview.roundview.ImageViewRound
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="10dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/hg"
+        app:cy_radiusCorner="10dp"
+        app:cy_heightWidthRatio="0.6"/>
 </LinearLayout>
