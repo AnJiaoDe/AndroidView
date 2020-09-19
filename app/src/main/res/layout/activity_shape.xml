@@ -16,8 +16,8 @@
 
         <!--圆角+填充色-->
         <com.cy.androidview.shapeview.FrameLayoutShape
-            android:layout_width="100dp"
             android:id="@+id/rsf"
+            android:layout_width="100dp"
             android:layout_height="40dp"
             app:cy_colorFill="#fff"
             app:cy_radiusCorner="18dp">
@@ -192,7 +192,6 @@
             app:cy_radiusGradient="10dp">
 
         </com.cy.androidview.shapeview.FrameLayoutShape>
-
     </LinearLayout>
 
     <LinearLayout

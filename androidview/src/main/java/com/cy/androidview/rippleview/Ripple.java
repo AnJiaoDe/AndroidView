@@ -25,7 +25,7 @@ import com.cy.androidview.R;
  * @Version: 1.0
  */
 public class Ripple {
-    private int colorRipple = 0x11000000;
+    private int colorRipple = 0x22000000;
     private boolean havaRipple = true;
     private TypedArray typedArray;
     private View view;
