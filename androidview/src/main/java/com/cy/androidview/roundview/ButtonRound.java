@@ -27,6 +27,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Checkable;
 
 import androidx.appcompat.widget.AppCompatButton;
@@ -63,6 +64,8 @@ public class ButtonRound extends AppCompatButton implements Checkable, RCAttrs ,
         ripple = ripple(typedArray);
         rectangleRatio = rectangle(typedArray);
         typedArray.recycle();
+        setLayerType(View.LAYER_TYPE_HARDWARE,null);
+
     }
 
     @Override

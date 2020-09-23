@@ -80,4 +80,12 @@
         android:src="@drawable/hg"
         app:cy_radiusCorner="10dp"
         app:cy_heightWidthRatio="0.6"/>
+    <com.cy.androidview.roundview.ImageViewRound
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="10dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/hg"
+        app:cy_radiusCorner="10dp"
+        app:cy_heightWidthRatio="1.3"/>
 </LinearLayout>

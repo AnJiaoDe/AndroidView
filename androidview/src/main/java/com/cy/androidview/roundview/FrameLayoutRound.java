@@ -27,6 +27,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Checkable;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -61,6 +62,8 @@ public class FrameLayoutRound extends FrameLayout implements Checkable, RCAttrs,
         ripple = ripple(typedArray);
         rectangleRatio = rectangle(typedArray);
         typedArray.recycle();
+        setLayerType(View.LAYER_TYPE_HARDWARE,null);
+
     }
 
     @Override
