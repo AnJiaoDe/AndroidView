@@ -34,6 +34,8 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageView;
 
 import com.cy.androidview.R;
+import com.cy.androidview.colorfilterview.ColorFilterCy;
+import com.cy.androidview.colorfilterview.IColorFilter;
 import com.cy.androidview.rectangleview.IRectangle;
 import com.cy.androidview.rectangleview.MeasureSizeCallback;
 import com.cy.androidview.rectangleview.RectangleRatio;
@@ -43,11 +45,12 @@ import com.cy.androidview.roundview.helper.RCAttrs;
 import com.cy.androidview.roundview.helper.RCHelper;
 
 
-public class ImageViewRound extends AppCompatImageView implements Checkable, RCAttrs , IRectangle, IRipple {
+public class ImageViewRound extends AppCompatImageView implements Checkable, RCAttrs , IRectangle, IRipple, IColorFilter {
 
     RCHelper mRCHelper;
     private RectangleRatio rectangleRatio;
     private Ripple ripple;
+    private ColorFilterCy colorFilter;
     public ImageViewRound(Context context) {
         this(context, null);
     }
@@ -255,7 +258,23 @@ public class ImageViewRound extends AppCompatImageView implements Checkable, RCA
         return new RectangleRatio(this,typedArray)
                 .setHeightWidthRatio(R.styleable.AttrsRound_cy_heightWidthRatio,0);
     }
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        colorFilter.colorFilter(event);
+        return super.onTouchEvent(event);
+    }
 
+    @Override
+    public ColorFilterCy colorFilter(TypedArray typedArray) {
+        return new ColorFilterCy(this, typedArray)
+                .setHavaFilter(R.styleable.ImageViewColorFilter_cy_haveFilter)
+                .setLightOrDark(R.styleable.ImageViewColorFilter_cy_lightOrDark)
+                .setLightNumber(R.styleable.ImageViewColorFilter_cy_lightNumber);
+    }
+    @Override
+    public ColorFilterCy getColorFilterCy() {
+        return colorFilter;
+    }
     @Override
     public Ripple ripple(TypedArray typedArray) {
         return new Ripple(this, typedArray);

@@ -1,7 +1,11 @@
 package com.cy.androidview.colorfilterview;
 
 import android.content.res.TypedArray;
+import android.graphics.ColorMatrixColorFilter;
+import android.os.Handler;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.StyleableRes;
 
@@ -30,7 +34,7 @@ public class ColorFilterCy {
 //            0, 0, 0, 1, 0};
 
     private TypedArray typedArray;
-    private View view;
+    private ImageView imageView;
     private boolean havaFilter = true;
     private boolean lightOrDark = false;
     private float lightNumber = -50;
@@ -41,8 +45,8 @@ public class ColorFilterCy {
             0, 0, 1, 0, 0,
             0, 0, 0, 1, 0};
 
-    public ColorFilterCy(View view, TypedArray typedArray) {
-        this.view = view;
+    public ColorFilterCy(ImageView imageView, TypedArray typedArray) {
+        this.imageView = imageView;
         this.typedArray = typedArray;
     }
 
@@ -99,12 +103,24 @@ public class ColorFilterCy {
     }
 
 
-    public ColorFilterCy colorFilter() {
+    public ColorFilterCy colorFilter(MotionEvent event) {
         if (!havaFilter) return this;
         //滤镜，变暗或者变亮，负数，变暗(值越大则效果越深)，正数，变亮
         filters[4] = lightNumber;
         filters[9] = lightNumber;
         filters[14] = lightNumber;
+
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                    imageView.setColorFilter(new ColorMatrixColorFilter(filters));
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            imageView.clearColorFilter();
+                        }
+                    }, 100);
+                break;
+        }
         return this;
     }
 }

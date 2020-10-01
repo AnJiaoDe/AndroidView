@@ -31,19 +31,7 @@ public class ImageViewColorFilter extends AppCompatImageView implements IColorFi
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                if (colorFilter.isHavaFilter()){
-                    setColorFilter(new ColorMatrixColorFilter(colorFilter.getFilters()));
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            clearColorFilter();
-                        }
-                    }, 100);
-                }
-                break;
-        }
+        colorFilter.colorFilter(event);
         return super.onTouchEvent(event);
     }
 
@@ -52,8 +40,7 @@ public class ImageViewColorFilter extends AppCompatImageView implements IColorFi
         return new ColorFilterCy(this, typedArray)
                 .setHavaFilter(R.styleable.ImageViewColorFilter_cy_haveFilter)
                 .setLightOrDark(R.styleable.ImageViewColorFilter_cy_lightOrDark)
-                .setLightNumber(R.styleable.ImageViewColorFilter_cy_lightNumber)
-                .colorFilter();
+                .setLightNumber(R.styleable.ImageViewColorFilter_cy_lightNumber);
     }
 
     @Override

@@ -22,7 +22,6 @@ import com.cy.androidview.colorfilterview.IColorFilter;
 public class ImageViewRectangle extends AppCompatImageView implements IRectangle, IColorFilter {
     private RectangleRatio rectangleRatio;
     private ColorFilterCy colorFilter;
-    private OnClickListener onClickListener;
     public ImageViewRectangle(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AttrsRectangle);
@@ -45,23 +44,10 @@ public class ImageViewRectangle extends AppCompatImageView implements IRectangle
     public RectangleRatio rectangle(TypedArray typedArray) {
         return new RectangleRatio(this,typedArray);
     }
-    @Override
-    public void setOnClickListener(@Nullable OnClickListener l) {
-        onClickListener = l;
-    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                if (colorFilter.isHavaFilter())
-                    setColorFilter(new ColorMatrixColorFilter(colorFilter.getFilters()));
-                return true;
-            case MotionEvent.ACTION_UP:
-                if (onClickListener != null) onClickListener.onClick(this);
-                clearColorFilter();
-                return true;
-        }
+        colorFilter.colorFilter(event);
         return super.onTouchEvent(event);
     }
 
@@ -70,8 +56,7 @@ public class ImageViewRectangle extends AppCompatImageView implements IRectangle
         return new ColorFilterCy(this, typedArray)
                 .setHavaFilter(R.styleable.ImageViewColorFilter_cy_haveFilter)
                 .setLightOrDark(R.styleable.ImageViewColorFilter_cy_lightOrDark)
-                .setLightNumber(R.styleable.ImageViewColorFilter_cy_lightNumber)
-                .colorFilter();
+                .setLightNumber(R.styleable.ImageViewColorFilter_cy_lightNumber);
     }
 
     @Override

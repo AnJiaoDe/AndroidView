@@ -67,9 +67,9 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <!--imageview,默认滤镜效果-->
-        <com.cy.androidview.colorfilterview.ImageViewColorFilter
+        <com.cy.androidview.rectangleview.ImageViewRectangle
             android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_height="200dp"
             android:layout_marginTop="10dp"
             android:id="@+id/ivcf1"
             android:scaleType="centerCrop"
