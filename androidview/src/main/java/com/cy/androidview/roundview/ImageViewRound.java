@@ -66,6 +66,8 @@ public class ImageViewRound extends AppCompatImageView implements Checkable, RCA
         mRCHelper.initAttrs(context, typedArray);
         ripple = ripple(typedArray);
         rectangleRatio = rectangle(typedArray);
+        colorFilter=colorFilter(typedArray);
+
         typedArray.recycle();
         setLayerType(View.LAYER_TYPE_HARDWARE,null);
     }
