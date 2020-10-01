@@ -15,7 +15,6 @@
         android:id="@+id/rpfl"
         android:layout_width="match_parent"
         android:background="#fff"
-        app:cy_colorRipple="#f00"
         android:layout_height="40dp" />
 
     <!--自定义水波纹颜色-->
@@ -25,7 +24,7 @@
         android:layout_height="60dp"
         android:layout_marginTop="10dp"
         android:background="#99ff0000"
-        app:cy_colorRipple="#fff" />
+        app:cy_colorRipple="#00ff00" />
 
     <com.cy.androidview.rippleview.ImageViewRipple
         android:id="@+id/civ1"
@@ -64,6 +63,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:id="@+id/ll"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <!--imageview,默认滤镜效果-->
@@ -71,6 +71,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginTop="10dp"
+            android:id="@+id/ivcf1"
             android:scaleType="centerCrop"
             android:src="@drawable/hg" />
 

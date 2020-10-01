@@ -3,8 +3,10 @@ package com.cy.androidview.colorfilterview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.ColorMatrixColorFilter;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -19,7 +21,6 @@ import com.cy.androidview.R;
 public class ImageViewColorFilter extends AppCompatImageView implements IColorFilter {
 
     private ColorFilterCy colorFilter;
-    private OnClickListener onClickListener;
 
     public ImageViewColorFilter(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -29,21 +30,19 @@ public class ImageViewColorFilter extends AppCompatImageView implements IColorFi
     }
 
     @Override
-    public void setOnClickListener(@Nullable OnClickListener l) {
-        onClickListener = l;
-    }
-
-    @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                if (colorFilter.isHavaFilter())
+                if (colorFilter.isHavaFilter()){
                     setColorFilter(new ColorMatrixColorFilter(colorFilter.getFilters()));
-                return true;
-            case MotionEvent.ACTION_UP:
-                if (onClickListener != null) onClickListener.onClick(this);
-                clearColorFilter();
-                return true;
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            clearColorFilter();
+                        }
+                    }, 100);
+                }
+                break;
         }
         return super.onTouchEvent(event);
     }
