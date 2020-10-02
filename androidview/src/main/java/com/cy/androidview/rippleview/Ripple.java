@@ -2,11 +2,15 @@ package com.cy.androidview.rippleview;
 
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.RippleDrawable;
 import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.Shape;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 
 import androidx.annotation.DrawableRes;
@@ -60,16 +64,21 @@ public class Ripple {
         //5.0以上才有效,
         if (havaRipple && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             RippleDrawable rippleDrawable;
-            Drawable drawable = view.getBackground();
-            if (drawable == null) {
-                ShapeDrawable shapeDrawable = new ShapeDrawable();
-                shapeDrawable.setAlpha(0);
-                shapeDrawable.setBounds(view.getLeft(), view.getTop(), view.getRight(), view.getBottom());
-                //当控件设置了点击监听器，并且控件点击有效，时，才能产生水波纹
-                rippleDrawable = new RippleDrawable(ColorStateList.valueOf(colorRipple), shapeDrawable, null);
-            } else {
-                rippleDrawable = new RippleDrawable(ColorStateList.valueOf(colorRipple), drawable, null);
+            Drawable drawable_bg = view.getBackground();
+            GradientDrawable drawable_mask = null;
+            if (drawable_bg == null) {
+                drawable_bg = new ShapeDrawable();
+                drawable_bg.setAlpha(0);
+                drawable_bg.setBounds(view.getLeft(), view.getTop(), view.getRight(), view.getBottom());
+
+                drawable_mask = new GradientDrawable();
+                drawable_mask.setColor(0xffffffff);
+                drawable_mask.setCornerRadius(view.getWidth() * 1f / 2);
+                drawable_mask.setStroke(1, 0xffffffff);
             }
+            //当控件设置了点击监听器，并且控件点击有效，时，才能产生水波纹
+            rippleDrawable = new RippleDrawable(ColorStateList.valueOf(colorRipple), drawable_bg, drawable_mask);
+
             view.setBackground(rippleDrawable);
         }
         return this;
