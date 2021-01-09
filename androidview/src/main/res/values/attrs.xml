@@ -11,7 +11,6 @@
     <attr name="cy_clip_background" format="boolean" />
 
 
-
     <!-- RectangleView???????????????????????????????????????????????????-->
     <attr name="cy_heightWidthRatio" format="float|reference" />
     <attr name="cy_baseOnWidthOrHeight" format="boolean" />
@@ -206,9 +205,9 @@
         <attr name="cy_radiusTopRight" />
         <attr name="cy_radiusBottomRight" />
         <attr name="cy_radiusBottomLeft" />
-        <attr name="cy_round_as_circle"  />
-        <attr name="cy_stroke_color"  />
-        <attr name="cy_stroke_width"  />
+        <attr name="cy_round_as_circle" />
+        <attr name="cy_stroke_color" />
+        <attr name="cy_stroke_width" />
         <attr name="cy_clip_background" />
     </declare-styleable>
     <declare-styleable name="FrameLayoutRound">
@@ -221,9 +220,9 @@
         <attr name="cy_radiusTopRight" />
         <attr name="cy_radiusBottomRight" />
         <attr name="cy_radiusBottomLeft" />
-        <attr name="cy_round_as_circle"  />
-        <attr name="cy_stroke_color"  />
-        <attr name="cy_stroke_width"  />
+        <attr name="cy_round_as_circle" />
+        <attr name="cy_stroke_color" />
+        <attr name="cy_stroke_width" />
         <attr name="cy_clip_background" />
     </declare-styleable>
 
@@ -237,9 +236,9 @@
         <attr name="cy_radiusTopRight" />
         <attr name="cy_radiusBottomRight" />
         <attr name="cy_radiusBottomLeft" />
-        <attr name="cy_round_as_circle"  />
-        <attr name="cy_stroke_color"  />
-        <attr name="cy_stroke_width"  />
+        <attr name="cy_round_as_circle" />
+        <attr name="cy_stroke_color" />
+        <attr name="cy_stroke_width" />
         <attr name="cy_clip_background" />
     </declare-styleable>
     <declare-styleable name="LinearLayoutRound">
@@ -252,12 +251,12 @@
         <attr name="cy_radiusTopRight" />
         <attr name="cy_radiusBottomRight" />
         <attr name="cy_radiusBottomLeft" />
-        <attr name="cy_round_as_circle"  />
-        <attr name="cy_stroke_color"  />
-        <attr name="cy_stroke_width"  />
+        <attr name="cy_round_as_circle" />
+        <attr name="cy_stroke_color" />
+        <attr name="cy_stroke_width" />
         <attr name="cy_clip_background" />
     </declare-styleable>
-    <declare-styleable name="RelativeLayoutRound" >
+    <declare-styleable name="RelativeLayoutRound">
         <attr name="cy_colorRipple" />
         <attr name="cy_haveRipple" />
         <attr name="cy_heightWidthRatio" />
@@ -267,9 +266,9 @@
         <attr name="cy_radiusTopRight" />
         <attr name="cy_radiusBottomRight" />
         <attr name="cy_radiusBottomLeft" />
-        <attr name="cy_round_as_circle"  />
-        <attr name="cy_stroke_color"  />
-        <attr name="cy_stroke_width"  />
+        <attr name="cy_round_as_circle" />
+        <attr name="cy_stroke_color" />
+        <attr name="cy_stroke_width" />
         <attr name="cy_clip_background" />
     </declare-styleable>
     <declare-styleable name="TextViewRound">
@@ -282,9 +281,9 @@
         <attr name="cy_radiusTopRight" />
         <attr name="cy_radiusBottomRight" />
         <attr name="cy_radiusBottomLeft" />
-        <attr name="cy_round_as_circle"  />
-        <attr name="cy_stroke_color"  />
-        <attr name="cy_stroke_width"  />
+        <attr name="cy_round_as_circle" />
+        <attr name="cy_stroke_color" />
+        <attr name="cy_stroke_width" />
         <attr name="cy_clip_background" />
     </declare-styleable>
     <declare-styleable name="ButtonRound">
@@ -297,9 +296,9 @@
         <attr name="cy_radiusTopRight" />
         <attr name="cy_radiusBottomRight" />
         <attr name="cy_radiusBottomLeft" />
-        <attr name="cy_round_as_circle"  />
-        <attr name="cy_stroke_color"  />
-        <attr name="cy_stroke_width"  />
+        <attr name="cy_round_as_circle" />
+        <attr name="cy_stroke_color" />
+        <attr name="cy_stroke_width" />
         <attr name="cy_clip_background" />
     </declare-styleable>
     <declare-styleable name="ButtonShape">
@@ -554,5 +553,10 @@
         <attr name="cy_srcUnChecked" format="reference" />
         <attr name="cy_srcChecked" format="reference" />
         <attr name="cy_checked" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="FrameLayoutSelector">
+        <attr name="cy_bgUnChecked" />
+        <attr name="cy_bgChecked" />
+        <attr name="cy_checked" />
     </declare-styleable>
 </resources>
