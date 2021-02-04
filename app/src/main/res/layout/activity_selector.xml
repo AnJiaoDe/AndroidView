@@ -88,7 +88,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SelectorImageView"/>
+        android:text="SelectorImageView" />
+
     <com.cy.androidview.selectorview.ImageViewSelector
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -102,10 +103,11 @@
         android:layout_marginTop="10dp"
         app:cy_bgChecked="@drawable/hg"
         app:cy_bgUnChecked="#f00" />
-<com.cy.androidview.selectorview.FrameLayoutSelector
-    android:layout_width="match_parent"
-    app:cy_bgChecked="#f00"
-    app:cy_bgUnChecked="#ff0"
-    android:layout_marginTop="10dp"
-    android:layout_height="100dp"/>
+
+    <com.cy.androidview.selectorview.FrameLayoutSelector
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        app:cy_bgChecked="#f00"
+        app:cy_bgUnChecked="#ff0" />
 </LinearLayout>
