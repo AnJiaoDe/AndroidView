@@ -29,14 +29,8 @@ public class FrameLayoutRectangle extends FrameLayout implements IRectangle, IRi
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        rectangleRatio.rectangle(new MeasureSizeCallback() {
-            @Override
-            public void setMeasuredSize(int measuredWidth, int measuredHeight) {
-                setMeasuredDimension(measuredWidth, measuredHeight);
-                measureChildren(MeasureSpec.makeMeasureSpec(measuredWidth,MeasureSpec.EXACTLY),MeasureSpec.makeMeasureSpec(measuredHeight,MeasureSpec.EXACTLY));
-            }
-        });
+        int [] specs=rectangleRatio.rectangle(widthMeasureSpec,heightMeasureSpec);
+        super.onMeasure(specs[0], specs[1]);
     }
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {

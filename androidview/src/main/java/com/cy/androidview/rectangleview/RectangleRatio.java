@@ -56,20 +56,23 @@ public class RectangleRatio {
         return baseOnWidthOrHeight;
     }
 
-    public RectangleRatio rectangle(MeasureSizeCallback measureSizeCallback) {
-        if (heightWidthRatio == 0) return this;
+    public int [] rectangle(int widthMeasureSpec, int heightMeasureSpec) {
+        int [] widthHeightMeasureSpecs=new int[]{widthMeasureSpec,heightMeasureSpec};
+        if (heightWidthRatio == 0) return widthHeightMeasureSpecs;
         //默认基于宽，即高会和宽度一致，高由宽决定
         if (baseOnWidthOrHeight) {
             int widthSize = view.getMeasuredWidth();
-            measureSizeCallback.setMeasuredSize(widthSize, (int) (widthSize * heightWidthRatio));
+            widthHeightMeasureSpecs[0]=widthMeasureSpec;
+            widthHeightMeasureSpecs[1]=View.MeasureSpec.makeMeasureSpec((int) (widthSize * heightWidthRatio),
+                    View.MeasureSpec.EXACTLY);
         } else {
             //基于高，即宽度会和高度一致，宽度由高度决定
             int heightSize = view.getMeasuredHeight();
-            measureSizeCallback.setMeasuredSize((int) (heightSize * heightWidthRatio), heightSize);
+            widthHeightMeasureSpecs[0]=View.MeasureSpec.makeMeasureSpec((int) (heightSize * heightWidthRatio),
+                    View.MeasureSpec.EXACTLY);
+            widthHeightMeasureSpecs[1]=heightMeasureSpec;
         }
-        return this;
+        return widthHeightMeasureSpecs;
     }
-
-
 
 }

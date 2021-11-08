@@ -8,7 +8,6 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import com.cy.androidview.R;
 import com.cy.androidview.rectangleview.IRectangle;
-import com.cy.androidview.rectangleview.MeasureSizeCallback;
 import com.cy.androidview.rectangleview.RectangleRatio;
 import com.cy.androidview.rippleview.IRipple;
 import com.cy.androidview.rippleview.Ripple;
@@ -33,13 +32,8 @@ public class ButtonShape extends AppCompatButton implements IShape, IRectangle, 
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        rectangleRatio.rectangle(new MeasureSizeCallback() {
-            @Override
-            public void setMeasuredSize(int measuredWidth, int measuredHeight) {
-                setMeasuredDimension(measuredWidth, measuredHeight);
-            }
-        });
+        int [] specs=rectangleRatio.rectangle(widthMeasureSpec,heightMeasureSpec);
+        super.onMeasure(specs[0], specs[1]);
     }
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {

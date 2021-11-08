@@ -32,13 +32,8 @@ public class ImageViewRectangle extends AppCompatImageView implements IRectangle
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        rectangleRatio.rectangle(new MeasureSizeCallback() {
-            @Override
-            public void setMeasuredSize(int measuredWidth, int measuredHeight) {
-                setMeasuredDimension(measuredWidth, measuredHeight);
-            }
-        });
+        int [] specs=rectangleRatio.rectangle(widthMeasureSpec,heightMeasureSpec);
+        super.onMeasure(specs[0], specs[1]);
     }
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {
