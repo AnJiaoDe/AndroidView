@@ -232,6 +232,7 @@ public class RelativeLayoutRound extends RelativeLayout implements Checkable, RC
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec,heightMeasureSpec);
         int [] specs=rectangleRatio.rectangle(widthMeasureSpec,heightMeasureSpec);
         super.onMeasure(specs[0], specs[1]);
     }
