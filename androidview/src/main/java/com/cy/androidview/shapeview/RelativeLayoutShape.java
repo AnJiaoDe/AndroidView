@@ -3,9 +3,12 @@ package com.cy.androidview.shapeview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.cy.androidview.R;
+import com.cy.androidview.ViewMeasureUtils;
 import com.cy.androidview.rectangleview.IRectangle;
 import com.cy.androidview.rectangleview.RectangleRatio;
 import com.cy.androidview.rippleview.IRipple;
@@ -30,9 +33,10 @@ public class RelativeLayoutShape extends RelativeLayout implements IShape, IRect
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int [] specs=rectangleRatio.rectangle(widthMeasureSpec,heightMeasureSpec);
-        super.onMeasure(specs[0], specs[1]);
+    protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
+        int[] specs=rectangleRatio.rectangle(widthMeasureSpec,heightMeasureSpec);
+        super.onMeasure(specs[0],specs[1]);
+        //不要调用setMeasuredDimension，否则会导致子View的测量不灵，GG
     }
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {

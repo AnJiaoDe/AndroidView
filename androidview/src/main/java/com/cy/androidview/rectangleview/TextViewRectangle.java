@@ -3,10 +3,13 @@ package com.cy.androidview.rectangleview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.appcompat.widget.AppCompatTextView;
 
 import com.cy.androidview.R;
+import com.cy.androidview.ViewMeasureUtils;
 import com.cy.androidview.rippleview.IRipple;
 import com.cy.androidview.rippleview.Ripple;
 import com.cy.androidview.rippleview.TextViewRipple;
@@ -29,9 +32,10 @@ public class TextViewRectangle extends AppCompatTextView implements IRectangle, 
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int [] specs=rectangleRatio.rectangle(widthMeasureSpec,heightMeasureSpec);
-        super.onMeasure(specs[0], specs[1]);
+    protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
+        int[] specs=rectangleRatio.rectangle(widthMeasureSpec,heightMeasureSpec);
+        super.onMeasure(specs[0],specs[1]);
+        //不要调用setMeasuredDimension，否则会导致子View的测量不灵，GG
     }
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {

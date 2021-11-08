@@ -5,11 +5,14 @@ import android.content.res.TypedArray;
 import android.graphics.ColorMatrixColorFilter;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 
 import com.cy.androidview.R;
+import com.cy.androidview.ViewMeasureUtils;
 import com.cy.androidview.colorfilterview.ColorFilterCy;
 import com.cy.androidview.colorfilterview.IColorFilter;
 
@@ -29,11 +32,11 @@ public class ImageViewRectangle extends AppCompatImageView implements IRectangle
         rectangleRatio = rectangle(typedArray);
         typedArray.recycle();
     }
-
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int [] specs=rectangleRatio.rectangle(widthMeasureSpec,heightMeasureSpec);
-        super.onMeasure(specs[0], specs[1]);
+    protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
+        int[] specs=rectangleRatio.rectangle(widthMeasureSpec,heightMeasureSpec);
+        super.onMeasure(specs[0],specs[1]);
+        //不要调用setMeasuredDimension，否则会导致子View的测量不灵，GG
     }
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {

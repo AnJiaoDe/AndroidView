@@ -28,10 +28,12 @@ import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Checkable;
 import android.widget.FrameLayout;
 
 import com.cy.androidview.R;
+import com.cy.androidview.ViewMeasureUtils;
 import com.cy.androidview.rectangleview.IRectangle;
 import com.cy.androidview.rectangleview.RectangleRatio;
 import com.cy.androidview.rippleview.IRipple;
@@ -43,6 +45,7 @@ public class FrameLayoutRound extends FrameLayout implements Checkable, RCAttrs,
     RCHelper mRCHelper;
     private RectangleRatio rectangleRatio;
     private Ripple ripple;
+
     public FrameLayoutRound(Context context) {
         this(context, null);
     }
@@ -59,7 +62,7 @@ public class FrameLayoutRound extends FrameLayout implements Checkable, RCAttrs,
         ripple = ripple(typedArray);
         rectangleRatio = rectangle(typedArray);
         typedArray.recycle();
-        setLayerType(View.LAYER_TYPE_HARDWARE,null);
+        setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
     }
 
@@ -231,20 +234,22 @@ public class FrameLayoutRound extends FrameLayout implements Checkable, RCAttrs,
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int [] specs=rectangleRatio.rectangle(widthMeasureSpec,heightMeasureSpec);
-        //不能单纯地用setmeasuedimension,否则GG，会导致子View不灵，正确的做法是改变widthMeasureSpec和heightMeasureSpec
-        super.onMeasure(specs[0], specs[1]);
+    protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
+        int[] specs=rectangleRatio.rectangle(widthMeasureSpec,heightMeasureSpec);
+        super.onMeasure(specs[0],specs[1]);
+        //不要调用setMeasuredDimension，否则会导致子View的测量不灵，GG
     }
+
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
         ripple.ripple();
     }
+
     @Override
     public RectangleRatio rectangle(TypedArray typedArray) {
-        return new RectangleRatio(this,typedArray)
-                .setHeightWidthRatio(R.styleable.AttrsRound_cy_heightWidthRatio,0);
+        return new RectangleRatio(this, typedArray)
+                .setHeightWidthRatio(R.styleable.AttrsRound_cy_heightWidthRatio, 0);
     }
 
     @Override
