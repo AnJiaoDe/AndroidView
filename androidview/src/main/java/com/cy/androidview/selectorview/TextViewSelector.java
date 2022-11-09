@@ -106,9 +106,6 @@ public class TextViewSelector extends AppCompatTextView {
     private void setResOnChecked() {
         if (backgroundCheckedID != -1)
             setBackgroundResource(backgroundCheckedID);
-    }
-
-    private void setTvColorOnChecked() {
         if (tvColorChecked != -1)
             setTextColor(tvColorChecked);
     }
@@ -117,9 +114,6 @@ public class TextViewSelector extends AppCompatTextView {
     private void setResOnUnChecked() {
         if (backgroundID != -1)
             setBackgroundResource(backgroundID);
-    }
-
-    private void setTvColorOnUnChecked() {
         if (tvColorUnChecked != -1)
             setTextColor(tvColorUnChecked);
     }
