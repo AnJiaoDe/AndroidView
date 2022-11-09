@@ -34,18 +34,18 @@ public class FrameLayoutSelector extends FrameLayout {
         super(context, attrs);
 
         TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.FrameLayoutSelector);
-        backgroundID = arr.getResourceId(R.styleable.ImageViewSelector_cy_bgUnChecked, -1);//未选中时的背景
-        backgroundCheckedID = arr.getResourceId(R.styleable.ImageViewSelector_cy_bgChecked, -1);//选中时的背景
+        backgroundID = arr.getResourceId(R.styleable.FrameLayoutSelector_cy_bgUnChecked, -1);//未选中时的背景
+        backgroundCheckedID = arr.getResourceId(R.styleable.FrameLayoutSelector_cy_bgChecked, -1);//选中时的背景
 
         if (backgroundID == -1) {
-            bg_color = arr.getColor(R.styleable.ImageViewSelector_cy_bgUnChecked, 0x00000000);//未选中时的背景颜色
+            bg_color = arr.getColor(R.styleable.FrameLayoutSelector_cy_bgUnChecked, 0x00000000);//未选中时的背景颜色
 
         }
         if (backgroundCheckedID == -1) {
-            bg_checked_color = arr.getColor(R.styleable.ImageViewSelector_cy_bgChecked, 0x00000000);//选中时的背景颜色
+            bg_checked_color = arr.getColor(R.styleable.FrameLayoutSelector_cy_bgChecked, 0x00000000);//选中时的背景颜色
 
         }
-        isChecked = arr.getBoolean(R.styleable.ImageViewSelector_cy_checked, false);//是否选中
+        isChecked = arr.getBoolean(R.styleable.FrameLayoutSelector_cy_checked, false);//是否选中
 
 
         if (isChecked()) {
@@ -60,7 +60,6 @@ public class FrameLayoutSelector extends FrameLayout {
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("onClick", "+++++++++++++++++");
                 setChecked(!isChecked);
                 if (onCheckedChangeListener != null) {
                     onCheckedChangeListener.onCheckedChanged(FrameLayoutSelector.this, isChecked);

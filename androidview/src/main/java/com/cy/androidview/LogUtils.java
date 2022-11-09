@@ -7,15 +7,19 @@ import android.util.Log;
  */
 
 public class LogUtils {
-    private static boolean DEBUG = true;
+    private static boolean DEBUG = BuildConfig.DEBUG;
 
     private LogUtils() {
     }
-
-    public static synchronized void debug(boolean debug) {
-        DEBUG = debug;
+    public static boolean isDEBUG() {
+        return DEBUG;
     }
 
+    public static void logD(Object tag, Object content) {
+        if(DEBUG==false)return;
+        if (tag == null) tag = "LOG_I";
+        Log.d(String.valueOf(tag), "----------------------------------->>>>" + content);
+    }
     public static void logI(Object tag, Object content) {
         if(DEBUG==false)return;
         if (tag == null) tag = "LOG_I";
@@ -28,6 +32,9 @@ public class LogUtils {
     }
 
 
+    public static void logD(Object content) {
+        logD(null,content);
+    }
     public static void logI(Object content) {
         logI(null,content);
     }
