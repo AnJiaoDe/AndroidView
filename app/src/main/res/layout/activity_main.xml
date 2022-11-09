@@ -9,7 +9,6 @@
     android:orientation="vertical"
     android:padding="10dp">
 
-
     <Button
         android:id="@+id/btn_click"
         android:layout_width="match_parent"
@@ -33,6 +32,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="roundView" />
+    <Button
+        android:id="@+id/btn_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="shadowView" />
 
     <Button
         android:id="@+id/btn_selector"

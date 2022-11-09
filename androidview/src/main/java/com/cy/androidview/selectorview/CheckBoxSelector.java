@@ -77,7 +77,7 @@ public class CheckBoxSelector extends AppCompatCheckBox {
     }
 
     @Override
-    public void setOnCheckedChangeListener(OnCheckedChangeListener listener) {
+    public  void setOnCheckedChangeListener(OnCheckedChangeListener listener) {
         if (myListener) {
             super.setOnCheckedChangeListener(listener);
             myListener = false;

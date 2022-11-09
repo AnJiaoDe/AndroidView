@@ -559,4 +559,9 @@
         <attr name="cy_bgChecked" />
         <attr name="cy_checked" />
     </declare-styleable>
+    <declare-styleable name="TextViewSelector">
+        <attr name="cy_bgUnChecked" />
+        <attr name="cy_bgChecked" />
+        <attr name="cy_checked" />
+    </declare-styleable>
 </resources>

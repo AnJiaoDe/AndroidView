@@ -61,15 +61,14 @@ public class Ripple {
     }
 
     public Ripple ripple() {
-        //5.0以上才有效,
-//        if (havaRipple && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-//            RippleDrawable rippleDrawable;
-//            Drawable drawable_bg = view.getBackground();
-//            GradientDrawable drawable_mask = null;
-//            if (drawable_bg == null) {
-//                drawable_bg = new ShapeDrawable();
-//                drawable_bg.setAlpha(0);
-//                drawable_bg.setBounds(view.getLeft(), view.getTop(), view.getRight(), view.getBottom());
+        //耗内存极其严重
+//        RippleDrawable rippleDrawable;
+//        Drawable drawable_bg = view.getBackground();
+//        GradientDrawable drawable_mask = null;
+//        if (drawable_bg == null) {
+//            drawable_bg = new ShapeDrawable();
+//            drawable_bg.setAlpha(0);
+//            drawable_bg.setBounds(view.getLeft(), view.getTop(), view.getRight(), view.getBottom());
 //
 ////                drawable_mask = new GradientDrawable();
 ////                drawable_mask.setColor(0xffffffff);
@@ -88,12 +87,11 @@ public class Ripple {
 ////                    drawable_mask.setCornerRadius(view.getWidth() * 1f / 2);
 ////                }
 ////                drawable_mask.setStroke(1, 0xffffffff);
-//            }
-//            //当控件设置了点击监听器，并且控件点击有效，时，才能产生水波纹
-//            rippleDrawable = new RippleDrawable(ColorStateList.valueOf(colorRipple), drawable_bg, drawable_mask);
-//
-//            view.setBackground(rippleDrawable);
 //        }
+//        //当控件设置了点击监听器，并且控件点击有效，时，才能产生水波纹
+//        rippleDrawable = new RippleDrawable(ColorStateList.valueOf(colorRipple), drawable_bg, drawable_mask);
+//
+//        view.setBackground(rippleDrawable);
         return this;
     }
 
