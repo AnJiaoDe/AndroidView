@@ -43,8 +43,9 @@ public class RadioButtonSelector extends AppCompatRadioButton {
         buttonRes = arr.getResourceId(R.styleable.RadioButtonSelector_cy_buttonUnChecked, -1);//未选中的按钮资源
         buttonCheckedRes = arr.getResourceId(R.styleable.RadioButtonSelector_cy_buttonChecked, -1);//选中的按钮资源
 
-        textColorID = arr.getColor(R.styleable.RadioButtonSelector_cy_textColorUnChecked, getCurrentTextColor());//未选中的文字颜色
-        textColorCheckedID = arr.getColor(R.styleable.RadioButtonSelector_cy_textColorChecked, getCurrentTextColor());//选中的文字颜色
+        textColorID = arr.getColor(R.styleable.RadioButtonSelector_cy_textColorUnChecked, -1);//未选中的文字颜色
+        textColorCheckedID = arr.getColor(R.styleable.RadioButtonSelector_cy_textColorChecked, -1);//选中的文字颜色
+
         arr.recycle();
 
         if (isChecked()) {

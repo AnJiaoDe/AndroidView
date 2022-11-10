@@ -8,9 +8,11 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.widget.TextViewCompat;
 
+import com.cy.androidview.LogUtils;
 import com.cy.androidview.R;
 
 /**
@@ -23,9 +25,10 @@ import com.cy.androidview.R;
  * @Version:
  */
 public class TextViewSelector extends AppCompatTextView {
-    private int backgroundID, backgroundCheckedID, tvColorUnChecked, tvColorChecked;
+    private int backgroundID, backgroundCheckedID, bg_color, bg_checked_color;
+    private int tv_color, tv_color_checked;
 
-    private OnCheckedChangeListener onCheckedChangeListener;
+    private TextViewSelector.OnCheckedChangeListener onCheckedChangeListener;
     private boolean isChecked = false;
 
     private boolean isMyListener = true;
@@ -33,20 +36,25 @@ public class TextViewSelector extends AppCompatTextView {
 
     public TextViewSelector(Context context, AttributeSet attrs) {
         super(context, attrs);
+
         TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.TextViewSelector);
         backgroundID = arr.getResourceId(R.styleable.TextViewSelector_cy_bgUnChecked, -1);//未选中时的背景
         backgroundCheckedID = arr.getResourceId(R.styleable.TextViewSelector_cy_bgChecked, -1);//选中时的背景
-        tvColorUnChecked = arr.getColor(R.styleable.TextViewSelector_cy_tvColorUnChecked, -1);//
-        tvColorChecked = arr.getColor(R.styleable.TextViewSelector_cy_tvColorChecked, -1);//
 
-//        if (backgroundID == -1) {
-//            bg_color = arr.getColor(R.styleable.TextViewSelector_cy_bgUnChecked, 0x00000000);//未选中时的背景颜色
-//        }
-//        if (backgroundCheckedID == -1) {
-//            bg_checked_color = arr.getColor(R.styleable.TextViewSelector_cy_bgChecked, 0x00000000);//选中时的背景颜色
-//        }
+        if (backgroundID == -1) {
+            bg_color = arr.getColor(R.styleable.TextViewSelector_cy_bgUnChecked, 0x00000000);//未选中时的背景颜色
+        }
+        if (backgroundCheckedID == -1) {
+            bg_checked_color = arr.getColor(R.styleable.TextViewSelector_cy_bgChecked, 0x00000000);//选中时的背景颜色
+        }
+
+        tv_color_checked = arr.getColor(R.styleable.TextViewSelector_cy_textColorChecked, -1);
+        tv_color = arr.getColor(R.styleable.TextViewSelector_cy_textColorUnChecked, -1);
+        //即使有颜色，也是-1,奇了葩了
+//        LogUtils.log("tv_color_checked",tv_color_checked);
         isChecked = arr.getBoolean(R.styleable.TextViewSelector_cy_checked, false);//是否选中
 
+        arr.recycle();
 
         if (isChecked()) {
 
@@ -56,7 +64,6 @@ public class TextViewSelector extends AppCompatTextView {
             setResOnUnChecked();
 
         }
-        arr.recycle();
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +86,7 @@ public class TextViewSelector extends AppCompatTextView {
     }
 
     //监听器使用这个方法
-    public void setOnCheckedChangeListener(OnCheckedChangeListener listener) {
+    public void setOnCheckedChangeListener(TextViewSelector.OnCheckedChangeListener listener) {
         this.onCheckedChangeListener = listener;
     }
 
@@ -104,17 +111,21 @@ public class TextViewSelector extends AppCompatTextView {
     //设置选中时的背景，Src等
 
     private void setResOnChecked() {
-        if (backgroundCheckedID != -1)
+        if (backgroundCheckedID != -1) {
             setBackgroundResource(backgroundCheckedID);
-        if (tvColorChecked != -1)
-            setTextColor(tvColorChecked);
+        } else {
+            setBackgroundColor(bg_checked_color);
+        }
+        setTextColor(tv_color_checked);
     }
 
     //设置未选中时的背景，Src等
     private void setResOnUnChecked() {
-        if (backgroundID != -1)
+        if (backgroundID != -1) {
             setBackgroundResource(backgroundID);
-        if (tvColorUnChecked != -1)
-            setTextColor(tvColorUnChecked);
+        } else {
+            setBackgroundColor(bg_color);
+        }
+       setTextColor(tv_color);
     }
 }

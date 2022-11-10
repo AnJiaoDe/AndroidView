@@ -43,7 +43,6 @@ public class FrameLayoutSelector extends FrameLayout {
         }
         if (backgroundCheckedID == -1) {
             bg_checked_color = arr.getColor(R.styleable.FrameLayoutSelector_cy_bgChecked, 0x00000000);//选中时的背景颜色
-
         }
         isChecked = arr.getBoolean(R.styleable.FrameLayoutSelector_cy_checked, false);//是否选中
 

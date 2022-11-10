@@ -71,6 +71,8 @@
             android:gravity="center_vertical"
             android:text="SelectorRadioButton"
             android:textSize="14sp"
+            app:cy_textColorChecked="#f00"
+            app:cy_textColorUnChecked="#ff0"
             app:cy_buttonChecked="@drawable/cb_zuji_selected"
             app:cy_buttonUnChecked="@drawable/cb_zuji_normal" />
 
@@ -110,4 +112,15 @@
         android:layout_marginTop="10dp"
         app:cy_bgChecked="#f00"
         app:cy_bgUnChecked="#ff0" />
+
+    <com.cy.androidview.selectorview.TextViewSelector
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="你个瓜皮嘞"
+        app:cy_bgChecked="#4CEDA5"
+        app:cy_textColorChecked="#fff"
+        app:cy_textColorUnChecked="#f00"
+        app:cy_bgUnChecked="#F2CB0A" />
 </LinearLayout>

@@ -562,8 +562,8 @@
     <declare-styleable name="TextViewSelector">
         <attr name="cy_bgUnChecked" />
         <attr name="cy_bgChecked" />
-        <attr name="cy_tvColorUnChecked" format="reference|color" />
-        <attr name="cy_tvColorChecked" format="reference|color" />
+        <attr name="cy_textColorUnChecked"  />
+        <attr name="cy_textColorChecked"  />
         <attr name="cy_checked" />
 
     </declare-styleable>
