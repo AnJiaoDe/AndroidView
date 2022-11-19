@@ -10,5 +10,20 @@
     <!--<item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>-->
     <!--<item name="android:clickable">true</item>-->
     <!--</style>-->
+    <style name="Base.CardView" parent="android:Widget">
+        <item name="cy_cardCornerRadius">@dimen/cardview_default_radius</item>
+        <item name="cy_cardElevation">@dimen/cardview_default_elevation</item>
+        <item name="cy_cardMaxElevation">@dimen/cardview_default_elevation</item>
+        <item name="cy_cardUseCompatPadding">false</item>
+        <item name="cy_cardPreventCornerOverlap">true</item>
+    </style>
 
+    <style name="CardView" parent="Base.CardView">
+    </style>
+    <style name="CardView.Dark">
+        <item name="cy_cardBackgroundColor">@color/cardview_dark_background</item>
+    </style>
+    <style name="CardView.Light">
+        <item name="cy_cardBackgroundColor">@color/cardview_light_background</item>
+    </style>
 </resources>

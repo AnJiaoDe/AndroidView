@@ -12,7 +12,6 @@ import androidx.annotation.ColorInt;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.widget.TextViewCompat;
 
-import com.cy.androidview.LogUtils;
 import com.cy.androidview.R;
 
 /**

@@ -8,7 +8,6 @@ import android.graphics.drawable.RippleDrawable;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
-import com.cy.androidview.LogUtils;
 import com.cy.androidview.R;
 
 

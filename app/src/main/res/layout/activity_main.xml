@@ -33,10 +33,10 @@
         android:layout_height="wrap_content"
         android:text="roundView" />
     <Button
-        android:id="@+id/btn_shadow"
+        android:id="@+id/btn_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="shadowView" />
+        android:text="cardView" />
 
     <Button
         android:id="@+id/btn_selector"

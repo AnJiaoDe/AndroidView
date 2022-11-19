@@ -16,7 +16,6 @@ import android.view.View;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.StyleableRes;
 
-import com.cy.androidview.LogUtils;
 import com.cy.androidview.R;
 
 /**

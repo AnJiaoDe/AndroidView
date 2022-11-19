@@ -562,9 +562,257 @@
     <declare-styleable name="TextViewSelector">
         <attr name="cy_bgUnChecked" />
         <attr name="cy_bgChecked" />
-        <attr name="cy_textColorUnChecked"  />
-        <attr name="cy_textColorChecked"  />
+        <attr name="cy_textColorUnChecked" />
+        <attr name="cy_textColorChecked" />
         <attr name="cy_checked" />
 
     </declare-styleable>
+
+
+    <attr name="cardViewStyle" format="reference" />
+
+
+
+    <!-- Background color for CardView. -->
+    <attr name="cy_cardBackgroundColor" format="color" />
+    <!-- Corner radius for CardView. -->
+    <attr name="cy_cardCornerRadius" format="dimension" />
+    <!-- Elevation for CardView. -->
+    <attr name="cy_cardElevation" format="dimension" />
+    <!-- Maximum Elevation for CardView. -->
+    <attr name="cy_cardMaxElevation" format="dimension" />
+    <!-- Add padding in API v21+ as well to have the same measurements with previous versions. -->
+    <attr name="cy_cardUseCompatPadding" format="boolean" />
+    <!-- Add padding to CardView on v20 and before to prevent intersections between the Card content and rounded corners. -->
+    <attr name="cy_cardPreventCornerOverlap" format="boolean" />
+    <!-- Inner padding between the edges of the Card and children of the CardView. -->
+    <attr name="cy_contentPadding" format="dimension" />
+    <!-- Inner padding between the left edge of the Card and children of the CardView. -->
+    <attr name="cy_contentPaddingLeft" format="dimension" />
+    <!-- Inner padding between the right edge of the Card and children of the CardView. -->
+    <attr name="cy_contentPaddingRight" format="dimension" />
+    <!-- Inner padding between the top edge of the Card and children of the CardView. -->
+    <attr name="cy_contentPaddingTop" format="dimension" />
+    <!-- Inner padding between the bottom edge of the Card and children of the CardView. -->
+    <attr name="cy_contentPaddingBottom" format="dimension" />
+
+    <declare-styleable name="AttrsCard">
+        <attr name="cy_heightWidthRatio" />
+        <attr name="cy_baseOnWidthOrHeight" />
+        <!-- Background color for CardView. -->
+        <attr name="cy_cardBackgroundColor"  />
+        <!-- Corner radius for CardView. -->
+        <attr name="cy_cardCornerRadius"  />
+        <!-- Elevation for CardView. -->
+        <attr name="cy_cardElevation"  />
+        <!-- Maximum Elevation for CardView. -->
+        <attr name="cy_cardMaxElevation"  />
+        <!-- Add padding in API v21+ as well to have the same measurements with previous versions. -->
+        <attr name="cy_cardUseCompatPadding"  />
+        <!-- Add padding to CardView on v20 and before to prevent intersections between the Card content and rounded corners. -->
+        <attr name="cy_cardPreventCornerOverlap" />
+        <!-- Inner padding between the edges of the Card and children of the CardView. -->
+        <attr name="cy_contentPadding" />
+        <!-- Inner padding between the left edge of the Card and children of the CardView. -->
+        <attr name="cy_contentPaddingLeft"  />
+        <!-- Inner padding between the right edge of the Card and children of the CardView. -->
+        <attr name="cy_contentPaddingRight" />
+        <!-- Inner padding between the top edge of the Card and children of the CardView. -->
+        <attr name="cy_contentPaddingTop"  />
+        <!-- Inner padding between the bottom edge of the Card and children of the CardView. -->
+        <attr name="cy_contentPaddingBottom"  />
+        <!-- Workaround to read user defined minimum width -->
+        <attr name="android:minWidth" />
+        <!-- Workaround to read user defined minimum height -->
+        <attr name="android:minHeight" />
+
+    </declare-styleable>
+    <declare-styleable name="FrameLayoutCard">
+        <attr name="cy_heightWidthRatio" />
+        <attr name="cy_baseOnWidthOrHeight" />
+        <!-- Background color for CardView. -->
+        <attr name="cy_cardBackgroundColor"  />
+        <!-- Corner radius for CardView. -->
+        <attr name="cy_cardCornerRadius"  />
+        <!-- Elevation for CardView. -->
+        <attr name="cy_cardElevation"  />
+        <!-- Maximum Elevation for CardView. -->
+        <attr name="cy_cardMaxElevation"  />
+        <!-- Add padding in API v21+ as well to have the same measurements with previous versions. -->
+        <attr name="cy_cardUseCompatPadding"  />
+        <!-- Add padding to CardView on v20 and before to prevent intersections between the Card content and rounded corners. -->
+        <attr name="cy_cardPreventCornerOverlap" />
+        <!-- Inner padding between the edges of the Card and children of the CardView. -->
+        <attr name="cy_contentPadding" />
+        <!-- Inner padding between the left edge of the Card and children of the CardView. -->
+        <attr name="cy_contentPaddingLeft"  />
+        <!-- Inner padding between the right edge of the Card and children of the CardView. -->
+        <attr name="cy_contentPaddingRight" />
+        <!-- Inner padding between the top edge of the Card and children of the CardView. -->
+        <attr name="cy_contentPaddingTop"  />
+        <!-- Inner padding between the bottom edge of the Card and children of the CardView. -->
+        <attr name="cy_contentPaddingBottom"  />
+        <!-- Workaround to read user defined minimum width -->
+        <attr name="android:minWidth" />
+        <!-- Workaround to read user defined minimum height -->
+        <attr name="android:minHeight" />
+
+    </declare-styleable>
+    <declare-styleable name="LinearLayoutCard">
+        <attr name="cy_heightWidthRatio" />
+        <attr name="cy_baseOnWidthOrHeight" />
+        <!-- Background color for CardView. -->
+        <attr name="cy_cardBackgroundColor"  />
+        <!-- Corner radius for CardView. -->
+        <attr name="cy_cardCornerRadius"  />
+        <!-- Elevation for CardView. -->
+        <attr name="cy_cardElevation"  />
+        <!-- Maximum Elevation for CardView. -->
+        <attr name="cy_cardMaxElevation"  />
+        <!-- Add padding in API v21+ as well to have the same measurements with previous versions. -->
+        <attr name="cy_cardUseCompatPadding"  />
+        <!-- Add padding to CardView on v20 and before to prevent intersections between the Card content and rounded corners. -->
+        <attr name="cy_cardPreventCornerOverlap" />
+        <!-- Inner padding between the edges of the Card and children of the CardView. -->
+        <attr name="cy_contentPadding" />
+        <!-- Inner padding between the left edge of the Card and children of the CardView. -->
+        <attr name="cy_contentPaddingLeft"  />
+        <!-- Inner padding between the right edge of the Card and children of the CardView. -->
+        <attr name="cy_contentPaddingRight" />
+        <!-- Inner padding between the top edge of the Card and children of the CardView. -->
+        <attr name="cy_contentPaddingTop"  />
+        <!-- Inner padding between the bottom edge of the Card and children of the CardView. -->
+        <attr name="cy_contentPaddingBottom"  />
+        <!-- Workaround to read user defined minimum width -->
+        <attr name="android:minWidth" />
+        <!-- Workaround to read user defined minimum height -->
+        <attr name="android:minHeight" />
+
+    </declare-styleable>
+    <declare-styleable name="RelativeLayoutCard">
+        <attr name="cy_heightWidthRatio" />
+        <attr name="cy_baseOnWidthOrHeight" />
+        <!-- Background color for CardView. -->
+        <attr name="cy_cardBackgroundColor"  />
+        <!-- Corner radius for CardView. -->
+        <attr name="cy_cardCornerRadius"  />
+        <!-- Elevation for CardView. -->
+        <attr name="cy_cardElevation"  />
+        <!-- Maximum Elevation for CardView. -->
+        <attr name="cy_cardMaxElevation"  />
+        <!-- Add padding in API v21+ as well to have the same measurements with previous versions. -->
+        <attr name="cy_cardUseCompatPadding"  />
+        <!-- Add padding to CardView on v20 and before to prevent intersections between the Card content and rounded corners. -->
+        <attr name="cy_cardPreventCornerOverlap" />
+        <!-- Inner padding between the edges of the Card and children of the CardView. -->
+        <attr name="cy_contentPadding" />
+        <!-- Inner padding between the left edge of the Card and children of the CardView. -->
+        <attr name="cy_contentPaddingLeft"  />
+        <!-- Inner padding between the right edge of the Card and children of the CardView. -->
+        <attr name="cy_contentPaddingRight" />
+        <!-- Inner padding between the top edge of the Card and children of the CardView. -->
+        <attr name="cy_contentPaddingTop"  />
+        <!-- Inner padding between the bottom edge of the Card and children of the CardView. -->
+        <attr name="cy_contentPaddingBottom"  />
+        <!-- Workaround to read user defined minimum width -->
+        <attr name="android:minWidth" />
+        <!-- Workaround to read user defined minimum height -->
+        <attr name="android:minHeight" />
+
+    </declare-styleable>
+    <declare-styleable name="ButtonCard">
+        <attr name="cy_heightWidthRatio" />
+        <attr name="cy_baseOnWidthOrHeight" />
+        <!-- Background color for CardView. -->
+        <attr name="cy_cardBackgroundColor"  />
+        <!-- Corner radius for CardView. -->
+        <attr name="cy_cardCornerRadius"  />
+        <!-- Elevation for CardView. -->
+        <attr name="cy_cardElevation"  />
+        <!-- Maximum Elevation for CardView. -->
+        <attr name="cy_cardMaxElevation"  />
+        <!-- Add padding in API v21+ as well to have the same measurements with previous versions. -->
+        <attr name="cy_cardUseCompatPadding"  />
+        <!-- Add padding to CardView on v20 and before to prevent intersections between the Card content and rounded corners. -->
+        <attr name="cy_cardPreventCornerOverlap" />
+        <!-- Inner padding between the edges of the Card and children of the CardView. -->
+        <attr name="cy_contentPadding" />
+        <!-- Inner padding between the left edge of the Card and children of the CardView. -->
+        <attr name="cy_contentPaddingLeft"  />
+        <!-- Inner padding between the right edge of the Card and children of the CardView. -->
+        <attr name="cy_contentPaddingRight" />
+        <!-- Inner padding between the top edge of the Card and children of the CardView. -->
+        <attr name="cy_contentPaddingTop"  />
+        <!-- Inner padding between the bottom edge of the Card and children of the CardView. -->
+        <attr name="cy_contentPaddingBottom"  />
+        <!-- Workaround to read user defined minimum width -->
+        <attr name="android:minWidth" />
+        <!-- Workaround to read user defined minimum height -->
+        <attr name="android:minHeight" />
+
+    </declare-styleable>
+    <declare-styleable name="TextViewCard">
+        <attr name="cy_heightWidthRatio" />
+        <attr name="cy_baseOnWidthOrHeight" />
+        <!-- Background color for CardView. -->
+        <attr name="cy_cardBackgroundColor"  />
+        <!-- Corner radius for CardView. -->
+        <attr name="cy_cardCornerRadius"  />
+        <!-- Elevation for CardView. -->
+        <attr name="cy_cardElevation"  />
+        <!-- Maximum Elevation for CardView. -->
+        <attr name="cy_cardMaxElevation"  />
+        <!-- Add padding in API v21+ as well to have the same measurements with previous versions. -->
+        <attr name="cy_cardUseCompatPadding"  />
+        <!-- Add padding to CardView on v20 and before to prevent intersections between the Card content and rounded corners. -->
+        <attr name="cy_cardPreventCornerOverlap" />
+        <!-- Inner padding between the edges of the Card and children of the CardView. -->
+        <attr name="cy_contentPadding" />
+        <!-- Inner padding between the left edge of the Card and children of the CardView. -->
+        <attr name="cy_contentPaddingLeft"  />
+        <!-- Inner padding between the right edge of the Card and children of the CardView. -->
+        <attr name="cy_contentPaddingRight" />
+        <!-- Inner padding between the top edge of the Card and children of the CardView. -->
+        <attr name="cy_contentPaddingTop"  />
+        <!-- Inner padding between the bottom edge of the Card and children of the CardView. -->
+        <attr name="cy_contentPaddingBottom"  />
+        <!-- Workaround to read user defined minimum width -->
+        <attr name="android:minWidth" />
+        <!-- Workaround to read user defined minimum height -->
+        <attr name="android:minHeight" />
+
+    </declare-styleable>
+    <declare-styleable name="ImageViewCard">
+        <attr name="cy_heightWidthRatio" />
+        <attr name="cy_baseOnWidthOrHeight" />
+        <!-- Background color for CardView. -->
+        <attr name="cy_cardBackgroundColor"  />
+        <!-- Corner radius for CardView. -->
+        <attr name="cy_cardCornerRadius"  />
+        <!-- Elevation for CardView. -->
+        <attr name="cy_cardElevation"  />
+        <!-- Maximum Elevation for CardView. -->
+        <attr name="cy_cardMaxElevation"  />
+        <!-- Add padding in API v21+ as well to have the same measurements with previous versions. -->
+        <attr name="cy_cardUseCompatPadding"  />
+        <!-- Add padding to CardView on v20 and before to prevent intersections between the Card content and rounded corners. -->
+        <attr name="cy_cardPreventCornerOverlap" />
+        <!-- Inner padding between the edges of the Card and children of the CardView. -->
+        <attr name="cy_contentPadding" />
+        <!-- Inner padding between the left edge of the Card and children of the CardView. -->
+        <attr name="cy_contentPaddingLeft"  />
+        <!-- Inner padding between the right edge of the Card and children of the CardView. -->
+        <attr name="cy_contentPaddingRight" />
+        <!-- Inner padding between the top edge of the Card and children of the CardView. -->
+        <attr name="cy_contentPaddingTop"  />
+        <!-- Inner padding between the bottom edge of the Card and children of the CardView. -->
+        <attr name="cy_contentPaddingBottom"  />
+        <!-- Workaround to read user defined minimum width -->
+        <attr name="android:minWidth" />
+        <!-- Workaround to read user defined minimum height -->
+        <attr name="android:minHeight" />
+
+    </declare-styleable>
+
+
 </resources>

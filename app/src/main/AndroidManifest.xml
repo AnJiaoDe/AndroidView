@@ -9,6 +9,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".CardActivity"
+            android:exported="true" />
+        <activity
             android:name=".ShadowActivity"
             android:exported="true" />
         <activity
