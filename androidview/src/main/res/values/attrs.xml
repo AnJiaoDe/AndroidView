@@ -569,9 +569,6 @@
     </declare-styleable>
 
 
-    <attr name="cardViewStyle" format="reference" />
-
-
 
     <!-- Background color for CardView. -->
     <attr name="cy_cardBackgroundColor" format="color" />

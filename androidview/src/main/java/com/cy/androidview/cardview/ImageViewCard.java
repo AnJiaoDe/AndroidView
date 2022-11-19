@@ -17,6 +17,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import com.cy.androidview.R;
+import com.cy.androidview.ScreenUtils;
 import com.cy.androidview.rectangleview.IRectangle;
 import com.cy.androidview.rectangleview.RectangleRatio;
 
@@ -53,18 +54,14 @@ public class ImageViewCard extends AppCompatImageView implements IRectangle {
     }
 
     public ImageViewCard(@NonNull Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, R.attr.cardViewStyle);
-    }
+        super(context, attrs);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AttrsCard);
 
-    public ImageViewCard(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AttrsCard, defStyleAttr, R.style.CardView);
-
-        rectangleRatio = rectangle(a);
+        rectangleRatio = rectangle(typedArray);
 
         ColorStateList backgroundColor;
-        if (a.hasValue(R.styleable.AttrsCard_cy_cardBackgroundColor)) {
-            backgroundColor = a.getColorStateList(R.styleable.AttrsCard_cy_cardBackgroundColor);
+        if (typedArray.hasValue(R.styleable.AttrsCard_cy_cardBackgroundColor)) {
+            backgroundColor = typedArray.getColorStateList(R.styleable.AttrsCard_cy_cardBackgroundColor);
         } else {
             // There isn't one set, so we'll compute one based on the theme
             final TypedArray aa = getContext().obtainStyledAttributes(COLOR_BACKGROUND_ATTR);
@@ -78,29 +75,28 @@ public class ImageViewCard extends AppCompatImageView implements IRectangle {
                     ? getResources().getColor(R.color.cardview_light_background)
                     : getResources().getColor(R.color.cardview_dark_background));
         }
-        float radius = a.getDimension(R.styleable.AttrsCard_cy_cardCornerRadius, 0);
-        float elevation = a.getDimension(R.styleable.AttrsCard_cy_cardElevation, 0);
-        float maxElevation = a.getDimension(R.styleable.AttrsCard_cy_cardMaxElevation, 0);
-        //邪了门了，如果XML不设置cy_cardUseCompatPadding属性，getBoolean永远为false，fuck，故如此
-        useCompatPadding = useCompatPadding || a.getBoolean(R.styleable.AttrsCard_cy_cardUseCompatPadding, true);
-        preventCornerOverlap = preventCornerOverlap || a.getBoolean(R.styleable.AttrsCard_cy_cardPreventCornerOverlap, true);
+        float radius = typedArray.getDimension(R.styleable.AttrsCard_cy_cardCornerRadius, ScreenUtils.dpAdapt(context,2));
+        float elevation = typedArray.getDimension(R.styleable.AttrsCard_cy_cardElevation, ScreenUtils.dpAdapt(context,2));
+        float maxElevation = typedArray.getDimension(R.styleable.AttrsCard_cy_cardMaxElevation,ScreenUtils.dpAdapt(context,2));
+        useCompatPadding =  typedArray.getBoolean(R.styleable.AttrsCard_cy_cardUseCompatPadding, true);
+        preventCornerOverlap =  typedArray.getBoolean(R.styleable.AttrsCard_cy_cardPreventCornerOverlap, true);
 
 
-        int defaultPadding = a.getDimensionPixelSize(R.styleable.AttrsCard_cy_contentPadding, 0);
-        mContentPadding.left = a.getDimensionPixelSize(R.styleable.AttrsCard_cy_contentPaddingLeft,
+        int defaultPadding = typedArray.getDimensionPixelSize(R.styleable.AttrsCard_cy_contentPadding, 0);
+        mContentPadding.left = typedArray.getDimensionPixelSize(R.styleable.AttrsCard_cy_contentPaddingLeft,
                 defaultPadding);
-        mContentPadding.top = a.getDimensionPixelSize(R.styleable.AttrsCard_cy_contentPaddingTop,
+        mContentPadding.top = typedArray.getDimensionPixelSize(R.styleable.AttrsCard_cy_contentPaddingTop,
                 defaultPadding);
-        mContentPadding.right = a.getDimensionPixelSize(R.styleable.AttrsCard_cy_contentPaddingRight,
+        mContentPadding.right = typedArray.getDimensionPixelSize(R.styleable.AttrsCard_cy_contentPaddingRight,
                 defaultPadding);
-        mContentPadding.bottom = a.getDimensionPixelSize(R.styleable.AttrsCard_cy_contentPaddingBottom,
+        mContentPadding.bottom = typedArray.getDimensionPixelSize(R.styleable.AttrsCard_cy_contentPaddingBottom,
                 defaultPadding);
         if (elevation > maxElevation) {
             maxElevation = elevation;
         }
-        mUserSetMinWidth = a.getDimensionPixelSize(R.styleable.AttrsCard_android_minWidth, 0);
-        mUserSetMinHeight = a.getDimensionPixelSize(R.styleable.AttrsCard_android_minHeight, 0);
-        a.recycle();
+        mUserSetMinWidth = typedArray.getDimensionPixelSize(R.styleable.AttrsCard_android_minWidth, 0);
+        mUserSetMinHeight = typedArray.getDimensionPixelSize(R.styleable.AttrsCard_android_minHeight, 0);
+        typedArray.recycle();
 
         IMPL.initialize(mCardViewDelegate, context, backgroundColor, radius,
                 elevation, maxElevation);
