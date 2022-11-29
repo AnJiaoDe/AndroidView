@@ -35,7 +35,7 @@ public class ShapeBackground {
     private int colorFill = 0x00000000;
     private int radiusGradient = 0;
     private int colorStart = 0x00000000;
-    private int colorCenter = 0x00000000;
+//    private int colorCenter = 0x00000000;
     private int colorEnd = 0x00000000;
     private int orientationGradient = 6;
     private int gradientType = 0;
@@ -63,7 +63,7 @@ public class ShapeBackground {
         this.radiusBottomLeft = typedArray.getDimensionPixelSize(R.styleable.AttrsShape_cy_radiusBottomLeft, radiusBottomLeft);
         this.colorFill = typedArray.getColor(R.styleable.AttrsShape_cy_colorFill, colorFill);
         this.colorStart = typedArray.getColor(R.styleable.AttrsShape_cy_colorStart, colorStart);
-        this.colorCenter = typedArray.getColor(R.styleable.AttrsShape_cy_colorCenter, colorCenter);
+//        this.colorCenter = typedArray.getColor(R.styleable.AttrsShape_cy_colorCenter, colorCenter);
         this.colorEnd = typedArray.getColor(R.styleable.AttrsShape_cy_colorEnd, colorEnd);
         this.orientationGradient = typedArray.getInt(R.styleable.AttrsShape_cy_orientationGradient, orientationGradient);
         this.gradientType = typedArray.getInt(R.styleable.AttrsShape_cy_gradientType, gradientType);
@@ -160,15 +160,14 @@ public class ShapeBackground {
 
     }
 
-    public int getColorCenter() {
-        return colorCenter;
-    }
+//    public int getColorCenter() {
+//        return colorCenter;
+//    }
 
-    public ShapeBackground setColorCenter_(int colorCenter) {
-        this.colorCenter =colorCenter;
-        return this;
-
-    }
+//    public ShapeBackground setColorCenter_(int colorCenter) {
+//        this.colorCenter =colorCenter;
+//        return this;
+//    }
 
     public int getColorEnd() {
         return colorEnd;
@@ -392,7 +391,7 @@ public class ShapeBackground {
         }
         //设置渐变颜色
         if (colorStart != 0x00000000 && colorEnd != 0x00000000) {
-            int[] colors = {colorStart, colorCenter, colorEnd};
+            int[] colors = {colorStart, colorEnd};
             gradientDrawable.setColors(colors);
         }
 
