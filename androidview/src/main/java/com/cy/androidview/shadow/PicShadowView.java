@@ -35,7 +35,7 @@ public class PicShadowView extends View {
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.PicShadowView);
         drawableSrc = typedArray.getResourceId(R.styleable.PicShadowView_cy_src, -1);
-        color_shadow = typedArray.getColor(R.styleable.PicShadowView_cy_color_shadow, 0xff696969);
+        color_shadow = typedArray.getColor(R.styleable.PicShadowView_cy_color_shadow, 0xff656565);
 //        scaleType = typedArray.getInt(R.styleable.PicShadowView_cy_scaleType, scaleType);
         this.shadow_limit = typedArray.getDimensionPixelSize(R.styleable.PicShadowView_cy_shadow_limit, shadow_limit);
 
@@ -60,9 +60,16 @@ public class PicShadowView extends View {
         if(bitmap==null)return;
         float ratio_w = width * 1.0f / bitmap.getWidth();
         float ratio_h = height * 1.0f / bitmap.getHeight();
-        float ratio = Math.min(ratio_w, ratio_h);
-        int width_b = (int) (width * 1.0f / ratio);
-        int height_b = (int) (height * 1.0f / ratio);
+        int width_b ;
+        int height_b;
+        if(ratio_w>ratio_h){
+            height_b= (int) (height/ratio_h);
+            width_b= (int) (height_b*1f*bitmap.getWidth()/bitmap.getHeight());
+        }else {
+            width_b= (int) (width/ratio_w);
+            height_b= (int) (width_b*1f*bitmap.getHeight()/bitmap.getWidth());
+        }
+
         left_pic = (int) ((width - width_b) * 0.5f);
         top_pic = (int) ((height - height_b) * 0.5f);
         right_pic = left_pic + width_b;
