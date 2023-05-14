@@ -25,7 +25,7 @@
         <com.cy.androidview.shadow.PicShadowView
             android:layout_width="60dp"
             app:cy_color_shadow="#656565"
-            app:cy_shadow_limit="2dp"
+            app:cy_shadow_limit="0dp"
             app:cy_src="@drawable/after_sale_icon"
             android:layout_height="60dp" />
     </LinearLayout>

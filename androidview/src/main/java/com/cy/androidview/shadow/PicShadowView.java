@@ -19,7 +19,7 @@ import com.cy.androidview.BitmapUtils;
 import com.cy.androidview.R;
 
 public class PicShadowView extends View {
-    private Paint paint;
+    private Paint paint,paintShadow;
     private Bitmap bitmap, bitmapAlpha;
     private int width, height;
     private int left_pic, top_pic, right_pic, bottom_pic;
@@ -27,7 +27,7 @@ public class PicShadowView extends View {
     private int drawableSrc;
     private int color_shadow;
 //    private int scaleType = 0;
-    private int shadow_limit = 3;
+    private int shadow_limit = 0;
 
     public PicShadowView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -48,8 +48,11 @@ public class PicShadowView extends View {
 
         paint = new Paint();
         paint.setAntiAlias(true);
-        paint.setColor(color_shadow);
-        paint.setMaskFilter(new BlurMaskFilter(10, BlurMaskFilter.Blur.NORMAL));
+
+        paintShadow = new Paint();
+        paintShadow.setAntiAlias(true);
+        paintShadow.setColor(color_shadow);
+        paintShadow.setMaskFilter(new BlurMaskFilter(10, BlurMaskFilter.Blur.OUTER));
     }
 
     @Override
@@ -81,7 +84,7 @@ public class PicShadowView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if(bitmap==null||rect==null)return;
-        canvas.drawBitmap(bitmapAlpha, null, rect, paint);
+        canvas.drawBitmap(bitmapAlpha, null, rect, paintShadow);
         canvas.translate(-shadow_limit, -shadow_limit);
         canvas.drawBitmap(bitmap, null, rect, paint);
     }
