@@ -27,7 +27,7 @@ public class PicShadowView extends View {
     private int drawableSrc;
     private int color_shadow;
 //    private int scaleType = 0;
-    private int shadow_limit = 5;
+    private int shadow_limit = 3;
 
     public PicShadowView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -35,7 +35,7 @@ public class PicShadowView extends View {
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.PicShadowView);
         drawableSrc = typedArray.getResourceId(R.styleable.PicShadowView_cy_src, -1);
-        color_shadow = typedArray.getColor(R.styleable.PicShadowView_cy_color_shadow, 0xff656565);
+        color_shadow = typedArray.getColor(R.styleable.PicShadowView_cy_color_shadow, 0xff616161);
 //        scaleType = typedArray.getInt(R.styleable.PicShadowView_cy_scaleType, scaleType);
         this.shadow_limit = typedArray.getDimensionPixelSize(R.styleable.PicShadowView_cy_shadow_limit, shadow_limit);
 
