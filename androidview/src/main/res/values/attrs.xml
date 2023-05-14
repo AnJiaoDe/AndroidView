@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="cy_scaleType">
+        <enum name="cy_centerInside" value="0" />
+        <enum name="cy_centerCrop" value="1" />
+    </attr>
+
     <attr name="cy_round_as_circle" format="boolean" />
     <!--全部圆角半径-->
 
@@ -89,6 +94,15 @@
     <attr name="cy_textColorChecked" format="reference|color" />
     <attr name="cy_buttonUnChecked" format="reference" />
     <attr name="cy_buttonChecked" format="reference" />
+
+    <declare-styleable name="PicShadowView">
+        <attr name="cy_src" format="reference" />
+<!--        <attr name="cy_scaleType" />-->
+        <attr name="cy_color_shadow" format="reference|color" />
+        <attr name="cy_shadow_limit" format="reference|dimension" />
+    </declare-styleable>
+
+
     <declare-styleable name="FrameLayoutRectangle">
         <attr name="cy_colorRipple" />
         <attr name="cy_haveRipple" />

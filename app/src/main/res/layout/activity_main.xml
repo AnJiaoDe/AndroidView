@@ -43,7 +43,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="selectorView" />
-
+    <Button
+        android:id="@+id/btn_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="shadow" />
     <com.cy.androidview.ScreenPercentFrameLayout
         android:layout_width="wrap_content"
         app:cy_width_percent="0.8"

@@ -13,9 +13,20 @@
         android:orientation="vertical"
         android:padding="10dp">
 
-<!--        <com.cy.androidview.shadowview.FrameLayoutShadow-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="100dp"/>-->
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:shadowColor="#454545"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="2"
+            android:text="setShadowLayer" />
 
+        <com.cy.androidview.shadow.PicShadowView
+            android:layout_width="60dp"
+            app:cy_color_shadow="#656565"
+            app:cy_shadow_limit="2dp"
+            app:cy_src="@drawable/after_sale_icon"
+            android:layout_height="60dp" />
     </LinearLayout>
 </ScrollView>
