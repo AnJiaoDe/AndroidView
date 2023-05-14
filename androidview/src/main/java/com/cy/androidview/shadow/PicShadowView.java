@@ -19,14 +19,14 @@ import com.cy.androidview.BitmapUtils;
 import com.cy.androidview.R;
 
 public class PicShadowView extends View {
-    private Paint paint,paintShadow;
+    private Paint paint, paintShadow;
     private Bitmap bitmap, bitmapAlpha;
     private int width, height;
     private int left_pic, top_pic, right_pic, bottom_pic;
     private Rect rect;
     private int drawableSrc;
     private int color_shadow;
-//    private int scaleType = 0;
+    //    private int scaleType = 0;
     private int shadow_limit = 0;
 
     public PicShadowView(Context context, @Nullable AttributeSet attrs) {
@@ -60,21 +60,24 @@ public class PicShadowView extends View {
         super.onLayout(changed, left, top, right, bottom);
         width = getWidth();
         height = getHeight();
-        if(bitmap==null)return;
-        float ratio_w = width * 1.0f / bitmap.getWidth();
-        float ratio_h = height * 1.0f / bitmap.getHeight();
-        int width_b ;
+        if (bitmap == null) return;
+
+        int width__ = width - getPaddingLeft() - getPaddingRight();
+        int height__ = height - getPaddingTop() - getPaddingBottom();
+        float ratio_w = width__ * 1.0f / bitmap.getWidth();
+        float ratio_h = height__ * 1.0f / bitmap.getHeight();
+        int width_b;
         int height_b;
-        if(ratio_w>ratio_h){
-            height_b= (int) (height/ratio_h);
-            width_b= (int) (height_b*1f*bitmap.getWidth()/bitmap.getHeight());
-        }else {
-            width_b= (int) (width/ratio_w);
-            height_b= (int) (width_b*1f*bitmap.getHeight()/bitmap.getWidth());
+        if (ratio_w > ratio_h) {
+            height_b = (int) (height__ / ratio_h);
+            width_b = (int) (height_b * 1f * bitmap.getWidth() / bitmap.getHeight());
+        } else {
+            width_b = (int) (width__ / ratio_w);
+            height_b = (int) (width_b * 1f * bitmap.getHeight() / bitmap.getWidth());
         }
 
-        left_pic = (int) ((width - width_b) * 0.5f);
-        top_pic = (int) ((height - height_b) * 0.5f);
+        left_pic = (int) (getPaddingLeft() + (width__ - width_b) * 0.5f);
+        top_pic = (int) (getPaddingTop() + (height__ - height_b) * 0.5f);
         right_pic = left_pic + width_b;
         bottom_pic = top_pic + height_b;
         rect = new Rect(left_pic, top_pic, right_pic, bottom_pic);
@@ -83,7 +86,7 @@ public class PicShadowView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if(bitmap==null||rect==null)return;
+        if (bitmap == null || rect == null) return;
         canvas.drawBitmap(bitmapAlpha, null, rect, paintShadow);
         canvas.translate(-shadow_limit, -shadow_limit);
         canvas.drawBitmap(bitmap, null, rect, paint);
