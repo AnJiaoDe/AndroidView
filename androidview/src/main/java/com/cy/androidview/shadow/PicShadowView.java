@@ -183,11 +183,11 @@ public class PicShadowView extends View {
             bitmap = BitmapUtils.decodeBitmapFromResource(getContext(), drawableSrc, 2000 * 2000);
     }
 
-    public void seImageResource(@DrawableRes int resID) {
+    public void setImageResource(@DrawableRes int resID) {
         drawableSrc=resID;
         setChecked(isChecked);
     }
-    public void seImageResourceChecked(@DrawableRes int resID) {
+    public void setImageResourceChecked(@DrawableRes int resID) {
         drawableSrcChecked=resID;
         setChecked(isChecked);
     }
