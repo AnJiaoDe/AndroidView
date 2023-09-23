@@ -22,16 +22,45 @@
             android:shadowRadius="2"
             android:text="setShadowLayer" />
 
+        <LinearLayout
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <com.cy.androidview.shadow.PicShadowView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                app:cy_color_shadow="#656565"
+                android:padding="10dp"
+                android:id="@+id/PicShadowView"
+                app:cy_src_color_checked="#f00"
+                app:cy_mask_type="SOLID"
+                app:cy_blur_radius="50dp"
+                app:cy_src_checked="@drawable/flash_on_white"
+                app:cy_src="@drawable/flash_aotu_white"
+                android:layout_height="60dp" />
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
         <com.cy.androidview.shadow.PicShadowView
             android:layout_width="60dp"
-            app:cy_color_shadow="#656565"
             android:padding="10dp"
-            android:id="@+id/PicShadowView"
-            app:cy_src_color_checked="#f00"
-            app:cy_mask_type="SOLID"
-            app:cy_blur_radius="50dp"
-            app:cy_src_checked="@drawable/flash_on_white"
-            app:cy_src="@drawable/flash_aotu_white"
+            android:id="@+id/PicShadowView2"
+            app:cy_src="@drawable/pic_edit_filter"
             android:layout_height="60dp" />
+<!--        最好别修改cy_blur_radius，否则阴影 有毛病，真是麻雀啄了牛屁股-->
+        <com.cy.androidview.shadow.PicShadowView
+            android:layout_width="60dp"
+            android:padding="10dp"
+            app:cy_blur_radius="10dp"
+            app:cy_src="@drawable/pic_edit_filter"
+            android:layout_height="60dp" />
+        <Button
+            android:layout_width="match_parent"
+            android:text="切换显示PicShadowView"
+            android:id="@+id/btn"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 </ScrollView>

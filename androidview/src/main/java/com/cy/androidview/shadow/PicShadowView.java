@@ -38,7 +38,7 @@ public class PicShadowView extends View {
     private boolean isChecked = false;
     private boolean isMyListener = true;
     private int mask_type = 1;
-    private int blur_radius = 10;
+    private int blur_radius = 1;
 
     public PicShadowView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -49,11 +49,11 @@ public class PicShadowView extends View {
         drawableSrcChecked = typedArray.getResourceId(R.styleable.PicShadowView_cy_src_checked, -1);
         colorSrcChecked = typedArray.getColor(R.styleable.PicShadowView_cy_src_color_checked, -1);//是否选中
         color_shadow = typedArray.getColor(R.styleable.PicShadowView_cy_color_shadow, 0xff616161);
-//        scaleType = typedArray.getInt(R.styleable.PicShadowView_cy_scaleType, scaleType);
-        this.shadow_limit = typedArray.getDimensionPixelSize(R.styleable.PicShadowView_cy_shadow_limit, shadow_limit);
+        shadow_limit = typedArray.getDimensionPixelSize(R.styleable.PicShadowView_cy_shadow_limit, shadow_limit);
+        //BlurMaskFilter的blur_radius  must >0，否则GG
+        blur_radius = Math.max(blur_radius,typedArray.getDimensionPixelSize(R.styleable.PicShadowView_cy_blur_radius, blur_radius));
         isChecked = typedArray.getBoolean(R.styleable.PicShadowView_cy_checked, false);//是否选中
         mask_type = typedArray.getInt(R.styleable.PicShadowView_cy_mask_type, mask_type);
-        blur_radius = typedArray.getDimensionPixelSize(R.styleable.PicShadowView_cy_blur_radius, ScreenUtils.dpAdapt(context, 10));
 
         typedArray.recycle();
 
