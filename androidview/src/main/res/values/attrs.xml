@@ -106,9 +106,9 @@
         <attr name="cy_blur_radius" format="reference|dimension" />
         <attr name="cy_shadow_limit" format="reference|dimension" />
         <attr name="cy_src" format="reference" />
-        <attr name="cy_src_checked" format="reference" />
-        <attr name="cy_src_color_checked" format="reference|color" />
-        <attr name="cy_checked" />
+<!--        <attr name="cy_src_checked" format="reference" />-->
+        <attr name="cy_color_filter" format="reference|color" />
+<!--        <attr name="cy_checked" />-->
         <attr name="cy_color_shadow" format="reference|color" />
     </declare-styleable>
 

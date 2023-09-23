@@ -22,21 +22,21 @@ import com.cy.androidview.ScreenUtils;
 import com.cy.androidview.selectorview.ImageViewSelector;
 
 public class PicShadowView extends View {
-    private Paint paint, paint_checked, paintShadow;
+    private Paint paint, paint_filter, paintShadow;
     private Bitmap bitmap, bitmapAlpha;
     private int width, height;
     private int left_pic, top_pic, right_pic, bottom_pic;
     private Rect rect;
     private int drawableSrc;
-    private int drawableSrcChecked;
-    private int colorSrcChecked;
+    //    private int drawableSrcChecked;
+    private int colorFilter;
     private int color_shadow;
     //    private int scaleType = 0;
     private int shadow_limit = 0;
 
-    private OnCheckedChangeListener onCheckedChangeListener;
-    private boolean isChecked = false;
-    private boolean isMyListener = true;
+    //    private OnCheckedChangeListener onCheckedChangeListener;
+//    private boolean isChecked = false;
+//    private boolean isMyListener = true;
     private int mask_type = 1;
     private int blur_radius = 1;
 
@@ -46,31 +46,32 @@ public class PicShadowView extends View {
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.PicShadowView);
         drawableSrc = typedArray.getResourceId(R.styleable.PicShadowView_cy_src, -1);
-        drawableSrcChecked = typedArray.getResourceId(R.styleable.PicShadowView_cy_src_checked, -1);
-        colorSrcChecked = typedArray.getColor(R.styleable.PicShadowView_cy_src_color_checked, -1);//是否选中
+//        drawableSrcChecked = typedArray.getResourceId(R.styleable.PicShadowView_cy_src_checked, -1);
+        colorFilter = typedArray.getColor(R.styleable.PicShadowView_cy_color_filter, -1);
         color_shadow = typedArray.getColor(R.styleable.PicShadowView_cy_color_shadow, 0xff616161);
         shadow_limit = typedArray.getDimensionPixelSize(R.styleable.PicShadowView_cy_shadow_limit, shadow_limit);
         //BlurMaskFilter的blur_radius  must >0，否则GG
         blur_radius = Math.max(blur_radius, typedArray.getDimensionPixelSize(R.styleable.PicShadowView_cy_blur_radius, blur_radius));
-        isChecked = typedArray.getBoolean(R.styleable.PicShadowView_cy_checked, false);//是否选中
+//        isChecked = typedArray.getBoolean(R.styleable.PicShadowView_cy_checked, false);//是否选中
         mask_type = typedArray.getInt(R.styleable.PicShadowView_cy_mask_type, mask_type);
 
         typedArray.recycle();
 
-        if (isChecked()) {
-            setResOnChecked();
-        } else {
-            setResOnUnChecked();
-        }
+//        if (isChecked()) {
+//            setResOnChecked();
+//        } else {
+//            setResOnUnChecked();
+//        }
+        bitmap = BitmapUtils.decodeBitmapFromResource(getContext(), drawableSrc, 2000 * 2000);
         if (bitmap != null)
             bitmapAlpha = bitmap.extractAlpha();
 
         paint = new Paint();
         paint.setAntiAlias(true);
 
-        paint_checked = new Paint();
-        paint_checked.setAntiAlias(true);
-        if (colorSrcChecked != -1) paint_checked.setColor(colorSrcChecked);
+        paint_filter = new Paint();
+        paint_filter.setAntiAlias(true);
+        if (colorFilter != -1) paint_filter.setColor(colorFilter);
 
         paintShadow = new Paint();
         paintShadow.setAntiAlias(true);
@@ -90,14 +91,14 @@ public class PicShadowView extends View {
                 break;
         }
 
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setChecked(!isChecked);
-                if (onCheckedChangeListener != null)
-                    onCheckedChangeListener.onCheckedChanged(PicShadowView.this, isChecked);
-            }
-        });
+//        setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                setChecked(!isChecked);
+//                if (onCheckedChangeListener != null)
+//                    onCheckedChangeListener.onCheckedChanged(PicShadowView.this, isChecked);
+//            }
+//        });
     }
 
     @Override
@@ -135,8 +136,8 @@ public class PicShadowView extends View {
         if (bitmap == null || rect == null) return;
         canvas.drawBitmap(bitmapAlpha, null, rect, paintShadow);
         canvas.translate(-shadow_limit, -shadow_limit);
-        if (isChecked && drawableSrcChecked == -1 && colorSrcChecked != -1) {
-            canvas.drawBitmap(bitmapAlpha, null, rect, paint_checked);
+        if (colorFilter != -1) {
+            canvas.drawBitmap(bitmapAlpha, null, rect, paint_filter);
         } else {
             canvas.drawBitmap(bitmap, null, rect, paint);
         }
@@ -152,60 +153,79 @@ public class PicShadowView extends View {
     }
 
     //判断是否选中
-    public boolean isChecked() {
-        return isChecked;
-    }
+//    public boolean isChecked() {
+//        return isChecked;
+//    }
 
     //设置是否选中
-    public void setChecked(boolean checked) {
-        isChecked = checked;
-        if (checked) {
-            setResOnChecked();
-        } else {
-            setResOnUnChecked();
-        }
+//    public void setChecked(boolean checked) {
+//        isChecked = checked;
+//        if (checked) {
+//            setResOnChecked();
+//        } else {
+//            setResOnUnChecked();
+//        }
+//        if (bitmap != null)
+//            bitmapAlpha = bitmap.extractAlpha();
+//        //因为需要计算图片宽高，所以必须先requestLayout
+//        requestLayout();
+//        invalidate();
+//    }
+//    //设置选中时的背景，Src等
+//
+//    private void setResOnChecked() {
+//        if (drawableSrcChecked != -1)
+//            bitmap = BitmapUtils.decodeBitmapFromResource(getContext(), drawableSrcChecked, 2000 * 2000);
+//    }
+//
+//    //设置未选中时的背景，Src等
+//    private void setResOnUnChecked() {
+//        if (drawableSrc != -1)
+//            bitmap = BitmapUtils.decodeBitmapFromResource(getContext(), drawableSrc, 2000 * 2000);
+//    }
+//
+    public void setImageResource(@DrawableRes int resID) {
+        drawableSrc = resID;
+        bitmap = BitmapUtils.decodeBitmapFromResource(getContext(), drawableSrc, 2000 * 2000);
         if (bitmap != null)
             bitmapAlpha = bitmap.extractAlpha();
         //因为需要计算图片宽高，所以必须先requestLayout
         requestLayout();
         invalidate();
     }
-    //设置选中时的背景，Src等
-
-    private void setResOnChecked() {
-        if (drawableSrcChecked != -1)
-            bitmap = BitmapUtils.decodeBitmapFromResource(getContext(), drawableSrcChecked, 2000 * 2000);
+    public void setImageBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
+        if (bitmap != null)
+            bitmapAlpha = bitmap.extractAlpha();
+        //因为需要计算图片宽高，所以必须先requestLayout
+        requestLayout();
+        invalidate();
     }
 
-    //设置未选中时的背景，Src等
-    private void setResOnUnChecked() {
-        if (drawableSrc != -1)
-            bitmap = BitmapUtils.decodeBitmapFromResource(getContext(), drawableSrc, 2000 * 2000);
+    public void setColorFilter(int colorFilter) {
+        this.colorFilter = colorFilter;
+        if(colorFilter!=-1)paint_filter.setColor(colorFilter);
+        invalidate();
     }
-
-    public void setImageResource(@DrawableRes int resID) {
-        drawableSrc=resID;
-        setChecked(isChecked);
-    }
-    public void setImageResourceChecked(@DrawableRes int resID) {
-        drawableSrcChecked=resID;
-        setChecked(isChecked);
-    }
-
-    @Override
-    public void setOnClickListener(OnClickListener l) {
-        if (isMyListener) {
-            super.setOnClickListener(l);
-            isMyListener = false;
-        }
-    }
-
-    //监听器使用这个方法
-    public void setOnCheckedChangeListener(OnCheckedChangeListener listener) {
-        this.onCheckedChangeListener = listener;
-    }
-
-    public static interface OnCheckedChangeListener {
-        void onCheckedChanged(PicShadowView picShadowView, boolean isChecked);
-    }
+    //    public void setImageResourceChecked(@DrawableRes int resID) {
+//        drawableSrcChecked=resID;
+//        setChecked(isChecked);
+//    }
+//
+//    @Override
+//    public void setOnClickListener(OnClickListener l) {
+//        if (isMyListener) {
+//            super.setOnClickListener(l);
+//            isMyListener = false;
+//        }
+//    }
+//
+//    //监听器使用这个方法
+//    public void setOnCheckedChangeListener(OnCheckedChangeListener listener) {
+//        this.onCheckedChangeListener = listener;
+//    }
+//
+//    public static interface OnCheckedChangeListener {
+//        void onCheckedChanged(PicShadowView picShadowView, boolean isChecked);
+//    }
 }
