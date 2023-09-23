@@ -51,7 +51,7 @@ public class PicShadowView extends View {
         color_shadow = typedArray.getColor(R.styleable.PicShadowView_cy_color_shadow, 0xff616161);
         shadow_limit = typedArray.getDimensionPixelSize(R.styleable.PicShadowView_cy_shadow_limit, shadow_limit);
         //BlurMaskFilter的blur_radius  must >0，否则GG
-        blur_radius = Math.max(blur_radius,typedArray.getDimensionPixelSize(R.styleable.PicShadowView_cy_blur_radius, blur_radius));
+        blur_radius = Math.max(blur_radius, typedArray.getDimensionPixelSize(R.styleable.PicShadowView_cy_blur_radius, blur_radius));
         isChecked = typedArray.getBoolean(R.styleable.PicShadowView_cy_checked, false);//是否选中
         mask_type = typedArray.getInt(R.styleable.PicShadowView_cy_mask_type, mask_type);
 
@@ -181,6 +181,15 @@ public class PicShadowView extends View {
     private void setResOnUnChecked() {
         if (drawableSrc != -1)
             bitmap = BitmapUtils.decodeBitmapFromResource(getContext(), drawableSrc, 2000 * 2000);
+    }
+
+    public void seImageResource(@DrawableRes int resID) {
+        drawableSrc=resID;
+        setChecked(isChecked);
+    }
+    public void seImageResourceChecked(@DrawableRes int resID) {
+        drawableSrcChecked=resID;
+        setChecked(isChecked);
     }
 
     @Override

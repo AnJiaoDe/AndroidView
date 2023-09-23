@@ -33,7 +33,9 @@ public class ShadowActivity extends AppCompatActivity {
         findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                layout.setVisibility(layout.getVisibility()==View.VISIBLE?View.GONE:View.VISIBLE);
+//                layout.setVisibility(layout.getVisibility()==View.VISIBLE?View.GONE:View.VISIBLE);
+                picShadowView2.seImageResource(R.drawable.cb_zuji_normal);
+                picShadowView2.seImageResourceChecked(R.drawable.after_sale_icon);
             }
         });
     }
