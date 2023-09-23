@@ -207,6 +207,10 @@ public class PicShadowView extends View {
         if(colorFilter!=-1)paint_filter.setColor(colorFilter);
         invalidate();
     }
+    public void clearColorFilter() {
+        this.colorFilter = -1;
+        invalidate();
+    }
     //    public void setImageResourceChecked(@DrawableRes int resID) {
 //        drawableSrcChecked=resID;
 //        setChecked(isChecked);

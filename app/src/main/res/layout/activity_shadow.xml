@@ -45,11 +45,11 @@
             app:cy_blur_radius="10dp"
             app:cy_src="@drawable/pic_edit_filter" />
 
-        <Button
-            android:id="@+id/btn_colorfilter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="colorFilter" />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:text="colorFIlter"
+            android:id="@+id/cb_colorFilter"
+            android:layout_height="wrap_content"/>
 
         <Button
             android:id="@+id/btn"
