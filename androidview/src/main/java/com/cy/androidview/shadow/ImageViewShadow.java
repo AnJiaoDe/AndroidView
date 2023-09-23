@@ -3,13 +3,10 @@ package com.cy.androidview.shadow;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -18,10 +15,8 @@ import androidx.annotation.Nullable;
 
 import com.cy.androidview.BitmapUtils;
 import com.cy.androidview.R;
-import com.cy.androidview.ScreenUtils;
-import com.cy.androidview.selectorview.ImageViewSelector;
 
-public class PicShadowView extends View {
+public class ImageViewShadow extends View {
     private Paint paint, paint_filter, paintShadow;
     private Bitmap bitmap, bitmapAlpha;
     private int width, height;
@@ -40,20 +35,20 @@ public class PicShadowView extends View {
     private int mask_type = 1;
     private int blur_radius = 1;
 
-    public PicShadowView(Context context, @Nullable AttributeSet attrs) {
+    public ImageViewShadow(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         setLayerType(LAYER_TYPE_SOFTWARE, null);
 
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.PicShadowView);
-        drawableSrc = typedArray.getResourceId(R.styleable.PicShadowView_cy_src, -1);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ImageViewShadow);
+        drawableSrc = typedArray.getResourceId(R.styleable.ImageViewShadow_cy_src, -1);
 //        drawableSrcChecked = typedArray.getResourceId(R.styleable.PicShadowView_cy_src_checked, -1);
-        colorFilter = typedArray.getColor(R.styleable.PicShadowView_cy_color_filter, -1);
-        color_shadow = typedArray.getColor(R.styleable.PicShadowView_cy_color_shadow, 0xff616161);
-        shadow_limit = typedArray.getDimensionPixelSize(R.styleable.PicShadowView_cy_shadow_limit, shadow_limit);
+        colorFilter = typedArray.getColor(R.styleable.ImageViewShadow_cy_color_filter, -1);
+        color_shadow = typedArray.getColor(R.styleable.ImageViewShadow_cy_color_shadow, 0xff616161);
+        shadow_limit = typedArray.getDimensionPixelSize(R.styleable.ImageViewShadow_cy_shadow_limit, shadow_limit);
         //BlurMaskFilter的blur_radius  must >0，否则GG
-        blur_radius = Math.max(blur_radius, typedArray.getDimensionPixelSize(R.styleable.PicShadowView_cy_blur_radius, blur_radius));
+        blur_radius = Math.max(blur_radius, typedArray.getDimensionPixelSize(R.styleable.ImageViewShadow_cy_blur_radius, blur_radius));
 //        isChecked = typedArray.getBoolean(R.styleable.PicShadowView_cy_checked, false);//是否选中
-        mask_type = typedArray.getInt(R.styleable.PicShadowView_cy_mask_type, mask_type);
+        mask_type = typedArray.getInt(R.styleable.ImageViewShadow_cy_mask_type, mask_type);
 
         typedArray.recycle();
 

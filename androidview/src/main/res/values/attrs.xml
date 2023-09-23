@@ -100,7 +100,7 @@
         <enum name="OUTER" value="2" />
         <enum name="INNER" value="3" />
     </attr>
-    <declare-styleable name="PicShadowView">
+    <declare-styleable name="ImageViewShadow">
 
         <attr name="cy_mask_type"  />
         <attr name="cy_blur_radius" format="reference|dimension" />

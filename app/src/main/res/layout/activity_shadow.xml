@@ -21,7 +21,7 @@
             android:shadowRadius="2"
             android:text="setShadowLayer" />
 
-        <com.cy.androidview.shadow.PicShadowView
+        <com.cy.androidview.shadow.ImageViewShadow
             android:id="@+id/PicShadowView"
             android:layout_width="60dp"
             android:layout_height="60dp"
@@ -31,14 +31,14 @@
             app:cy_mask_type="SOLID"
             app:cy_src="@drawable/flash_aotu_white" />
 
-        <com.cy.androidview.shadow.PicShadowView
+        <com.cy.androidview.shadow.ImageViewShadow
             android:id="@+id/PicShadowView2"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:padding="10dp"
             app:cy_src="@drawable/pic_edit_filter" />
         <!--        最好别修改cy_blur_radius，否则阴影 有毛病，真是麻雀啄了牛屁股-->
-        <com.cy.androidview.shadow.PicShadowView
+        <com.cy.androidview.shadow.ImageViewShadow
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:padding="10dp"
