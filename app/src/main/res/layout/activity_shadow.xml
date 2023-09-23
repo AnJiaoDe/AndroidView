@@ -25,8 +25,13 @@
         <com.cy.androidview.shadow.PicShadowView
             android:layout_width="60dp"
             app:cy_color_shadow="#656565"
-            app:cy_shadow_limit="0dp"
-            app:cy_src="@drawable/after_sale_icon"
+            android:padding="10dp"
+            android:id="@+id/PicShadowView"
+            app:cy_src_color_checked="#f00"
+            app:cy_mask_type="SOLID"
+            app:cy_blur_radius="50dp"
+            app:cy_src_checked="@drawable/flash_on_white"
+            app:cy_src="@drawable/flash_aotu_white"
             android:layout_height="60dp" />
     </LinearLayout>
 </ScrollView>

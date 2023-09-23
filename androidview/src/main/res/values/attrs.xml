@@ -94,9 +94,20 @@
     <attr name="cy_textColorChecked" format="reference|color" />
     <attr name="cy_buttonUnChecked" format="reference" />
     <attr name="cy_buttonChecked" format="reference" />
-
+    <attr name="cy_mask_type">
+        <enum name="NORMAL" value="0" />
+        <enum name="SOLID" value="1" />
+        <enum name="OUTER" value="2" />
+        <enum name="INNER" value="3" />
+    </attr>
     <declare-styleable name="PicShadowView">
+
+        <attr name="cy_mask_type"  />
+        <attr name="cy_blur_radius" format="reference|dimension" />
         <attr name="cy_src" format="reference" />
+        <attr name="cy_src_checked" format="reference" />
+        <attr name="cy_src_color_checked" format="reference|color" />
+        <attr name="cy_checked" />
 <!--        <attr name="cy_scaleType" />-->
         <attr name="cy_color_shadow" format="reference|color" />
         <attr name="cy_shadow_limit" format="reference|dimension" />
