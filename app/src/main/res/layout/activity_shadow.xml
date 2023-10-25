@@ -36,6 +36,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:padding="10dp"
+            app:cy_shadow_limit="2dp"
             app:cy_src="@drawable/pic_edit_filter" />
         <!--        最好别修改cy_blur_radius，否则阴影 有毛病，真是麻雀啄了牛屁股-->
         <com.cy.androidview.shadow.ImageViewShadow

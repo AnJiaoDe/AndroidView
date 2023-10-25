@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 
 import com.cy.androidview.BitmapUtils;
 import com.cy.androidview.R;
+import com.cy.androidview.ScreenUtils;
 
 public class ImageViewShadow extends View {
     private Paint paint, paint_filter, paintShadow;
@@ -44,6 +45,7 @@ public class ImageViewShadow extends View {
 //        drawableSrcChecked = typedArray.getResourceId(R.styleable.PicShadowView_cy_src_checked, -1);
         colorFilter = typedArray.getColor(R.styleable.ImageViewShadow_cy_color_filter, -1);
         color_shadow = typedArray.getColor(R.styleable.ImageViewShadow_cy_color_shadow, 0xff616161);
+        shadow_limit= ScreenUtils.dpAdapt(context,0.4f);
         shadow_limit = typedArray.getDimensionPixelSize(R.styleable.ImageViewShadow_cy_shadow_limit, shadow_limit);
         //BlurMaskFilter的blur_radius  must >0，否则GG
         blur_radius = Math.max(blur_radius, typedArray.getDimensionPixelSize(R.styleable.ImageViewShadow_cy_blur_radius, blur_radius));
