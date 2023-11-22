@@ -281,6 +281,23 @@
             app:cy_shapeType="oval">
 
         </com.cy.androidview.shapeview.FrameLayoutShape>
+        <com.cy.androidview.shapeview.FrameLayoutShape
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="5dp"
+            app:cy_colorStart="#00ff00"
+            app:cy_colorEnd="#ff0000"
+            app:cy_gradientType="sweep_gradient"
+            app:cy_radiusGradient="20dp"
+            app:cy_shapeType="oval"/>
+        <com.cy.androidview.shapeview.TextViewShape
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/TextViewShape"
+            android:layout_marginTop="5dp"
+            app:cy_gradientType="sweep_gradient"
+            app:cy_radiusGradient="20dp"
+            app:cy_shapeType="oval"/>
 
 
         <!--控件下画线,不画线的方向，需要padding,strokeWidth的2倍-->

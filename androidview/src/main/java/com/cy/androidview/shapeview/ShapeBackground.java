@@ -2,6 +2,7 @@ package com.cy.androidview.shapeview;
 
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
@@ -10,6 +11,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.StyleableRes;
 
 import com.cy.androidview.R;
@@ -34,9 +36,9 @@ public class ShapeBackground {
     private int radiusBottomLeft = 0;
     private int colorFill = 0x00000000;
     private int radiusGradient = 0;
-    private int colorStart = 0x00000000;
+    //    private int colorStart = 0x00000000;
 //    private int colorCenter = 0x00000000;
-    private int colorEnd = 0x00000000;
+//    private int colorEnd = 0x00000000;
     private int orientationGradient = 6;
     private int gradientType = 0;
     private float centerX = 0.5f;
@@ -52,8 +54,10 @@ public class ShapeBackground {
     private int strokePaddingBottom = 0;
     private int shapeType = 0;
     private GradientDrawable gradientDrawable;
+    //    private int[] colors;
+    private @ColorInt int[] colors_gradient;
 
-    public ShapeBackground(View view,TypedArray typedArray) {
+    public ShapeBackground(View view, TypedArray typedArray) {
         this.view = view;
         this.typedArray = typedArray;
         this.radiusCorner = typedArray.getDimensionPixelSize(R.styleable.AttrsShape_cy_radiusCorner, radiusCorner);
@@ -62,9 +66,8 @@ public class ShapeBackground {
         this.radiusBottomRight = typedArray.getDimensionPixelSize(R.styleable.AttrsShape_cy_radiusBottomRight, radiusBottomRight);
         this.radiusBottomLeft = typedArray.getDimensionPixelSize(R.styleable.AttrsShape_cy_radiusBottomLeft, radiusBottomLeft);
         this.colorFill = typedArray.getColor(R.styleable.AttrsShape_cy_colorFill, colorFill);
-        this.colorStart = typedArray.getColor(R.styleable.AttrsShape_cy_colorStart, colorStart);
-//        this.colorCenter = typedArray.getColor(R.styleable.AttrsShape_cy_colorCenter, colorCenter);
-        this.colorEnd = typedArray.getColor(R.styleable.AttrsShape_cy_colorEnd, colorEnd);
+        setGradientColors(new int[]{typedArray.getColor(R.styleable.AttrsShape_cy_colorStart, colorFill),
+                typedArray.getColor(R.styleable.AttrsShape_cy_colorEnd, colorFill)});
         this.orientationGradient = typedArray.getInt(R.styleable.AttrsShape_cy_orientationGradient, orientationGradient);
         this.gradientType = typedArray.getInt(R.styleable.AttrsShape_cy_gradientType, gradientType);
         this.centerX = typedArray.getFloat(R.styleable.AttrsShape_cy_centerX, centerX);
@@ -125,7 +128,7 @@ public class ShapeBackground {
         return radiusBottomLeft;
     }
 
-    public ShapeBackground setRadiusBottomLeft_(int radiusBottomLeft ) {
+    public ShapeBackground setRadiusBottomLeft_(int radiusBottomLeft) {
         this.radiusBottomLeft = radiusBottomLeft;
         return this;
 
@@ -134,10 +137,11 @@ public class ShapeBackground {
     public int getColorFill() {
         return colorFill;
     }
+
     public ShapeBackground setColorFill_(int colorFill) {
         this.colorFill = colorFill;
+        setGradientColors(new int[]{colorFill, colorFill});
         return this;
-
     }
 
     public int getRadiusGradient() {
@@ -150,15 +154,14 @@ public class ShapeBackground {
 
     }
 
-    public int getColorStart() {
-        return colorStart;
-    }
-
-    public ShapeBackground setColorStart_(int colorStart) {
-        this.colorStart =colorStart;
-        return this;
-
-    }
+//    public int getColorStart() {
+//        return colorStart;
+//    }
+//
+//    public ShapeBackground setColorStart_(int colorStart) {
+//        this.colorStart = colorStart;
+//        return this;
+//    }
 
 //    public int getColorCenter() {
 //        return colorCenter;
@@ -168,16 +171,16 @@ public class ShapeBackground {
 //        this.colorCenter =colorCenter;
 //        return this;
 //    }
-
-    public int getColorEnd() {
-        return colorEnd;
-    }
-
-    public ShapeBackground setColorEnd_(int colorEnd) {
-        this.colorEnd = colorEnd;
-        return this;
-
-    }
+//
+//    public int getColorEnd() {
+//        return colorEnd;
+//    }
+//
+//    public ShapeBackground setColorEnd_(int colorEnd) {
+//        this.colorEnd = colorEnd;
+//        return this;
+//
+//    }
 
     public int getOrientationGradient() {
         return orientationGradient;
@@ -192,6 +195,7 @@ public class ShapeBackground {
     public int getGradientType() {
         return gradientType;
     }
+
     public ShapeBackground setGradientType_(int gradientType) {
         this.gradientType = gradientType;
         return this;
@@ -202,7 +206,7 @@ public class ShapeBackground {
         return centerX;
     }
 
-    public ShapeBackground setCenterX_(int centerX ) {
+    public ShapeBackground setCenterX_(int centerX) {
         this.centerX = centerX;
         return this;
 
@@ -221,6 +225,7 @@ public class ShapeBackground {
     public int getAngle() {
         return angle;
     }
+
     public ShapeBackground setAngle_(int angle) {
         this.angle = angle;
         return this;
@@ -249,7 +254,7 @@ public class ShapeBackground {
     }
 
     public ShapeBackground setStrokeDashWidth_(int strokeDashWidth) {
-        this.strokeDashWidth =strokeDashWidth;
+        this.strokeDashWidth = strokeDashWidth;
         return this;
     }
 
@@ -276,7 +281,7 @@ public class ShapeBackground {
     }
 
     public ShapeBackground setStrokePaddingTop_(int strokePaddingTop) {
-        this.strokePaddingTop =strokePaddingTop;
+        this.strokePaddingTop = strokePaddingTop;
         return this;
     }
 
@@ -307,10 +312,15 @@ public class ShapeBackground {
         return this;
     }
 
+    public ShapeBackground setGradientColors(int[] colors_gradient) {
+        this.colors_gradient = colors_gradient;
+        return this;
+    }
+
     public ShapeBackground shape() {
 //        //设置了填充色或者设置了渐变色的开始和结束，或者设置了描边颜色，才会设置drawable
-        if (colorFill == 0x00000000 && strokeColor == 0x00000000 && (colorStart == 0x00000000 || colorEnd == 0x00000000))
-            return this;
+//        if (colorFill == 0x00000000 && strokeColor == 0x00000000 && (colorStart == 0x00000000 || colorEnd == 0x00000000))
+//            return this;
 
         //创建背景drawable
         gradientDrawable = new GradientDrawable();
@@ -327,19 +337,15 @@ public class ShapeBackground {
                 break;
             case 1:
                 gradientDrawable.setShape(GradientDrawable.OVAL);//椭圆
-
                 break;
             case 2:
                 gradientDrawable.setShape(GradientDrawable.LINE);//直线
-
                 break;
             case 3:
                 gradientDrawable.setShape(GradientDrawable.RING);//圆环
-
                 break;
         }
-        gradientDrawable.setColor(colorFill);//设置填充色
-
+//        gradientDrawable.setColor(colorFill);//设置填充色
         switch (gradientType) {
             case 0:
                 gradientDrawable.setGradientType(GradientDrawable.LINEAR_GRADIENT);//线性渐变
@@ -347,34 +353,27 @@ public class ShapeBackground {
                 switch (orientationGradient) {
                     case 0:
                         gradientDrawable.setOrientation(GradientDrawable.Orientation.TOP_BOTTOM);//从上到下
-
                         break;
                     case 1:
                         gradientDrawable.setOrientation(GradientDrawable.Orientation.TR_BL);//从右上到左下
-
                         break;
                     case 2:
                         gradientDrawable.setOrientation(GradientDrawable.Orientation.RIGHT_LEFT);//从右到左
-
                         break;
                     case 3:
                         gradientDrawable.setOrientation(GradientDrawable.Orientation.BR_TL);//从右下到左上
-
                         break;
                     case 4:
                         gradientDrawable.setOrientation(GradientDrawable.Orientation.BOTTOM_TOP);//从下到上
-
                         break;
                     case 5:
                         gradientDrawable.setOrientation(GradientDrawable.Orientation.BL_TR);//从左下到右上
                         break;
                     case 6:
                         gradientDrawable.setOrientation(GradientDrawable.Orientation.LEFT_RIGHT);//从左到右
-
                         break;
                     case 7:
                         gradientDrawable.setOrientation(GradientDrawable.Orientation.TL_BR);//从左上到右下
-
                         break;
                 }
                 break;
@@ -390,10 +389,10 @@ public class ShapeBackground {
                 break;
         }
         //设置渐变颜色
-        if (colorStart != 0x00000000 && colorEnd != 0x00000000) {
-            int[] colors = {colorStart, colorEnd};
-            gradientDrawable.setColors(colors);
-        }
+//        if (colorStart != 0x00000000 && colorEnd != 0x00000000) {
+//            colors = new int[]{colorStart, colorEnd};
+        gradientDrawable.setColors(colors_gradient);
+//        }
 
         //描边
         gradientDrawable.setStroke(strokeWidth, strokeColor, strokeDashWidth, strokeDashGap);
