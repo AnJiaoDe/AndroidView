@@ -276,8 +276,7 @@
             android:layout_marginTop="5dp"
             app:cy_colorEnd="#ff0000"
             app:cy_colorStart="#33FF7580"
-            app:cy_gradientType="sweep_gradient"
-            app:cy_radiusGradient="20dp"
+            app:cy_gradientType="radial_gradient"
             app:cy_shapeType="oval">
 
         </com.cy.androidview.shapeview.FrameLayoutShape>
@@ -288,7 +287,6 @@
             app:cy_colorStart="#00ff00"
             app:cy_colorEnd="#ff0000"
             app:cy_gradientType="sweep_gradient"
-            app:cy_radiusGradient="20dp"
             app:cy_shapeType="oval"/>
         <com.cy.androidview.shapeview.TextViewShape
             android:layout_width="60dp"

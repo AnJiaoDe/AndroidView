@@ -15,6 +15,7 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.StyleableRes;
 
 import com.cy.androidview.R;
+import com.cy.androidview.ScreenUtils;
 import com.cy.androidview.rippleview.Ripple;
 
 /**
@@ -27,6 +28,20 @@ import com.cy.androidview.rippleview.Ripple;
  * @Version: 1.0
  */
 public class ShapeBackground {
+    /**
+     * Gradient is linear (default.)
+     */
+    public static final int LINEAR_GRADIENT = 0;
+
+    /**
+     * Gradient is circular.
+     */
+    public static final int RADIAL_GRADIENT = 1;
+
+    /**
+     * Gradient is a sweep.
+     */
+    public static final int SWEEP_GRADIENT  = 2;
     private TypedArray typedArray;
     private View view;
     private int radiusCorner = 0;
@@ -70,6 +85,7 @@ public class ShapeBackground {
                 typedArray.getColor(R.styleable.AttrsShape_cy_colorEnd, colorFill)});
         this.orientationGradient = typedArray.getInt(R.styleable.AttrsShape_cy_orientationGradient, orientationGradient);
         this.gradientType = typedArray.getInt(R.styleable.AttrsShape_cy_gradientType, gradientType);
+        this.radiusGradient = typedArray.getDimensionPixelSize(R.styleable.AttrsShape_cy_radiusGradient, ScreenUtils.dpAdapt(view.getContext(),10));
         this.centerX = typedArray.getFloat(R.styleable.AttrsShape_cy_centerX, centerX);
         this.centerY = typedArray.getFloat(R.styleable.AttrsShape_cy_centerY, centerY);
         this.angle = typedArray.getInt(R.styleable.AttrsShape_cy_angle, angle);
@@ -312,7 +328,7 @@ public class ShapeBackground {
         return this;
     }
 
-    public ShapeBackground setGradientColors(int[] colors_gradient) {
+    public ShapeBackground setGradientColors(@ColorInt int[] colors_gradient) {
         this.colors_gradient = colors_gradient;
         return this;
     }
@@ -385,7 +401,6 @@ public class ShapeBackground {
             case 2:
                 gradientDrawable.setGradientType(GradientDrawable.SWEEP_GRADIENT);//扫描渐变
                 gradientDrawable.setGradientCenter(centerX, centerY);//设置渐变相对于控件的中心点坐标，如(0.3,0.6)
-
                 break;
         }
         //设置渐变颜色
