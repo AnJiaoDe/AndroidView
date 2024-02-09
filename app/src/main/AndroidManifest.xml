@@ -9,6 +9,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ProgressActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SwitchButtonActivity"
+            android:exported="false" />
+        <activity
             android:name=".CardActivity"
             android:exported="true" />
         <activity

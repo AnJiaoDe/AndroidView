@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#000"
+    android:padding="10dp">
+<!--    //31  50  81  100-->
+    <com.cy.androidview.progress.VCutProgressView
+        android:layout_width="match_parent"
+        app:cy_progress="100"
+        android:id="@+id/VCutProgressView"
+        android:layout_height="200dp" />
+</LinearLayout>

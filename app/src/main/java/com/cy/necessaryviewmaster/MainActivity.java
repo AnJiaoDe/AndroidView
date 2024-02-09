@@ -18,6 +18,7 @@ public class MainActivity extends BaseActivity {
         findViewById(R.id.btn_roundiv).setOnClickListener(this);
         findViewById(R.id.btn_selector).setOnClickListener(this);
         findViewById(R.id.btn_shadow).setOnClickListener(this);
+        findViewById(R.id.btn_progress).setOnClickListener(this);
     }
 
     @Override
@@ -44,6 +45,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.btn_shadow:
                 startAppcompatActivity(ShadowActivity.class);
+                break;
+            case R.id.btn_progress:
+                startAppcompatActivity(ProgressActivity.class);
                 break;
         }
     }
