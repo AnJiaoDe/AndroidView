@@ -7,10 +7,17 @@
     android:orientation="vertical"
     android:background="#000"
     android:padding="10dp">
-<!--    //31  50  81  100-->
-    <com.cy.androidview.progress.VCutProgressView
+    <com.cy.androidview.roundview.FrameLayoutRound
         android:layout_width="match_parent"
-        app:cy_progress="100"
-        android:id="@+id/VCutProgressView"
-        android:layout_height="200dp" />
+        android:background="#f00"
+        android:layout_height="200dp">
+        <!--    //31  50  81  100-->
+        <com.cy.androidview.progress.VCutProgressView
+            android:layout_width="match_parent"
+            app:cy_progress="70"
+            android:padding="10dp"
+            android:id="@+id/VCutProgressView"
+            android:layout_height="match_parent" />
+    </com.cy.androidview.roundview.FrameLayoutRound>
+
 </LinearLayout>

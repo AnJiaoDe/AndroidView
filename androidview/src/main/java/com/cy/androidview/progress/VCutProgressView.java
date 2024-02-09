@@ -43,7 +43,7 @@ public class VCutProgressView extends View {
         paintProgress.setAntiAlias(true); // 开启抗锯齿
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.VCutProgressView);
-        setColorBg(typedArray.getColor(R.styleable.VCutProgressView_cy_color_bg, 0x33ffffff));
+        setColorBg(typedArray.getColor(R.styleable.VCutProgressView_cy_color_bg, 0xffffff00));
         setColorProgress(typedArray.getColor(R.styleable.VCutProgressView_cy_color_progress, 0xff2a83fc));
         setCorner(typedArray.getDimensionPixelSize(R.styleable.VCutProgressView_cy_radiusCorner, ScreenUtils.dpAdapt(context, 10)));
         setWidthStroke(typedArray.getDimensionPixelSize(R.styleable.VCutProgressView_cy_strokeWidth, ScreenUtils.dpAdapt(context, 3)));
@@ -96,7 +96,7 @@ public class VCutProgressView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        rectF.left = corner * 0.5f;
+        rectF.left = widthStroke * 0.5f;
         rectF.top = rectF.left;
         rectF.right = width - rectF.left;
         rectF.bottom = height - rectF.left;
