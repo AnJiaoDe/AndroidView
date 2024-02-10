@@ -14,7 +14,7 @@ public class ProgressActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_progress);
         VCutProgressView cutProgressView=findViewById(R.id.VCutProgressView);
-        cutProgressView.setProgress(70);
+//        cutProgressView.setProgress(70);
     }
 
     @Override

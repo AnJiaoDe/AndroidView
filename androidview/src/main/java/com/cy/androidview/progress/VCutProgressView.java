@@ -102,8 +102,9 @@ public class VCutProgressView extends View {
         rectF.bottom = height - rectF.left;
         canvas.drawRoundRect(rectF, corner, corner, paint);
 
-        path.moveTo(rectF.left + corner, rectF.top);
-        path.lineTo(Math.min(rectF.right - corner, rectF.left + corner + (width - 2.0f * corner) * progress / progressT[0]), rectF.top);
+        //注意：这里考虑了corner为0的时候，进度也能填满方框
+        path.moveTo(corner, rectF.top);
+        path.lineTo(Math.min(width - corner, corner + (width - 2.0f * corner) * progress / progressT[0]), rectF.top);
 
         if (progress > progressT[0]) {
             rectFCorner.left = rectF.right - 2 * corner;
@@ -114,7 +115,7 @@ public class VCutProgressView extends View {
 
             path.moveTo(rectF.right, rectF.top + corner);
             path.lineTo(rectF.right, Math.min(rectF.bottom - corner,
-                    rectF.top + corner + (height - 2.0f * corner) * (progress-progressT[0]) / (progressT[1]-progressT[0])));
+                    rectF.top + corner + (height - 2.0f * corner) * (progress - progressT[0]) / (progressT[1] - progressT[0])));
         }
 
         if (progress > progressT[1]) {
@@ -124,9 +125,9 @@ public class VCutProgressView extends View {
             rectFCorner.bottom = rectF.bottom;
             path.arcTo(rectFCorner, 0, 90, true);
 
-            path.moveTo(rectF.right - corner, rectF.bottom);
-            path.lineTo(Math.max(rectF.left + corner,
-                    rectF.right - corner - (width - 2.0f * corner) * (progress-progressT[1]) / (progressT[2]-progressT[1])), rectF.bottom);
+            path.moveTo(width - corner, rectF.bottom);
+            path.lineTo(Math.max(corner,
+                    width - corner - (width - 2.0f * corner) * (progress - progressT[1]) / (progressT[2] - progressT[1])), rectF.bottom);
         }
 
         if (progress > progressT[2]) {
@@ -138,7 +139,7 @@ public class VCutProgressView extends View {
 
             path.moveTo(rectF.left, rectF.bottom - corner);
             path.lineTo(rectF.left, Math.max(rectF.top + corner,
-                    rectF.bottom - corner - (height-2.0f*corner) * (progress-progressT[2]) / (progressT[3]-progressT[2])));
+                    rectF.bottom - corner - (height - 2.0f * corner) * (progress - progressT[2]) / (progressT[3] - progressT[2])));
         }
 
         if (progress >= progressT[3]) {
