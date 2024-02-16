@@ -841,4 +841,12 @@
         <attr name="cy_strokeWidth" />
         <attr name="cy_progress" format="integer" />
     </declare-styleable>
+    <declare-styleable name="StickerView">
+        <attr name="cy_src_close" format="reference" />
+        <attr name="cy_src_copy" format="reference" />
+        <attr name="cy_src_rotateZ" format="reference" />
+        <attr name="cy_src_rotateXY" format="reference" />
+        <attr name="cy_radius_menu" format="dimension|reference" />
+        <attr name="cy_color_bg_menu" format="color|reference" />
+    </declare-styleable>
 </resources>

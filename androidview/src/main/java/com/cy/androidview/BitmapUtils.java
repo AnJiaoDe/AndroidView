@@ -1,12 +1,14 @@
-package com.cy.androidview;//package com.cy.sdkstrategy_master.http;
+package com.cy.androidview;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.TypedValue;
 import android.view.View;
 
 import java.io.BufferedOutputStream;
@@ -14,6 +16,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by lenovo on 2017/12/24.
@@ -42,7 +45,7 @@ public class BitmapUtils {
 
     /**
      * @param source
-     * @param degree  比如90度，是顺时针旋转90度，-90度是逆时针旋转90度
+     * @param degree         比如90度，是顺时针旋转90度，-90度是逆时针旋转90度
      * @param flipHorizontal 是否左右镜像
      * @return
      */
@@ -52,131 +55,164 @@ public class BitmapUtils {
         }
         Matrix matrix = new Matrix();
         matrix.postRotate(degree);
-        if (flipHorizontal) {
+        if (flipHorizontal)
             matrix.postScale(-1, 1);
-        }
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, false);
     }
 
     /**
      * 从底层返回的数据拿到对应的图片的角度，有些手机hal层会对手机拍出来的照片作相应的旋转，有些手机不会(比如三星手机)
-     *  //有些奇葩垃圾手机拍出来会被旋转，如小米奇葩垃圾手机 cc9,
-     *  //手机屏幕正上方指向正上方，图片逆时针旋转了90度，getHardwareOrientation 得到90度，
-     *  手机屏幕正上方指向正左方，图片没有被旋转，getHardwareOrientation得到0度
-     * @param jpeg
+     * //有些奇葩垃圾手机拍出来会被旋转，如小米奇葩垃圾手机 cc9,
+     * //手机屏幕正上方指向正上方，图片逆时针旋转了90度，getHardwareOrientation 得到90度，
+     * 手机屏幕正上方指向正左方，图片没有被旋转，getHardwareOrientation得到0度
+     *
      * @return
      */
-    public static int getHardwareOrientation(byte[] jpeg) {
-        if (jpeg == null) {
-            return 0;
+    public static int getPicDegree(InputStream inputStream) {
+        int degree = 0;
+        try {
+            ExifInterface exifInterface = new ExifInterface(inputStream);
+
+            int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    degree = 90;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    degree = 180;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    degree = 270;
+                    break;
+            }
+//            exifInterface.setAttribute(ExifInterface.TAG_ORIENTATION, "no");
+//            exifInterface.saveAttributes();
+        } catch (IOException e) {
+            e.printStackTrace();
+            LogUtils.log("getPicDegree", e.getMessage());
         }
-
-        int offset = 0;
-        int length = 0;
-
-        // ISO/IEC 10918-1:1993(E)
-        while (offset + 3 < jpeg.length && (jpeg[offset++] & 0xFF) == 0xFF) {
-            int marker = jpeg[offset] & 0xFF;
-
-            // Check if the marker is a padding.
-            if (marker == 0xFF) {
-                continue;
-            }
-            offset++;
-
-            // Check if the marker is SOI or TEM.
-            if (marker == 0xD8 || marker == 0x01) {
-                continue;
-            }
-            // Check if the marker is EOI or SOS.
-            if (marker == 0xD9 || marker == 0xDA) {
-                break;
-            }
-
-            // Get the length and check if it is reasonable.
-            length = pack(jpeg, offset, 2, false);
-            if (length < 2 || offset + length > jpeg.length) {
-//                KSLog.e(TAG, "Invalid length");
-                return 0;
-            }
-
-            // Break if the marker is EXIF in APP1.
-            if (marker == 0xE1 && length >= 8 &&
-                    pack(jpeg, offset + 2, 4, false) == 0x45786966 &&
-                    pack(jpeg, offset + 6, 2, false) == 0) {
-                offset += 8;
-                length -= 8;
-                break;
-            }
-
-            // Skip other markers.
-            offset += length;
-            length = 0;
-        }
-
-        // JEITA CP-3451 Exif Version 2.2
-        if (length > 8) {
-            // Identify the byte order.
-            int tag = pack(jpeg, offset, 4, false);
-            if (tag != 0x49492A00 && tag != 0x4D4D002A) {
-//                KSLog.e(TAG, "Invalid byte order");
-                return 0;
-            }
-            boolean littleEndian = (tag == 0x49492A00);
-
-            // Get the offset and check if it is reasonable.
-            int count = pack(jpeg, offset + 4, 4, littleEndian) + 2;
-            if (count < 10 || count > length) {
-//                KSLog.e(TAG, "Invalid offset");
-                return 0;
-            }
-            offset += count;
-            length -= count;
-
-            // Get the count and go through all the elements.
-            count = pack(jpeg, offset - 2, 2, littleEndian);
-            while (count-- > 0 && length >= 12) {
-                // Get the tag and check if it is orientation.
-                tag = pack(jpeg, offset, 2, littleEndian);
-                if (tag == 0x0112) {
-                    // We do not really care about type and count, do we?
-                    int orientation = pack(jpeg, offset + 8, 2, littleEndian);
-                    switch (orientation) {
-                        case 1:
-                            return 0;
-                        case 3:
-                            return 180;
-                        case 6:
-                            return 90;
-                        case 8:
-                            return 270;
-                    }
-//                    KSLog.i(TAG, "Unsupported orientation");
-                    return 0;
-                }
-                offset += 12;
-                length -= 12;
-            }
-        }
-        return 0;
+        LogUtils.log("getPicDegree", degree);
+        return degree;
     }
 
-    private static int pack(byte[] bytes, int offset, int length,
-                            boolean littleEndian) {
-        int step = 1;
-        if (littleEndian) {
-            offset += length - 1;
-            step = -1;
-        }
-
-        int value = 0;
-        while (length-- > 0) {
-            value = (value << 8) | (bytes[offset] & 0xFF);
-            offset += step;
-        }
-        return value;
-    }
-
+    /**
+     * 从底层返回的数据拿到对应的图片的角度，有些手机hal层会对手机拍出来的照片作相应的旋转，有些手机不会(比如三星手机)
+     * //有些奇葩垃圾手机拍出来会被旋转，如小米奇葩垃圾手机 cc9,
+     * //手机屏幕正上方指向正上方，图片逆时针旋转了90度，getHardwareOrientation 得到90度，
+     * 手机屏幕正上方指向正左方，图片没有被旋转，getHardwareOrientation得到0度
+     *
+     * @return
+     */
+//    public static int getHardwareOrientation(byte[] jpeg) {
+//        if (jpeg == null) {
+//            return 0;
+//        }
+//
+//        int offset = 0;
+//        int length = 0;
+//
+//        // ISO/IEC 10918-1:1993(E)
+//        while (offset + 3 < jpeg.length && (jpeg[offset++] & 0xFF) == 0xFF) {
+//            int marker = jpeg[offset] & 0xFF;
+//
+//            // Check if the marker is a padding.
+//            if (marker == 0xFF) {
+//                continue;
+//            }
+//            offset++;
+//
+//            // Check if the marker is SOI or TEM.
+//            if (marker == 0xD8 || marker == 0x01) {
+//                continue;
+//            }
+//            // Check if the marker is EOI or SOS.
+//            if (marker == 0xD9 || marker == 0xDA) {
+//                break;
+//            }
+//
+//            // Get the length and check if it is reasonable.
+//            length = pack(jpeg, offset, 2, false);
+//            if (length < 2 || offset + length > jpeg.length) {
+////                KSLog.e(TAG, "Invalid length");
+//                return 0;
+//            }
+//
+//            // Break if the marker is EXIF in APP1.
+//            if (marker == 0xE1 && length >= 8 &&
+//                    pack(jpeg, offset + 2, 4, false) == 0x45786966 &&
+//                    pack(jpeg, offset + 6, 2, false) == 0) {
+//                offset += 8;
+//                length -= 8;
+//                break;
+//            }
+//
+//            // Skip other markers.
+//            offset += length;
+//            length = 0;
+//        }
+//
+//        // JEITA CP-3451 Exif Version 2.2
+//        if (length > 8) {
+//            // Identify the byte order.
+//            int tag = pack(jpeg, offset, 4, false);
+//            if (tag != 0x49492A00 && tag != 0x4D4D002A) {
+////                KSLog.e(TAG, "Invalid byte order");
+//                return 0;
+//            }
+//            boolean littleEndian = (tag == 0x49492A00);
+//
+//            // Get the offset and check if it is reasonable.
+//            int count = pack(jpeg, offset + 4, 4, littleEndian) + 2;
+//            if (count < 10 || count > length) {
+////                KSLog.e(TAG, "Invalid offset");
+//                return 0;
+//            }
+//            offset += count;
+//            length -= count;
+//
+//            // Get the count and go through all the elements.
+//            count = pack(jpeg, offset - 2, 2, littleEndian);
+//            while (count-- > 0 && length >= 12) {
+//                // Get the tag and check if it is orientation.
+//                tag = pack(jpeg, offset, 2, littleEndian);
+//                if (tag == 0x0112) {
+//                    // We do not really care about type and count, do we?
+//                    int orientation = pack(jpeg, offset + 8, 2, littleEndian);
+//                    switch (orientation) {
+//                        case 1:
+//                            return 0;
+//                        case 3:
+//                            return 180;
+//                        case 6:
+//                            return 90;
+//                        case 8:
+//                            return 270;
+//                    }
+////                    KSLog.i(TAG, "Unsupported orientation");
+//                    return 0;
+//                }
+//                offset += 12;
+//                length -= 12;
+//            }
+//        }
+//        return 0;
+//    }
+//
+//    private static int pack(byte[] bytes, int offset, int length,
+//                            boolean littleEndian) {
+//        int step = 1;
+//        if (littleEndian) {
+//            offset += length - 1;
+//            step = -1;
+//        }
+//
+//        int value = 0;
+//        while (length-- > 0) {
+//            value = (value << 8) | (bytes[offset] & 0xFF);
+//            offset += step;
+//        }
+//        return value;
+//    }
     public static String getSuffix(String filePath) {
         String suffix = "";
         try {
@@ -203,10 +239,10 @@ public class BitmapUtils {
     public static boolean saveBitmapToFile(Bitmap bitmap, File file, int quality) {
         try {
             BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
-            if(file.getAbsolutePath().endsWith(".png")){
+            if (file.getAbsolutePath().endsWith(".png")) {
                 //PNG不支持压缩
                 bitmap.compress(Bitmap.CompressFormat.PNG, quality, bos);
-            }else {
+            } else {
                 bitmap.compress(Bitmap.CompressFormat.JPEG, quality, bos);
             }
             bos.flush();
@@ -413,9 +449,29 @@ public class BitmapUtils {
         new CompressFileThread(compressFileBean, compressFileCallback).start();
     }
 
-    /*
+    /**
+     * drawable raw目录均可以
+     *直接使用BitmapFactory.decodeResource btimap 会被根据屏幕密度进行压缩，真是麻雀啄了牛屁股
+     * @param context
+     * @param resId
+     * @return
      */
-    public static Bitmap decodeBitmapFromResource(Context context, int id, int reqWidth, int reqHeight) {
+    public static Bitmap decodeResourceOrigin(Context context, int resId) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        TypedValue value = new TypedValue();
+        context.getResources().openRawResource(resId, value);
+        options.inTargetDensity = value.density;
+        options.inScaled = false;//不缩放
+        return BitmapFactory.decodeResource(context.getResources(), resId, options);
+    }
+
+    /**
+     * drawable raw目录均可以
+     *
+     * @param context
+     * @return
+     */
+    public static Bitmap decodeResource(Context context, int id, int reqWidth, int reqHeight) {
         // First decode with inJustDecodeBounds=true to check dimensions
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;//如此，无法decode bitmap
@@ -427,6 +483,43 @@ public class BitmapUtils {
         options.inJustDecodeBounds = false;//如此，方可decode bitmap
 
         return BitmapFactory.decodeResource(context.getResources(), id, options);
+    }
+
+//    public static Bitmap decodeBitmapFromRaw(Context context, @RawRes int id) {
+//        return BitmapFactory.decodeStream(context.getResources().openRawResource(id));
+//    }
+
+    /**
+     * drawable raw目录均可以
+     *
+     * @param context
+     * @return
+     */
+    public static Bitmap decodeResource(Context context, int id, int reqWidthxreqHeight) {
+        // First decode with inJustDecodeBounds=true to check dimensions
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;//如此，无法decode bitmap
+        BitmapFactory.decodeResource(context.getResources(), id, options);
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidthxreqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;//如此，方可decode bitmap
+
+        return BitmapFactory.decodeResource(context.getResources(), id, options);
+    }
+
+    public static Bitmap decodeByteArray(byte[] bytes, int reqWidth, int reqHeight) {
+        // First decode with inJustDecodeBounds=true to check dimensions
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;//如此，无法decode bitmap
+        BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;//如此，方可decode bitmap
+
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
     }
 
 
@@ -465,19 +558,6 @@ public class BitmapUtils {
         return BitmapFactory.decodeFile(path, options);
     }
 
-    public static Bitmap decodeBitmapFromResource(Context context, int id, int reqWidthxreqHeight) {
-        // First decode with inJustDecodeBounds=true to check dimensions
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;//如此，无法decode bitmap
-        BitmapFactory.decodeResource(context.getResources(), id, options);
-        // Calculate inSampleSize
-        options.inSampleSize = calculateInSampleSize(options, reqWidthxreqHeight);
-
-        // Decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;//如此，方可decode bitmap
-
-        return BitmapFactory.decodeResource(context.getResources(), id, options);
-    }
 
     public static Bitmap decodeBitmapFromFilePathWxH(String path, int reqWidthxreqHeight) {
         // First decode with inJustDecodeBounds=true to check dimensions

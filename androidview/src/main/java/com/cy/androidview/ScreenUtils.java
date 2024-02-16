@@ -121,8 +121,9 @@ public class ScreenUtils {
      */
     public static int dpAdapt(Context context, float dp) {
 
-        return dpAdapt(context,dp,360);
+        return dpAdapt(context, dp, 360);
     }
+
     public static int dpAdapt(Context context, float dp, float widthDpBase) {
         DisplayMetrics dm = context.getResources().getDisplayMetrics();
         int heightPixels = dm.heightPixels;//高的像素
@@ -146,8 +147,9 @@ public class ScreenUtils {
      */
     public static int spAdapt(Context context, float sp) {
 
-        return spAdapt(context,sp,360);
+        return spAdapt(context, sp, 360);
     }
+
     public static int spAdapt(Context context, float sp, float widthDpBase) {
         DisplayMetrics dm = context.getResources().getDisplayMetrics();
         int heightPixels = dm.heightPixels;//高的像素
@@ -178,6 +180,15 @@ public class ScreenUtils {
     public static int px2sp(Context context, float pxValue) {
         final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
         return (int) (pxValue / fontScale + 0.5f);
+    }
+
+    /**
+     * convert sp to its equivalent px
+     * 将sp转换为px
+     */
+    public static int sp2px(Context context, float spValue) {
+        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (spValue * fontScale + 0.5f);
     }
 
     /**

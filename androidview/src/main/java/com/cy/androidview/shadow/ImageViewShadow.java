@@ -59,7 +59,7 @@ public class ImageViewShadow extends View {
 //        } else {
 //            setResOnUnChecked();
 //        }
-        bitmap = BitmapUtils.decodeBitmapFromResource(getContext(), drawableSrc, 2000 * 2000);
+        bitmap = BitmapUtils.decodeResource(getContext(), drawableSrc, 2000 * 2000);
         if (bitmap != null)
             bitmapAlpha = bitmap.extractAlpha();
 
@@ -183,7 +183,7 @@ public class ImageViewShadow extends View {
 //
     public void setImageResource(@DrawableRes int resID) {
         drawableSrc = resID;
-        bitmap = BitmapUtils.decodeBitmapFromResource(getContext(), drawableSrc, 2000 * 2000);
+        bitmap = BitmapUtils.decodeResource(getContext(), drawableSrc, 2000 * 2000);
         if (bitmap != null)
             bitmapAlpha = bitmap.extractAlpha();
         //因为需要计算图片宽高，所以必须先requestLayout
