@@ -23,13 +23,13 @@ public class StickActivity extends BaseActivity {
                 .setRotationX(30);
         stickerView.addSticker(sticker);
 
-        Sticker sticker2 = new Sticker(this, Sticker.TYPE_TEXT, "贴纸文字2");
+        Sticker sticker2 = new Sticker(this, Sticker.TYPE_TEXT, "#*￥$（3gdd3435额\n哥哥问过他");
         sticker2.setCenterX(540)
                 .setCenterY(1000)
-//                .setRotationX(30)
-//                .setRotationY(30)
-//                .setRotationZ(30)
-//                .setScale(1.5f)
+                .setRotationX(30)
+                .setRotationY(30)
+                .setRotationZ(30)
+                .setScale(1.2f)
         ;
         stickerView.addSticker(sticker2);
 

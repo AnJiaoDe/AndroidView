@@ -1,27 +1,34 @@
 package com.cy.androidview;
 
+import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
 public class TextUtils {
-    public static RectF getTextRectF(String text, Paint paint, float baseLineX, float baseLineY) {
-        Rect rect = new Rect();
-        Paint.Align align = paint.getTextAlign();
-        paint.getTextBounds(text, 0, text.length(), rect);
+    public static RectF getTextRectF(String text, Paint paint, float centerX, float centerY) {
+        float w = getTextWidth(text, paint);
+        float h = getTextHeight(paint);
+        return new RectF(centerX - w * 0.5f, centerY - h * 0.5f, centerX + w * 0.5f, centerY + h * 0.5f);
+    }
 
-        float d = baseLineX;
-        if (align == Paint.Align.CENTER) {
-            d = baseLineX - rect.width() * 0.5f;
-        } else if (align == Paint.Align.RIGHT) {
-            d = baseLineX - rect.width();
+    public static RectF getTextRectF_multi_line(String text, Paint paint, float centerX, float centerY) {
+        String[] ts = text.split("\n");
+        float w = 0;
+        float h = getTextHeight(paint) * ts.length;
+        for (int i = 0; i < ts.length; i++) {
+            w = Math.max(w, getTextWidth(ts[i], paint));
         }
-        rect.left += d;
-        rect.right += d;
+        return new RectF(centerX - w * 0.5f, centerY - h * 0.5f, centerX + w * 0.5f, centerY + h * 0.5f);
+    }
 
-        rect.top += baseLineY;
-        rect.bottom += baseLineY;
-        return new RectF(rect);
+    public static void drawText_multi_line(Canvas canvas, Paint paint, String text, float centerX, float centerY) {
+        String[] ts = text.split("\n");
+        float h = getTextHeight(paint);
+        float o = centerY - h * ts.length * 0.5f + h * 0.5f;
+        for (int i = 0; i < ts.length; i++) {
+            canvas.drawText(ts[i], getBaseLineX(paint, ts[i], centerX), getBaseLineY(paint, o + h * i), paint);
+        }
     }
 
     public static float getBaseLineX(Paint paint, String text, float centerX) {
@@ -37,5 +44,14 @@ public class TextUtils {
     public static float getBaseLineY(Paint paint, float centerY) {
         Paint.FontMetricsInt fontMetricsInt = paint.getFontMetricsInt();
         return centerY - (fontMetricsInt.bottom - fontMetricsInt.top) * 0.5f - fontMetricsInt.top;
+    }
+
+    public static float getTextWidth(String text, Paint paint) {
+        return paint.measureText(text);
+    }
+
+    public static float getTextHeight(Paint paint) {
+        Paint.FontMetrics fontMetrics = paint.getFontMetrics();
+        return fontMetrics.bottom - fontMetrics.top;
     }
 }
