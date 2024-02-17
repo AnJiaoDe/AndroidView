@@ -2,28 +2,12 @@ package com.cy.androidview.sticker;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.Camera;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.PointF;
-import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.Size;
 import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
-
-import com.cy.androidview.BitmapUtils;
-import com.cy.androidview.LogUtils;
-import com.cy.androidview.R;
-import com.cy.androidview.ScreenUtils;
-import com.cy.androidview.TextUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -230,6 +214,43 @@ public class StickerView extends View {
                 break;
         }
         return super.onTouchEvent(event);
+    }
+
+    /**
+     * 此函数供外部使用，处理触摸事件抢占
+     * @param x
+     * @param y
+     * @return
+     */
+    public boolean isXYinAnySticker(float x, float y) {
+        boolean in = false;
+        //注意：应该倒叙遍历，因为后添加的在上层，
+        for (int i = listSticker.size() - 1; i >= 0; i--) {
+            Sticker sticker = listSticker.get(i);
+            if (sticker.getRectFRotateRotated().contains(x,y)) {
+                in = true;
+                break;
+            }
+            if (sticker.getRectF3DRotated().contains(x,y)) {
+                in = true;
+                break;
+            }
+            if (sticker.getRectFCloseRotated().contains(x,y)) {
+                in = true;
+                break;
+            }
+            if (sticker.getRectFCopyRotated().contains(x,y)) {
+                in = true;
+                break;
+            }
+            float[] points_touch_origin = new float[2];
+            sticker.getMatrix_invert().mapPoints(points_touch_origin, new float[]{x,y});
+            if (sticker.getRectF_box_normal().contains(points_touch_origin[0], points_touch_origin[1])) {
+                in = true;
+                break;
+            }
+        }
+        return in;
     }
 
     private float getFingerDistance(MotionEvent event) {
