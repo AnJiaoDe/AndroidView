@@ -83,7 +83,7 @@ public class Sticker {
         setTextColor(Color.WHITE);
         setBoxColor(Color.WHITE);
         setBoxStrokeWidth(ScreenUtils.dpAdapt(context, 1));
-        setTextSize(ScreenUtils.sp2px(context, ScreenUtils.spAdapt(context, 18)));
+        setTextSize(ScreenUtils.sp2px(context, ScreenUtils.spAdapt(context, 16)));
     }
 
     /**

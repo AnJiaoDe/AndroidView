@@ -20,7 +20,8 @@ public class StickActivity extends BaseActivity {
         Sticker sticker = new Sticker(this, Sticker.TYPE_TEXT, "贴纸文字");
         sticker.setCenterX(540)
                 .setCenterY(500)
-                .setRotationX(30);
+//                .setRotationX(30)
+        ;
         stickerView.addSticker(sticker);
 
         Sticker sticker2 = new Sticker(this, Sticker.TYPE_TEXT, "#*￥$（3gdd3435额\n哥哥问过他");
@@ -34,6 +35,11 @@ public class StickActivity extends BaseActivity {
         stickerView.addSticker(sticker2);
 
         stickerView.setCallback(new StickerView.Callback() {
+            @Override
+            public void onOutsideClick() {
+                LogUtils.log("onOutsideClick");
+            }
+
             @Override
             public void onBoxClick(int index) {
                 LogUtils.log("onBoxClick",index);

@@ -218,6 +218,7 @@ public class StickerView extends View {
                                 s.setShowBox(false);
                             }
                             invalidate();
+                            if (callback != null) callback.onOutsideClick();
                             break;
                     }
                 }
@@ -238,6 +239,8 @@ public class StickerView extends View {
     }
 
     public static interface Callback {
+        public void onOutsideClick();
+
         public void onBoxClick(int index);
 
         public void onCloseClick(int index);
