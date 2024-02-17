@@ -216,8 +216,16 @@ public class StickerView extends View {
         return super.onTouchEvent(event);
     }
 
+    public void showBox(boolean showBox) {
+        for (Sticker s : listSticker) {
+            s.setShowBox(showBox);
+        }
+        invalidate();
+    }
+
     /**
      * 此函数供外部使用，处理触摸事件抢占
+     *
      * @param x
      * @param y
      * @return
@@ -227,24 +235,24 @@ public class StickerView extends View {
         //注意：应该倒叙遍历，因为后添加的在上层，
         for (int i = listSticker.size() - 1; i >= 0; i--) {
             Sticker sticker = listSticker.get(i);
-            if (sticker.getRectFRotateRotated().contains(x,y)) {
+            if (sticker.getRectFRotateRotated().contains(x, y)) {
                 in = true;
                 break;
             }
-            if (sticker.getRectF3DRotated().contains(x,y)) {
+            if (sticker.getRectF3DRotated().contains(x, y)) {
                 in = true;
                 break;
             }
-            if (sticker.getRectFCloseRotated().contains(x,y)) {
+            if (sticker.getRectFCloseRotated().contains(x, y)) {
                 in = true;
                 break;
             }
-            if (sticker.getRectFCopyRotated().contains(x,y)) {
+            if (sticker.getRectFCopyRotated().contains(x, y)) {
                 in = true;
                 break;
             }
             float[] points_touch_origin = new float[2];
-            sticker.getMatrix_invert().mapPoints(points_touch_origin, new float[]{x,y});
+            sticker.getMatrix_invert().mapPoints(points_touch_origin, new float[]{x, y});
             if (sticker.getRectF_box_normal().contains(points_touch_origin[0], points_touch_origin[1])) {
                 in = true;
                 break;
