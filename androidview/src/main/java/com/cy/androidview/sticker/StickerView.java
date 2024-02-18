@@ -198,10 +198,7 @@ public class StickerView extends View {
                             if (callback != null) callback.onCopyClick(index_down);
                             break;
                         default:
-                            for (Sticker s : listSticker) {
-                                s.setShowBox(false);
-                            }
-                            invalidate();
+                            showBox(false);
                             if (callback != null) callback.onOutsideClick();
                             break;
                     }
