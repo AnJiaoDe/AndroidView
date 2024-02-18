@@ -113,7 +113,6 @@ public class StickerView extends View {
                 if (downIn == DOWN_BOX) {
                     index_2_pointer = index_down;
                     distance_last = getFingerDistance(event);
-                    return true;
                 } else {
                     //注意：应该倒叙遍历，因为后添加的在上层，
                     for (int i = listSticker.size() - 1; i >= 0; i--) {
@@ -124,7 +123,7 @@ public class StickerView extends View {
                         if (sticker.getRectF_box_normal().contains(points_touch_origin[0], points_touch_origin[1])) {
                             index_2_pointer = i;
                             distance_last = getFingerDistance(event);
-                            return true;
+                            break;
                         }
                     }
                 }
