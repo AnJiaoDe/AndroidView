@@ -10,6 +10,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class StickerView extends View {
@@ -50,8 +51,29 @@ public class StickerView extends View {
         invalidate();
     }
 
+    public void removeSticker(int index) {
+        if (index < 0 || index >= listSticker.size()) return;
+        listSticker.remove(index);
+        invalidate();
+    }
+
+    public void clearSticker() {
+        listSticker.clear();
+        invalidate();
+    }
+
+    public void swap(int i, int j) {
+        if (i < 0 || i >= listSticker.size()||j < 0 || j >= listSticker.size()) return;
+        Collections.swap(listSticker, i, j);
+        invalidate();
+    }
+
     public List<Sticker> getListSticker() {
         return listSticker;
+    }
+
+    public void setListSticker(List<Sticker> listSticker) {
+        this.listSticker = listSticker;
     }
 
     public void setCallback(Callback callback) {
