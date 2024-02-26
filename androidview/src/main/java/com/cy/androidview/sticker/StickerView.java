@@ -50,6 +50,10 @@ public class StickerView extends View {
         listSticker.add(sticker);
         invalidate();
     }
+    public void setSticker(int index, Sticker sticker){
+        listSticker.set(index,sticker);
+        invalidate();
+    }
 
     public void removeSticker(int index) {
         if (index < 0 || index >= listSticker.size()) return;
