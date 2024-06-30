@@ -1,7 +1,6 @@
 package com.cy.androidview.sticker;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Camera;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -9,15 +8,8 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
-import android.os.Parcelable;
 
-import androidx.annotation.NonNull;
-
-import com.cy.androidview.BitmapUtils;
-import com.cy.androidview.LogUtils;
-import com.cy.androidview.R;
 import com.cy.androidview.ScreenUtils;
-import com.cy.androidview.TextUtils;
 
 public class Sticker {
     public static final int TYPE_TEXT = 0;
@@ -44,6 +36,7 @@ public class Sticker {
             points_box2, points_box3;
     private Paint paintText, paintRectF;
     private boolean showBox = true;
+    private boolean vertical = false;
 
     public Sticker(Context context, int type, String text) {
         this.context = context;
@@ -83,11 +76,28 @@ public class Sticker {
         setTextColor(Color.WHITE);
         setBoxColor(Color.WHITE);
         setBoxStrokeWidth(ScreenUtils.dpAdapt(context, 1));
-        setTextSize(ScreenUtils.sp2px(context, ScreenUtils.spAdapt(context, 16)));
+        setTextSize(ScreenUtils.sp2px(context, ScreenUtils.spAdapt(context, 18)));
+    }
+
+    public boolean isVertical() {
+        return vertical;
+    }
+
+    public Sticker setVertical(boolean vertical) {
+        this.vertical = vertical;
+        return this;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public Sticker setText(String text) {
+        this.text = text;
+        return this;
     }
 
     /**
-     * staticLayout 虽然可以做到自动换行，但是不支持3D效果，还是我写得不对?
      * 如果缩放过大后进行3D旋转，会导致文字框线条错乱，正常现象，因为溢出边界了
      *
      * @param canvas
@@ -96,8 +106,8 @@ public class Sticker {
     public void onDraw(Canvas canvas, StickerAttr stickerAttr) {
         switch (type) {
             case TYPE_TEXT:
-                rectF_text_normal = TextUtils.getTextRectF_multi_line(text,
-                        paintText, centerX, centerY);
+//     * staticLayout 虽然可以做到自动换行，但是不太支持3D效果，rotationX 60度，文字直接不见了。
+                rectF_text_normal = TextUtils.getTextRectF(vertical, paintText, text, centerX, centerY);
 //                    canvas.drawRect(rectF_text_normal,paintRectF);
                 rectF_box_normal.left = rectF_text_normal.left - stickerAttr.getRadius_menu();
                 rectF_box_normal.top = rectF_text_normal.top - stickerAttr.getRadius_menu();
@@ -126,7 +136,7 @@ public class Sticker {
                 matrix.postConcat(matrix_camera);
 
                 canvas.setMatrix(matrix);
-                TextUtils.drawText_multi_line(canvas, paintText, text, centerX, centerY);
+                TextUtils.drawText(vertical, canvas, paintText, text, centerX, centerY, rectF_text_normal);
                 canvas.restore();
                 //除了文字以外，其他的粗细都应该不进行缩放
                 matrix.mapPoints(points_box0, new float[]{rectF_box_normal.left, rectF_box_normal.top});
@@ -263,14 +273,6 @@ public class Sticker {
         return this;
     }
 
-    public String getText() {
-        return text;
-    }
-
-    public Sticker setText(String text) {
-        this.text = text;
-        return this;
-    }
 
     public float getRotationX() {
         return rotationX;

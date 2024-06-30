@@ -20,6 +20,11 @@ public class MainActivity extends BaseActivity {
         findViewById(R.id.btn_shadow).setOnClickListener(this);
         findViewById(R.id.btn_progress).setOnClickListener(this);
         findViewById(R.id.btn_stick).setOnClickListener(this);
+
+        String str="各个大哥更";
+        for(String s:str.split("")){
+            LogUtils.log("String",s);
+        }
     }
 
     @Override

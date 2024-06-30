@@ -15,9 +15,6 @@
             android:name=".ProgressActivity"
             android:exported="false" />
         <activity
-            android:name=".SwitchButtonActivity"
-            android:exported="false" />
-        <activity
             android:name=".CardActivity"
             android:exported="true" />
         <activity

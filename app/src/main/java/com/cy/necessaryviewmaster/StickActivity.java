@@ -2,6 +2,8 @@ package com.cy.necessaryviewmaster;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Size;
 import android.view.View;
@@ -10,6 +12,9 @@ import com.cy.androidview.LogUtils;
 import com.cy.androidview.sticker.Sticker;
 import com.cy.androidview.sticker.StickerView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class StickActivity extends BaseActivity {
 
     @Override
@@ -17,20 +22,22 @@ public class StickActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stick);
         StickerView stickerView = findViewById(R.id.StickerView);
-        Sticker sticker = new Sticker(this, Sticker.TYPE_TEXT, "贴纸文字");
+        Sticker sticker = new Sticker(this, Sticker.TYPE_TEXT, "贴纸\n文字");
         sticker.setCenterX(540)
-                .setCenterY(500)
-//                .setRotationX(30)
-        ;
-        stickerView.addSticker(sticker);
-
-        Sticker sticker2 = new Sticker(this, Sticker.TYPE_TEXT, "#*￥$（3gdd3435额\n哥哥问过他");
-        sticker2.setCenterX(540)
-                .setCenterY(1000)
+                .setCenterY(100)
                 .setRotationX(30)
                 .setRotationY(30)
                 .setRotationZ(30)
                 .setScale(1.2f)
+
+        ;
+        stickerView.addSticker(sticker);
+
+        Sticker sticker2 = new Sticker(this, Sticker.TYPE_TEXT, "#*￥$(3gdd3435额\n哥哥问过大哥大哥大风歌他");
+        sticker2.getPaintText().setTextAlign(Paint.Align.CENTER);
+        sticker2.setCenterX(540)
+                .setCenterY(1000)
+                .setVertical(true);
         ;
         stickerView.addSticker(sticker2);
 
@@ -42,19 +49,41 @@ public class StickActivity extends BaseActivity {
 
             @Override
             public void onBoxClick(int index) {
-                LogUtils.log("onBoxClick",index);
+                LogUtils.log("onBoxClick", index);
             }
 
             @Override
             public void onCloseClick(int index) {
-                LogUtils.log("onCloseClick",index);
+                LogUtils.log("onCloseClick", index);
             }
 
             @Override
             public void onCopyClick(int index) {
-                LogUtils.log("onCopyClick",index);
+                LogUtils.log("onCopyClick", index);
             }
         });
+
+        initSystemFontMap();
+        String systemFontPath = getSystemFontPath("default");
+        com.cy.necessaryviewmaster.LogUtils.log("System Default Font Path: " + systemFontPath);
+    }
+
+    private static Map<String, Typeface> sSystemFontMap = new HashMap<>();
+
+    public static void initSystemFontMap() {
+        // 添加系统默认字体到映射
+        Typeface defaultTypeface = Typeface.DEFAULT;
+        sSystemFontMap.put("default", defaultTypeface);
+    }
+
+    public static String getSystemFontPath(String fontKey) {
+        Typeface typeface = sSystemFontMap.get(fontKey);
+        if (typeface != null) {
+            // 获取字体文件路径
+            String fontPath = typeface.toString();
+            return fontPath;
+        }
+        return null;
     }
 
     @Override
