@@ -38,6 +38,7 @@ public class Sticker {
     private boolean showBox = true;
     private boolean vertical = false;
 
+    private float lineSpace=0;
     public Sticker(Context context, int type, String text) {
         this.context = context;
         this.type = type;
@@ -97,6 +98,15 @@ public class Sticker {
         return this;
     }
 
+    public float getLineSpace() {
+        return lineSpace;
+    }
+
+    public Sticker setLineSpace(float lineSpace) {
+        this.lineSpace = lineSpace;
+        return this;
+    }
+
     /**
      * 如果缩放过大后进行3D旋转，会导致文字框线条错乱，正常现象，因为溢出边界了
      *
@@ -107,7 +117,7 @@ public class Sticker {
         switch (type) {
             case TYPE_TEXT:
 //     * staticLayout 虽然可以做到自动换行，但是不太支持3D效果，rotationX 60度，文字直接不见了。
-                rectF_text_normal = TextUtils.getTextRectF(vertical, paintText, text, centerX, centerY);
+                rectF_text_normal = TextUtils.getTextRectF(vertical, lineSpace,paintText, text, centerX, centerY);
 //                    canvas.drawRect(rectF_text_normal,paintRectF);
                 rectF_box_normal.left = rectF_text_normal.left - stickerAttr.getRadius_menu();
                 rectF_box_normal.top = rectF_text_normal.top - stickerAttr.getRadius_menu();
@@ -136,7 +146,7 @@ public class Sticker {
                 matrix.postConcat(matrix_camera);
 
                 canvas.setMatrix(matrix);
-                TextUtils.drawText(vertical, canvas, paintText, text, centerX, centerY, rectF_text_normal);
+                TextUtils.drawText(vertical, lineSpace,canvas, paintText, text, centerX, centerY, rectF_text_normal);
                 canvas.restore();
                 //除了文字以外，其他的粗细都应该不进行缩放
                 matrix.mapPoints(points_box0, new float[]{rectF_box_normal.left, rectF_box_normal.top});

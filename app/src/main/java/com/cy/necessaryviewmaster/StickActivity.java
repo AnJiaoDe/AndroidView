@@ -33,13 +33,24 @@ public class StickActivity extends BaseActivity {
         ;
         stickerView.addSticker(sticker);
 
-        Sticker sticker2 = new Sticker(this, Sticker.TYPE_TEXT, "#*￥$(3gdd3435额\n哥哥问过大哥大哥大风歌他");
-        sticker2.getPaintText().setTextAlign(Paint.Align.CENTER);
+        Sticker sticker2 = new Sticker(this, Sticker.TYPE_TEXT, "#*￥$(35额\n哥哥风歌他");
+        sticker2.getPaintText().setTextAlign(Paint.Align.RIGHT);
+        sticker2.getPaintText().setLetterSpacing(1f);
         sticker2.setCenterX(540)
                 .setCenterY(1000)
-                .setVertical(true);
+                .setVertical(true)
+                .setLineSpace(2)
         ;
         stickerView.addSticker(sticker2);
+
+        Sticker sticker3 = new Sticker(this, Sticker.TYPE_TEXT, "代加工第几个i诶过\n纷纷恶妇");
+        sticker3.getPaintText().setTextAlign(Paint.Align.CENTER);
+        sticker3.getPaintText().setLetterSpacing(1f);
+        sticker3.setCenterX(540)
+                .setCenterY(1800)
+                .setLineSpace(0.5f);
+        ;
+        stickerView.addSticker(sticker3);
 
         stickerView.setCallback(new StickerView.Callback() {
             @Override
