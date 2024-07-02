@@ -55,7 +55,7 @@ public class StickActivity extends BaseActivity {
 //        sticker3.setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         //会出现2条横线，原因不明
 //        sticker3.setFlags(sticker3.getFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        float blur_radius = 20;
+        float blur_radius = 50;
         sticker3.setMaskFilter(blur_radius);
         sticker3.setShadowLayer(10, 10, 10, Color.RED);
         sticker3.setCenterX(540)

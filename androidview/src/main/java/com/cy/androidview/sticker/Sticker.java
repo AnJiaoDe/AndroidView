@@ -234,15 +234,16 @@ public class Sticker {
         }
     }
 
-    public void setTypeface(String pathFont, int style) {
+    public Sticker setTypeface(String pathFont, int style) {
         this.pathFont = pathFont;
         this.style = style;
         if (android.text.TextUtils.isEmpty(pathFont)) {
             paintText.setTypeface(Typeface.defaultFromStyle(style));
-            return;
+            return this;
         }
         paintText.setTypeface(
                 Typeface.create(Typeface.createFromFile(pathFont), style));
+        return this;
     }
 
     public String getPathFont() {
@@ -257,26 +258,30 @@ public class Sticker {
         return showBox;
     }
 
-    public void setShowBox(boolean showBox) {
+    public Sticker setShowBox(boolean showBox) {
         this.showBox = showBox;
+        return this;
     }
 
 
-    public void setBoxColor(int color) {
+    public Sticker setBoxColor(int color) {
         paintRectF.setColor(color);
+        return this;
     }
 
-    public void setBoxStrokeWidth(float px) {
+    public Sticker setBoxStrokeWidth(float px) {
         paintRectF.setStrokeWidth(px);
+        return this;
     }
 
     public float getOneLineHeight() {
         return TextUtils.getTextHeight(paintText);
     }
 
-    public void setFilterBitmap(boolean filter) {
+    public Sticker setFilterBitmap(boolean filter) {
         this.filter=filter;
         paintText.setFilterBitmap(filter);
+        return this;
     }
 
     public Matrix getMatrix() {
@@ -310,34 +315,38 @@ public class Sticker {
         return textColor;
     }
 
-    public void setTextColor(int textColor) {
+    public Sticker setTextColor(int textColor) {
         this.textColor = textColor;
         paintText.setColor(textColor);
+        return this;
     }
 
     public float getTextSize() {
         return textSize;
     }
 
-    public void setTextSize(float textSize) {
+    public Sticker setTextSize(float textSize) {
         this.textSize = textSize;
         paintText.setTextSize(textSize);
+        return this;
     }
 
     public float getLetterSpacing() {
         return letterSpacing;
     }
 
-    public void setLetterSpacing(float letterSpacing) {
+    public Sticker setLetterSpacing(float letterSpacing) {
         this.letterSpacing = letterSpacing;
+        return this;
     }
 
     public Paint.Align getTextAlign() {
         return textAlign;
     }
 
-    public void setTextAlign(Paint.Align textAlign) {
+    public Sticker setTextAlign(Paint.Align textAlign) {
         this.textAlign = textAlign;
+        return this;
     }
 
     public float getRotationX() {
@@ -381,46 +390,46 @@ public class Sticker {
         return rectF_box_normal;
     }
 
-    public Sticker setRectF_box_normal(RectF rectF_box_normal) {
-        this.rectF_box_normal = rectF_box_normal;
-        return this;
-    }
+//    public Sticker setRectF_box_normal(RectF rectF_box_normal) {
+//        this.rectF_box_normal = rectF_box_normal;
+//        return this;
+//    }
 
     public RectF getRectFCloseRotated() {
         return rectFCloseRotated;
     }
 
-    public Sticker setRectFCloseRotated(RectF rectFCloseRotated) {
-        this.rectFCloseRotated = rectFCloseRotated;
-        return this;
-    }
+//    public Sticker setRectFCloseRotated(RectF rectFCloseRotated) {
+//        this.rectFCloseRotated = rectFCloseRotated;
+//        return this;
+//    }
 
     public RectF getRectF3DRotated() {
         return rectF3DRotated;
     }
 
-    public Sticker setRectF3DRotated(RectF rectF3DRotated) {
-        this.rectF3DRotated = rectF3DRotated;
-        return this;
-    }
+//    public Sticker setRectF3DRotated(RectF rectF3DRotated) {
+//        this.rectF3DRotated = rectF3DRotated;
+//        return this;
+//    }
 
     public RectF getRectFRotateRotated() {
         return rectFRotateRotated;
     }
 
-    public Sticker setRectFRotateRotated(RectF rectFRotateRotated) {
-        this.rectFRotateRotated = rectFRotateRotated;
-        return this;
-    }
+//    public Sticker setRectFRotateRotated(RectF rectFRotateRotated) {
+//        this.rectFRotateRotated = rectFRotateRotated;
+//        return this;
+//    }
 
     public RectF getRectFCopyRotated() {
         return rectFCopyRotated;
     }
 
-    public Sticker setRectFCopyRotated(RectF rectFCopyRotated) {
-        this.rectFCopyRotated = rectFCopyRotated;
-        return this;
-    }
+//    public Sticker setRectFCopyRotated(RectF rectFCopyRotated) {
+//        this.rectFCopyRotated = rectFCopyRotated;
+//        return this;
+//    }
 
     public float getRotationZ() {
         return rotationZ;
@@ -440,110 +449,121 @@ public class Sticker {
         return this;
     }
 
-    public RectF getRectF_text_normal() {
-        return rectF_text_normal;
-    }
-
-    public Sticker setRectF_text_normal(RectF rectF_text_normal) {
-        this.rectF_text_normal = rectF_text_normal;
-        return this;
-    }
-
-    public RectF getRectFBitmapClose() {
-        return rectFBitmapClose;
-    }
-
-    public void setRectFBitmapClose(RectF rectFBitmapClose) {
-        this.rectFBitmapClose = rectFBitmapClose;
-    }
-
-    public RectF getRectFBitmapCopy() {
-        return rectFBitmapCopy;
-    }
-
-    public void setRectFBitmapCopy(RectF rectFBitmapCopy) {
-        this.rectFBitmapCopy = rectFBitmapCopy;
-    }
-
-    public RectF getRectFBitmapRotate() {
-        return rectFBitmapRotate;
-    }
-
-    public void setRectFBitmapRotate(RectF rectFBitmapRotate) {
-        this.rectFBitmapRotate = rectFBitmapRotate;
-    }
-
-    public RectF getRectFBitmap3DRotate() {
-        return rectFBitmap3DRotate;
-    }
-
-    public void setRectFBitmap3DRotate(RectF rectFBitmap3DRotate) {
-        this.rectFBitmap3DRotate = rectFBitmap3DRotate;
-    }
-
-    public void setMatrix(Matrix matrix) {
-        this.matrix = matrix;
-    }
-
-    public void setMatrix_invert(Matrix matrix_invert) {
-        this.matrix_invert = matrix_invert;
-    }
-
-    public void setCamera(Camera camera) {
-        this.camera = camera;
-    }
-
-    public void setMatrix_camera(Matrix matrix_camera) {
-        this.matrix_camera = matrix_camera;
-    }
-
-    public float[] getCenter_rotated() {
-        return center_rotated;
-    }
-
-    public void setCenter_rotated(float[] center_rotated) {
-        this.center_rotated = center_rotated;
-    }
-
-    public Path getPath() {
-        return path;
-    }
-
-    public void setPath(Path path) {
-        this.path = path;
-    }
-
-    public float[] getPoints_box0() {
-        return points_box0;
-    }
-
-    public void setPoints_box0(float[] points_box0) {
-        this.points_box0 = points_box0;
-    }
-
-    public float[] getPoints_box1() {
-        return points_box1;
-    }
-
-    public void setPoints_box1(float[] points_box1) {
-        this.points_box1 = points_box1;
-    }
-
-    public float[] getPoints_box2() {
-        return points_box2;
-    }
-
-    public void setPoints_box2(float[] points_box2) {
-        this.points_box2 = points_box2;
-    }
-
-    public float[] getPoints_box3() {
-        return points_box3;
-    }
-
-    public void setPoints_box3(float[] points_box3) {
-        this.points_box3 = points_box3;
-    }
+//    public RectF getRectF_text_normal() {
+//        return rectF_text_normal;
+//    }
+//
+//    public Sticker setRectF_text_normal(RectF rectF_text_normal) {
+//        this.rectF_text_normal = rectF_text_normal;
+//        return this;
+//    }
+//
+//    public RectF getRectFBitmapClose() {
+//        return rectFBitmapClose;
+//    }
+//
+//    public Sticker setRectFBitmapClose(RectF rectFBitmapClose) {
+//        this.rectFBitmapClose = rectFBitmapClose;
+//        return this;
+//    }
+//
+//    public RectF getRectFBitmapCopy() {
+//        return rectFBitmapCopy;
+//    }
+//
+//    public Sticker setRectFBitmapCopy(RectF rectFBitmapCopy) {
+//        this.rectFBitmapCopy = rectFBitmapCopy;
+//        return this;
+//    }
+//
+//    public RectF getRectFBitmapRotate() {
+//        return rectFBitmapRotate;
+//    }
+//
+//    public Sticker setRectFBitmapRotate(RectF rectFBitmapRotate) {
+//        this.rectFBitmapRotate = rectFBitmapRotate;
+//        return this;
+//    }
+//
+//    public RectF getRectFBitmap3DRotate() {
+//        return rectFBitmap3DRotate;
+//    }
+//
+//    public Sticker setRectFBitmap3DRotate(RectF rectFBitmap3DRotate) {
+//        this.rectFBitmap3DRotate = rectFBitmap3DRotate;
+//        return this;
+//    }
+//
+//    public Sticker setMatrix(Matrix matrix) {
+//        this.matrix = matrix;
+//        return this;
+//    }
+//
+//    public Sticker setMatrix_invert(Matrix matrix_invert) {
+//        this.matrix_invert = matrix_invert;
+//        return this;
+//    }
+//
+//    public Sticker setCamera(Camera camera) {
+//        this.camera = camera;
+//        return this;
+//    }
+//
+//    public Sticker setMatrix_camera(Matrix matrix_camera) {
+//        this.matrix_camera = matrix_camera;
+//        return this;
+//    }
+//
+//    public float[] getCenter_rotated() {
+//        return center_rotated;
+//    }
+//
+//    public Sticker setCenter_rotated(float[] center_rotated) {
+//        this.center_rotated = center_rotated;
+//        return this;
+//    }
+//
+//    public Path getPath() {
+//        return path;
+//    }
+//
+//    public Sticker setPath(Path path) {
+//        this.path = path;
+//        return this;
+//    }
+//
+//    public float[] getPoints_box0() {
+//        return points_box0;
+//    }
+//
+//    public Sticker setPoints_box0(float[] points_box0) {
+//        this.points_box0 = points_box0;
+//        return this;
+//    }
+//
+//    public float[] getPoints_box1() {
+//        return points_box1;
+//    }
+//
+//    public void setPoints_box1(float[] points_box1) {
+//        this.points_box1 = points_box1;
+//    }
+//
+//    public float[] getPoints_box2() {
+//        return points_box2;
+//    }
+//
+//    public void setPoints_box2(float[] points_box2) {
+//        this.points_box2 = points_box2;
+//    }
+//
+//    public float[] getPoints_box3() {
+//        return points_box3;
+//    }
+//
+//    public void setPoints_box3(float[] points_box3) {
+//        this.points_box3 = points_box3;
+//    }
 
     public float getBlur_radius() {
         return blur_radius;
@@ -552,18 +572,20 @@ public class Sticker {
     /**
      * @param blur_radius 必须>0 否则崩溃
      */
-    public void setMaskFilter(float blur_radius) {
+    public Sticker setMaskFilter(float blur_radius) {
         blur_radius=Math.max(1,blur_radius);
         this.blur_radius = blur_radius;
         paintText.setMaskFilter(new BlurMaskFilter(blur_radius, BlurMaskFilter.Blur.SOLID));
+        return this;
     }
 
-    public void setShadowLayer(float radius, float dx, float dy, @ColorInt int shadowColor) {
+    public Sticker setShadowLayer(float radius, float dx, float dy, @ColorInt int shadowColor) {
         this.shadowRadius = radius;
         this.shadowDx = dx;
         this.shadowDy = dy;
         this.shadowColor = shadowColor;
         paintText.setShadowLayer(radius, dx, dy, shadowColor);
+        return this;
     }
 
     /**
