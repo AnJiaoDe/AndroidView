@@ -549,7 +549,11 @@ public class Sticker {
         return blur_radius;
     }
 
+    /**
+     * @param blur_radius 必须>0 否则崩溃
+     */
     public void setMaskFilter(float blur_radius) {
+        blur_radius=Math.max(1,blur_radius);
         this.blur_radius = blur_radius;
         paintText.setMaskFilter(new BlurMaskFilter(blur_radius, BlurMaskFilter.Blur.SOLID));
     }
