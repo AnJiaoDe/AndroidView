@@ -37,7 +37,7 @@ public class StickActivity extends BaseActivity {
         ;
         stickerView.addSticker(sticker);
 
-        Sticker sticker2 = new Sticker(this, Sticker.TYPE_TEXT, "#*￥$(35额\n哥哥风歌他");
+        Sticker sticker2 = new Sticker(this, Sticker.TYPE_TEXT, "#*￥$(35额的额服务\n哥哥风歌他");
         sticker2.setTextAlign(Paint.Align.RIGHT);
         sticker2.setLetterSpacing(1f);
         sticker2.setCenterX(540)
@@ -47,7 +47,7 @@ public class StickActivity extends BaseActivity {
         ;
         stickerView.addSticker(sticker2);
 
-        Sticker sticker3 = new Sticker(this, Sticker.TYPE_TEXT, "代加工第几个i诶过");
+        Sticker sticker3 = new Sticker(this, Sticker.TYPE_TEXT, "代加工第几个i诶过\nefefeg淀粉");
         sticker3.setTextAlign(Paint.Align.CENTER);
         sticker3.setLetterSpacing(1f);
         sticker3.setTypeface("",Typeface.BOLD_ITALIC);
@@ -59,7 +59,7 @@ public class StickActivity extends BaseActivity {
         sticker3.setMaskFilter(blur_radius);
         sticker3.setShadowLayer(10, 10, 10, Color.RED);
         sticker3.setCenterX(540)
-                .setCenterY(1800)
+                .setCenterY(1600)
                 .setLineSpace(0.5f);
         ;
         stickerView.addSticker(sticker3);
@@ -82,6 +82,14 @@ public class StickActivity extends BaseActivity {
             @Override
             public void onCopyClick(int index) {
                 LogUtils.log("onCopyClick", index);
+            }
+        });
+
+        findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sticker3.setTextAlign(Paint.Align.RIGHT).setVertical(true);
+                stickerView.invalidate();
             }
         });
 
