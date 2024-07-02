@@ -15,6 +15,7 @@ import android.graphics.Typeface;
 import androidx.annotation.ColorInt;
 
 import com.cy.androidview.ScreenUtils;
+import com.cy.androidview.selectorview.TextViewSelector;
 
 public class Sticker {
     public static final int TYPE_TEXT = 0;

@@ -50,7 +50,7 @@ public class StickActivity extends BaseActivity {
         Sticker sticker3 = new Sticker(this, Sticker.TYPE_TEXT, "代加工第几个i诶过\nefefeg淀粉");
         sticker3.setTextAlign(Paint.Align.CENTER);
         sticker3.setLetterSpacing(1f);
-        sticker3.setTypeface("",Typeface.BOLD_ITALIC);
+        sticker3.setTypeface("",Typeface.BOLD|Typeface.ITALIC);
 
 //        sticker3.setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         //会出现2条横线，原因不明
