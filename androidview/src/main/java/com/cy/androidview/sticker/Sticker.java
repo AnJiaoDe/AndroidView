@@ -346,6 +346,7 @@ public class Sticker {
 
     public Sticker setTextAlign(Paint.Align textAlign) {
         this.textAlign = textAlign;
+        paintText.setTextAlign(textAlign);
         return this;
     }
 
