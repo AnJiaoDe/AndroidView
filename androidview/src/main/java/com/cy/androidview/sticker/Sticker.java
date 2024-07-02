@@ -55,6 +55,7 @@ public class Sticker {
     private float shadowDx;
     private float shadowDy;
     private @ColorInt int shadowColor;
+    private boolean filter=false;
 
     public Sticker(Context context, int type, String text) {
         this.context = context;
@@ -236,7 +237,7 @@ public class Sticker {
     public void setTypeface(String pathFont, int style) {
         this.pathFont = pathFont;
         this.style = style;
-        if(android.text.TextUtils.isEmpty(pathFont)){
+        if (android.text.TextUtils.isEmpty(pathFont)) {
             paintText.setTypeface(Typeface.defaultFromStyle(style));
             return;
         }
@@ -269,6 +270,14 @@ public class Sticker {
         paintRectF.setStrokeWidth(px);
     }
 
+    public float getOneLineHeight() {
+        return TextUtils.getTextHeight(paintText);
+    }
+
+    public void setFilterBitmap(boolean filter) {
+        this.filter=filter;
+        paintText.setFilterBitmap(filter);
+    }
 
     public Matrix getMatrix() {
         return matrix;
@@ -576,6 +585,7 @@ public class Sticker {
         sticker.setTypeface(pathFont, style);
         sticker.setVertical(vertical);
         sticker.setLineSpace(lineSpace);
+        sticker.setFilterBitmap(filter);
 
         sticker.setBoxColor(paintRectF.getColor());
         sticker.setBoxStrokeWidth(paintRectF.getStrokeWidth());
