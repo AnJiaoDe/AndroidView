@@ -2,11 +2,15 @@ package com.cy.necessaryviewmaster;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.BlurMaskFilter;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.TextPaint;
 import android.util.Size;
 import android.view.View;
+import android.widget.TextView;
 
 import com.cy.androidview.LogUtils;
 import com.cy.androidview.sticker.Sticker;
@@ -34,8 +38,8 @@ public class StickActivity extends BaseActivity {
         stickerView.addSticker(sticker);
 
         Sticker sticker2 = new Sticker(this, Sticker.TYPE_TEXT, "#*￥$(35额\n哥哥风歌他");
-        sticker2.getPaintText().setTextAlign(Paint.Align.RIGHT);
-        sticker2.getPaintText().setLetterSpacing(1f);
+        sticker2.setTextAlign(Paint.Align.RIGHT);
+        sticker2.setLetterSpacing(1f);
         sticker2.setCenterX(540)
                 .setCenterY(1000)
                 .setVertical(true)
@@ -43,15 +47,22 @@ public class StickActivity extends BaseActivity {
         ;
         stickerView.addSticker(sticker2);
 
-        Sticker sticker3 = new Sticker(this, Sticker.TYPE_TEXT, "代加工第几个i诶过\n纷纷恶妇");
-        sticker3.getPaintText().setTextAlign(Paint.Align.CENTER);
-        sticker3.getPaintText().setLetterSpacing(1f);
+        Sticker sticker3 = new Sticker(this, Sticker.TYPE_TEXT, "代加工第几个i诶过");
+        sticker3.setTextAlign(Paint.Align.CENTER);
+        sticker3.setLetterSpacing(1f);
+        sticker3.setTypeface("",Typeface.BOLD_ITALIC);
+
+//        sticker3.setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+        //会出现2条横线，原因不明
+//        sticker3.setFlags(sticker3.getFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        float blur_radius = 20;
+        sticker3.setMaskFilter(blur_radius);
+        sticker3.setShadowLayer(10, 10, 10, Color.RED);
         sticker3.setCenterX(540)
                 .setCenterY(1800)
                 .setLineSpace(0.5f);
         ;
         stickerView.addSticker(sticker3);
-
         stickerView.setCallback(new StickerView.Callback() {
             @Override
             public void onOutsideClick() {

@@ -1,13 +1,18 @@
 package com.cy.androidview.sticker;
 
 import android.content.Context;
+import android.graphics.BlurMaskFilter;
 import android.graphics.Camera;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.MaskFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.graphics.Typeface;
+
+import androidx.annotation.ColorInt;
 
 import com.cy.androidview.ScreenUtils;
 
@@ -34,11 +39,23 @@ public class Sticker {
     private Path path;
     private float[] points_box0, points_box1,
             points_box2, points_box3;
-    private Paint paintText, paintRectF;
+    private Paint paintText;
+    private Paint paintRectF;
     private boolean showBox = true;
     private boolean vertical = false;
+    private float lineSpace = 0;
+    private int textColor;
+    private float textSize;
+    private float letterSpacing;
+    private Paint.Align textAlign;
+    private float blur_radius;
+    private String pathFont;
+    private int style;
+    private float shadowRadius;
+    private float shadowDx;
+    private float shadowDy;
+    private @ColorInt int shadowColor;
 
-    private float lineSpace=0;
     public Sticker(Context context, int type, String text) {
         this.context = context;
         this.type = type;
@@ -75,9 +92,9 @@ public class Sticker {
         paintRectF.setAntiAlias(true);
 
         setTextColor(Color.WHITE);
+        setTextSize(ScreenUtils.sp2px(context, ScreenUtils.spAdapt(context, 18)));
         setBoxColor(Color.WHITE);
         setBoxStrokeWidth(ScreenUtils.dpAdapt(context, 1));
-        setTextSize(ScreenUtils.sp2px(context, ScreenUtils.spAdapt(context, 18)));
     }
 
     public boolean isVertical() {
@@ -117,7 +134,7 @@ public class Sticker {
         switch (type) {
             case TYPE_TEXT:
 //     * staticLayout 虽然可以做到自动换行，但是不太支持3D效果，rotationX 60度，文字直接不见了。
-                rectF_text_normal = TextUtils.getTextRectF(vertical, lineSpace,paintText, text, centerX, centerY);
+                rectF_text_normal = TextUtils.getTextRectF(vertical, lineSpace, paintText, text, centerX, centerY);
 //                    canvas.drawRect(rectF_text_normal,paintRectF);
                 rectF_box_normal.left = rectF_text_normal.left - stickerAttr.getRadius_menu();
                 rectF_box_normal.top = rectF_text_normal.top - stickerAttr.getRadius_menu();
@@ -146,7 +163,7 @@ public class Sticker {
                 matrix.postConcat(matrix_camera);
 
                 canvas.setMatrix(matrix);
-                TextUtils.drawText(vertical, lineSpace,canvas, paintText, text, centerX, centerY, rectF_text_normal);
+                TextUtils.drawText(vertical, lineSpace, canvas, paintText, text, centerX, centerY, rectF_text_normal);
                 canvas.restore();
                 //除了文字以外，其他的粗细都应该不进行缩放
                 matrix.mapPoints(points_box0, new float[]{rectF_box_normal.left, rectF_box_normal.top});
@@ -216,6 +233,25 @@ public class Sticker {
         }
     }
 
+    public void setTypeface(String pathFont, int style) {
+        this.pathFont = pathFont;
+        this.style = style;
+        if(android.text.TextUtils.isEmpty(pathFont)){
+            paintText.setTypeface(Typeface.defaultFromStyle(style));
+            return;
+        }
+        paintText.setTypeface(
+                Typeface.create(Typeface.createFromFile(pathFont), style));
+    }
+
+    public String getPathFont() {
+        return pathFont;
+    }
+
+    public int getStyle() {
+        return style;
+    }
+
     public boolean isShowBox() {
         return showBox;
     }
@@ -224,13 +260,6 @@ public class Sticker {
         this.showBox = showBox;
     }
 
-    public void setTextSize(float px) {
-        paintText.setTextSize(px);
-    }
-
-    public void setTextColor(int color) {
-        paintText.setColor(color);
-    }
 
     public void setBoxColor(int color) {
         paintRectF.setColor(color);
@@ -240,21 +269,6 @@ public class Sticker {
         paintRectF.setStrokeWidth(px);
     }
 
-    public Paint getPaintText() {
-        return paintText;
-    }
-
-    public void setPaintText(Paint paintText) {
-        this.paintText = paintText;
-    }
-
-    public Paint getPaintRectF() {
-        return paintRectF;
-    }
-
-    public void setPaintRectF(Paint paintRectF) {
-        this.paintRectF = paintRectF;
-    }
 
     public Matrix getMatrix() {
         return matrix;
@@ -283,6 +297,39 @@ public class Sticker {
         return this;
     }
 
+    public int getTextColor() {
+        return textColor;
+    }
+
+    public void setTextColor(int textColor) {
+        this.textColor = textColor;
+        paintText.setColor(textColor);
+    }
+
+    public float getTextSize() {
+        return textSize;
+    }
+
+    public void setTextSize(float textSize) {
+        this.textSize = textSize;
+        paintText.setTextSize(textSize);
+    }
+
+    public float getLetterSpacing() {
+        return letterSpacing;
+    }
+
+    public void setLetterSpacing(float letterSpacing) {
+        this.letterSpacing = letterSpacing;
+    }
+
+    public Paint.Align getTextAlign() {
+        return textAlign;
+    }
+
+    public void setTextAlign(Paint.Align textAlign) {
+        this.textAlign = textAlign;
+    }
 
     public float getRotationX() {
         return rotationX;
@@ -489,6 +536,23 @@ public class Sticker {
         this.points_box3 = points_box3;
     }
 
+    public float getBlur_radius() {
+        return blur_radius;
+    }
+
+    public void setMaskFilter(float blur_radius) {
+        this.blur_radius = blur_radius;
+        paintText.setMaskFilter(new BlurMaskFilter(blur_radius, BlurMaskFilter.Blur.SOLID));
+    }
+
+    public void setShadowLayer(float radius, float dx, float dy, @ColorInt int shadowColor) {
+        this.shadowRadius = radius;
+        this.shadowDx = dx;
+        this.shadowDy = dy;
+        this.shadowColor = shadowColor;
+        paintText.setShadowLayer(radius, dx, dy, shadowColor);
+    }
+
     /**
      * 注意：这里不要复制类的对象，否则容易出现共用错误，
      *
@@ -505,6 +569,14 @@ public class Sticker {
         sticker.setScale(scale);
         sticker.setTextColor(paintText.getColor());
         sticker.setTextSize(paintText.getTextSize());
+        sticker.setLetterSpacing(paintText.getLetterSpacing());
+        sticker.setTextAlign(paintText.getTextAlign());
+        sticker.setMaskFilter(blur_radius);
+        sticker.setShadowLayer(shadowRadius, shadowDx, shadowDy, shadowColor);
+        sticker.setTypeface(pathFont, style);
+        sticker.setVertical(vertical);
+        sticker.setLineSpace(lineSpace);
+
         sticker.setBoxColor(paintRectF.getColor());
         sticker.setBoxStrokeWidth(paintRectF.getStrokeWidth());
 
