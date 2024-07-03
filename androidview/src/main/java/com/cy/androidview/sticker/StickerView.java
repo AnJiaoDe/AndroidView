@@ -50,8 +50,9 @@ public class StickerView extends View {
         listSticker.add(sticker);
         invalidate();
     }
-    public void setSticker(int index, Sticker sticker){
-        listSticker.set(index,sticker);
+
+    public void setSticker(int index, Sticker sticker) {
+        listSticker.set(index, sticker);
         invalidate();
     }
 
@@ -67,7 +68,7 @@ public class StickerView extends View {
     }
 
     public void swap(int i, int j) {
-        if (i < 0 || i >= listSticker.size()||j < 0 || j >= listSticker.size()) return;
+        if (i < 0 || i >= listSticker.size() || j < 0 || j >= listSticker.size()) return;
         Collections.swap(listSticker, i, j);
         invalidate();
     }
@@ -200,6 +201,9 @@ public class StickerView extends View {
                     sticker.setCenterY(Math.min(Math.max(0, event.getY()), getHeight()));
 
                     invalidate();
+                    Sticker.Callback c=sticker.getCallback();
+                    if(c!=null)c.onXYChanged(sticker.getCenterX(),sticker.getCenterY());
+                    if(callback!=null)callback.onXYChanged(index_down);
                 }
                 break;
             case MotionEvent.ACTION_UP:
@@ -292,6 +296,8 @@ public class StickerView extends View {
 
     public static interface Callback {
         public void onOutsideClick();
+
+        public void onXYChanged(int index);
 
         public void onBoxClick(int index);
 

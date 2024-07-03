@@ -70,6 +70,11 @@ public class StickActivity extends BaseActivity {
             }
 
             @Override
+            public void onXYChanged(int index) {
+
+            }
+
+            @Override
             public void onBoxClick(int index) {
                 LogUtils.log("onBoxClick", index);
             }

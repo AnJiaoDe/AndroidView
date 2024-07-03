@@ -56,7 +56,8 @@ public class Sticker {
     private float shadowDx;
     private float shadowDy;
     private @ColorInt int shadowColor;
-    private boolean filter=false;
+    private boolean filter = false;
+    private Callback callback;
 
     public Sticker(Context context, int type, String text) {
         this.context = context;
@@ -97,6 +98,15 @@ public class Sticker {
         setTextSize(ScreenUtils.sp2px(context, ScreenUtils.spAdapt(context, 18)));
         setBoxColor(Color.WHITE);
         setBoxStrokeWidth(ScreenUtils.dpAdapt(context, 1));
+    }
+
+    public Sticker setCallback(Callback callback) {
+        this.callback = callback;
+        return this;
+    }
+
+    public Callback getCallback() {
+        return callback;
     }
 
     public boolean isVertical() {
@@ -280,7 +290,7 @@ public class Sticker {
     }
 
     public Sticker setFilterBitmap(boolean filter) {
-        this.filter=filter;
+        this.filter = filter;
         paintText.setFilterBitmap(filter);
         return this;
     }
@@ -576,7 +586,7 @@ public class Sticker {
      * @param blur_radius 必须>0 否则崩溃
      */
     public Sticker setMaskFilter(float blur_radius) {
-        blur_radius=Math.max(1,blur_radius);
+        blur_radius = Math.max(1, blur_radius);
         this.blur_radius = blur_radius;
         paintText.setMaskFilter(new BlurMaskFilter(blur_radius, BlurMaskFilter.Blur.SOLID));
         return this;
@@ -620,5 +630,9 @@ public class Sticker {
         sticker.setBoxStrokeWidth(paintRectF.getStrokeWidth());
 
         return sticker;
+    }
+
+    public static interface Callback {
+        public void onXYChanged(float centerX,float centerY);
     }
 }
