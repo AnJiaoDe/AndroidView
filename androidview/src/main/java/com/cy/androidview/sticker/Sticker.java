@@ -458,6 +458,7 @@ public class Sticker {
     }
 
     public Sticker setScale(float scale) {
+        scale=Math.max(0.1f,Math.min(200,scale));
         this.scale = scale;
         return this;
     }

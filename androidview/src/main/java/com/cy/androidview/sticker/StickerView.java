@@ -159,7 +159,7 @@ public class StickerView extends View {
                 if (index_2_pointer >= 0 && index_2_pointer < listSticker.size() && event.getPointerCount() >= 2) {
                     float distance = getFingerDistance(event);
                     Sticker sticker = listSticker.get(index_2_pointer);
-                    sticker.setScale(Math.max(0.1f, Math.min(100, sticker.getScale() + 0.005f * (distance - distance_last))));
+                    sticker.setScale( sticker.getScale() + 0.005f * (distance - distance_last));
                     distance_last = distance;
                     invalidate();
                     break;
