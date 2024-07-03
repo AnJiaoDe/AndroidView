@@ -338,6 +338,7 @@ public class Sticker {
 
     public Sticker setLetterSpacing(float letterSpacing) {
         this.letterSpacing = letterSpacing;
+        paintText.setLetterSpacing(letterSpacing);
         return this;
     }
 
