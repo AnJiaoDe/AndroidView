@@ -99,6 +99,14 @@ public class Sticker {
         setBoxColor(Color.WHITE);
         setBoxStrokeWidth(ScreenUtils.dpAdapt(context, 1));
     }
+//Object obj;
+//    public <T> void setBean(T t) {
+// obj=t;
+//    }
+//
+//    public <T> T getBean() {
+//return (T) obj;
+//    }
 
     public Sticker setCallback(Callback callback) {
         this.callback = callback;
@@ -255,6 +263,10 @@ public class Sticker {
         paintText.setTypeface(
                 Typeface.create(Typeface.createFromFile(pathFont), style));
         return this;
+    }
+
+    public Paint getPaintText() {
+        return paintText;
     }
 
     public String getPathFont() {
@@ -458,7 +470,7 @@ public class Sticker {
     }
 
     public Sticker setScale(float scale) {
-        scale=Math.max(0.1f,Math.min(200,scale));
+        scale = Math.max(0.1f, Math.min(200, scale));
         this.scale = scale;
         return this;
     }
@@ -634,6 +646,6 @@ public class Sticker {
     }
 
     public static interface Callback {
-        public void onXYChanged(float centerX,float centerY);
+        public void onXYChanged(float centerX, float centerY);
     }
 }

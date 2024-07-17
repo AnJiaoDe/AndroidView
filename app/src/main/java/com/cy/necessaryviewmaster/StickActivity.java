@@ -12,6 +12,7 @@ import android.util.Size;
 import android.view.View;
 import android.widget.TextView;
 
+import com.cy.androidview.BitmapUtils;
 import com.cy.androidview.LogUtils;
 import com.cy.androidview.sticker.Sticker;
 import com.cy.androidview.sticker.StickerView;
@@ -36,6 +37,7 @@ public class StickActivity extends BaseActivity {
 
         ;
         stickerView.addSticker(sticker);
+
 
         Sticker sticker2 = new Sticker(this, Sticker.TYPE_TEXT, "#*￥$(35额的额服务\n哥哥风歌他");
         sticker2.setTextAlign(Paint.Align.RIGHT);
