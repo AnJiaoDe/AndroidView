@@ -38,7 +38,7 @@ public class WatermarkStickerView extends StickerView {
         paint.setAntiAlias(true);
         paint.setTextAlign(Paint.Align.LEFT);
         paint.setColor(Color.WHITE);
-        paint.setTextSize(ScreenUtils.sp2px(context, ScreenUtils.spAdapt(context, 10)));
+        paint.setTextSize(ScreenUtils.sp2px(context, ScreenUtils.spAdapt(context, 11)));
         paint.setShadowLayer(1, 1, 1, Color.BLACK);
 
         text_appName = VersionUtils.getAppName(context);
@@ -100,6 +100,10 @@ public class WatermarkStickerView extends StickerView {
     public WatermarkStickerView setShadowLayer(float radius, float dx, float dy, @ColorInt int shadowColor) {
         paint.setShadowLayer(radius, dx, dy, shadowColor);
         return this;
+    }
+
+    public Paint getPaint() {
+        return paint;
     }
 
     private void time_invalidate() {
