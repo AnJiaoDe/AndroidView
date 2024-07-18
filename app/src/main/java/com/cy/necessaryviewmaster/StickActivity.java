@@ -66,7 +66,6 @@ public class StickActivity extends BaseActivity {
                 .setLineSpace(0.5f);
         ;
         watermarkStickerView.addSticker(sticker3);
-
         watermarkStickerView.setText_text("日常自拍大哥哥特特瑞特任特特大肥肥我");
 
         watermarkStickerView.setCallback(new StickerView.Callback() {
@@ -103,29 +102,8 @@ public class StickActivity extends BaseActivity {
                 watermarkStickerView.invalidate();
             }
         });
-
-        initSystemFontMap();
-        String systemFontPath = getSystemFontPath("default");
-        com.cy.necessaryviewmaster.LogUtils.log("System Default Font Path: " + systemFontPath);
     }
 
-    private static Map<String, Typeface> sSystemFontMap = new HashMap<>();
-
-    public static void initSystemFontMap() {
-        // 添加系统默认字体到映射
-        Typeface defaultTypeface = Typeface.DEFAULT;
-        sSystemFontMap.put("default", defaultTypeface);
-    }
-
-    public static String getSystemFontPath(String fontKey) {
-        Typeface typeface = sSystemFontMap.get(fontKey);
-        if (typeface != null) {
-            // 获取字体文件路径
-            String fontPath = typeface.toString();
-            return fontPath;
-        }
-        return null;
-    }
 
     @Override
     public void onClick(View v) {

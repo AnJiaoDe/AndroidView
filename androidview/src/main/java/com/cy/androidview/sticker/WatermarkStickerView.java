@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.util.AttributeSet;
 
@@ -62,6 +63,13 @@ public class WatermarkStickerView extends StickerView {
         return this;
     }
 
+    public WatermarkStickerView setTypeface(String pathFont) {
+        //必须判断，否则崩溃
+        if (android.text.TextUtils.isEmpty(pathFont)) return this;
+        paint.setTypeface(Typeface.createFromFile(pathFont));
+        return this;
+    }
+
     public void setMargin(float margin) {
         this.margin = margin;
     }
@@ -86,10 +94,12 @@ public class WatermarkStickerView extends StickerView {
         this.date = date;
         return this;
     }
+
     public WatermarkStickerView setShadowLayer(float radius, float dx, float dy, @ColorInt int shadowColor) {
         paint.setShadowLayer(radius, dx, dy, shadowColor);
         return this;
     }
+
     private void time_invalidate() {
         if (showTime) {
             thread = new Thread(new Runnable() {
