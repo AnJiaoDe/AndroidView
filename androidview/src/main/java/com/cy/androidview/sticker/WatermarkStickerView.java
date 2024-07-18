@@ -20,7 +20,7 @@ public class WatermarkStickerView extends StickerView {
     private RectF rectF_text;
     private RectF rectF_time;
     private Paint paint;
-    private boolean showTime = true;
+    private boolean show_time = true;
     private String date = "";
     private float centerX_time, centerY_time;
     private float centerX_text, centerY_text;
@@ -30,7 +30,6 @@ public class WatermarkStickerView extends StickerView {
     private String text_text = "";
     private float onLineHeight;
     private float margin;
-    private boolean show_watermark = true;
     private Thread thread;
 
     public WatermarkStickerView(Context context, @Nullable AttributeSet attrs) {
@@ -54,11 +53,11 @@ public class WatermarkStickerView extends StickerView {
     }
 
     public boolean isShowTime() {
-        return showTime;
+        return show_time;
     }
 
     public WatermarkStickerView setShowTime(boolean showTime) {
-        this.showTime = showTime;
+        this.show_time = showTime;
         time_invalidate();
         return this;
     }
@@ -74,6 +73,10 @@ public class WatermarkStickerView extends StickerView {
         this.margin = margin;
     }
 
+    public void setText_appName(String text_appName) {
+        this.text_appName = text_appName;
+    }
+
     public void setText_product(String text_product) {
         this.text_product = text_product;
     }
@@ -82,12 +85,11 @@ public class WatermarkStickerView extends StickerView {
         this.text_text = text_text;
     }
 
-    public boolean isShow_watermark() {
-        return show_watermark;
-    }
-
-    public void setShow_watermark(boolean show_watermark) {
-        this.show_watermark = show_watermark;
+    public boolean haveWatermark() {
+        return show_time
+                || !android.text.TextUtils.isEmpty(text_appName)
+                || !android.text.TextUtils.isEmpty(text_product)
+                || !android.text.TextUtils.isEmpty(text_text);
     }
 
     public WatermarkStickerView setDate(String date) {
@@ -101,7 +103,7 @@ public class WatermarkStickerView extends StickerView {
     }
 
     private void time_invalidate() {
-        if (showTime) {
+        if (show_time) {
             thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -110,6 +112,7 @@ public class WatermarkStickerView extends StickerView {
                             Thread.sleep(1000);
                         } catch (InterruptedException e) {
                         }
+                        date = TimeAndAgeUtils.timeStamp2DateAll(TimeAndAgeUtils.getCureentTimeStamp());
                         invalidate();
                     }
                 }
@@ -135,7 +138,6 @@ public class WatermarkStickerView extends StickerView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (!show_watermark) return;
         onLineHeight = TextUtils.getTextHeightOneLine(paint);
 
         text = text_appName
@@ -147,8 +149,7 @@ public class WatermarkStickerView extends StickerView {
         centerY_text = getHeight() - margin - onLineHeight * text.split("\n").length * 0.5f;
         rectF_text = TextUtils.getTextRectF(false, 0, paint, text, centerX_text, centerY_text);
         TextUtils.drawText(false, 0, canvas, paint, text, centerX_text, centerY_text, rectF_text);
-        if (showTime) {
-            date = TimeAndAgeUtils.timeStamp2DateAll(TimeAndAgeUtils.getCureentTimeStamp());
+        if (show_time) {
             centerX_time = getWidth() - margin - TextUtils.getTextWidthOneLine(false, date, paint) * 0.5f;
             centerY_time = getHeight() - margin - onLineHeight * 0.5f;
             rectF_time = TextUtils.getTextRectF(false, 0, paint, date, centerX_time, centerY_time);
