@@ -138,6 +138,7 @@ public class WatermarkStickerView extends StickerView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        if(!haveWatermark())return;
         onLineHeight = TextUtils.getTextHeightOneLine(paint);
 
         text = text_appName
