@@ -38,7 +38,8 @@ public class WatermarkStickerView extends StickerView {
         paint.setAntiAlias(true);
         paint.setTextAlign(Paint.Align.LEFT);
         paint.setColor(Color.WHITE);
-        paint.setTextSize(ScreenUtils.sp2px(context, ScreenUtils.spAdapt(context, 11)));
+        paint.setTextSize(ScreenUtils.sp2px(context, ScreenUtils.spAdapt(context, 10)));
+        setTypeface("",Typeface.BOLD);
         paint.setShadowLayer(1, 1, 1, Color.BLACK);
 
         text_appName = VersionUtils.getAppName(context);
@@ -62,10 +63,13 @@ public class WatermarkStickerView extends StickerView {
         return this;
     }
 
-    public WatermarkStickerView setTypeface(String pathFont) {
-        //必须判断，否则崩溃
-        if (android.text.TextUtils.isEmpty(pathFont)) return this;
-        paint.setTypeface(Typeface.createFromFile(pathFont));
+    public WatermarkStickerView setTypeface(String pathFont, int style) {
+        if (android.text.TextUtils.isEmpty(pathFont)) {
+            paint.setTypeface(Typeface.defaultFromStyle(style));
+            return this;
+        }
+        paint.setTypeface(
+                Typeface.create(Typeface.createFromFile(pathFont), style));
         return this;
     }
 
