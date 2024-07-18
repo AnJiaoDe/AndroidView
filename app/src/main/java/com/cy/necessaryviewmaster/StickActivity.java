@@ -16,6 +16,7 @@ import com.cy.androidview.BitmapUtils;
 import com.cy.androidview.LogUtils;
 import com.cy.androidview.sticker.Sticker;
 import com.cy.androidview.sticker.StickerView;
+import com.cy.androidview.sticker.WatermarkStickerView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +27,7 @@ public class StickActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stick);
-        StickerView stickerView = findViewById(R.id.StickerView);
+        WatermarkStickerView watermarkStickerView = findViewById(R.id.WatermarkStickerView);
         Sticker sticker = new Sticker(this, Sticker.TYPE_TEXT, "贴纸\n文字");
         sticker.setCenterX(540)
                 .setCenterY(100)
@@ -36,7 +37,7 @@ public class StickActivity extends BaseActivity {
                 .setScale(1.2f)
 
         ;
-        stickerView.addSticker(sticker);
+        watermarkStickerView.addSticker(sticker);
 
 
         Sticker sticker2 = new Sticker(this, Sticker.TYPE_TEXT, "#*￥$(35额的额服务\n哥哥风歌他");
@@ -47,12 +48,12 @@ public class StickActivity extends BaseActivity {
                 .setVertical(true)
                 .setLineSpace(2)
         ;
-        stickerView.addSticker(sticker2);
+        watermarkStickerView.addSticker(sticker2);
 
         Sticker sticker3 = new Sticker(this, Sticker.TYPE_TEXT, "代加工第几个i诶过\nefefeg淀粉");
         sticker3.setTextAlign(Paint.Align.CENTER);
         sticker3.setLetterSpacing(1f);
-        sticker3.setTypeface("",Typeface.BOLD|Typeface.ITALIC);
+        sticker3.setTypeface("", Typeface.BOLD | Typeface.ITALIC);
 
 //        sticker3.setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         //会出现2条横线，原因不明
@@ -64,8 +65,11 @@ public class StickActivity extends BaseActivity {
                 .setCenterY(1600)
                 .setLineSpace(0.5f);
         ;
-        stickerView.addSticker(sticker3);
-        stickerView.setCallback(new StickerView.Callback() {
+        watermarkStickerView.addSticker(sticker3);
+
+        watermarkStickerView.setText_text("日常自拍大哥哥特特瑞特任特特大肥肥我");
+
+        watermarkStickerView.setCallback(new StickerView.Callback() {
             @Override
             public void onOutsideClick() {
                 LogUtils.log("onOutsideClick");
@@ -96,7 +100,7 @@ public class StickActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 sticker3.setTextAlign(Paint.Align.RIGHT).setVertical(true);
-                stickerView.invalidate();
+                watermarkStickerView.invalidate();
             }
         });
 

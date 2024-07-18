@@ -7,9 +7,9 @@
     android:background="#959595"
     android:orientation="vertical">
 
-    <com.cy.androidview.sticker.StickerView
+    <com.cy.androidview.sticker.WatermarkStickerView
         android:layout_width="match_parent"
-        android:id="@+id/StickerView"
+        android:id="@+id/WatermarkStickerView"
         android:layout_height="0dp"
         android:layout_weight="1"/>
     <Button

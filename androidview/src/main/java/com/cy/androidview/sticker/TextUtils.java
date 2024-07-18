@@ -9,18 +9,18 @@ public class TextUtils {
         String[] ts = text.split("\n");
         float w = 0;
         float h;
-        float textH = getTextHeight(paint);
+        float textH = getTextHeightOneLine(paint);
         if (!vertical) {
             h = textH * ts.length + textH * lineSpace * (ts.length - 1);
             for (int i = 0; i < ts.length; i++) {
-                w = Math.max(w, getTextWidth(vertical, ts[i], paint));
+                w = Math.max(w, getTextWidthOneLine(vertical, ts[i], paint));
             }
         } else {
             int len_max = 0;
             float wT = 0;
             for (int i = 0; i < ts.length; i++) {
                 w += wT * lineSpace;
-                wT = getTextWidth(vertical, ts[i], paint);
+                wT = getTextWidthOneLine(vertical, ts[i], paint);
                 w += wT;
                 len_max = Math.max(len_max, ts[i].length());
             }
@@ -31,7 +31,7 @@ public class TextUtils {
 
     public static void drawText(boolean vertical, float lineSpace, Canvas canvas, Paint paint, String text, float centerX, float centerY, RectF rectF) {
         String[] ts = text.split("\n");
-        float textH = getTextHeight(paint);
+        float textH = getTextHeightOneLine(paint);
         if (!vertical) {
             float hhh = textH * ts.length + textH * lineSpace * (ts.length - 1);
             float o = centerY - hhh * 0.5f + textH * 0.5f;
@@ -48,7 +48,7 @@ public class TextUtils {
         float h;
         Paint.Align align = paint.getTextAlign();
         for (int i = 0; i < ts.length; i++) {
-            w = getTextWidth(vertical, ts[i], paint);
+            w = getTextWidthOneLine(vertical, ts[i], paint);
             h = textH * ts[i].length() + textH * paint.getLetterSpacing() * (ts[i].length() - 1);
             if (paint.getTextAlign() == Paint.Align.LEFT) {
                 centerY__ = rectF.top;
@@ -74,7 +74,25 @@ public class TextUtils {
         }
     }
 
-    public static float getTextWidth(boolean vertical, String text, Paint paint) {
+    public static float getTextWidth(boolean vertical, float lineSpace, String text, Paint paint) {
+        float w = 0;
+        String[] ts = text.split("\n");
+        if (!vertical) {
+            for (int i = 0; i < ts.length; i++) {
+                w = Math.max(w, getTextWidthOneLine(vertical, ts[i], paint));
+            }
+        } else {
+            float wT = 0;
+            for (int i = 0; i < ts.length; i++) {
+                w += wT * lineSpace;
+                wT = getTextWidthOneLine(vertical, ts[i], paint);
+                w += wT;
+            }
+        }
+        return w;
+    }
+
+    public static float getTextWidthOneLine(boolean vertical, String text, Paint paint) {
         if (!vertical)
             return paint.measureText(text);
         float letterSpacing = paint.getLetterSpacing();
@@ -87,7 +105,7 @@ public class TextUtils {
         return w;
     }
 
-    public static float getTextHeight(Paint paint) {
+    public static float getTextHeightOneLine(Paint paint) {
         Paint.FontMetrics fontMetrics = paint.getFontMetrics();
         return fontMetrics.bottom - fontMetrics.top;
     }

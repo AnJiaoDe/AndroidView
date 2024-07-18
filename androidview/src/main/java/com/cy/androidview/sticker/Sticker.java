@@ -5,7 +5,6 @@ import android.graphics.BlurMaskFilter;
 import android.graphics.Camera;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.MaskFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -13,9 +12,9 @@ import android.graphics.RectF;
 import android.graphics.Typeface;
 
 import androidx.annotation.ColorInt;
+import androidx.annotation.Nullable;
 
 import com.cy.androidview.ScreenUtils;
-import com.cy.androidview.selectorview.TextViewSelector;
 
 public class Sticker {
     public static final int TYPE_TEXT = 0;
@@ -58,6 +57,7 @@ public class Sticker {
     private @ColorInt int shadowColor;
     private boolean filter = false;
     private Callback callback;
+    private Object obj;
 
     public Sticker(Context context, int type, String text) {
         this.context = context;
@@ -96,17 +96,19 @@ public class Sticker {
 
         setTextColor(Color.WHITE);
         setTextSize(ScreenUtils.sp2px(context, ScreenUtils.spAdapt(context, 18)));
+        setShadowLayer(1, 1, 1, Color.BLACK);
         setBoxColor(Color.WHITE);
         setBoxStrokeWidth(ScreenUtils.dpAdapt(context, 1));
     }
-//Object obj;
-//    public <T> void setBean(T t) {
-// obj=t;
-//    }
-//
-//    public <T> T getBean() {
-//return (T) obj;
-//    }
+
+    public <T> void setBean(@Nullable T t) {
+        obj = t;
+    }
+
+    public @Nullable <T> T getBean() {
+        if (obj == null) return null;
+        return (T) obj;
+    }
 
     public Sticker setCallback(Callback callback) {
         this.callback = callback;
@@ -298,7 +300,7 @@ public class Sticker {
     }
 
     public float getOneLineHeight() {
-        return TextUtils.getTextHeight(paintText);
+        return TextUtils.getTextHeightOneLine(paintText);
     }
 
     public Sticker setFilterBitmap(boolean filter) {
