@@ -25,7 +25,9 @@ public class WatermarkStickerView extends StickerView {
     private float centerX_time, centerY_time;
     private float centerX_text, centerY_text;
     private String text = "";
+    private String text_appName_default = "";
     private String text_appName = "";
+    private String text_product_default = "";
     private String text_product = "";
     private String text_text = "";
     private float onLineHeight;
@@ -39,13 +41,15 @@ public class WatermarkStickerView extends StickerView {
         paint.setTextAlign(Paint.Align.LEFT);
         paint.setColor(Color.WHITE);
         paint.setTextSize(ScreenUtils.sp2px(context, ScreenUtils.spAdapt(context, 10)));
-        setTypeface("",Typeface.BOLD);
+        setTypeface("", Typeface.BOLD);
         paint.setShadowLayer(1, 1, 1, Color.BLACK);
 
-        text_appName = VersionUtils.getAppName(context);
-        text_product = Build.BRAND + "    " + Build.PRODUCT;
-        margin = ScreenUtils.dpAdapt(context, 10);
+        text_appName_default = VersionUtils.getAppName(context);
+        text_product_default = Build.BRAND + "    " + Build.PRODUCT;
 
+        text_appName=text_appName_default;
+        text_product=text_product_default;
+        margin = ScreenUtils.dpAdapt(context, 10);
     }
 
     public WatermarkStickerView setTextSize(float px) {
@@ -73,20 +77,56 @@ public class WatermarkStickerView extends StickerView {
         return this;
     }
 
-    public void setMargin(float margin) {
+    public WatermarkStickerView setMargin(float margin) {
         this.margin = margin;
+        return this;
     }
 
-    public void setText_appName(String text_appName) {
+    public WatermarkStickerView setText_appName(String text_appName) {
         this.text_appName = text_appName;
+        return this;
     }
 
-    public void setText_product(String text_product) {
+    public WatermarkStickerView setText_product(String text_product) {
         this.text_product = text_product;
+        return this;
     }
 
-    public void setText_text(String text_text) {
+    public WatermarkStickerView setText_text(String text_text) {
         this.text_text = text_text;
+        return this;
+    }
+
+    public boolean isShow_time() {
+        return show_time;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getText_appName() {
+        return text_appName;
+    }
+
+    public String getText_product() {
+        return text_product;
+    }
+
+    public String getText_text() {
+        return text_text;
+    }
+
+    public float getMargin() {
+        return margin;
+    }
+
+    public String getText_appName_default() {
+        return text_appName_default;
+    }
+
+    public String getText_product_default() {
+        return text_product_default;
     }
 
     public boolean haveWatermark() {
@@ -112,6 +152,7 @@ public class WatermarkStickerView extends StickerView {
 
     private void time_invalidate() {
         if (show_time) {
+            if (thread != null) thread.interrupt();
             thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
