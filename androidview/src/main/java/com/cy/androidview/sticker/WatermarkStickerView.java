@@ -1,6 +1,7 @@
 package com.cy.androidview.sticker;
 
 import android.content.Context;
+import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -148,6 +149,11 @@ public class WatermarkStickerView extends StickerView {
 
     public WatermarkStickerView setShadowLayer(float radius, float dx, float dy, @ColorInt int shadowColor) {
         paint.setShadowLayer(radius, dx, dy, shadowColor);
+        return this;
+    }
+    public WatermarkStickerView setMaskFilter(float blur_radius) {
+        blur_radius = Math.max(1, blur_radius);
+        paint.setMaskFilter(new BlurMaskFilter(blur_radius, BlurMaskFilter.Blur.SOLID));
         return this;
     }
 
