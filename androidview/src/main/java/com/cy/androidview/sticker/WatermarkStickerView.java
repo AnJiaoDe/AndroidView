@@ -54,7 +54,7 @@ public class WatermarkStickerView extends StickerView {
     }
 
     public WatermarkStickerView setTextSize(float sp) {
-        sp = Math.max(8, Math.min(200, sp));
+        sp = Math.max(10, Math.min(200, sp));
         paint.setTextSize(ScreenUtils.sp2px(getContext(), ScreenUtils.spAdapt(getContext(), sp)));
         return this;
     }
