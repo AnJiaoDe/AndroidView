@@ -52,8 +52,9 @@ public class WatermarkStickerView extends StickerView {
         margin = ScreenUtils.dpAdapt(context, 10);
     }
 
-    public WatermarkStickerView setTextSize(float px) {
-        paint.setTextSize(Math.max(ScreenUtils.sp2px(getContext(), ScreenUtils.spAdapt(getContext(), 8)), px));
+    public WatermarkStickerView setTextSize(float sp) {
+        sp = Math.max(8, Math.min(200, sp));
+        paint.setTextSize(ScreenUtils.sp2px(getContext(), ScreenUtils.spAdapt(getContext(), sp)));
         return this;
     }
     public WatermarkStickerView setTextColor(int color) {
