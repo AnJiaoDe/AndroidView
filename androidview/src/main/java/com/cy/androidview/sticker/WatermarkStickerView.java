@@ -47,13 +47,17 @@ public class WatermarkStickerView extends StickerView {
         text_appName_default = VersionUtils.getAppName(context);
         text_product_default = Build.BRAND + "    " + Build.PRODUCT;
 
-        text_appName=text_appName_default;
-        text_product=text_product_default;
+        text_appName = text_appName_default;
+        text_product = text_product_default;
         margin = ScreenUtils.dpAdapt(context, 10);
     }
 
     public WatermarkStickerView setTextSize(float px) {
-        paint.setTextSize(px);
+        paint.setTextSize(Math.max(ScreenUtils.sp2px(getContext(), ScreenUtils.spAdapt(getContext(), 8)), px));
+        return this;
+    }
+    public WatermarkStickerView setTextColor(int color) {
+        paint.setColor(color);
         return this;
     }
 
