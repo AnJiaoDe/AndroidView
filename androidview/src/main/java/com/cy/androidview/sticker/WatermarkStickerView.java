@@ -21,7 +21,7 @@ public class WatermarkStickerView extends StickerView {
     private RectF rectF_text;
     private RectF rectF_time;
     private Paint paint;
-    private boolean show_time = true;
+    private boolean show_time = false;
     private String date = "";
     private float centerX_time, centerY_time;
     private float centerX_text, centerY_text;
@@ -49,7 +49,6 @@ public class WatermarkStickerView extends StickerView {
         text_product_default = Build.BRAND + "    " + Build.PRODUCT;
 
         text_appName = text_appName_default;
-        text_product = text_product_default;
         margin = ScreenUtils.dpAdapt(context, 10);
     }
 
