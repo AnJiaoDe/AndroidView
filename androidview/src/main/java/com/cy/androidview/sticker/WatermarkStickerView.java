@@ -167,12 +167,11 @@ public class WatermarkStickerView extends StickerView {
                 @Override
                 public void run() {
                     while (!thread.isInterrupted()) {
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                        }
                         date = TimeAndAgeUtils.timeStamp2DateAll(TimeAndAgeUtils.getCureentTimeStamp());
-                        invalidate();
+                        //invalidate() 应该在 UI 线程中调用，用于重绘当前视图。
+                        //postInvalidate() 可以在任何线程中调用，用于在 UI 线程上异步地请求重绘视图。
+                        //在实际开发中，通常使用 invalidate() 来更新当前视图，而 postInvalidate() 则适用于在后台线程中更新 UI。
+                        postInvalidateDelayed(1000);
                     }
                 }
             });

@@ -2,7 +2,9 @@ package com.cy.necessaryviewmaster;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
 import android.graphics.BlurMaskFilter;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -10,6 +12,7 @@ import android.os.Bundle;
 import android.text.TextPaint;
 import android.util.Size;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cy.androidview.BitmapUtils;
@@ -67,6 +70,8 @@ public class StickActivity extends BaseActivity {
         ;
         watermarkStickerView.addSticker(sticker3);
         watermarkStickerView.setText_text("日常自拍大哥哥特特瑞特任特特大肥肥我");
+        watermarkStickerView.setShadowLayer(10,10,10,Color.RED);
+        watermarkStickerView.setShowTime(true);
 
         watermarkStickerView.setCallback(new StickerView.Callback() {
             @Override
@@ -94,7 +99,6 @@ public class StickActivity extends BaseActivity {
                 LogUtils.log("onCopyClick", index);
             }
         });
-
         findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
