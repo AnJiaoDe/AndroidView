@@ -601,7 +601,7 @@ public class Sticker {
      * @param blur_radius 必须>0 否则崩溃
      */
     public Sticker setMaskFilter(float blur_radius) {
-        blur_radius = Math.max(1, blur_radius);
+        blur_radius = Math.max(0.00000001f, blur_radius);
         this.blur_radius = blur_radius;
         paintText.setMaskFilter(new BlurMaskFilter(blur_radius, BlurMaskFilter.Blur.SOLID));
         return this;

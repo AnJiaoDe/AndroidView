@@ -151,7 +151,7 @@ public class WatermarkStickerView extends StickerView {
         return this;
     }
     public WatermarkStickerView setMaskFilter(float blur_radius) {
-        blur_radius = Math.max(1, blur_radius);
+        blur_radius = Math.max(0.0000001f, blur_radius);
         paint.setMaskFilter(new BlurMaskFilter(blur_radius, BlurMaskFilter.Blur.SOLID));
         return this;
     }
