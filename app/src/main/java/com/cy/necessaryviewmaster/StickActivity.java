@@ -85,6 +85,11 @@ public class StickActivity extends BaseActivity {
             }
 
             @Override
+            public void onScaleChanged(int index) {
+
+            }
+
+            @Override
             public void onBoxClick(int index) {
                 LogUtils.log("onBoxClick", index);
             }
