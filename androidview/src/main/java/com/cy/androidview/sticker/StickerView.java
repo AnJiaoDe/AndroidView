@@ -159,9 +159,10 @@ public class StickerView extends View {
                 if (index_2_pointer >= 0 && index_2_pointer < listSticker.size() && event.getPointerCount() >= 2) {
                     float distance = getFingerDistance(event);
                     Sticker sticker = listSticker.get(index_2_pointer);
-                    sticker.setScale( sticker.getScale() + 0.005f * (distance - distance_last));
+                    sticker.setScale(sticker.getScale() + 0.005f * (distance - distance_last));
                     distance_last = distance;
                     invalidate();
+                    if (callback != null) callback.onScaleChanged(index_2_pointer);
                     break;
                 }
                 if (index_rotateZ >= 0 && index_rotateZ < listSticker.size()) {
@@ -176,8 +177,8 @@ public class StickerView extends View {
                             + Math.pow(event.getY() - sticker.getCenterY(), 2))
                             / Math.sqrt(Math.pow(sticker.getRectF_box_normal().width() * 0.5f, 2)
                             + Math.pow(sticker.getRectF_box_normal().height() * 0.5f, 2))));
-
                     invalidate();
+                    if (callback != null) callback.onScaleChanged(index_rotateZ);
                     break;
                 }
                 if (index_rotate3D >= 0 && index_rotate3D < listSticker.size()) {
@@ -201,9 +202,9 @@ public class StickerView extends View {
                     sticker.setCenterY(Math.min(Math.max(0, event.getY()), getHeight()));
 
                     invalidate();
-                    Sticker.Callback c=sticker.getCallback();
-                    if(c!=null)c.onXYChanged(sticker.getCenterX(),sticker.getCenterY());
-                    if(callback!=null)callback.onXYChanged(index_down);
+                    Sticker.Callback c = sticker.getCallback();
+                    if (c != null) c.onXYChanged(sticker.getCenterX(), sticker.getCenterY());
+                    if (callback != null) callback.onXYChanged(index_down);
                 }
                 break;
             case MotionEvent.ACTION_UP:
@@ -298,6 +299,8 @@ public class StickerView extends View {
         public void onOutsideClick();
 
         public void onXYChanged(int index);
+
+        public void onScaleChanged(int index);
 
         public void onBoxClick(int index);
 
