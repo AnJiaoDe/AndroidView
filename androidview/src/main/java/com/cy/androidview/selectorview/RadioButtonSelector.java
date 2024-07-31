@@ -73,7 +73,6 @@ public class RadioButtonSelector extends AppCompatRadioButton {
                 }
             }
         });
-
     }
 
     @Override

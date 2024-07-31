@@ -93,11 +93,15 @@ public class FrameLayoutSelector extends FrameLayout {
 
     //设置是否选中
     public void setChecked(boolean checked) {
+        if(isChecked==checked)return;
         isChecked = checked;
         if (checked) {
             setResOnChecked();
         } else {
             setResOnUnChecked();
+        }
+        if (onCheckedChangeListener != null) {
+            onCheckedChangeListener.onCheckedChanged(FrameLayoutSelector.this, isChecked);
         }
     }
     //设置选中时的背景，Src等
