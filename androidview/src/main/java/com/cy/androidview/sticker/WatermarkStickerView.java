@@ -34,7 +34,6 @@ public class WatermarkStickerView extends StickerView {
     private float onLineHeight;
     private float margin;
     private Thread thread;
-    private boolean openWatermark=true;
 
     public WatermarkStickerView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -137,10 +136,10 @@ public class WatermarkStickerView extends StickerView {
     }
 
     public boolean haveWatermark() {
-        return isOpenWatermark()&&(show_time
+        return show_time
                 || !android.text.TextUtils.isEmpty(text_appName)
                 || !android.text.TextUtils.isEmpty(text_product)
-                || !android.text.TextUtils.isEmpty(text_text));
+                || !android.text.TextUtils.isEmpty(text_text);
     }
 
     public WatermarkStickerView setDate(String date) {
@@ -196,13 +195,6 @@ public class WatermarkStickerView extends StickerView {
         if (thread != null) thread.interrupt();
     }
 
-    public boolean isOpenWatermark() {
-        return openWatermark;
-    }
-
-    public void setOpenWatermark(boolean openWatermark) {
-        this.openWatermark = openWatermark;
-    }
 
     @Override
     protected void onDraw(Canvas canvas) {
