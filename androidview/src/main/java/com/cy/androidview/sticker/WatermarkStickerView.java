@@ -34,6 +34,7 @@ public class WatermarkStickerView extends StickerView {
     private float onLineHeight;
     private float margin;
     private Thread thread;
+    private boolean openWatermark=true;
 
     public WatermarkStickerView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -195,10 +196,18 @@ public class WatermarkStickerView extends StickerView {
         if (thread != null) thread.interrupt();
     }
 
+    public boolean isOpenWatermark() {
+        return openWatermark;
+    }
+
+    public void setOpenWatermark(boolean openWatermark) {
+        this.openWatermark = openWatermark;
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (!isOpen()) return;
+        if (!isOpenWatermark()) return;
         drawWatermark(canvas);
     }
 
