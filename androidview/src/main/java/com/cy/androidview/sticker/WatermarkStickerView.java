@@ -137,10 +137,10 @@ public class WatermarkStickerView extends StickerView {
     }
 
     public boolean haveWatermark() {
-        return show_time
+        return isOpenWatermark()&&(show_time
                 || !android.text.TextUtils.isEmpty(text_appName)
                 || !android.text.TextUtils.isEmpty(text_product)
-                || !android.text.TextUtils.isEmpty(text_text);
+                || !android.text.TextUtils.isEmpty(text_text));
     }
 
     public WatermarkStickerView setDate(String date) {
@@ -207,7 +207,6 @@ public class WatermarkStickerView extends StickerView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (!isOpenWatermark()) return;
         drawWatermark(canvas);
     }
 
