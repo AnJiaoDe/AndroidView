@@ -28,7 +28,7 @@ public class StickerView extends View {
     private Callback callback;
     private final int TIME_CLICK_THRESHOLD = 200;
     private float distance_last;
-
+    private boolean open=true;
     private StickerAttr stickerAttr;
 
     public StickerView(Context context, @Nullable AttributeSet attrs) {
@@ -85,10 +85,19 @@ public class StickerView extends View {
         this.callback = callback;
     }
 
+    public boolean isOpen() {
+        return open;
+    }
+
+    public void setOpen(boolean open) {
+        this.open = open;
+    }
+
     @SuppressLint("DrawAllocation")
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        if(!open)return;
         for (int i = 0; i < listSticker.size(); i++) {
             Sticker sticker = listSticker.get(i);
             sticker.onDraw(canvas, stickerAttr);

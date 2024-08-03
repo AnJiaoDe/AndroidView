@@ -57,6 +57,7 @@ public class WatermarkStickerView extends StickerView {
         paint.setTextSize(ScreenUtils.sp2px(getContext(), ScreenUtils.spAdapt(getContext(), sp)));
         return this;
     }
+
     public WatermarkStickerView setTextColor(int color) {
         paint.setColor(color);
         return this;
@@ -150,6 +151,7 @@ public class WatermarkStickerView extends StickerView {
         paint.setShadowLayer(radius, dx, dy, shadowColor);
         return this;
     }
+
     public WatermarkStickerView setMaskFilter(float blur_radius) {
         blur_radius = Math.max(0.0000001f, blur_radius);
         paint.setMaskFilter(new BlurMaskFilter(blur_radius, BlurMaskFilter.Blur.SOLID));
@@ -196,6 +198,7 @@ public class WatermarkStickerView extends StickerView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        if (!isOpen()) return;
         drawWatermark(canvas);
     }
 
