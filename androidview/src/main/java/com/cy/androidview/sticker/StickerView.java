@@ -46,8 +46,10 @@ public class StickerView extends View {
         super.onLayout(changed, left, top, right, bottom);
         for (int i = 0; i < listSticker.size(); i++) {
             Sticker sticker = listSticker.get(i);
-            sticker.setCenterX(Math.max(0, Math.min(getWidth(), sticker.getCenterX())))
-                    .setCenterY(Math.max(0, Math.min(getHeight(), sticker.getCenterY())));
+            float w=sticker.getTextWidth()*0.5f;
+            float h=sticker.getTextHeight()*0.5f;
+            sticker.setCenterX(Math.max(w, Math.min(getWidth()-w, sticker.getCenterX())))
+                    .setCenterY(Math.max(h, Math.min(getHeight()-h, sticker.getCenterY())));
             listSticker.set(i,sticker);
         }
         invalidate();

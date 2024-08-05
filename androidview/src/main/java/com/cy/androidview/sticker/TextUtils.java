@@ -91,6 +91,21 @@ public class TextUtils {
         }
         return w;
     }
+    public static float getTextHeight(boolean vertical, float lineSpace, String text, Paint paint) {
+        String[] ts = text.split("\n");
+        float h;
+        float textH = getTextHeightOneLine(paint);
+        if (!vertical) {
+            h = textH * ts.length + textH * lineSpace * (ts.length - 1);
+        } else {
+            int len_max = 0;
+            for (int i = 0; i < ts.length; i++) {
+                len_max = Math.max(len_max, ts[i].length());
+            }
+            h = textH * len_max + textH * paint.getLetterSpacing() * (len_max - 1);
+        }
+        return h;
+    }
 
     public static float getTextWidthOneLine(boolean vertical, String text, Paint paint) {
         if (!vertical)

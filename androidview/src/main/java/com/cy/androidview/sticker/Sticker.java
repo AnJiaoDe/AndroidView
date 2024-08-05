@@ -299,8 +299,20 @@ public class Sticker {
         return this;
     }
 
-    public float getOneLineHeight() {
+    public float getTextWidthOneLine() {
+        return TextUtils.getTextWidthOneLine(vertical, text, paintText);
+    }
+
+    public float getTextWidth() {
+        return TextUtils.getTextWidth(vertical, lineSpace, text, paintText);
+    }
+
+    public float getTextHeightOneLine() {
         return TextUtils.getTextHeightOneLine(paintText);
+    }
+
+    public float getTextHeight() {
+        return TextUtils.getTextHeight(vertical, lineSpace, text, paintText);
     }
 
     public Sticker setFilterBitmap(boolean filter) {
