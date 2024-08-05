@@ -28,7 +28,7 @@ public class StickerView extends View {
     private Callback callback;
     private final int TIME_CLICK_THRESHOLD = 200;
     private float distance_last;
-    private boolean open=true;
+    private boolean open = true;
     private StickerAttr stickerAttr;
 
     public StickerView(Context context, @Nullable AttributeSet attrs) {
@@ -44,6 +44,13 @@ public class StickerView extends View {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
+        for (int i = 0; i < listSticker.size(); i++) {
+            Sticker sticker = listSticker.get(i);
+            sticker.setCenterX(Math.max(0, Math.min(getWidth(), sticker.getCenterX())))
+                    .setCenterY(Math.max(0, Math.min(getHeight(), sticker.getCenterY())));
+            listSticker.set(i,sticker);
+        }
+        invalidate();
     }
 
     public void addSticker(Sticker sticker) {
@@ -97,7 +104,7 @@ public class StickerView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if(!open)return;
+        if (!open) return;
         for (int i = 0; i < listSticker.size(); i++) {
             Sticker sticker = listSticker.get(i);
             sticker.onDraw(canvas, stickerAttr);
