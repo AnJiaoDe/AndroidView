@@ -47,8 +47,8 @@ public class StickerView extends View {
         //防止StickerView宽高改变后，文字看不见，贼鸡儿尴尬
         for (int i = 0; i < listSticker.size(); i++) {
             Sticker sticker = listSticker.get(i);
-            float w=sticker.getTextWidth()*0.5f;
-            float h=sticker.getTextHeight()*0.5f;
+            float w=sticker.getTextWidth()*sticker.getScale()*0.5f;
+            float h=sticker.getTextHeight()*sticker.getScale()*0.5f;
             sticker.setCenterX(Math.max(w, Math.min(getWidth()-w, sticker.getCenterX())))
                     .setCenterY(Math.max(h, Math.min(getHeight()-h, sticker.getCenterY())));
             listSticker.set(i,sticker);
