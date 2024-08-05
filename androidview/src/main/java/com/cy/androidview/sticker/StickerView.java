@@ -53,7 +53,6 @@ public class StickerView extends View {
                     .setCenterY(Math.max(h, Math.min(getHeight()-h, sticker.getCenterY())));
             listSticker.set(i,sticker);
         }
-        invalidate();
     }
 
     public void addSticker(Sticker sticker) {
