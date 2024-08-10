@@ -32,7 +32,8 @@ public class WatermarkStickerView extends StickerView {
     private String text_product = "";
     private String text_text = "";
     private float onLineHeight;
-    private float margin;
+    private float margin_x;
+    private float margin_y;
     private Thread thread;
 
     public WatermarkStickerView(Context context, @Nullable AttributeSet attrs) {
@@ -49,7 +50,8 @@ public class WatermarkStickerView extends StickerView {
         text_product_default = Build.BRAND + "    " + Build.PRODUCT;
 
         text_appName = text_appName_default;
-        margin = ScreenUtils.dpAdapt(context, 10);
+        margin_x = ScreenUtils.dpAdapt(context, 10);
+        margin_y = ScreenUtils.dpAdapt(context, 10);
     }
 
     public WatermarkStickerView setTextSize(float sp) {
@@ -83,8 +85,21 @@ public class WatermarkStickerView extends StickerView {
         return this;
     }
 
-    public WatermarkStickerView setMargin(float margin) {
-        this.margin = margin;
+    public float getMargin_x() {
+        return margin_x;
+    }
+
+    public WatermarkStickerView setMargin_x(float margin_x) {
+        this.margin_x = margin_x;
+        return this;
+    }
+
+    public float getMargin_y() {
+        return margin_y;
+    }
+
+    public WatermarkStickerView setMargin_y(float margin_y) {
+        this.margin_y = margin_y;
         return this;
     }
 
@@ -123,9 +138,6 @@ public class WatermarkStickerView extends StickerView {
         return text_text;
     }
 
-    public float getMargin() {
-        return margin;
-    }
 
     public String getText_appName_default() {
         return text_appName_default;
@@ -212,13 +224,13 @@ public class WatermarkStickerView extends StickerView {
                 + text_product
                 + (android.text.TextUtils.isEmpty(text_text) ? "" : "\n")
                 + text_text;
-        centerX_text = margin + TextUtils.getTextWidth(false, 0, text, paint) * 0.5f;
-        centerY_text = getHeight() - margin - onLineHeight * text.split("\n").length * 0.5f;
+        centerX_text = margin_x + TextUtils.getTextWidth(false, 0, text, paint) * 0.5f;
+        centerY_text = getHeight() - margin_y - onLineHeight * text.split("\n").length * 0.5f;
         rectF_text = TextUtils.getTextRectF(false, 0, paint, text, centerX_text, centerY_text);
         TextUtils.drawText(false, 0, canvas, paint, text, centerX_text, centerY_text, rectF_text);
         if (show_time) {
-            centerX_time = getWidth() - margin - TextUtils.getTextWidthOneLine(false, date, paint) * 0.5f;
-            centerY_time = getHeight() - margin - onLineHeight * 0.5f;
+            centerX_time = getWidth() - margin_x - TextUtils.getTextWidthOneLine(false, date, paint) * 0.5f;
+            centerY_time = getHeight() - margin_y - onLineHeight * 0.5f;
             rectF_time = TextUtils.getTextRectF(false, 0, paint, date, centerX_time, centerY_time);
             TextUtils.drawText(false, 0, canvas, paint, date, centerX_time, centerY_time, rectF_time);
         }

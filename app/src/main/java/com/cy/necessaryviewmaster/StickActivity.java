@@ -71,6 +71,7 @@ public class StickActivity extends BaseActivity {
         watermarkStickerView.addSticker(sticker3);
         watermarkStickerView.setText_text("日常自拍大哥哥特特瑞特任特特大肥肥我");
         watermarkStickerView.setShadowLayer(10,10,10,Color.RED);
+//        watermarkStickerView.setMargin_y()
         watermarkStickerView.setShowTime(true);
 
         watermarkStickerView.setCallback(new StickerView.Callback() {
