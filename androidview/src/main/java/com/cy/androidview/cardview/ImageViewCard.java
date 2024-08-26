@@ -75,9 +75,9 @@ public class ImageViewCard extends AppCompatImageView implements IRectangle {
                     ? getResources().getColor(R.color.cardview_light_background)
                     : getResources().getColor(R.color.cardview_dark_background));
         }
-        float radius = typedArray.getDimension(R.styleable.AttrsCard_cy_cardCornerRadius, ScreenUtils.dpAdapt(context,2));
-        float elevation = typedArray.getDimension(R.styleable.AttrsCard_cy_cardElevation, ScreenUtils.dpAdapt(context,2));
-        float maxElevation = typedArray.getDimension(R.styleable.AttrsCard_cy_cardMaxElevation,ScreenUtils.dpAdapt(context,2));
+        float radius = typedArray.getDimensionPixelSize(R.styleable.AttrsCard_cy_cardCornerRadius, ScreenUtils.dpAdapt(context,2));
+        float elevation = typedArray.getDimensionPixelSize(R.styleable.AttrsCard_cy_cardElevation, ScreenUtils.dpAdapt(context,2));
+        float maxElevation = typedArray.getDimensionPixelSize(R.styleable.AttrsCard_cy_cardMaxElevation,ScreenUtils.dpAdapt(context,2));
         useCompatPadding =  typedArray.getBoolean(R.styleable.AttrsCard_cy_cardUseCompatPadding, true);
         preventCornerOverlap =  typedArray.getBoolean(R.styleable.AttrsCard_cy_cardPreventCornerOverlap, true);
 
