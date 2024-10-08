@@ -60,9 +60,6 @@ public class FrameLayoutSelector extends FrameLayout {
             @Override
             public void onClick(View v) {
                 setChecked(!isChecked);
-                if (onCheckedChangeListener != null) {
-                    onCheckedChangeListener.onCheckedChanged(FrameLayoutSelector.this, isChecked);
-                }
             }
         });
 

@@ -59,9 +59,6 @@ public class ImageViewSelector extends AppCompatImageView {
             @Override
             public void onClick(View v) {
                 setChecked(!isChecked);
-                if (onCheckedChangeListener != null) {
-                    onCheckedChangeListener.onCheckedChanged(ImageViewSelector.this, isChecked);
-                }
             }
         });
 

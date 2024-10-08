@@ -67,9 +67,6 @@ public class TextViewSelector extends AppCompatTextView {
             @Override
             public void onClick(View v) {
                 setChecked(!isChecked);
-                if (onCheckedChangeListener != null) {
-                    onCheckedChangeListener.onCheckedChanged(TextViewSelector.this, isChecked);
-                }
             }
         });
 

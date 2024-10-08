@@ -3,6 +3,7 @@ package com.cy.necessaryviewmaster;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -31,7 +32,19 @@ public class StickActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stick);
         WatermarkStickerView watermarkStickerView = findViewById(R.id.WatermarkStickerView);
-        Sticker sticker = new Sticker(this, Sticker.TYPE_TEXT, "贴纸\n文字");
+        Bitmap bitmap= BitmapUtils.decodeResourceOrigin(this,R.drawable.pic_big);
+        Sticker sticker_bitmap = new Sticker(this, bitmap);
+        sticker_bitmap.setCenterX(540)
+                .setCenterY(600)
+//                .setRotationX(30)
+//                .setRotationY(30)
+//                .setRotationZ(30)
+                .setScale(0.2f)
+
+        ;
+        watermarkStickerView.addSticker(sticker_bitmap);
+
+        Sticker sticker = new Sticker(this,  "贴纸\n文字");
         sticker.setCenterX(540)
                 .setCenterY(100)
                 .setRotationX(30)
@@ -40,10 +53,10 @@ public class StickActivity extends BaseActivity {
                 .setScale(1.2f)
 
         ;
-        watermarkStickerView.addSticker(sticker);
+//        watermarkStickerView.addSticker(sticker);
 
 
-        Sticker sticker2 = new Sticker(this, Sticker.TYPE_TEXT, "#*￥$(35额的额服务\n哥哥风歌他");
+        Sticker sticker2 = new Sticker(this,  "#*￥$(35额的额服务\n哥哥风歌他");
         sticker2.setTextAlign(Paint.Align.RIGHT);
         sticker2.setLetterSpacing(1f);
         sticker2.setCenterX(540)
@@ -51,9 +64,9 @@ public class StickActivity extends BaseActivity {
                 .setVertical(true)
                 .setLineSpace(2)
         ;
-        watermarkStickerView.addSticker(sticker2);
+//        watermarkStickerView.addSticker(sticker2);
 
-        Sticker sticker3 = new Sticker(this, Sticker.TYPE_TEXT, "代加工第几个i诶过\nefefeg淀粉");
+        Sticker sticker3 = new Sticker(this,  "代加工第几个i诶过\nefefeg淀粉");
         sticker3.setTextAlign(Paint.Align.CENTER);
         sticker3.setLetterSpacing(1f);
         sticker3.setTypeface("", Typeface.BOLD | Typeface.ITALIC);

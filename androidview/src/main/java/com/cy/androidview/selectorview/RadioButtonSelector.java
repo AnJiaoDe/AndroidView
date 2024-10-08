@@ -62,11 +62,8 @@ public class RadioButtonSelector extends AppCompatRadioButton {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     setResOnChecked();
-
                 } else {
                     setResOnUnChecked();
-
-
                 }
                 if (selectorOnCheckedChangeListener != null) {
                     selectorOnCheckedChangeListener.onCheckedChanged(buttonView, isChecked);
