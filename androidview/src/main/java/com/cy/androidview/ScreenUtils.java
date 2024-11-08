@@ -103,24 +103,11 @@ public class ScreenUtils {
 
 
     /**
-     * 将px值转换为dip或dp值，保证尺寸大小不变
-     *
-     * @param pxValue
-     * @param scale   （DisplayMetrics类中属性density）
-     * @return
-     */
-    public static int px2dip(Context context, float pxValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (pxValue / scale + 0.5f);
-    }
-
-    /**
      * 将dp值转换为px值，保证尺寸大小不变
      *
      * @return
      */
     public static int dpAdapt(Context context, float dp) {
-
         return dpAdapt(context, dp, 360);
     }
 
@@ -135,7 +122,7 @@ public class ScreenUtils {
 //        float scaledDensity = dm.scaledDensity;//scaledDensity=dpi/160 字体缩放密度比
         float heightDP = heightPixels / density;//高度的dp
         float widthDP = widthPixels / density;//宽度的dp
-        float w = widthDP > heightDP ? heightDP : widthDP;
+        float w = Math.min(widthDP, heightDP);
 //        final float scale = activity.getResources().getDisplayMetrics().density;
         return (int) (dp * w / widthDpBase * density + 0.5f);
     }
@@ -146,7 +133,6 @@ public class ScreenUtils {
      * @return
      */
     public static int spAdapt(Context context, float sp) {
-
         return spAdapt(context, sp, 360);
     }
 
@@ -161,34 +147,41 @@ public class ScreenUtils {
 //        float scaledDensity = dm.scaledDensity;//scaledDensity=dpi/160 字体缩放密度比
         float heightDP = heightPixels / density;//高度的dp
         float widthDP = widthPixels / density;//宽度的dp
-        float w = widthDP > heightDP ? heightDP : widthDP;
+        float w = Math.min(widthDP, heightDP);
 //        final float scale = activity.getResources().getDisplayMetrics().density;
-        return (int) (sp * w / widthDpBase + 0.5f);
-    }
-//    public static int dp2px(Context context,int dimen_resID) {
-//        final float scale = context.getResources().getDisplayMetrics().density;
-//        return (int) (context.getResources().getDimension(dimen_resID) * scale + 0.5f);
-//    }
-
-    /**
-     * 将px值转换为sp值，保证文字大小不变
-     *
-     * @param pxValue
-     * @param fontScale （DisplayMetrics类中属性scaledDensity）
-     * @return
-     */
-    public static int px2sp(Context context, float pxValue) {
-        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
-        return (int) (pxValue / fontScale + 0.5f);
+        return (int) (sp * w / widthDpBase * dm.scaledDensity + 0.5f);
     }
 
     /**
-     * convert sp to its equivalent px
-     * 将sp转换为px
+     * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
      */
-    public static int sp2px(Context context, float spValue) {
-        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
-        return (int) (spValue * fontScale + 0.5f);
+    public static int dp2px(Context context, float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
+
+    /**
+     * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
+     */
+    public static int px2dp(Context context, float pxValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
+    }
+
+    /**
+     * sp转px
+     */
+    public static int sp2px(Context context, float sp) {
+        float scaledDensity = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (sp * scaledDensity + 0.5f);
+    }
+
+    /**
+     * px转sp
+     */
+    public static int px2sp(Context context, float px) {
+        float scaledDensity = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (px / scaledDensity + 0.5f);
     }
 
     /**
