@@ -32,7 +32,7 @@ public class ProgressWeightView extends View {
         paintBg.setAntiAlias(true);
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ProgressWeightView);
-        setBgColor(typedArray.getColor(R.styleable.ProgressWeightView_cy_color_bg, 0x33ffffff));
+        setBgColor(typedArray.getColor(R.styleable.ProgressWeightView_cy_color_bg, 0x11000000));
         setFgColor(typedArray.getColor(R.styleable.ProgressWeightView_cy_color_fg, 0xff2a83fc));
         typedArray.recycle();
     }
