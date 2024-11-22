@@ -853,6 +853,5 @@
     <declare-styleable name="ProgressWeightView">
         <attr name="cy_color_bg" />
         <attr name="cy_color_fg" format="color|reference" />
-        <attr name="cy_radiusCorner" />
     </declare-styleable>
 </resources>

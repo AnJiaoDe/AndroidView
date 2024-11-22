@@ -14,8 +14,10 @@ import com.cy.androidview.ScreenUtils;
 
 public class ProgressWeightView extends View {
     private Paint paintBg, paintFg;
-    private int radius;
     private float progress;
+    private int width;
+    private int height;
+    private int radius;
 
     public ProgressWeightView(Context context) {
         this(context, null);
@@ -32,7 +34,6 @@ public class ProgressWeightView extends View {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ProgressWeightView);
         setBgColor(typedArray.getColor(R.styleable.ProgressWeightView_cy_color_bg, 0x33ffffff));
         setFgColor(typedArray.getColor(R.styleable.ProgressWeightView_cy_color_fg, 0xff2a83fc));
-        setRadius(typedArray.getDimensionPixelSize(R.styleable.ProgressWeightView_cy_radiusCorner, ScreenUtils.dpAdapt(context, 10)));
         typedArray.recycle();
     }
 
@@ -46,21 +47,25 @@ public class ProgressWeightView extends View {
         return this;
     }
 
-    public ProgressWeightView setRadius(int radius) {
-        this.radius = radius;
-        return this;
-    }
 
-    public ProgressWeightView setProgress(float progress){
-        this.progress=Math.min(1,Math.max(0,progress));
+    public ProgressWeightView setProgress(float progress) {
+        this.progress = Math.min(1, Math.max(0, progress));
         invalidate();
         return this;
     }
 
     @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        width = getWidth();
+        height = getHeight();
+        radius= (int) (height*0.5f);
+    }
+
+    @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawRoundRect(0, 0, getWidth(), getHeight(), radius, radius, paintBg);
-        canvas.drawRoundRect(0, 0, progress*getWidth(), getHeight(), radius, radius, paintFg);
+        canvas.drawRoundRect(0, 0, width, height, radius, radius, paintBg);
+        canvas.drawRoundRect(0, 0, progress * width, height, radius, radius, paintFg);
     }
 }
