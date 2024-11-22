@@ -11,6 +11,8 @@ import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.TextView;
 
+import com.cy.androidview.progress.ProgressWeightView;
+
 
 public class MainActivity extends BaseActivity {
 
@@ -68,6 +70,9 @@ public class MainActivity extends BaseActivity {
         builder.setSpan(new RelativeSizeSpan(1.5f), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         // 设置 SpannableStringBuilder 为 TextView 的内容
         tv.setText(builder);
+
+        ProgressWeightView progressWeightView=findViewById(R.id.ProgressWeightView);
+        progressWeightView.setProgress(0.1f);
     }
 
     @Override

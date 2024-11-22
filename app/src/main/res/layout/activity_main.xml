@@ -71,8 +71,9 @@
         android:layout_width="match_parent"
         android:id="@+id/tv"
         android:layout_height="wrap_content"/>
-    <com.cy.necessaryviewmaster.BitmapView
+    <com.cy.androidview.progress.ProgressWeightView
         android:layout_width="match_parent"
-        android:background="#ff0"
-        android:layout_height="match_parent"/>
+        android:layout_marginTop="20dp"
+        android:id="@+id/ProgressWeightView"
+        android:layout_height="10dp"/>
 </LinearLayout>
