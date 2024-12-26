@@ -42,7 +42,7 @@ public class WatermarkStickerView extends StickerView {
         paint.setAntiAlias(true);
         paint.setTextAlign(Paint.Align.LEFT);
         paint.setColor(Color.WHITE);
-        paint.setTextSize(ScreenUtils.sp2px(context, ScreenUtils.spAdapt(context, 10)));
+        paint.setTextSize( ScreenUtils.spAdapt(context, 10));
         setTypeface("", Typeface.BOLD);
         paint.setShadowLayer(1, 1, 1, Color.BLACK);
 
@@ -56,7 +56,7 @@ public class WatermarkStickerView extends StickerView {
 
     public WatermarkStickerView setTextSize(float sp) {
         sp = Math.max(10, Math.min(200, sp));
-        paint.setTextSize(ScreenUtils.sp2px(getContext(), ScreenUtils.spAdapt(getContext(), sp)));
+        paint.setTextSize(ScreenUtils.spAdapt(getContext(), sp));
         return this;
     }
 
