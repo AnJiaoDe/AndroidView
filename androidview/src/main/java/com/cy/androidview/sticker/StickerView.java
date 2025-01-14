@@ -3,6 +3,7 @@ package com.cy.androidview.sticker;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,7 +31,6 @@ public class StickerView extends View {
     private float distance_last;
     private boolean open = true;
     private StickerAttr stickerAttr;
-
     public StickerView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         listSticker = new ArrayList<>();
@@ -129,31 +129,31 @@ public class StickerView extends View {
                     //一定要先判断旋转和点击再判断移动，否则容易导致文本框被移出view之外
                     if (sticker.getRectFRotateRotated().contains(downX, downY)) {
                         index_rotateZ = i;
-                        break;
+                        return true;
                     }
                     if (sticker.getRectF3DRotated().contains(downX, downY)) {
                         index_rotate3D = i;
-                        break;
+                        return true;
                     }
                     if (sticker.getRectFCloseRotated().contains(downX, downY)) {
                         index_down = i;
                         downIn = DOWN_CLOSE;
-                        break;
+                        return true;
                     }
                     if (sticker.getRectFCopyRotated().contains(downX, downY)) {
                         index_down = i;
                         downIn = DOWN_COPY;
-                        break;
+                        return true;
                     }
                     float[] points_touch_origin = new float[2];
                     sticker.getMatrix_invert().mapPoints(points_touch_origin, new float[]{downX, downY});
                     if (sticker.getRectF_box_normal().contains(points_touch_origin[0], points_touch_origin[1])) {
                         index_down = i;
                         downIn = DOWN_BOX;
-                        break;
+                        return true;
                     }
                 }
-                return true;
+                break;
             case MotionEvent.ACTION_POINTER_DOWN:
                 if (downIn == DOWN_BOX) {
                     index_2_pointer = index_down;
