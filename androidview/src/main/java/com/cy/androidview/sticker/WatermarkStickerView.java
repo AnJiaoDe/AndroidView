@@ -207,7 +207,6 @@ public class WatermarkStickerView extends StickerView {
         if (thread != null) thread.interrupt();
     }
 
-
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);

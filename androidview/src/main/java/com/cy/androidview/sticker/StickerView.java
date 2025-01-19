@@ -3,13 +3,14 @@ package com.cy.androidview.sticker;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.opengl.GLSurfaceView;
+import android.graphics.Matrix;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -31,10 +32,19 @@ public class StickerView extends View {
     private float distance_last;
     private boolean open = true;
     private StickerAttr stickerAttr;
+
+    private Matrix matrixParent;
+    private Matrix matrixParentInvert;
+    private float[] points_touch_origin;
+    private RectF rectF;
+
     public StickerView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         listSticker = new ArrayList<>();
         stickerAttr = new StickerAttr(context, attrs);
+        matrixParent = new Matrix();
+        points_touch_origin = new float[2];
+        rectF = new RectF();
     }
 
     public StickerAttr getStickerAttr() {
@@ -47,11 +57,11 @@ public class StickerView extends View {
         //防止StickerView宽高改变后，文字看不见，贼鸡儿尴尬
         for (int i = 0; i < listSticker.size(); i++) {
             Sticker sticker = listSticker.get(i);
-            float w=sticker.getTextWidth()*sticker.getScale()*0.5f;
-            float h=sticker.getTextHeight()*sticker.getScale()*0.5f;
-            sticker.setCenterX(Math.max(w, Math.min(getWidth()-w, sticker.getCenterX())))
-                    .setCenterY(Math.max(h, Math.min(getHeight()-h, sticker.getCenterY())));
-            listSticker.set(i,sticker);
+            float w = sticker.getTextWidth() * sticker.getScale() * 0.5f;
+            float h = sticker.getTextHeight() * sticker.getScale() * 0.5f;
+            sticker.setCenterX(Math.max(w, Math.min(getWidth() - w, sticker.getCenterX())))
+                    .setCenterY(Math.max(h, Math.min(getHeight() - h, sticker.getCenterY())));
+            listSticker.set(i, sticker);
         }
     }
 
@@ -102,6 +112,17 @@ public class StickerView extends View {
         this.open = open;
     }
 
+    public StickerView onCanvasChange(float scale, float dx, float dy) {
+        matrixParent = new Matrix();
+        //注意不是setScale setTranslate否则会覆盖之前的
+        matrixParent.postScale(scale, scale, getWidth() * 0.5f, getHeight() * 0.5f);
+        matrixParent.postTranslate(dx, dy);
+
+        matrixParentInvert = new Matrix();
+        matrixParent.invert(matrixParentInvert);
+        return this;
+    }
+
     @SuppressLint("DrawAllocation")
     @Override
     protected void onDraw(Canvas canvas) {
@@ -113,8 +134,18 @@ public class StickerView extends View {
         }
     }
 
+    /**
+     * 1.如果使用FrameLayout包裹StickerView,触摸FrameLayout，对FrameLayout的canvas进行sacle和translate,
+     * getRectFCloseRotated和event.getX均是原来的StickerView的位置，没有变化，
+     * 这样的话，就必须将FrameLayout的canvas的scale和translate形成的matrix将getRectFCloseRotated映射到缩放和平移后的位置，
+     * 2.如果使用FrameLayout包裹StickerView,触摸FrameLayout，然后在Sticker里进行scale 和translate，很复杂
+     *
+     * @param event The motion event.
+     * @return
+     */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
                 downX = event.getX(0);
@@ -127,27 +158,32 @@ public class StickerView extends View {
                 for (int i = listSticker.size() - 1; i >= 0; i--) {
                     Sticker sticker = listSticker.get(i);
                     //一定要先判断旋转和点击再判断移动，否则容易导致文本框被移出view之外
-                    if (sticker.getRectFRotateRotated().contains(downX, downY)) {
+                    matrixParent.mapRect(rectF, sticker.getRectFRotateRotated());
+                    if (rectF.contains(downX, downY)) {
                         index_rotateZ = i;
                         return true;
                     }
-                    if (sticker.getRectF3DRotated().contains(downX, downY)) {
+                    matrixParent.mapRect(rectF, sticker.getRectF3DRotated());
+                    if (rectF.contains(downX, downY)) {
                         index_rotate3D = i;
                         return true;
                     }
-                    if (sticker.getRectFCloseRotated().contains(downX, downY)) {
+                    matrixParent.mapRect(rectF, sticker.getRectFCloseRotated());
+                    if (rectF.contains(downX, downY)) {
                         index_down = i;
                         downIn = DOWN_CLOSE;
                         return true;
                     }
-                    if (sticker.getRectFCopyRotated().contains(downX, downY)) {
+                    matrixParent.mapRect(rectF, sticker.getRectFCopyRotated());
+                    if (rectF.contains(downX, downY)) {
                         index_down = i;
                         downIn = DOWN_COPY;
                         return true;
                     }
-                    float[] points_touch_origin = new float[2];
-                    sticker.getMatrix_invert().mapPoints(points_touch_origin, new float[]{downX, downY});
-                    if (sticker.getRectF_box_normal().contains(points_touch_origin[0], points_touch_origin[1])) {
+                    //注意：rect永远是水平和垂直的矩形，不是斜着的，
+                    sticker.getMatrix().mapRect(rectF, sticker.getRectF_box_normal());
+                    matrixParent.mapRect(rectF, rectF);
+                    if (rectF.contains(downX, downY)) {
                         index_down = i;
                         downIn = DOWN_BOX;
                         return true;
@@ -155,6 +191,7 @@ public class StickerView extends View {
                 }
                 break;
             case MotionEvent.ACTION_POINTER_DOWN:
+                //有时候会2个手指分别按在2个sticker上，故而，以第一根手指为准
                 if (downIn == DOWN_BOX) {
                     index_2_pointer = index_down;
                     distance_last = getFingerDistance(event);
@@ -162,10 +199,9 @@ public class StickerView extends View {
                     //注意：应该倒叙遍历，因为后添加的在上层，
                     for (int i = listSticker.size() - 1; i >= 0; i--) {
                         Sticker sticker = listSticker.get(i);
-                        float[] points_touch_origin = new float[2];
                         //注意是getX(1)
-                        sticker.getMatrix_invert().mapPoints(points_touch_origin, new float[]{event.getX(1), event.getY(1)});
-                        if (sticker.getRectF_box_normal().contains(points_touch_origin[0], points_touch_origin[1])) {
+                        sticker.getMatrix().mapRect(rectF, sticker.getRectF_box_normal());
+                        if (rectF.contains(downX, downY)) {
                             index_2_pointer = i;
                             distance_last = getFingerDistance(event);
                             break;
@@ -174,6 +210,7 @@ public class StickerView extends View {
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
+                matrixParentInvert.mapPoints(points_touch_origin, new float[]{event.getX(), event.getY()});
                 if (index_2_pointer >= 0 && index_2_pointer < listSticker.size() && event.getPointerCount() >= 2) {
                     float distance = getFingerDistance(event);
                     Sticker sticker = listSticker.get(index_2_pointer);
@@ -186,43 +223,45 @@ public class StickerView extends View {
                 if (index_rotateZ >= 0 && index_rotateZ < listSticker.size()) {
                     Sticker sticker = listSticker.get(index_rotateZ);
 
-                    float dx = event.getX() - sticker.getCenterX();
-                    float dy = event.getY() - sticker.getCenterY();
+                    float dx = points_touch_origin[0] - sticker.getCenterX();
+                    float dy = points_touch_origin[1] - sticker.getCenterY();
                     double angle = Math.toDegrees(Math.atan2(dy, dx));
                     sticker.setRotationZ((float) angle);
 
-                    sticker.setScale((float) (Math.sqrt(Math.pow(event.getX() - sticker.getCenterX(), 2)
-                            + Math.pow(event.getY() - sticker.getCenterY(), 2))
+                    sticker.setScale(((float) (Math.sqrt(Math.pow(points_touch_origin[0] - sticker.getCenterX(), 2)
+                            + Math.pow(points_touch_origin[1] - sticker.getCenterY(), 2))
                             / Math.sqrt(Math.pow(sticker.getRectF_box_normal().width() * 0.5f, 2)
-                            + Math.pow(sticker.getRectF_box_normal().height() * 0.5f, 2))));
+                            + Math.pow(sticker.getRectF_box_normal().height() * 0.5f, 2)))));
                     invalidate();
                     if (callback != null) callback.onScaleChanged(index_rotateZ);
                     break;
+
                 }
                 if (index_rotate3D >= 0 && index_rotate3D < listSticker.size()) {
                     Sticker sticker = listSticker.get(index_rotate3D);
 
-                    float dx = event.getX() - moveX_last;
-                    float dy = event.getY() - moveY_last;
-                    moveX_last = event.getX();
-                    moveY_last = event.getY();
+                    float dx = points_touch_origin[0] - moveX_last;
+                    float dy = points_touch_origin[1] - moveY_last;
+                    moveX_last = points_touch_origin[0];
+                    moveY_last = points_touch_origin[1];
 
                     sticker.setRotationX(sticker.getRotationX() - dy);
                     sticker.setRotationY(sticker.getRotationY() + dx);
 
                     invalidate();
                     break;
+
                 }
                 if (index_down >= 0 && index_down < listSticker.size()
                         && System.currentTimeMillis() - downTime > TIME_CLICK_THRESHOLD) {
                     Sticker sticker = listSticker.get(index_down);
-                    sticker.setCenterX(Math.min(Math.max(0, event.getX()), getWidth()));
-                    sticker.setCenterY(Math.min(Math.max(0, event.getY()), getHeight()));
-
+                    sticker.setCenterX(Math.min(Math.max(0, points_touch_origin[0]), getWidth()));
+                    sticker.setCenterY(Math.min(Math.max(0, points_touch_origin[1]), getHeight()));
                     invalidate();
                     Sticker.Callback c = sticker.getCallback();
                     if (c != null) c.onXYChanged(sticker.getCenterX(), sticker.getCenterY());
                     if (callback != null) callback.onXYChanged(index_down);
+                    break;
                 }
                 break;
             case MotionEvent.ACTION_UP:
@@ -272,41 +311,38 @@ public class StickerView extends View {
     /**
      * 此函数供外部使用，处理触摸事件抢占
      *
-     * @param x
-     * @param y
      * @return
      */
-    public boolean isXYinAnySticker(float x, float y) {
-        boolean in = false;
-        //注意：应该倒叙遍历，因为后添加的在上层，
-        for (int i = listSticker.size() - 1; i >= 0; i--) {
-            Sticker sticker = listSticker.get(i);
-            if (sticker.getRectFRotateRotated().contains(x, y)) {
-                in = true;
-                break;
-            }
-            if (sticker.getRectF3DRotated().contains(x, y)) {
-                in = true;
-                break;
-            }
-            if (sticker.getRectFCloseRotated().contains(x, y)) {
-                in = true;
-                break;
-            }
-            if (sticker.getRectFCopyRotated().contains(x, y)) {
-                in = true;
-                break;
-            }
-            float[] points_touch_origin = new float[2];
-            sticker.getMatrix_invert().mapPoints(points_touch_origin, new float[]{x, y});
-            if (sticker.getRectF_box_normal().contains(points_touch_origin[0], points_touch_origin[1])) {
-                in = true;
-                break;
-            }
-        }
-        return in;
-    }
-
+//    public boolean isXYinAnySticker(float x, float y) {
+//        boolean in = false;
+//        //注意：应该倒叙遍历，因为后添加的在上层，
+//        for (int i = listSticker.size() - 1; i >= 0; i--) {
+//            Sticker sticker = listSticker.get(i);
+//            if (sticker.getRectFRotateRotated().contains(x, y)) {
+//                in = true;
+//                break;
+//            }
+//            if (sticker.getRectF3DRotated().contains(x, y)) {
+//                in = true;
+//                break;
+//            }
+//            if (sticker.getRectFCloseRotated().contains(x, y)) {
+//                in = true;
+//                break;
+//            }
+//            if (sticker.getRectFCopyRotated().contains(x, y)) {
+//                in = true;
+//                break;
+//            }
+//            float[] points_touch_origin = new float[2];
+//            sticker.getMatrix_invert().mapPoints(points_touch_origin, new float[]{x, y});
+//            if (sticker.getRectF_box_normal().contains(points_touch_origin[0], points_touch_origin[1])) {
+//                in = true;
+//                break;
+//            }
+//        }
+//        return in;
+//    }
     private float getFingerDistance(MotionEvent event) {
         float x = event.getX(0) - event.getX(1);
         float y = event.getY(0) - event.getY(1);

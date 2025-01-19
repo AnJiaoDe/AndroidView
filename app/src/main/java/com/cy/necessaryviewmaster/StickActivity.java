@@ -1,29 +1,18 @@
 package com.cy.necessaryviewmaster;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.BlurMaskFilter;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.text.TextPaint;
-import android.util.Size;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.cy.androidview.BitmapUtils;
 import com.cy.androidview.LogUtils;
+import com.cy.androidview.ScaleFrameLayout;
 import com.cy.androidview.sticker.Sticker;
 import com.cy.androidview.sticker.StickerView;
 import com.cy.androidview.sticker.WatermarkStickerView;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class StickActivity extends BaseActivity {
 
@@ -80,8 +69,9 @@ public class StickActivity extends BaseActivity {
         sticker3.setCenterX(540)
                 .setCenterY(1600)
                 .setLineSpace(0.5f);
-        ;
+
         watermarkStickerView.addSticker(sticker3);
+
         watermarkStickerView.setText_text("日常自拍大哥哥特特瑞特任特特大肥肥我");
         watermarkStickerView.setShadowLayer(10,10,10,Color.RED);
 //        watermarkStickerView.setMargin_y()
@@ -123,6 +113,19 @@ public class StickActivity extends BaseActivity {
             public void onClick(View v) {
                 sticker3.setTextAlign(Paint.Align.RIGHT).setVertical(true);
                 watermarkStickerView.invalidate();
+            }
+        });
+
+        ScaleFrameLayout scaleFrameLayout=findViewById(R.id.ScaleFrameLayout);
+        scaleFrameLayout.setCallback(new ScaleFrameLayout.Callback() {
+            @Override
+            public void onCanvasChange(float scale, float dx, float dy) {
+                watermarkStickerView.onCanvasChange(scale,dx,dy);
+            }
+
+            @Override
+            public void onSingleTapUp() {
+                watermarkStickerView.showBox(false);
             }
         });
     }

@@ -32,6 +32,9 @@ public class Sticker {
     private float rotationY = 0;
     private float rotationZ = 0;
     private float scale = 1;
+//    private float scaleParent = 1;
+//    private float translateXParent = 0;
+//    private float translateYParent = 0;
     private RectF rectF_text_normal;
     private Context context;
     private Matrix matrix, matrix_invert;
@@ -97,7 +100,7 @@ public class Sticker {
         paintRectF.setAntiAlias(true);
 
         setTextColor(Color.WHITE);
-        setTextSize(ScreenUtils.sp2px(context, ScreenUtils.spAdapt(context, 18)));
+        setTextSize( ScreenUtils.spAdapt(context, 18));
         setShadowLayer(1, 1, 1, Color.BLACK);
         setBoxColor(Color.WHITE);
         setBoxStrokeWidth(ScreenUtils.dpAdapt(context, 1));
@@ -528,46 +531,26 @@ public class Sticker {
         return rectF_box_normal;
     }
 
-//    public Sticker setRectF_box_normal(RectF rectF_box_normal) {
-//        this.rectF_box_normal = rectF_box_normal;
-//        return this;
-//    }
 
     public RectF getRectFCloseRotated() {
         return rectFCloseRotated;
     }
 
-//    public Sticker setRectFCloseRotated(RectF rectFCloseRotated) {
-//        this.rectFCloseRotated = rectFCloseRotated;
-//        return this;
-//    }
 
     public RectF getRectF3DRotated() {
         return rectF3DRotated;
     }
 
-//    public Sticker setRectF3DRotated(RectF rectF3DRotated) {
-//        this.rectF3DRotated = rectF3DRotated;
-//        return this;
-//    }
 
     public RectF getRectFRotateRotated() {
         return rectFRotateRotated;
     }
 
-//    public Sticker setRectFRotateRotated(RectF rectFRotateRotated) {
-//        this.rectFRotateRotated = rectFRotateRotated;
-//        return this;
-//    }
 
     public RectF getRectFCopyRotated() {
         return rectFCopyRotated;
     }
 
-//    public Sticker setRectFCopyRotated(RectF rectFCopyRotated) {
-//        this.rectFCopyRotated = rectFCopyRotated;
-//        return this;
-//    }
 
     public float getRotationZ() {
         return rotationZ;
@@ -583,125 +566,39 @@ public class Sticker {
     }
 
     public Sticker setScale(float scale) {
-        scale = Math.max(0.1f, Math.min(200, scale));
-        this.scale = scale;
+        this.scale = Math.max(0.1f, Math.min(200, scale));
+//        this.scale*=scaleParent;
         return this;
     }
 
-//    public RectF getRectF_text_normal() {
-//        return rectF_text_normal;
+//    public float getScaleParent() {
+//        return scaleParent;
 //    }
 //
-//    public Sticker setRectF_text_normal(RectF rectF_text_normal) {
-//        this.rectF_text_normal = rectF_text_normal;
+//    public Sticker setScaleParent(float scaleParent) {
+//        this.scaleParent = scaleParent;
+//        this.scale*=scaleParent;
+//        return this;
+//    }
+
+//    public float getTranslateXParent() {
+//        return translateXParent;
+//    }
+//
+//    public Sticker setTranslateXParent(float translateXParent) {
+//        this.translateXParent = translateXParent;
+//        this.centerX+=translateXParent;
 //        return this;
 //    }
 //
-//    public RectF getRectFBitmapClose() {
-//        return rectFBitmapClose;
+//    public float getTranslateYParent() {
+//        return translateYParent;
 //    }
 //
-//    public Sticker setRectFBitmapClose(RectF rectFBitmapClose) {
-//        this.rectFBitmapClose = rectFBitmapClose;
+//    public Sticker setTranslateYParent(float translateYParent) {
+//        this.translateYParent = translateYParent;
+//        this.centerY+=translateYParent;
 //        return this;
-//    }
-//
-//    public RectF getRectFBitmapCopy() {
-//        return rectFBitmapCopy;
-//    }
-//
-//    public Sticker setRectFBitmapCopy(RectF rectFBitmapCopy) {
-//        this.rectFBitmapCopy = rectFBitmapCopy;
-//        return this;
-//    }
-//
-//    public RectF getRectFBitmapRotate() {
-//        return rectFBitmapRotate;
-//    }
-//
-//    public Sticker setRectFBitmapRotate(RectF rectFBitmapRotate) {
-//        this.rectFBitmapRotate = rectFBitmapRotate;
-//        return this;
-//    }
-//
-//    public RectF getRectFBitmap3DRotate() {
-//        return rectFBitmap3DRotate;
-//    }
-//
-//    public Sticker setRectFBitmap3DRotate(RectF rectFBitmap3DRotate) {
-//        this.rectFBitmap3DRotate = rectFBitmap3DRotate;
-//        return this;
-//    }
-//
-//    public Sticker setMatrix(Matrix matrix) {
-//        this.matrix = matrix;
-//        return this;
-//    }
-//
-//    public Sticker setMatrix_invert(Matrix matrix_invert) {
-//        this.matrix_invert = matrix_invert;
-//        return this;
-//    }
-//
-//    public Sticker setCamera(Camera camera) {
-//        this.camera = camera;
-//        return this;
-//    }
-//
-//    public Sticker setMatrix_camera(Matrix matrix_camera) {
-//        this.matrix_camera = matrix_camera;
-//        return this;
-//    }
-//
-//    public float[] getCenter_rotated() {
-//        return center_rotated;
-//    }
-//
-//    public Sticker setCenter_rotated(float[] center_rotated) {
-//        this.center_rotated = center_rotated;
-//        return this;
-//    }
-//
-//    public Path getPath() {
-//        return path;
-//    }
-//
-//    public Sticker setPath(Path path) {
-//        this.path = path;
-//        return this;
-//    }
-//
-//    public float[] getPoints_box0() {
-//        return points_box0;
-//    }
-//
-//    public Sticker setPoints_box0(float[] points_box0) {
-//        this.points_box0 = points_box0;
-//        return this;
-//    }
-//
-//    public float[] getPoints_box1() {
-//        return points_box1;
-//    }
-//
-//    public void setPoints_box1(float[] points_box1) {
-//        this.points_box1 = points_box1;
-//    }
-//
-//    public float[] getPoints_box2() {
-//        return points_box2;
-//    }
-//
-//    public void setPoints_box2(float[] points_box2) {
-//        this.points_box2 = points_box2;
-//    }
-//
-//    public float[] getPoints_box3() {
-//        return points_box3;
-//    }
-//
-//    public void setPoints_box3(float[] points_box3) {
-//        this.points_box3 = points_box3;
 //    }
 
     public float getBlur_radius() {
@@ -758,6 +655,9 @@ public class Sticker {
         sticker.setRotationY(rotationY);
         sticker.setRotationZ(rotationZ);
         sticker.setScale(scale);
+//        sticker.setScaleParent(scaleParent);
+//        sticker.setTranslateXParent(translateXParent);
+//        sticker.setTranslateYParent(translateYParent);
         sticker.setTextColor(paintText.getColor());
         sticker.setTextSize(paintText.getTextSize());
         sticker.setLetterSpacing(paintText.getLetterSpacing());

@@ -7,14 +7,21 @@
     android:background="#959595"
     android:orientation="vertical">
 
-    <com.cy.androidview.sticker.WatermarkStickerView
+    <com.cy.androidview.ScaleFrameLayout
         android:layout_width="match_parent"
-        android:id="@+id/WatermarkStickerView"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:id="@+id/ScaleFrameLayout"
+        android:layout_weight="1">
+        <com.cy.androidview.sticker.WatermarkStickerView
+            android:id="@+id/WatermarkStickerView"
+            android:layout_width="match_parent"
+            android:background="#eee"
+            android:layout_height="match_parent" />
+    </com.cy.androidview.ScaleFrameLayout>
+
     <Button
-        android:layout_width="match_parent"
-        android:text="刷新"
         android:id="@+id/btn"
-        android:layout_height="wrap_content"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="刷新" />
 </LinearLayout>
