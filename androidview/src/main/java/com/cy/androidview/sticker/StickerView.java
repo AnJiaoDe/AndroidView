@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -43,6 +44,7 @@ public class StickerView extends View {
         listSticker = new ArrayList<>();
         stickerAttr = new StickerAttr(context, attrs);
         matrixParent = new Matrix();
+        matrixParentInvert = new Matrix();
         points_touch_origin = new float[2];
         rectF = new RectF();
     }
@@ -113,12 +115,12 @@ public class StickerView extends View {
     }
 
     public StickerView onCanvasChange(float scale, float dx, float dy) {
-        matrixParent = new Matrix();
+        matrixParent.reset();
         //注意不是setScale setTranslate否则会覆盖之前的
         matrixParent.postScale(scale, scale, getWidth() * 0.5f, getHeight() * 0.5f);
         matrixParent.postTranslate(dx, dy);
 
-        matrixParentInvert = new Matrix();
+        matrixParentInvert.reset();
         matrixParent.invert(matrixParentInvert);
         return this;
     }
