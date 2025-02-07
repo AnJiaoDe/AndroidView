@@ -42,7 +42,7 @@ public class WatermarkStickerView extends StickerView {
         paint.setAntiAlias(true);
         paint.setTextAlign(Paint.Align.LEFT);
         paint.setColor(Color.WHITE);
-        paint.setTextSize( ScreenUtils.spAdapt(context, 10));
+        paint.setTextSize(ScreenUtils.spAdapt(context, 10));
         setTypeface("", Typeface.BOLD);
         paint.setShadowLayer(1, 1, 1, Color.BLACK);
 
@@ -210,10 +210,10 @@ public class WatermarkStickerView extends StickerView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        drawWatermark(canvas);
+        drawWatermark(canvas,getWidth(),getHeight());
     }
 
-    public void drawWatermark(Canvas canvas) {
+    public void drawWatermark(Canvas canvas, int width, int height) {
         if (!haveWatermark()) return;
 
         onLineHeight = TextUtils.getTextHeightOneLine(paint);
@@ -224,12 +224,12 @@ public class WatermarkStickerView extends StickerView {
                 + (android.text.TextUtils.isEmpty(text_text) ? "" : "\n")
                 + text_text;
         centerX_text = margin_x + TextUtils.getTextWidth(false, 0, text, paint) * 0.5f;
-        centerY_text = getHeight() - margin_y - onLineHeight * text.split("\n").length * 0.5f;
+        centerY_text = height - margin_y - onLineHeight * text.split("\n").length * 0.5f;
         rectF_text = TextUtils.getTextRectF(false, 0, paint, text, centerX_text, centerY_text);
         TextUtils.drawText(false, 0, canvas, paint, text, centerX_text, centerY_text, rectF_text);
         if (show_time) {
-            centerX_time = getWidth() - margin_x - TextUtils.getTextWidthOneLine(false, date, paint) * 0.5f;
-            centerY_time = getHeight() - margin_y - onLineHeight * 0.5f;
+            centerX_time = width - margin_x - TextUtils.getTextWidthOneLine(false, date, paint) * 0.5f;
+            centerY_time = height - margin_y - onLineHeight * 0.5f;
             rectF_time = TextUtils.getTextRectF(false, 0, paint, date, centerX_time, centerY_time);
             TextUtils.drawText(false, 0, canvas, paint, date, centerX_time, centerY_time, rectF_time);
         }
