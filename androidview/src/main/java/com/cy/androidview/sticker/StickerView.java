@@ -315,36 +315,36 @@ public class StickerView extends View {
      *
      * @return
      */
-//    public boolean isXYinAnySticker(float x, float y) {
-//        boolean in = false;
-//        //注意：应该倒叙遍历，因为后添加的在上层，
-//        for (int i = listSticker.size() - 1; i >= 0; i--) {
-//            Sticker sticker = listSticker.get(i);
-//            if (sticker.getRectFRotateRotated().contains(x, y)) {
-//                in = true;
-//                break;
-//            }
-//            if (sticker.getRectF3DRotated().contains(x, y)) {
-//                in = true;
-//                break;
-//            }
-//            if (sticker.getRectFCloseRotated().contains(x, y)) {
-//                in = true;
-//                break;
-//            }
-//            if (sticker.getRectFCopyRotated().contains(x, y)) {
-//                in = true;
-//                break;
-//            }
-//            float[] points_touch_origin = new float[2];
-//            sticker.getMatrix_invert().mapPoints(points_touch_origin, new float[]{x, y});
-//            if (sticker.getRectF_box_normal().contains(points_touch_origin[0], points_touch_origin[1])) {
-//                in = true;
-//                break;
-//            }
-//        }
-//        return in;
-//    }
+    public boolean isXYinAnySticker(float x, float y) {
+        boolean in = false;
+        //注意：应该倒叙遍历，因为后添加的在上层，
+        for (int i = listSticker.size() - 1; i >= 0; i--) {
+            Sticker sticker = listSticker.get(i);
+            if (sticker.getRectFRotateRotated().contains(x, y)) {
+                in = true;
+                break;
+            }
+            if (sticker.getRectF3DRotated().contains(x, y)) {
+                in = true;
+                break;
+            }
+            if (sticker.getRectFCloseRotated().contains(x, y)) {
+                in = true;
+                break;
+            }
+            if (sticker.getRectFCopyRotated().contains(x, y)) {
+                in = true;
+                break;
+            }
+            float[] points_touch_origin = new float[2];
+            sticker.getMatrix_invert().mapPoints(points_touch_origin, new float[]{x, y});
+            if (sticker.getRectF_box_normal().contains(points_touch_origin[0], points_touch_origin[1])) {
+                in = true;
+                break;
+            }
+        }
+        return in;
+    }
     private float getFingerDistance(MotionEvent event) {
         float x = event.getX(0) - event.getX(1);
         float y = event.getY(0) - event.getY(1);
