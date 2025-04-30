@@ -26,7 +26,7 @@ public class ScaleFrameLayout extends FrameLayout {
 
     private GestureDetector gestureDetector;
     private ScaleGestureDetector scaleGestureDetector;
-
+    private boolean useDoubleTap=true;
     public ScaleFrameLayout(@NonNull Context context) {
         this(context, null);
     }
@@ -36,6 +36,7 @@ public class ScaleFrameLayout extends FrameLayout {
         gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onDoubleTap(MotionEvent e) {
+                if(!useDoubleTap)return true;
                 if (zoom == 1.f) {
                     zoom = 2.f;
                 } else {
@@ -78,6 +79,14 @@ public class ScaleFrameLayout extends FrameLayout {
 
     public void setCallback(Callback callback) {
         this.callback = callback;
+    }
+
+    public boolean isUseDoubleTap() {
+        return useDoubleTap;
+    }
+
+    public void setUseDoubleTap(boolean useDoubleTap) {
+        this.useDoubleTap = useDoubleTap;
     }
 
     @Override
