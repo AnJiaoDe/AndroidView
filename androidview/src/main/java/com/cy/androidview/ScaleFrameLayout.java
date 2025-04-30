@@ -83,13 +83,7 @@ public class ScaleFrameLayout extends FrameLayout {
         this.callback = callback;
     }
 
-    public boolean isUseDoubleTap() {
-        return useDoubleTap;
-    }
 
-    public void setUseDoubleTap(boolean useDoubleTap) {
-        this.useDoubleTap = useDoubleTap;
-    }
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
@@ -121,22 +115,40 @@ public class ScaleFrameLayout extends FrameLayout {
         }
         return super.onTouchEvent(event);
     }
+    public boolean isUseDoubleTap() {
+        return useDoubleTap;
+    }
 
+    public ScaleFrameLayout setUseDoubleTap(boolean useDoubleTap) {
+        this.useDoubleTap = useDoubleTap;
+        return this;
+    }
+
+    public boolean isUseScroll() {
+        return useScroll;
+    }
+
+    public ScaleFrameLayout setUseScroll(boolean useScroll) {
+        this.useScroll = useScroll;
+        return this;
+    }
 
     public float getZoom_max() {
         return zoom_max;
     }
 
-    public void setZoom_max(float zoom_max) {
+    public ScaleFrameLayout setZoom_max(float zoom_max) {
         this.zoom_max = zoom_max;
+        return this;
     }
 
     public float getZoom_min() {
         return zoom_min;
     }
 
-    public void setZoom_min(float zoom_min) {
+    public ScaleFrameLayout setZoom_min(float zoom_min) {
         this.zoom_min = zoom_min;
+        return this;
     }
 
     public float getZoom() {
@@ -155,8 +167,9 @@ public class ScaleFrameLayout extends FrameLayout {
         return enableZoom;
     }
 
-    public void setEnableZoom(boolean enableZoom) {
+    public ScaleFrameLayout setEnableZoom(boolean enableZoom) {
         this.enableZoom = enableZoom;
+        return this;
     }
 
 
@@ -164,16 +177,18 @@ public class ScaleFrameLayout extends FrameLayout {
         return touchEventDownReturnTrue;
     }
 
-    public void setTouchEventDownReturnTrue(boolean touchEventDownReturnTrue) {
+    public ScaleFrameLayout setTouchEventDownReturnTrue(boolean touchEventDownReturnTrue) {
         this.touchEventDownReturnTrue = touchEventDownReturnTrue;
+        return this;
     }
 
     public boolean isTouchEventUpReset() {
         return touchEventUpReset;
     }
 
-    public void setTouchEventUpReset(boolean touchEventUpReset) {
+    public ScaleFrameLayout setTouchEventUpReset(boolean touchEventUpReset) {
         this.touchEventUpReset = touchEventUpReset;
+        return this;
     }
 
     public static interface Callback {
