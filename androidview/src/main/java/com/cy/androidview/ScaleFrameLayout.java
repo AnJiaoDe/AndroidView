@@ -27,6 +27,7 @@ public class ScaleFrameLayout extends FrameLayout {
     private GestureDetector gestureDetector;
     private ScaleGestureDetector scaleGestureDetector;
     private boolean useDoubleTap=true;
+    private boolean useScroll=true;
     public ScaleFrameLayout(@NonNull Context context) {
         this(context, null);
     }
@@ -50,6 +51,7 @@ public class ScaleFrameLayout extends FrameLayout {
 
             @Override
             public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+                if(!useScroll)return true;
                 translate_x -= distanceX;
                 translate_y -= distanceY;
                 translate_x = Math.max(-getWidth()*0.5f, Math.min(getWidth()*0.5f, translate_x));
