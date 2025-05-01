@@ -23,8 +23,8 @@ public class StickActivity extends BaseActivity {
         WatermarkStickerView watermarkStickerView = findViewById(R.id.WatermarkStickerView);
         Bitmap bitmap= BitmapUtils.decodeResourceOrigin(this,R.drawable.pic_big);
         Sticker sticker_bitmap = new Sticker(this, bitmap);
-        sticker_bitmap.setCenterX(540)
-                .setCenterY(600)
+        sticker_bitmap.setCenterX(0.5f)
+                .setCenterY(0.4f)
 //                .setRotationX(30)
 //                .setRotationY(30)
 //                .setRotationZ(30)
@@ -34,8 +34,8 @@ public class StickActivity extends BaseActivity {
         watermarkStickerView.addSticker(sticker_bitmap);
 
         Sticker sticker = new Sticker(this,  "贴纸\n文字");
-        sticker.setCenterX(540)
-                .setCenterY(100)
+        sticker.setCenterX(0.5f)
+                .setCenterY(0.3f)
                 .setRotationX(30)
                 .setRotationY(30)
                 .setRotationZ(30)
@@ -48,8 +48,8 @@ public class StickActivity extends BaseActivity {
         Sticker sticker2 = new Sticker(this,  "#*￥$(35额的额服务\n哥哥风歌他");
         sticker2.setTextAlign(Paint.Align.RIGHT);
         sticker2.setLetterSpacing(1f);
-        sticker2.setCenterX(540)
-                .setCenterY(1000)
+        sticker2.setCenterX(0.7f)
+                .setCenterY(0.5f)
                 .setVertical(true)
                 .setLineSpace(2)
         ;
@@ -66,8 +66,8 @@ public class StickActivity extends BaseActivity {
         float blur_radius = 50;
         sticker3.setMaskFilter(blur_radius);
         sticker3.setShadowLayer(10, 10, 10, Color.RED);
-        sticker3.setCenterX(540)
-                .setCenterY(1600)
+        sticker3.setCenterX(0.4f)
+                .setCenterY(0.8f)
                 .setLineSpace(0.5f);
 
         watermarkStickerView.addSticker(sticker3);

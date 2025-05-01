@@ -59,10 +59,10 @@ public class StickerView extends View {
         //防止StickerView宽高改变后，文字看不见，贼鸡儿尴尬
         for (int i = 0; i < listSticker.size(); i++) {
             Sticker sticker = listSticker.get(i);
-            float w = sticker.getTextWidth() * sticker.getScale() * 0.5f;
-            float h = sticker.getTextHeight() * sticker.getScale() * 0.5f;
-            sticker.setCenterX(Math.max(w, Math.min(getWidth() - w, sticker.getCenterX())))
-                    .setCenterY(Math.max(h, Math.min(getHeight() - h, sticker.getCenterY())));
+            float w = sticker.getTextWidth()/getWidth() * sticker.getScale() * 0.5f;
+            float h = sticker.getTextHeight()/getHeight() * sticker.getScale() * 0.5f;
+            sticker.setCenterX(Math.max(w, Math.min(1 - w, sticker.getCenterX())))
+                    .setCenterY(Math.max(h, Math.min(1 - h, sticker.getCenterY())));
             listSticker.set(i, sticker);
         }
     }
@@ -132,7 +132,7 @@ public class StickerView extends View {
         if (!open) return;
         for (int i = 0; i < listSticker.size(); i++) {
             Sticker sticker = listSticker.get(i);
-            sticker.onDraw(canvas, stickerAttr);
+            sticker.onDraw(canvas, getWidth(),getHeight(),stickerAttr);
         }
     }
 
@@ -225,13 +225,13 @@ public class StickerView extends View {
                 if (index_rotateZ >= 0 && index_rotateZ < listSticker.size()) {
                     Sticker sticker = listSticker.get(index_rotateZ);
 
-                    float dx = points_touch_origin[0] - sticker.getCenterX();
-                    float dy = points_touch_origin[1] - sticker.getCenterY();
+                    float dx = points_touch_origin[0]/getWidth() - sticker.getCenterX();
+                    float dy = points_touch_origin[1]/getHeight() - sticker.getCenterY();
                     double angle = Math.toDegrees(Math.atan2(dy, dx));
                     sticker.setRotationZ((float) angle);
 
-                    sticker.setScale(((float) (Math.sqrt(Math.pow(points_touch_origin[0] - sticker.getCenterX(), 2)
-                            + Math.pow(points_touch_origin[1] - sticker.getCenterY(), 2))
+                    sticker.setScale(((float) (Math.sqrt(Math.pow(points_touch_origin[0] /getWidth()- sticker.getCenterX(), 2)
+                            + Math.pow(points_touch_origin[1]/getHeight() - sticker.getCenterY(), 2))
                             / Math.sqrt(Math.pow(sticker.getRectF_box_normal().width() * 0.5f, 2)
                             + Math.pow(sticker.getRectF_box_normal().height() * 0.5f, 2)))));
                     invalidate();
@@ -257,8 +257,8 @@ public class StickerView extends View {
                 if (index_down >= 0 && index_down < listSticker.size()
                         && System.currentTimeMillis() - downTime > TIME_CLICK_THRESHOLD) {
                     Sticker sticker = listSticker.get(index_down);
-                    sticker.setCenterX(Math.min(Math.max(0, points_touch_origin[0]), getWidth()));
-                    sticker.setCenterY(Math.min(Math.max(0, points_touch_origin[1]), getHeight()));
+                    sticker.setCenterX(Math.min(Math.max(0, points_touch_origin[0]/getWidth()), 1));
+                    sticker.setCenterY(Math.min(Math.max(0, points_touch_origin[1]/getHeight()), 1));
                     invalidate();
                     Sticker.Callback c = sticker.getCallback();
                     if (c != null) c.onXYChanged(sticker.getCenterX(), sticker.getCenterY());
