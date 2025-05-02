@@ -31,7 +31,6 @@ public class WatermarkStickerView extends StickerView {
     private String text_product_default = "";
     private String text_product = "";
     private String text_text = "";
-    private float onLineHeight;
     private float margin_x;
     private float margin_y;
     private Thread thread;
@@ -242,8 +241,8 @@ public class WatermarkStickerView extends StickerView {
         //注意：第一次oldw为0
         if (oldw > 0) {
             setTextSizeSp(textSizeSp * w / oldw);
-            setMargin_x(margin_x* w / oldw);
-            setMargin_y(margin_y* h / oldh);
+            setMargin_x(margin_x * w / oldw);
+            setMargin_y(margin_y * h / oldh);
         }
     }
 
@@ -256,20 +255,23 @@ public class WatermarkStickerView extends StickerView {
     public void drawWatermark(Canvas canvas, int width_canvas, int height_canvas) {
         if (!haveWatermark()) return;
 
-        onLineHeight = TextUtils.getTextHeightOneLine(paint);
+        float oneLineHeight = TextUtils.getTextHeightOneLine(paint);
 
         text = text_appName
                 + (android.text.TextUtils.isEmpty(text_product) ? "" : "\n")
                 + text_product
                 + (android.text.TextUtils.isEmpty(text_text) ? "" : "\n")
                 + text_text;
-        centerX_text = margin_x + TextUtils.getTextWidth(false, 0, text, paint) * 0.5f;
-        centerY_text = height_canvas - margin_y - onLineHeight * text.split("\n").length * 0.5f;
+        float textWidth = TextUtils.getTextWidth(false, 0, text, paint);
+        margin_x = Math.min(Math.max(0, width_canvas - textWidth), Math.max(0, margin_x));
+        margin_y= Math.min(Math.max(0, height_canvas - oneLineHeight * text.split("\n").length), Math.max(0, margin_y));
+        centerX_text = margin_x + textWidth * 0.5f;
+        centerY_text = height_canvas - margin_y - oneLineHeight * text.split("\n").length * 0.5f;
         rectF_text = TextUtils.getTextRectF(false, 0, paint, text, centerX_text, centerY_text);
         TextUtils.drawText(false, 0, canvas, paint, text, centerX_text, centerY_text, rectF_text);
         if (show_time) {
             centerX_time = width_canvas - margin_x - TextUtils.getTextWidthOneLine(false, date, paint) * 0.5f;
-            centerY_time = height_canvas - margin_y - onLineHeight * 0.5f;
+            centerY_time = height_canvas - margin_y - oneLineHeight * 0.5f;
             rectF_time = TextUtils.getTextRectF(false, 0, paint, date, centerX_time, centerY_time);
             TextUtils.drawText(false, 0, canvas, paint, date, centerX_time, centerY_time, rectF_time);
         }
