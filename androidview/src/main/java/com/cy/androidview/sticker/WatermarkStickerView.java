@@ -35,6 +35,7 @@ public class WatermarkStickerView extends StickerView {
     private float margin_x;
     private float margin_y;
     private Thread thread;
+    private float textSizeSp;
 
     public WatermarkStickerView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -54,10 +55,15 @@ public class WatermarkStickerView extends StickerView {
         margin_y = ScreenUtils.dpAdapt(context, 10);
     }
 
-    public WatermarkStickerView setTextSize(float sp) {
-        sp = Math.max(10, Math.min(200, sp));
+    public WatermarkStickerView setTextSizeSp(float sp) {
+//        sp = Math.max(10, Math.min(200, sp));
+        this.textSizeSp=sp;
         paint.setTextSize(ScreenUtils.spAdapt(getContext(), sp));
         return this;
+    }
+
+    public float getTextSizeSp() {
+        return textSizeSp;
     }
 
     public WatermarkStickerView setTextColor(int color) {
@@ -164,15 +170,19 @@ public class WatermarkStickerView extends StickerView {
         return this;
     }
 
+    /**
+     * @param blur_radius 必须>0 否则崩溃
+     * @return
+     */
     public WatermarkStickerView setMaskFilter(float blur_radius) {
         blur_radius = Math.max(0.0000001f, blur_radius);
         paint.setMaskFilter(new BlurMaskFilter(blur_radius, BlurMaskFilter.Blur.SOLID));
         return this;
     }
 
-    public Paint getPaint() {
-        return paint;
-    }
+//    public Paint getPaint() {
+//        return paint;
+//    }
 
     private void time_invalidate() {
         if (show_time) {
@@ -210,7 +220,7 @@ public class WatermarkStickerView extends StickerView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        drawWatermark(canvas,getWidth(),getHeight());
+        drawWatermark(canvas, getWidth(), getHeight());
     }
 
     public void drawWatermark(Canvas canvas, int width, int height) {

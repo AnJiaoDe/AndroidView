@@ -55,19 +55,6 @@ public class StickerView extends View {
         return stickerAttr;
     }
 
-    @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
-//        //防止StickerView宽高改变后，文字看不见，贼鸡儿尴尬
-//        for (int i = 0; i < listSticker.size(); i++) {
-//            Sticker sticker = listSticker.get(i);
-//            float w = sticker.getTextWidth()/getWidth() * sticker.getScale() * 0.5f;
-//            float h = sticker.getTextHeight()/getHeight() * sticker.getScale() * 0.5f;
-//            sticker.setCenterX(Math.max(w, Math.min(1 - w, sticker.getCenterX())))
-//                    .setCenterY(Math.max(h, Math.min(1 - h, sticker.getCenterY())));
-//            listSticker.set(i, sticker);
-//        }
-    }
 
     public void addSticker(Sticker sticker) {
         listSticker.add(sticker);
@@ -259,8 +246,8 @@ public class StickerView extends View {
                 if (index_down >= 0 && index_down < listSticker.size()
                         && System.currentTimeMillis() - downTime > TIME_CLICK_THRESHOLD) {
                     Sticker sticker = listSticker.get(index_down);
-                    sticker.setCenterX(Math.min(Math.max(0, points_touch_origin[0]/getWidth()), 1));
-                    sticker.setCenterY(Math.min(Math.max(0, points_touch_origin[1]/getHeight()), 1));
+                    sticker.setCenterX( points_touch_origin[0]/getWidth());
+                    sticker.setCenterY( points_touch_origin[1]/getHeight());
                     invalidate();
                     Sticker.Callback c = sticker.getCallback();
                     if (c != null) c.onXYChanged(sticker.getCenterX(), sticker.getCenterY());

@@ -32,9 +32,6 @@ public class Sticker {
     private float rotationY = 0;
     private float rotationZ = 0;
     private float scale = 1;
-//    private float scaleParent = 1;
-//    private float translateXParent = 0;
-//    private float translateYParent = 0;
     private RectF rectF_text_normal;
     private Context context;
     private Matrix matrix, matrix_invert;
@@ -163,11 +160,11 @@ public class Sticker {
      * @param canvas
      * @param stickerAttr
      */
-    public void onDraw(Canvas canvas, int width_view,int height_view,StickerAttr stickerAttr) {
+    public void onDraw(Canvas canvas, int width_canvas,int height_canvas,StickerAttr stickerAttr) {
         switch (type) {
             case TYPE_TEXT:
 //     * staticLayout 虽然可以做到自动换行，但是不太支持3D效果，rotationX 60度，文字直接不见了。
-                rectF_text_normal = TextUtils.getTextRectF(vertical, lineSpace, paintText, text, centerX*width_view, centerY*height_view);
+                rectF_text_normal = TextUtils.getTextRectF(vertical, lineSpace, paintText, text, centerX*width_canvas, centerY*height_canvas);
 //                    canvas.drawRect(rectF_text_normal,paintRectF);
                 rectF_box_normal.left = rectF_text_normal.left - stickerAttr.getRadius_menu();
                 rectF_box_normal.top = rectF_text_normal.top - stickerAttr.getRadius_menu();
@@ -177,11 +174,11 @@ public class Sticker {
                 // 保存当前画布状态
                 canvas.save();
                 matrix.reset();
-                matrix.postScale(scale, scale, centerX*width_view, centerY*height_view);
+                matrix.postScale(scale, scale, centerX*width_canvas, centerY*height_canvas);
                 // 设置旋转角度
                 //默认是围绕(0,0旋转),顺时针旋转
-                matrix.postRotate(rotationZ, centerX*width_view, centerY*height_view);
-                matrix.mapPoints(center_rotated, new float[]{centerX*width_view, centerY*height_view});
+                matrix.postRotate(rotationZ, centerX*width_canvas, centerY*height_canvas);
+                matrix.mapPoints(center_rotated, new float[]{centerX*width_canvas, centerY*height_canvas});
 
                 matrix_camera.reset();
                 camera.save();
@@ -196,7 +193,7 @@ public class Sticker {
                 matrix.postConcat(matrix_camera);
 
                 canvas.setMatrix(matrix);
-                TextUtils.drawText(vertical, lineSpace, canvas, paintText, text, centerX*width_view, centerY*height_view, rectF_text_normal);
+                TextUtils.drawText(vertical, lineSpace, canvas, paintText, text, centerX*width_canvas, centerY*height_canvas, rectF_text_normal);
                 canvas.restore();
                 //除了文字以外，其他的粗细都应该不进行缩放
                 matrix.mapPoints(points_box0, new float[]{rectF_box_normal.left, rectF_box_normal.top});
@@ -264,15 +261,15 @@ public class Sticker {
                 canvas.drawBitmap(stickerAttr.getBitmap_rotate_3d(), null, rectFBitmap3DRotate, stickerAttr.getPaintBitmap());
                 break;
             case TYPE_PIC:
-                rectF_box_normal=getPicRectF(centerX*width_view,centerY*height_view);
+                rectF_box_normal=getPicRectF(centerX*width_canvas,centerY*height_canvas);
                 // 保存当前画布状态
                 canvas.save();
                 matrix.reset();
                 // 设置旋转角度
                 //默认是围绕(0,0旋转),顺时针旋转
-                matrix.postScale(scale, scale, centerX*width_view, centerY*height_view);
-                matrix.postRotate(rotationZ, centerX*width_view, centerY*height_view);
-                matrix.mapPoints(center_rotated, new float[]{centerX*width_view, centerY*height_view});
+                matrix.postScale(scale, scale, centerX*width_canvas, centerY*height_canvas);
+                matrix.postRotate(rotationZ, centerX*width_canvas, centerY*height_canvas);
+                matrix.mapPoints(center_rotated, new float[]{centerX*width_canvas, centerY*height_canvas});
 
                 matrix_camera.reset();
                 camera.save();
@@ -369,9 +366,9 @@ public class Sticker {
         return this;
     }
 
-    public Paint getPaintText() {
-        return paintText;
-    }
+//    public Paint getPaintText() {
+//        return paintText;
+//    }
 
     public String getPathFont() {
         return pathFont;
@@ -575,40 +572,10 @@ public class Sticker {
     }
 
     public Sticker setScale(float scale) {
-        this.scale = Math.max(0.1f, Math.min(200, scale));
-//        this.scale*=scaleParent;
+        this.scale=scale;
+//        this.scale = Math.max(0.1f, Math.min(200, scale));
         return this;
     }
-
-//    public float getScaleParent() {
-//        return scaleParent;
-//    }
-//
-//    public Sticker setScaleParent(float scaleParent) {
-//        this.scaleParent = scaleParent;
-//        this.scale*=scaleParent;
-//        return this;
-//    }
-
-//    public float getTranslateXParent() {
-//        return translateXParent;
-//    }
-//
-//    public Sticker setTranslateXParent(float translateXParent) {
-//        this.translateXParent = translateXParent;
-//        this.centerX+=translateXParent;
-//        return this;
-//    }
-//
-//    public float getTranslateYParent() {
-//        return translateYParent;
-//    }
-//
-//    public Sticker setTranslateYParent(float translateYParent) {
-//        this.translateYParent = translateYParent;
-//        this.centerY+=translateYParent;
-//        return this;
-//    }
 
     public float getBlur_radius() {
         return blur_radius;
@@ -664,9 +631,6 @@ public class Sticker {
         sticker.setRotationY(rotationY);
         sticker.setRotationZ(rotationZ);
         sticker.setScale(scale);
-//        sticker.setScaleParent(scaleParent);
-//        sticker.setTranslateXParent(translateXParent);
-//        sticker.setTranslateYParent(translateYParent);
         sticker.setTextColor(paintText.getColor());
         sticker.setTextSize(paintText.getTextSize());
         sticker.setLetterSpacing(paintText.getLetterSpacing());
