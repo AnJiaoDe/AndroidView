@@ -218,6 +218,13 @@ public class WatermarkStickerView extends StickerView {
     }
 
     @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        //StickerView宽高改变后，文字应该按比例改变，否则比例失调
+        textSizeSp = textSizeSp * w / oldw;
+    }
+
+    @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         drawWatermark(canvas, getWidth(), getHeight());
