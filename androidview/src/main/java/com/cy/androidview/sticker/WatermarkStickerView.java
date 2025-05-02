@@ -57,6 +57,7 @@ public class WatermarkStickerView extends StickerView {
 
     /**
      * 注意：只是改变水印的文字大小，不会改变非水印文字的大小
+     *
      * @param sp
      * @return
      */
@@ -226,7 +227,7 @@ public class WatermarkStickerView extends StickerView {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         //StickerView宽高改变后，文字应该按比例改变，否则比例失调
-        textSizeSp = textSizeSp * w / oldw;
+        setTextSizeSp(textSizeSp * w / oldw);
     }
 
     @Override
