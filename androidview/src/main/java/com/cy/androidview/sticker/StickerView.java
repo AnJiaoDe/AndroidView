@@ -59,9 +59,11 @@ public class StickerView extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         //StickerView宽高改变后，文字应该按比例改变，否则比例失调
+        //注意：第一次oldw为0
+        if (oldw <= 0) return;
         for (int i = 0; i < listSticker.size(); i++) {
             Sticker sticker = listSticker.get(i);
-            sticker.setScale(sticker.getScale()*w/oldw);
+            sticker.setScale(sticker.getScale() * w / oldw);
             listSticker.set(i, sticker);
         }
     }
@@ -131,7 +133,7 @@ public class StickerView extends View {
         if (!open) return;
         for (int i = 0; i < listSticker.size(); i++) {
             Sticker sticker = listSticker.get(i);
-            sticker.onDraw(canvas, getWidth(),getHeight(),stickerAttr);
+            sticker.onDraw(canvas, getWidth(), getHeight(), stickerAttr);
         }
     }
 
@@ -224,13 +226,13 @@ public class StickerView extends View {
                 if (index_rotateZ >= 0 && index_rotateZ < listSticker.size()) {
                     Sticker sticker = listSticker.get(index_rotateZ);
 
-                    float dx = points_touch_origin[0]/getWidth() - sticker.getCenterX();
-                    float dy = points_touch_origin[1]/getHeight() - sticker.getCenterY();
+                    float dx = points_touch_origin[0] / getWidth() - sticker.getCenterX();
+                    float dy = points_touch_origin[1] / getHeight() - sticker.getCenterY();
                     double angle = Math.toDegrees(Math.atan2(dy, dx));
                     sticker.setRotationZ((float) angle);
 
-                    sticker.setScale(((float) (Math.sqrt(Math.pow(points_touch_origin[0] /getWidth()- sticker.getCenterX(), 2)
-                            + Math.pow(points_touch_origin[1]/getHeight() - sticker.getCenterY(), 2))
+                    sticker.setScale(((float) (Math.sqrt(Math.pow(points_touch_origin[0] / getWidth() - sticker.getCenterX(), 2)
+                            + Math.pow(points_touch_origin[1] / getHeight() - sticker.getCenterY(), 2))
                             / Math.sqrt(Math.pow(sticker.getRectF_box_normal().width() * 0.5f, 2)
                             + Math.pow(sticker.getRectF_box_normal().height() * 0.5f, 2)))));
                     invalidate();
@@ -256,8 +258,8 @@ public class StickerView extends View {
                 if (index_down >= 0 && index_down < listSticker.size()
                         && System.currentTimeMillis() - downTime > TIME_CLICK_THRESHOLD) {
                     Sticker sticker = listSticker.get(index_down);
-                    sticker.setCenterX( points_touch_origin[0]/getWidth());
-                    sticker.setCenterY( points_touch_origin[1]/getHeight());
+                    sticker.setCenterX(points_touch_origin[0] / getWidth());
+                    sticker.setCenterY(points_touch_origin[1] / getHeight());
                     invalidate();
                     Sticker.Callback c = sticker.getCallback();
                     if (c != null) c.onXYChanged(sticker.getCenterX(), sticker.getCenterY());
@@ -344,6 +346,7 @@ public class StickerView extends View {
         }
         return in;
     }
+
     private float getFingerDistance(MotionEvent event) {
         float x = event.getX(0) - event.getX(1);
         float y = event.getY(0) - event.getY(1);
