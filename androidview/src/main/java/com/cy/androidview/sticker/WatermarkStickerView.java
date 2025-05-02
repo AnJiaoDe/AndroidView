@@ -43,7 +43,7 @@ public class WatermarkStickerView extends StickerView {
         paint.setAntiAlias(true);
         paint.setTextAlign(Paint.Align.LEFT);
         paint.setColor(Color.WHITE);
-        paint.setTextSize(ScreenUtils.spAdapt(context, 10));
+        setTextSizeSp(10);
         setTypeface("", Typeface.BOLD);
         paint.setShadowLayer(1, 1, 1, Color.BLACK);
 
@@ -51,13 +51,13 @@ public class WatermarkStickerView extends StickerView {
         text_product_default = Build.BRAND + "    " + Build.PRODUCT;
 
         text_appName = text_appName_default;
-        margin_x = ScreenUtils.dpAdapt(context, 10);
-        margin_y = ScreenUtils.dpAdapt(context, 10);
+        setMargin_x(ScreenUtils.dpAdapt(context, 10));
+        setMargin_y(ScreenUtils.dpAdapt(context, 10));
     }
 
     public WatermarkStickerView setTextSizeSp(float sp) {
 //        sp = Math.max(10, Math.min(200, sp));
-        this.textSizeSp=sp;
+        this.textSizeSp = sp;
         paint.setTextSize(ScreenUtils.spAdapt(getContext(), sp));
         return this;
     }
