@@ -12,6 +12,8 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import com.cy.androidview.LogUtils;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -56,15 +58,15 @@ public class StickerView extends View {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        //防止StickerView宽高改变后，文字看不见，贼鸡儿尴尬
-        for (int i = 0; i < listSticker.size(); i++) {
-            Sticker sticker = listSticker.get(i);
-            float w = sticker.getTextWidth()/getWidth() * sticker.getScale() * 0.5f;
-            float h = sticker.getTextHeight()/getHeight() * sticker.getScale() * 0.5f;
-            sticker.setCenterX(Math.max(w, Math.min(1 - w, sticker.getCenterX())))
-                    .setCenterY(Math.max(h, Math.min(1 - h, sticker.getCenterY())));
-            listSticker.set(i, sticker);
-        }
+//        //防止StickerView宽高改变后，文字看不见，贼鸡儿尴尬
+//        for (int i = 0; i < listSticker.size(); i++) {
+//            Sticker sticker = listSticker.get(i);
+//            float w = sticker.getTextWidth()/getWidth() * sticker.getScale() * 0.5f;
+//            float h = sticker.getTextHeight()/getHeight() * sticker.getScale() * 0.5f;
+//            sticker.setCenterX(Math.max(w, Math.min(1 - w, sticker.getCenterX())))
+//                    .setCenterY(Math.max(h, Math.min(1 - h, sticker.getCenterY())));
+//            listSticker.set(i, sticker);
+//        }
     }
 
     public void addSticker(Sticker sticker) {
