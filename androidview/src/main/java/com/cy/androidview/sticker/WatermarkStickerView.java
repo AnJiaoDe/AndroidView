@@ -43,7 +43,7 @@ public class WatermarkStickerView extends StickerView {
         paint.setAntiAlias(true);
         paint.setTextAlign(Paint.Align.LEFT);
         paint.setColor(Color.WHITE);
-        setTextSizeSp(10);
+        setTextSizeSp(12);
         setTypeface("", Typeface.BOLD);
         paint.setShadowLayer(1, 1, 1, Color.BLACK);
 
@@ -101,6 +101,12 @@ public class WatermarkStickerView extends StickerView {
         return margin_x;
     }
 
+    /**
+     * 距离图片左边
+     *
+     * @param margin_x
+     * @return
+     */
     public WatermarkStickerView setMargin_x(float margin_x) {
         this.margin_x = margin_x;
         return this;
@@ -110,6 +116,12 @@ public class WatermarkStickerView extends StickerView {
         return margin_y;
     }
 
+    /**
+     * 距离图片底部
+     *
+     * @param margin_y
+     * @return
+     */
     public WatermarkStickerView setMargin_y(float margin_y) {
         this.margin_y = margin_y;
         return this;
@@ -228,7 +240,11 @@ public class WatermarkStickerView extends StickerView {
         super.onSizeChanged(w, h, oldw, oldh);
         //StickerView宽高改变后，文字应该按比例改变，否则比例失调
         //注意：第一次oldw为0
-        if (oldw > 0) setTextSizeSp(textSizeSp * w / oldw);
+        if (oldw > 0) {
+            setTextSizeSp(textSizeSp * w / oldw);
+            setMargin_x(margin_x* w / oldw);
+            setMargin_y(margin_y* h / oldh);
+        }
     }
 
     @Override
@@ -237,7 +253,7 @@ public class WatermarkStickerView extends StickerView {
         drawWatermark(canvas, getWidth(), getHeight());
     }
 
-    public void drawWatermark(Canvas canvas, int width, int height) {
+    public void drawWatermark(Canvas canvas, int width_canvas, int height_canvas) {
         if (!haveWatermark()) return;
 
         onLineHeight = TextUtils.getTextHeightOneLine(paint);
@@ -248,12 +264,12 @@ public class WatermarkStickerView extends StickerView {
                 + (android.text.TextUtils.isEmpty(text_text) ? "" : "\n")
                 + text_text;
         centerX_text = margin_x + TextUtils.getTextWidth(false, 0, text, paint) * 0.5f;
-        centerY_text = height - margin_y - onLineHeight * text.split("\n").length * 0.5f;
+        centerY_text = height_canvas - margin_y - onLineHeight * text.split("\n").length * 0.5f;
         rectF_text = TextUtils.getTextRectF(false, 0, paint, text, centerX_text, centerY_text);
         TextUtils.drawText(false, 0, canvas, paint, text, centerX_text, centerY_text, rectF_text);
         if (show_time) {
-            centerX_time = width - margin_x - TextUtils.getTextWidthOneLine(false, date, paint) * 0.5f;
-            centerY_time = height - margin_y - onLineHeight * 0.5f;
+            centerX_time = width_canvas - margin_x - TextUtils.getTextWidthOneLine(false, date, paint) * 0.5f;
+            centerY_time = height_canvas - margin_y - onLineHeight * 0.5f;
             rectF_time = TextUtils.getTextRectF(false, 0, paint, date, centerX_time, centerY_time);
             TextUtils.drawText(false, 0, canvas, paint, date, centerX_time, centerY_time, rectF_time);
         }
