@@ -55,6 +55,11 @@ public class WatermarkStickerView extends StickerView {
         setMargin_y(ScreenUtils.dpAdapt(context, 10));
     }
 
+    /**
+     * 注意：只是改变水印的文字大小，不会改变非水印文字的大小
+     * @param sp
+     * @return
+     */
     public WatermarkStickerView setTextSizeSp(float sp) {
 //        sp = Math.max(10, Math.min(200, sp));
         this.textSizeSp = sp;
