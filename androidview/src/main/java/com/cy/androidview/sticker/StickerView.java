@@ -55,6 +55,16 @@ public class StickerView extends View {
         return stickerAttr;
     }
 
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        //StickerView宽高改变后，文字应该按比例改变，否则比例失调
+        for (int i = 0; i < listSticker.size(); i++) {
+            Sticker sticker = listSticker.get(i);
+            sticker.setScale(sticker.getScale()*w/oldw);
+            listSticker.set(i, sticker);
+        }
+    }
 
     public void addSticker(Sticker sticker) {
         listSticker.add(sticker);
