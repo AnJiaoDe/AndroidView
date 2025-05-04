@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -38,7 +37,9 @@ public class StickerView extends View {
 
     private Matrix matrixParent;
     private Matrix matrixParentInvert;
-    private float[] points_touch_origin;
+    private float[] points_move_origin;
+    private float[] points_move_origin_last;
+
     private RectF rectF;
 
     public StickerView(Context context, @Nullable AttributeSet attrs) {
@@ -47,7 +48,7 @@ public class StickerView extends View {
         stickerAttr = new StickerAttr(context, attrs);
         matrixParent = new Matrix();
         matrixParentInvert = new Matrix();
-        points_touch_origin = new float[2];
+        points_move_origin = new float[2];
         rectF = new RectF();
     }
 
@@ -213,7 +214,14 @@ public class StickerView extends View {
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
-                matrixParentInvert.mapPoints(points_touch_origin, new float[]{event.getX(), event.getY()});
+                if(points_move_origin_last!=null){
+                    points_move_origin_last[0]=points_move_origin[0];
+                    points_move_origin_last[1]=points_move_origin[1];
+                }
+                matrixParentInvert.mapPoints(points_move_origin, new float[]{event.getX(), event.getY()});
+                if(points_move_origin_last==null){
+                    points_move_origin_last=new float[]{points_move_origin[0],points_move_origin[1]};
+                }
                 if (index_2_pointer >= 0 && index_2_pointer < listSticker.size() && event.getPointerCount() >= 2) {
                     float distance = getFingerDistance(event);
                     Sticker sticker = listSticker.get(index_2_pointer);
@@ -226,13 +234,15 @@ public class StickerView extends View {
                 if (index_rotateZ >= 0 && index_rotateZ < listSticker.size()) {
                     Sticker sticker = listSticker.get(index_rotateZ);
 
-                    float dx = points_touch_origin[0] / getWidth() - sticker.getCenterX();
-                    float dy = points_touch_origin[1] / getHeight() - sticker.getCenterY();
-                    double angle = Math.toDegrees(Math.atan2(dy, dx));
-                    sticker.setRotationZ((float) angle);
+                    float dx_last = points_move_origin_last[0] - sticker.getCenterX() * getWidth();
+                    float dy_last = points_move_origin_last[1] - sticker.getCenterY() * getHeight();
+                    float dx = points_move_origin[0] - sticker.getCenterX() * getWidth();
+                    float dy = points_move_origin[1] - sticker.getCenterY() * getHeight();
+                    sticker.setRotationZ((float) (sticker.getRotationZ() + Math.toDegrees(Math.atan2(dy, dx))
+                            - Math.toDegrees(Math.atan2(dy_last, dx_last))));
 
-                    sticker.setScale(((float) (Math.sqrt(Math.pow(points_touch_origin[0] / getWidth() - sticker.getCenterX(), 2)
-                            + Math.pow(points_touch_origin[1] / getHeight() - sticker.getCenterY(), 2))
+                    sticker.setScale(((float) (Math.sqrt(Math.pow(points_move_origin[0] - sticker.getCenterX() * getWidth(), 2)
+                            + Math.pow(points_move_origin[1] - sticker.getCenterY() * getHeight(), 2))
                             / Math.sqrt(Math.pow(sticker.getRectF_box_normal().width() * 0.5f, 2)
                             + Math.pow(sticker.getRectF_box_normal().height() * 0.5f, 2)))));
                     invalidate();
@@ -243,10 +253,10 @@ public class StickerView extends View {
                 if (index_rotate3D >= 0 && index_rotate3D < listSticker.size()) {
                     Sticker sticker = listSticker.get(index_rotate3D);
 
-                    float dx = points_touch_origin[0] - moveX_last;
-                    float dy = points_touch_origin[1] - moveY_last;
-                    moveX_last = points_touch_origin[0];
-                    moveY_last = points_touch_origin[1];
+                    float dx = points_move_origin[0] - moveX_last;
+                    float dy = points_move_origin[1] - moveY_last;
+                    moveX_last = points_move_origin[0];
+                    moveY_last = points_move_origin[1];
 
                     sticker.setRotationX(sticker.getRotationX() - dy);
                     sticker.setRotationY(sticker.getRotationY() + dx);
@@ -258,8 +268,8 @@ public class StickerView extends View {
                 if (index_down >= 0 && index_down < listSticker.size()
                         && System.currentTimeMillis() - downTime > TIME_CLICK_THRESHOLD) {
                     Sticker sticker = listSticker.get(index_down);
-                    sticker.setCenterX(points_touch_origin[0] / getWidth());
-                    sticker.setCenterY(points_touch_origin[1] / getHeight());
+                    sticker.setCenterX(points_move_origin[0] / getWidth());
+                    sticker.setCenterY(points_move_origin[1] / getHeight());
                     invalidate();
                     Sticker.Callback c = sticker.getCallback();
                     if (c != null) c.onXYChanged(sticker.getCenterX(), sticker.getCenterY());
@@ -299,6 +309,7 @@ public class StickerView extends View {
                 index_down = -1;
                 downIn = -1;
                 index_2_pointer = -1;
+                points_move_origin_last=null;
                 break;
         }
         return super.onTouchEvent(event);

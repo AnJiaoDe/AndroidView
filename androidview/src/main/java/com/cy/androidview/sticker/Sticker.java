@@ -17,6 +17,10 @@ import androidx.annotation.Nullable;
 
 import com.cy.androidview.ScreenUtils;
 
+/**
+ * 直接使用Bitmap 无法添加大量图片贴纸，其实图片贴纸还是应该传递图像数组到C++ 用opengl 绘制，
+ * 还有文字更加应该用opengl绘制 ，用 SDF开源库
+ */
 public class Sticker {
     public static final int TYPE_TEXT = 0;
     public static final int TYPE_LABEL = 1;
@@ -24,7 +28,7 @@ public class Sticker {
     private int type;
     private String text;
     private Bitmap bitmap;
-    private float centerX=0.5f, centerY=0.5f;
+    private float centerX = 0.5f, centerY = 0.5f;
     private RectF rectF_box_normal;
     private RectF rectFCloseRotated, rectFCopyRotated, rectFRotateRotated, rectF3DRotated;
     private RectF rectFBitmapClose, rectFBitmapCopy, rectFBitmapRotate, rectFBitmap3DRotate;
@@ -97,7 +101,7 @@ public class Sticker {
         paintRectF.setAntiAlias(true);
 
         setTextColor(Color.WHITE);
-        setTextSize( ScreenUtils.spAdapt(context, 18));
+        paintText.setTextSize(ScreenUtils.spAdapt(context, 18));
         setShadowLayer(1, 1, 1, Color.BLACK);
         setBoxColor(Color.WHITE);
         setBoxStrokeWidth(ScreenUtils.dpAdapt(context, 1));
@@ -160,198 +164,111 @@ public class Sticker {
      * @param canvas
      * @param stickerAttr
      */
-    public void onDraw(Canvas canvas, int width_canvas,int height_canvas,StickerAttr stickerAttr) {
-        switch (type) {
-            case TYPE_TEXT:
+    public void onDraw(Canvas canvas, int width_canvas, int height_canvas, StickerAttr stickerAttr) {
+        if (type == TYPE_TEXT) {
 //     * staticLayout 虽然可以做到自动换行，但是不太支持3D效果，rotationX 60度，文字直接不见了。
-                rectF_text_normal = TextUtils.getTextRectF(vertical, lineSpace, paintText, text, centerX*width_canvas, centerY*height_canvas);
+            rectF_text_normal = TextUtils.getTextRectF(vertical, lineSpace, paintText, text, centerX * width_canvas, centerY * height_canvas);
 //                    canvas.drawRect(rectF_text_normal,paintRectF);
-                rectF_box_normal.left = rectF_text_normal.left - stickerAttr.getRadius_menu();
-                rectF_box_normal.top = rectF_text_normal.top - stickerAttr.getRadius_menu();
-                rectF_box_normal.right = rectF_text_normal.right + stickerAttr.getRadius_menu();
-                rectF_box_normal.bottom = rectF_text_normal.bottom + stickerAttr.getRadius_menu();
-//                    canvas.drawRect(rectF_box_normal,paintRectF);
-                // 保存当前画布状态
-                canvas.save();
-                matrix.reset();
-                matrix.postScale(scale, scale, centerX*width_canvas, centerY*height_canvas);
-                // 设置旋转角度
-                //默认是围绕(0,0旋转),顺时针旋转
-                matrix.postRotate(rotationZ, centerX*width_canvas, centerY*height_canvas);
-                matrix.mapPoints(center_rotated, new float[]{centerX*width_canvas, centerY*height_canvas});
-
-                matrix_camera.reset();
-                camera.save();
-                camera.rotateX(rotationX);
-                camera.rotateY(rotationY);
-//                     将 Camera 的变换应用到 Matrix 上
-                camera.getMatrix(matrix_camera);
-                camera.restore();
-                //为了使3D旋转围绕文字中心  先将旋转中心移动到（0,0）点，因为Matrix总是用0,0点作为旋转点，旋转之后将视图放回原来的位置。
-                matrix_camera.preTranslate(-center_rotated[0], -center_rotated[1]);
-                matrix_camera.postTranslate(center_rotated[0], center_rotated[1]);
-                matrix.postConcat(matrix_camera);
-
-                canvas.setMatrix(matrix);
-                TextUtils.drawText(vertical, lineSpace, canvas, paintText, text, centerX*width_canvas, centerY*height_canvas, rectF_text_normal);
-                canvas.restore();
-                //除了文字以外，其他的粗细都应该不进行缩放
-                matrix.mapPoints(points_box0, new float[]{rectF_box_normal.left, rectF_box_normal.top});
-                matrix.mapPoints(points_box1, new float[]{rectF_box_normal.right, rectF_box_normal.top});
-                matrix.mapPoints(points_box2, new float[]{rectF_box_normal.right, rectF_box_normal.bottom});
-                matrix.mapPoints(points_box3, new float[]{rectF_box_normal.left, rectF_box_normal.bottom});
-
-                if (!showBox) return;
-
-                path.reset();
-                path.moveTo(points_box0[0], points_box0[1]);
-                path.lineTo(points_box1[0], points_box1[1]);
-                path.lineTo(points_box2[0], points_box2[1]);
-                path.lineTo(points_box3[0], points_box3[1]);
-                path.close();
-                canvas.drawPath(path, paintRectF);
-
-                canvas.drawCircle(points_box0[0], points_box0[1], stickerAttr.getRadius_menu(), stickerAttr.getPaintMenuBg());
-                canvas.drawCircle(points_box1[0], points_box1[1], stickerAttr.getRadius_menu(), stickerAttr.getPaintMenuBg());
-                canvas.drawCircle(points_box2[0], points_box2[1], stickerAttr.getRadius_menu(), stickerAttr.getPaintMenuBg());
-                canvas.drawCircle(points_box3[0], points_box3[1], stickerAttr.getRadius_menu(), stickerAttr.getPaintMenuBg());
-
-                //扩大触摸范围
-                rectFCloseRotated.left = points_box0[0] - stickerAttr.getRadius_menu();
-                rectFCloseRotated.top = points_box0[1] - stickerAttr.getRadius_menu();
-                rectFCloseRotated.right = points_box0[0] + stickerAttr.getRadius_menu();
-                rectFCloseRotated.bottom = points_box0[1] + stickerAttr.getRadius_menu();
-                rectFBitmapClose.left = points_box0[0] - stickerAttr.getRadius_menu() * 0.5f;
-                rectFBitmapClose.top = points_box0[1] - stickerAttr.getRadius_menu() * 0.5f;
-                rectFBitmapClose.right = points_box0[0] + stickerAttr.getRadius_menu() * 0.5f;
-                rectFBitmapClose.bottom = points_box0[1] + stickerAttr.getRadius_menu() * 0.5f;
-                canvas.drawBitmap(stickerAttr.getBitmap_close(), null, rectFBitmapClose, stickerAttr.getPaintBitmap());
-
-                //扩大触摸范围
-                rectFCopyRotated.left = points_box1[0] - stickerAttr.getRadius_menu();
-                rectFCopyRotated.top = points_box1[1] - stickerAttr.getRadius_menu();
-                rectFCopyRotated.right = points_box1[0] + stickerAttr.getRadius_menu();
-                rectFCopyRotated.bottom = points_box1[1] + stickerAttr.getRadius_menu();
-                rectFBitmapCopy.left = points_box1[0] - stickerAttr.getRadius_menu() * 0.5f;
-                rectFBitmapCopy.top = points_box1[1] - stickerAttr.getRadius_menu() * 0.5f;
-                rectFBitmapCopy.right = points_box1[0] + stickerAttr.getRadius_menu() * 0.5f;
-                rectFBitmapCopy.bottom = points_box1[1] + stickerAttr.getRadius_menu() * 0.5f;
-                canvas.drawBitmap(stickerAttr.getBitmap_copy(), null, rectFBitmapCopy, stickerAttr.getPaintBitmap());
-
-                //扩大触摸范围
-                rectFRotateRotated.left = points_box2[0] - stickerAttr.getRadius_menu();
-                rectFRotateRotated.top = points_box2[1] - stickerAttr.getRadius_menu();
-                rectFRotateRotated.right = points_box2[0] + stickerAttr.getRadius_menu();
-                rectFRotateRotated.bottom = points_box2[1] + stickerAttr.getRadius_menu();
-                rectFBitmapRotate.left = points_box2[0] - stickerAttr.getRadius_menu() * 0.5f;
-                rectFBitmapRotate.top = points_box2[1] - stickerAttr.getRadius_menu() * 0.5f;
-                rectFBitmapRotate.right = points_box2[0] + stickerAttr.getRadius_menu() * 0.5f;
-                rectFBitmapRotate.bottom = points_box2[1] + stickerAttr.getRadius_menu() * 0.5f;
-                canvas.drawBitmap(stickerAttr.getBitmap_rotate(), null, rectFBitmapRotate, stickerAttr.getPaintBitmap());
-
-                //扩大触摸范围
-                rectF3DRotated.left = points_box3[0] - stickerAttr.getRadius_menu();
-                rectF3DRotated.top = points_box3[1] - stickerAttr.getRadius_menu();
-                rectF3DRotated.right = points_box3[0] + stickerAttr.getRadius_menu();
-                rectF3DRotated.bottom = points_box3[1] + stickerAttr.getRadius_menu();
-                rectFBitmap3DRotate.left = points_box3[0] - stickerAttr.getRadius_menu() * 0.5f;
-                rectFBitmap3DRotate.top = points_box3[1] - stickerAttr.getRadius_menu() * 0.5f;
-                rectFBitmap3DRotate.right = points_box3[0] + stickerAttr.getRadius_menu() * 0.5f;
-                rectFBitmap3DRotate.bottom = points_box3[1] + stickerAttr.getRadius_menu() * 0.5f;
-                canvas.drawBitmap(stickerAttr.getBitmap_rotate_3d(), null, rectFBitmap3DRotate, stickerAttr.getPaintBitmap());
-                break;
-            case TYPE_PIC:
-                rectF_box_normal=getPicRectF(centerX*width_canvas,centerY*height_canvas);
-                // 保存当前画布状态
-                canvas.save();
-                matrix.reset();
-                // 设置旋转角度
-                //默认是围绕(0,0旋转),顺时针旋转
-                matrix.postScale(scale, scale, centerX*width_canvas, centerY*height_canvas);
-                matrix.postRotate(rotationZ, centerX*width_canvas, centerY*height_canvas);
-                matrix.mapPoints(center_rotated, new float[]{centerX*width_canvas, centerY*height_canvas});
-
-                matrix_camera.reset();
-                camera.save();
-                camera.rotateX(rotationX);
-                camera.rotateY(rotationY);
-//                     将 Camera 的变换应用到 Matrix 上
-                camera.getMatrix(matrix_camera);
-                camera.restore();
-                //为了使3D旋转围绕文字中心  先将旋转中心移动到（0,0）点，因为Matrix总是用0,0点作为旋转点，旋转之后将视图放回原来的位置。
-                matrix_camera.preTranslate(-center_rotated[0], -center_rotated[1]);
-                matrix_camera.postTranslate(center_rotated[0], center_rotated[1]);
-                matrix.postConcat(matrix_camera);
-
-                canvas.setMatrix(matrix);
-                canvas.drawBitmap(bitmap,null,rectF_box_normal,stickerAttr.getPaintBitmap());
-                canvas.restore();
-                //除了文字以外，其他的粗细都应该不进行缩放
-                matrix.mapPoints(points_box0, new float[]{rectF_box_normal.left, rectF_box_normal.top});
-                matrix.mapPoints(points_box1, new float[]{rectF_box_normal.right, rectF_box_normal.top});
-                matrix.mapPoints(points_box2, new float[]{rectF_box_normal.right, rectF_box_normal.bottom});
-                matrix.mapPoints(points_box3, new float[]{rectF_box_normal.left, rectF_box_normal.bottom});
-
-                if (!showBox) return;
-
-                path.reset();
-                path.moveTo(points_box0[0], points_box0[1]);
-                path.lineTo(points_box1[0], points_box1[1]);
-                path.lineTo(points_box2[0], points_box2[1]);
-                path.lineTo(points_box3[0], points_box3[1]);
-                path.close();
-                canvas.drawPath(path, paintRectF);
-
-                canvas.drawCircle(points_box0[0], points_box0[1], stickerAttr.getRadius_menu(), stickerAttr.getPaintMenuBg());
-                canvas.drawCircle(points_box1[0], points_box1[1], stickerAttr.getRadius_menu(), stickerAttr.getPaintMenuBg());
-                canvas.drawCircle(points_box2[0], points_box2[1], stickerAttr.getRadius_menu(), stickerAttr.getPaintMenuBg());
-                canvas.drawCircle(points_box3[0], points_box3[1], stickerAttr.getRadius_menu(), stickerAttr.getPaintMenuBg());
-
-                //扩大触摸范围
-                rectFCloseRotated.left = points_box0[0] - stickerAttr.getRadius_menu();
-                rectFCloseRotated.top = points_box0[1] - stickerAttr.getRadius_menu();
-                rectFCloseRotated.right = points_box0[0] + stickerAttr.getRadius_menu();
-                rectFCloseRotated.bottom = points_box0[1] + stickerAttr.getRadius_menu();
-                rectFBitmapClose.left = points_box0[0] - stickerAttr.getRadius_menu() * 0.5f;
-                rectFBitmapClose.top = points_box0[1] - stickerAttr.getRadius_menu() * 0.5f;
-                rectFBitmapClose.right = points_box0[0] + stickerAttr.getRadius_menu() * 0.5f;
-                rectFBitmapClose.bottom = points_box0[1] + stickerAttr.getRadius_menu() * 0.5f;
-                canvas.drawBitmap(stickerAttr.getBitmap_close(), null, rectFBitmapClose, stickerAttr.getPaintBitmap());
-
-                //扩大触摸范围
-                rectFCopyRotated.left = points_box1[0] - stickerAttr.getRadius_menu();
-                rectFCopyRotated.top = points_box1[1] - stickerAttr.getRadius_menu();
-                rectFCopyRotated.right = points_box1[0] + stickerAttr.getRadius_menu();
-                rectFCopyRotated.bottom = points_box1[1] + stickerAttr.getRadius_menu();
-                rectFBitmapCopy.left = points_box1[0] - stickerAttr.getRadius_menu() * 0.5f;
-                rectFBitmapCopy.top = points_box1[1] - stickerAttr.getRadius_menu() * 0.5f;
-                rectFBitmapCopy.right = points_box1[0] + stickerAttr.getRadius_menu() * 0.5f;
-                rectFBitmapCopy.bottom = points_box1[1] + stickerAttr.getRadius_menu() * 0.5f;
-                canvas.drawBitmap(stickerAttr.getBitmap_copy(), null, rectFBitmapCopy, stickerAttr.getPaintBitmap());
-
-                //扩大触摸范围
-                rectFRotateRotated.left = points_box2[0] - stickerAttr.getRadius_menu();
-                rectFRotateRotated.top = points_box2[1] - stickerAttr.getRadius_menu();
-                rectFRotateRotated.right = points_box2[0] + stickerAttr.getRadius_menu();
-                rectFRotateRotated.bottom = points_box2[1] + stickerAttr.getRadius_menu();
-                rectFBitmapRotate.left = points_box2[0] - stickerAttr.getRadius_menu() * 0.5f;
-                rectFBitmapRotate.top = points_box2[1] - stickerAttr.getRadius_menu() * 0.5f;
-                rectFBitmapRotate.right = points_box2[0] + stickerAttr.getRadius_menu() * 0.5f;
-                rectFBitmapRotate.bottom = points_box2[1] + stickerAttr.getRadius_menu() * 0.5f;
-                canvas.drawBitmap(stickerAttr.getBitmap_rotate(), null, rectFBitmapRotate, stickerAttr.getPaintBitmap());
-
-                //扩大触摸范围
-                rectF3DRotated.left = points_box3[0] - stickerAttr.getRadius_menu();
-                rectF3DRotated.top = points_box3[1] - stickerAttr.getRadius_menu();
-                rectF3DRotated.right = points_box3[0] + stickerAttr.getRadius_menu();
-                rectF3DRotated.bottom = points_box3[1] + stickerAttr.getRadius_menu();
-                rectFBitmap3DRotate.left = points_box3[0] - stickerAttr.getRadius_menu() * 0.5f;
-                rectFBitmap3DRotate.top = points_box3[1] - stickerAttr.getRadius_menu() * 0.5f;
-                rectFBitmap3DRotate.right = points_box3[0] + stickerAttr.getRadius_menu() * 0.5f;
-                rectFBitmap3DRotate.bottom = points_box3[1] + stickerAttr.getRadius_menu() * 0.5f;
-                canvas.drawBitmap(stickerAttr.getBitmap_rotate_3d(), null, rectFBitmap3DRotate, stickerAttr.getPaintBitmap());
-                break;
+            rectF_box_normal.left = rectF_text_normal.left - stickerAttr.getRadius_menu();
+            rectF_box_normal.top = rectF_text_normal.top - stickerAttr.getRadius_menu();
+            rectF_box_normal.right = rectF_text_normal.right + stickerAttr.getRadius_menu();
+            rectF_box_normal.bottom = rectF_text_normal.bottom + stickerAttr.getRadius_menu();
+        } else if (type == TYPE_PIC) {
+            rectF_box_normal = getPicRectF(centerX * width_canvas, centerY * height_canvas);
         }
+        // 保存当前画布状态
+        canvas.save();
+        matrix.reset();
+        matrix.postScale(scale, scale, centerX * width_canvas, centerY * height_canvas);
+        // 设置旋转角度
+        //默认是围绕(0,0旋转),顺时针旋转
+        matrix.postRotate(rotationZ, centerX * width_canvas, centerY * height_canvas);
+        matrix.mapPoints(center_rotated, new float[]{centerX * width_canvas, centerY * height_canvas});
+
+        matrix_camera.reset();
+        camera.save();
+        camera.rotateX(rotationX);
+        camera.rotateY(rotationY);
+//                     将 Camera 的变换应用到 Matrix 上
+        camera.getMatrix(matrix_camera);
+        camera.restore();
+        //为了使3D旋转围绕文字中心  先将旋转中心移动到（0,0）点，因为Matrix总是用0,0点作为旋转点，旋转之后将视图放回原来的位置。
+        matrix_camera.preTranslate(-center_rotated[0], -center_rotated[1]);
+        matrix_camera.postTranslate(center_rotated[0], center_rotated[1]);
+        matrix.postConcat(matrix_camera);
+
+        canvas.setMatrix(matrix);
+
+        if (type == TYPE_TEXT) {
+            TextUtils.drawText(vertical, lineSpace, canvas, paintText, text, centerX * width_canvas, centerY * height_canvas, rectF_text_normal);
+        } else if (type == TYPE_PIC) {
+            canvas.drawBitmap(bitmap, null, rectF_box_normal, stickerAttr.getPaintBitmap());
+        }
+        canvas.restore();
+        //除了文字以外，其他的粗细都应该不进行缩放
+        matrix.mapPoints(points_box0, new float[]{rectF_box_normal.left, rectF_box_normal.top});
+        matrix.mapPoints(points_box1, new float[]{rectF_box_normal.right, rectF_box_normal.top});
+        matrix.mapPoints(points_box2, new float[]{rectF_box_normal.right, rectF_box_normal.bottom});
+        matrix.mapPoints(points_box3, new float[]{rectF_box_normal.left, rectF_box_normal.bottom});
+
+        if (!showBox) return;
+
+        path.reset();
+        path.moveTo(points_box0[0], points_box0[1]);
+        path.lineTo(points_box1[0], points_box1[1]);
+        path.lineTo(points_box2[0], points_box2[1]);
+        path.lineTo(points_box3[0], points_box3[1]);
+        path.close();
+        canvas.drawPath(path, paintRectF);
+
+        canvas.drawCircle(points_box0[0], points_box0[1], stickerAttr.getRadius_menu(), stickerAttr.getPaintMenuBg());
+        canvas.drawCircle(points_box1[0], points_box1[1], stickerAttr.getRadius_menu(), stickerAttr.getPaintMenuBg());
+        canvas.drawCircle(points_box2[0], points_box2[1], stickerAttr.getRadius_menu(), stickerAttr.getPaintMenuBg());
+        canvas.drawCircle(points_box3[0], points_box3[1], stickerAttr.getRadius_menu(), stickerAttr.getPaintMenuBg());
+
+        //扩大触摸范围
+        rectFCloseRotated.left = points_box0[0] - stickerAttr.getRadius_menu();
+        rectFCloseRotated.top = points_box0[1] - stickerAttr.getRadius_menu();
+        rectFCloseRotated.right = points_box0[0] + stickerAttr.getRadius_menu();
+        rectFCloseRotated.bottom = points_box0[1] + stickerAttr.getRadius_menu();
+        rectFBitmapClose.left = points_box0[0] - stickerAttr.getRadius_menu() * 0.5f;
+        rectFBitmapClose.top = points_box0[1] - stickerAttr.getRadius_menu() * 0.5f;
+        rectFBitmapClose.right = points_box0[0] + stickerAttr.getRadius_menu() * 0.5f;
+        rectFBitmapClose.bottom = points_box0[1] + stickerAttr.getRadius_menu() * 0.5f;
+        canvas.drawBitmap(stickerAttr.getBitmap_close(), null, rectFBitmapClose, stickerAttr.getPaintBitmap());
+
+        //扩大触摸范围
+        rectFCopyRotated.left = points_box1[0] - stickerAttr.getRadius_menu();
+        rectFCopyRotated.top = points_box1[1] - stickerAttr.getRadius_menu();
+        rectFCopyRotated.right = points_box1[0] + stickerAttr.getRadius_menu();
+        rectFCopyRotated.bottom = points_box1[1] + stickerAttr.getRadius_menu();
+        rectFBitmapCopy.left = points_box1[0] - stickerAttr.getRadius_menu() * 0.5f;
+        rectFBitmapCopy.top = points_box1[1] - stickerAttr.getRadius_menu() * 0.5f;
+        rectFBitmapCopy.right = points_box1[0] + stickerAttr.getRadius_menu() * 0.5f;
+        rectFBitmapCopy.bottom = points_box1[1] + stickerAttr.getRadius_menu() * 0.5f;
+        canvas.drawBitmap(stickerAttr.getBitmap_copy(), null, rectFBitmapCopy, stickerAttr.getPaintBitmap());
+
+        //扩大触摸范围
+        rectFRotateRotated.left = points_box2[0] - stickerAttr.getRadius_menu();
+        rectFRotateRotated.top = points_box2[1] - stickerAttr.getRadius_menu();
+        rectFRotateRotated.right = points_box2[0] + stickerAttr.getRadius_menu();
+        rectFRotateRotated.bottom = points_box2[1] + stickerAttr.getRadius_menu();
+        rectFBitmapRotate.left = points_box2[0] - stickerAttr.getRadius_menu() * 0.5f;
+        rectFBitmapRotate.top = points_box2[1] - stickerAttr.getRadius_menu() * 0.5f;
+        rectFBitmapRotate.right = points_box2[0] + stickerAttr.getRadius_menu() * 0.5f;
+        rectFBitmapRotate.bottom = points_box2[1] + stickerAttr.getRadius_menu() * 0.5f;
+        canvas.drawBitmap(stickerAttr.getBitmap_rotate(), null, rectFBitmapRotate, stickerAttr.getPaintBitmap());
+
+        //扩大触摸范围
+        rectF3DRotated.left = points_box3[0] - stickerAttr.getRadius_menu();
+        rectF3DRotated.top = points_box3[1] - stickerAttr.getRadius_menu();
+        rectF3DRotated.right = points_box3[0] + stickerAttr.getRadius_menu();
+        rectF3DRotated.bottom = points_box3[1] + stickerAttr.getRadius_menu();
+        rectFBitmap3DRotate.left = points_box3[0] - stickerAttr.getRadius_menu() * 0.5f;
+        rectFBitmap3DRotate.top = points_box3[1] - stickerAttr.getRadius_menu() * 0.5f;
+        rectFBitmap3DRotate.right = points_box3[0] + stickerAttr.getRadius_menu() * 0.5f;
+        rectFBitmap3DRotate.bottom = points_box3[1] + stickerAttr.getRadius_menu() * 0.5f;
+        canvas.drawBitmap(stickerAttr.getBitmap_rotate_3d(), null, rectFBitmap3DRotate, stickerAttr.getPaintBitmap());
     }
 
     public Sticker setTypeface(String pathFont, int style) {
@@ -461,11 +378,11 @@ public class Sticker {
         return textSize;
     }
 
-    public Sticker setTextSize(float textSize) {
-        this.textSize = textSize;
-        paintText.setTextSize(textSize);
-        return this;
-    }
+//    public Sticker setTextSize(float textSize) {
+//        this.textSize = textSize;
+//        paintText.setTextSize(textSize);
+//        return this;
+//    }
 
     public float getLetterSpacing() {
         return letterSpacing;
@@ -510,11 +427,11 @@ public class Sticker {
     }
 
     /**
-     * @param centerX  0-1
+     * @param centerX 0-1
      * @return
      */
     public Sticker setCenterX(float centerX) {
-        this.centerX = Math.min(1,Math.max(0,centerX));
+        this.centerX = Math.min(1, Math.max(0, centerX));
         return this;
     }
 
@@ -523,12 +440,11 @@ public class Sticker {
     }
 
     /**
-     *
-     * @param centerY  0-1
+     * @param centerY 0-1
      * @return
      */
     public Sticker setCenterY(float centerY) {
-        this.centerY = Math.min(1,Math.max(0,centerY));
+        this.centerY = Math.min(1, Math.max(0, centerY));
         return this;
     }
 
@@ -571,9 +487,21 @@ public class Sticker {
         return scale;
     }
 
+    /**
+     * 直接使用Bitmap 无法添加大量图片贴纸，其实图片贴纸还是应该传递图像数组到C++ 用opengl 绘制，
+     * 还有文字更加应该用opengl绘制 ，用 SDF开源库
+     */
     public Sticker setScale(float scale) {
-        this.scale=scale;
+//        this.scale = scale;
 //        this.scale = Math.max(0.1f, Math.min(200, scale));
+        this.scale = Math.max(0.1f, scale);
+        if (type == TYPE_PIC) {
+            if (bitmap != null && !bitmap.isRecycled()) {
+                //由于StickerAttr中radius_menu是dpaddapt 10 ，不能让4个MENU 粘在一起
+                this.scale = Math.max(ScreenUtils.dpAdapt(context, 20) * 1.f /
+                        Math.min(bitmap.getWidth(), bitmap.getHeight()), scale);
+            }
+        }
         return this;
     }
 
@@ -632,7 +560,7 @@ public class Sticker {
         sticker.setRotationZ(rotationZ);
         sticker.setScale(scale);
         sticker.setTextColor(paintText.getColor());
-        sticker.setTextSize(paintText.getTextSize());
+//        sticker.setTextSize(paintText.getTextSize());
         sticker.setLetterSpacing(paintText.getLetterSpacing());
         sticker.setTextAlign(paintText.getTextAlign());
         sticker.setMaskFilter(blur_radius);

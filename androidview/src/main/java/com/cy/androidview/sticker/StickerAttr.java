@@ -33,8 +33,8 @@ public class StickerAttr {
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.StickerView);
         setMenuBgColor(typedArray.getColor(R.styleable.StickerView_cy_color_bg_menu, Color.BLACK));
-        setRadius_menu(typedArray.getDimensionPixelSize(R.styleable.StickerView_cy_radius_menu, ScreenUtils.dpAdapt(context, 10)));
-
+//        setRadius_menu(typedArray.getDimensionPixelSize(R.styleable.StickerView_cy_radius_menu, ScreenUtils.dpAdapt(context, 10)));
+        radius_menu=ScreenUtils.dpAdapt(context, 10);
         bitmap_close = BitmapUtils.decodeResourceOrigin(context,
                 typedArray.getResourceId(R.styleable.StickerView_cy_src_close, R.drawable.close_white));
         bitmap_copy = BitmapUtils.decodeResourceOrigin(context,
@@ -75,9 +75,9 @@ public class StickerAttr {
         paintMenuBg.setColor(color);
     }
 
-    public void setRadius_menu(int radius_menu) {
-        this.radius_menu = radius_menu;
-    }
+//    public void setRadius_menu(int radius_menu) {
+//        this.radius_menu = radius_menu;
+//    }
 
     public Paint getPaintMenuBg() {
         return paintMenuBg;
