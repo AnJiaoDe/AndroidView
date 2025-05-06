@@ -17,10 +17,6 @@ import androidx.annotation.Nullable;
 
 import com.cy.androidview.ScreenUtils;
 
-/**
- * 直接使用Bitmap 无法添加大量图片贴纸，其实图片贴纸还是应该传递图像数组到C++ 用opengl 绘制，
- * 还有文字更加应该用opengl绘制 ，用 SDF开源库
- */
 public class Sticker {
     public static final int TYPE_TEXT = 0;
     public static final int TYPE_LABEL = 1;
@@ -203,6 +199,8 @@ public class Sticker {
             TextUtils.drawText(vertical, lineSpace, canvas, paintText, text, centerX * width_canvas, centerY * height_canvas, rectF_text_normal);
         } else if (type == TYPE_PIC) {
             canvas.drawBitmap(bitmap, null, rectF_box_normal, stickerAttr.getPaintBitmap());
+            bitmap.recycle();
+            bitmap=null;
         }
         canvas.restore();
         //除了文字以外，其他的粗细都应该不进行缩放

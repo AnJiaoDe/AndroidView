@@ -1,9 +1,13 @@
 package com.cy.necessaryviewmaster;
 
+import static androidx.core.util.Preconditions.checkNotNull;
+
+import android.gesture.Prediction;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Looper;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
@@ -11,6 +15,7 @@ import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cy.androidview.progress.ProgressWeightView;
 
@@ -31,9 +36,9 @@ public class MainActivity extends BaseActivity {
         findViewById(R.id.btn_progress).setOnClickListener(this);
         findViewById(R.id.btn_stick).setOnClickListener(this);
 
-        String str="各个大哥更";
-        for(String s:str.split("")){
-            LogUtils.log("String",s);
+        String str = "各个大哥更";
+        for (String s : str.split("")) {
+            LogUtils.log("String", s);
         }
 
         /**
@@ -51,7 +56,7 @@ public class MainActivity extends BaseActivity {
         builder.append("size varied", new RelativeSizeSpan(2f), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         builder.append(" text!");
 
-        TextView tv=findViewById(R.id.tv);
+        TextView tv = findViewById(R.id.tv);
         tv.setText(builder);
 
 
@@ -72,8 +77,9 @@ public class MainActivity extends BaseActivity {
         // 设置 SpannableStringBuilder 为 TextView 的内容
         tv.setText(builder);
 
-        ProgressWeightView progressWeightView=findViewById(R.id.ProgressWeightView);
+        ProgressWeightView progressWeightView = findViewById(R.id.ProgressWeightView);
         progressWeightView.setProgress(0.1f);
+
     }
 
     @Override
