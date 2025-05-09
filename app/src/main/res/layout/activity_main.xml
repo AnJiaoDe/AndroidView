@@ -53,11 +53,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="progress" />
-    <Button
-        android:id="@+id/btn_stick"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="stick" />
     <com.cy.androidview.ScreenPercentFrameLayout
         android:layout_width="wrap_content"
         app:cy_width_percent="0.8"
@@ -76,8 +71,4 @@
         android:layout_marginTop="20dp"
         android:id="@+id/ProgressWeightView"
         android:layout_height="10dp"/>
-    <com.cy.necessaryviewmaster.TextSurfaceView
-        android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_height="200dp"/>
 </LinearLayout>
