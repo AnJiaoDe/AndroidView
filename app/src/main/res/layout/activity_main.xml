@@ -53,6 +53,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="progress" />
+    <Button
+        android:id="@+id/btn_swipe_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="swipe_activity" />
     <com.cy.androidview.ScreenPercentFrameLayout
         android:layout_width="wrap_content"
         app:cy_width_percent="0.8"
