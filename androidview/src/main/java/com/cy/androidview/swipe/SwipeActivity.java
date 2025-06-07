@@ -26,25 +26,37 @@ public class SwipeActivity extends ComponentActivity {
     private boolean draging = false;
     private float dx;
     private View contentView;
+    private SwipeLayout swipeLayout;
+    private ViewGroup decorChild;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        // 去除标题栏（必须在 setContentView 前）
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        // 设置背景透明
-        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        // 让状态栏和导航栏也透明
-        Window window = getWindow();
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-        window.setStatusBarColor(Color.TRANSPARENT);
-
         super.onCreate(savedInstanceState);
 
-        viewDecor = (ViewGroup) getWindow().getDecorView();
-        contentView = findViewById(android.R.id.content);
+        swipeLayout = new SwipeLayout(this);
+        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        getWindow().getDecorView().setBackgroundDrawable(null);
+        TransparentUtils.convertActivityToTranslucent(this);
     }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        TypedArray a = getTheme().obtainStyledAttributes(new int[]{
+                android.R.attr.windowBackground
+        });
+        int background = a.getResourceId(0, 0);
+        a.recycle();
+
+        ViewGroup decor = (ViewGroup) getWindow().getDecorView();
+        decorChild = (ViewGroup) decor.getChildAt(0);
+        decorChild.setBackgroundResource(background);
+        decor.removeView(decorChild);
+        swipeLayout.addView(decorChild, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        swipeLayout.setContentView(decorChild);
+        decor.addView(swipeLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+    }
+
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -58,8 +70,10 @@ public class SwipeActivity extends ComponentActivity {
                 float moveX = event.getX();
                 dx = moveX - downX;
                 if (dx >= SWIPE_THRESHOLD) draging = true;
-                if (draging)
-                    contentView.setTranslationX(dx);
+                if (draging){
+                    swipeLayout.setMargin_left((int) dx);
+                    swipeLayout.requestLayout();
+                }
 //                if (deltaX > SWIPE_THRESHOLD) {
 //                    finish();
 //                    overridePendingTransition(0, R.anim.slide_out_right);
@@ -71,7 +85,8 @@ public class SwipeActivity extends ComponentActivity {
                 if (dx > ScreenUtils.getScreenWidth(this) * 0.5) {
                     finish();
                 } else {
-                    contentView.setTranslationX(0);
+                    swipeLayout.setMargin_left(0);
+                    swipeLayout.requestLayout();
                 }
                 break;
         }
