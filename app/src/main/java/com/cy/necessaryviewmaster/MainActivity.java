@@ -112,7 +112,7 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.btn_swipe_activity:
                 startAppcompatActivity(AnimateActivity.class);
-                overridePendingTransition(R.anim.slide_in_right, 0); // 进入动画
+//                overridePendingTransition(R.anim.slide_in_right, 0); // 进入动画
                 break;
         }
     }

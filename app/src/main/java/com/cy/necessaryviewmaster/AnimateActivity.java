@@ -12,9 +12,9 @@ public class AnimateActivity extends SwipeActivity {
         setContentView(R.layout.activity_animate);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        overridePendingTransition(0, R.anim.slide_out_right); // 退出动画
-    }
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        overridePendingTransition(0, R.anim.slide_out_right); // 退出动画
+//    }
 }

@@ -10,7 +10,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".AnimateActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".StickActivity"
             android:exported="false" />
