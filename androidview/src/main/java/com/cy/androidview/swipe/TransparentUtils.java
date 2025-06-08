@@ -44,18 +44,18 @@ public class TransparentUtils {
      * This call has no effect on non-translucent activities or on activities
      * with the {@link android.R.attr#windowIsFloating} attribute.
      */
-    public static void convertActivityToTranslucent(Activity activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            convertActivityToTranslucentAfterL(activity);
-        } else {
-            convertActivityToTranslucentBeforeL(activity);
-        }
+    public static boolean convertActivityToTranslucent(Activity activity) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        return     convertActivityToTranslucentAfterL(activity);
+//        } else {
+//            return    convertActivityToTranslucentBeforeL(activity);
+//        }
     }
 
     /**
      * Calling the convertToTranslucent method on platforms before Android 5.0
      */
-    public static void convertActivityToTranslucentBeforeL(Activity activity) {
+    public static boolean convertActivityToTranslucentBeforeL(Activity activity) {
         try {
             Class<?>[] classes = Activity.class.getDeclaredClasses();
             Class<?> translucentConversionListenerClazz = null;
@@ -67,17 +67,19 @@ public class TransparentUtils {
             Method method = Activity.class.getDeclaredMethod("convertToTranslucent",
                     translucentConversionListenerClazz);
             method.setAccessible(true);
-            method.invoke(activity, new Object[] {
-                null
+            method.invoke(activity, new Object[]{
+                    null
             });
-        } catch (Throwable t) {
+        } catch (Exception e) {
+            return false;
         }
+        return true;
     }
 
     /**
      * Calling the convertToTranslucent method on platforms after Android 5.0
      */
-    private static void convertActivityToTranslucentAfterL(Activity activity) {
+    private static boolean convertActivityToTranslucentAfterL(Activity activity) {
         try {
             Method getActivityOptions = Activity.class.getDeclaredMethod("getActivityOptions");
             getActivityOptions.setAccessible(true);
@@ -94,7 +96,9 @@ public class TransparentUtils {
                     translucentConversionListenerClazz, ActivityOptions.class);
             convertToTranslucent.setAccessible(true);
             convertToTranslucent.invoke(activity, null, options);
-        } catch (Throwable t) {
+        } catch (Exception e) {
+            return false;
         }
+        return true;
     }
 }

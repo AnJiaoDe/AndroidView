@@ -28,6 +28,7 @@ public class SwipeActivity extends ComponentActivity {
     private View contentView;
     private SwipeLayout swipeLayout;
     private ViewGroup decorChild;
+    private boolean convertToTransed = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,7 +37,6 @@ public class SwipeActivity extends ComponentActivity {
         swipeLayout = new SwipeLayout(this);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         getWindow().getDecorView().setBackgroundDrawable(null);
-        TransparentUtils.convertActivityToTranslucent(this);
     }
 
     @Override
@@ -65,12 +65,15 @@ public class SwipeActivity extends ComponentActivity {
             case MotionEvent.ACTION_POINTER_DOWN:
                 downX = event.getX();
                 draging = false;
+                //必须在DOWN事件中设置透明，否则滑动的时候会出现黑屏的情况，GG
+                convertToTransed = TransparentUtils.convertActivityToTranslucent(this);
                 break;
             case MotionEvent.ACTION_MOVE:
+                if (!convertToTransed) break;
                 float moveX = event.getX();
                 dx = moveX - downX;
                 if (dx >= SWIPE_THRESHOLD) draging = true;
-                if (draging){
+                if (draging) {
                     swipeLayout.setMargin_left((int) dx);
                     swipeLayout.requestLayout();
                 }
@@ -82,6 +85,7 @@ public class SwipeActivity extends ComponentActivity {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_POINTER_UP:
             case MotionEvent.ACTION_CANCEL:
+                if (!convertToTransed) break;
                 if (dx > ScreenUtils.getScreenWidth(this) * 0.5) {
                     finish();
                 } else {
