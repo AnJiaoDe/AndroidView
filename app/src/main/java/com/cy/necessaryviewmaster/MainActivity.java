@@ -2,12 +2,9 @@ package com.cy.necessaryviewmaster;
 
 import static androidx.core.util.Preconditions.checkNotNull;
 
-import android.gesture.Prediction;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Looper;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
@@ -15,7 +12,6 @@ import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cy.androidview.progress.ProgressWeightView;
 
@@ -87,31 +83,31 @@ public class MainActivity extends BaseActivity {
 
         switch (v.getId()) {
             case R.id.btn_click:
-                startAppcompatActivity(ClickActivity.class);
+                startActivity(ClickActivity.class);
                 break;
             case R.id.btn_rectangle:
-                startAppcompatActivity(RectangleActivity.class);
+                startActivity(RectangleActivity.class);
                 break;
             case R.id.btn_shape:
-                startAppcompatActivity(ShapeActivity.class);
+                startActivity(ShapeActivity.class);
                 break;
             case R.id.btn_card:
-                startAppcompatActivity(CardActivity.class);
+                startActivity(CardActivity.class);
                 break;
             case R.id.btn_roundiv:
-                startAppcompatActivity(RoundedIVActivity.class);
+                startActivity(RoundedIVActivity.class);
                 break;
             case R.id.btn_selector:
-                startAppcompatActivity(SelectorActivity.class);
+                startActivity(SelectorActivity.class);
                 break;
             case R.id.btn_shadow:
-                startAppcompatActivity(ShadowActivity.class);
+                startActivity(ShadowActivity.class);
                 break;
             case R.id.btn_progress:
-                startAppcompatActivity(ProgressActivity.class);
+                startActivity(ProgressActivity.class);
                 break;
             case R.id.btn_swipe_activity:
-                startAppcompatActivity(AnimateActivity.class);
+                startActivity(AnimateActivity.class);
 //                overridePendingTransition(R.anim.slide_in_right, 0); // 进入动画
                 break;
         }
