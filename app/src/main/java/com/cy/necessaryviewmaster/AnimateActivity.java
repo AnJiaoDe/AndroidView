@@ -1,15 +1,19 @@
 package com.cy.necessaryviewmaster;
 
 import android.os.Bundle;
+import android.view.View;
 
-import com.cy.androidview.swipe.SwipeActivity;
-
-public class AnimateActivity extends SwipeActivity {
+public class AnimateActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animate);
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 
 //    @Override
