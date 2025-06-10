@@ -2,10 +2,10 @@ package com.cy.androidview.swipe;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +13,9 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.ViewCompat;
-import androidx.customview.widget.ViewDragHelper;
 
 import com.cy.androidview.LogUtils;
 import com.cy.androidview.R;
-import com.cy.androidview.ScreenUtils;
 
 public class SwipeLayout extends FrameLayout {
     private View contentView;
@@ -35,8 +33,8 @@ public class SwipeLayout extends FrameLayout {
     private float dx;
     private boolean convertToTransed = false;
     private Callback callback;
-    private ViewDragHelper viewDragHelper;
-    private int edgeFlag = ViewDragHelper.EDGE_BOTTOM;
+    private SwipeUtils swipeUtils;
+    private int edgeFlag = SwipeUtils.EDGE_ALL;
     private float scrollPercent;
     private static final float DEFAULT_SCROLL_THRESHOLD = 0.4f;
     private static final int OVERSCROLL_DISTANCE = 10;
@@ -45,7 +43,8 @@ public class SwipeLayout extends FrameLayout {
     private static final int DEFAULT_SCRIM_COLOR = 0x99000000;
     private float scrimOpacity;
     private int scrimColor = DEFAULT_SCRIM_COLOR;
-
+    private float scale;
+    private Matrix matrix;
     public SwipeLayout(Context context) {
         this(context, null);
     }
@@ -53,130 +52,131 @@ public class SwipeLayout extends FrameLayout {
     public SwipeLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
 
+        matrix=new Matrix();
         childRect = new Rect();
         drawable_shadow_left = getResources().getDrawable(R.drawable.shadow_left);
-        drawable_shadow_top = getResources().getDrawable(R.drawable.shadow_bottom);
+        drawable_shadow_top = getResources().getDrawable(R.drawable.shadow_top);
         drawable_shadow_right = getResources().getDrawable(R.drawable.shadow_right);
         drawable_shadow_bottom = getResources().getDrawable(R.drawable.shadow_bottom);
 //        setShadow(R.drawable.shadow_left, 0);
 //        setShadow(R.drawable.shadow_right, 0);
 //        setShadow(R.drawable.shadow_bottom, 0);
-        viewDragHelper = ViewDragHelper.create(this, new ViewDragHelper.Callback() {
+        swipeUtils = SwipeUtils.create(this, new SwipeUtils.Callback() {
             @Override
             public boolean tryCaptureView(@NonNull View child, int pointerId) {
-                if (viewDragHelper.isEdgeTouched(ViewDragHelper.EDGE_LEFT, pointerId)) {
-                    edgeTracking = ViewDragHelper.EDGE_LEFT;
+                if (swipeUtils.isEdgeTouched(SwipeUtils.EDGE_LEFT, pointerId)) {
+                    edgeTracking = SwipeUtils.EDGE_LEFT;
                     LogUtils.log("tryCaptureView", "EDGE_LEFT");
-                } else if (viewDragHelper.isEdgeTouched(ViewDragHelper.EDGE_TOP, pointerId)) {
-                    edgeTracking = ViewDragHelper.EDGE_TOP;
+                } else if (swipeUtils.isEdgeTouched(SwipeUtils.EDGE_TOP, pointerId)) {
+                    edgeTracking = SwipeUtils.EDGE_TOP;
                     LogUtils.log("tryCaptureView", "EDGE_TOP");
-                } else if (viewDragHelper.isEdgeTouched(ViewDragHelper.EDGE_RIGHT, pointerId)) {
-                    edgeTracking = ViewDragHelper.EDGE_RIGHT;
+                } else if (swipeUtils.isEdgeTouched(SwipeUtils.EDGE_RIGHT, pointerId)) {
+                    edgeTracking = SwipeUtils.EDGE_RIGHT;
                     LogUtils.log("tryCaptureView", "EDGE_RIGHT");
-                } else if (viewDragHelper.isEdgeTouched(ViewDragHelper.EDGE_BOTTOM, pointerId)) {
-                    edgeTracking = ViewDragHelper.EDGE_BOTTOM;
+                } else if (swipeUtils.isEdgeTouched(SwipeUtils.EDGE_BOTTOM, pointerId)) {
+                    edgeTracking = SwipeUtils.EDGE_BOTTOM;
                     LogUtils.log("tryCaptureView", "EDGE_BOTTOM");
                 }
-                boolean dragEnable = viewDragHelper.isEdgeTouched(edgeFlag, pointerId);
+                boolean dragEnable = swipeUtils.isEdgeTouched(edgeFlag, pointerId);
                 if (dragEnable && callback != null)
                     dragEnable = callback.convertActivityToTranslucent();
+                LogUtils.log("dragEnable",dragEnable);
                 return dragEnable;
             }
 
             @Override
             public int getViewHorizontalDragRange(View child) {
-                return edgeFlag & (ViewDragHelper.EDGE_LEFT | ViewDragHelper.EDGE_RIGHT);
+                return edgeFlag & (SwipeUtils.EDGE_LEFT | SwipeUtils.EDGE_RIGHT);
             }
 
             @Override
             public int getViewVerticalDragRange(View child) {
-                return edgeFlag & (ViewDragHelper.EDGE_TOP | ViewDragHelper.EDGE_BOTTOM);
+                return edgeFlag & (SwipeUtils.EDGE_TOP | SwipeUtils.EDGE_BOTTOM);
             }
-//
-//            @Override
-//            public int clampViewPositionHorizontal(View child, int left, int dx) {
-//                int ret = 0;
-//                if ((edgeTracking & ViewDragHelper.EDGE_LEFT) != 0) {
-//                    ret = Math.min(child.getWidth(), Math.max(left, 0));
-//                } else if ((edgeTracking & ViewDragHelper.EDGE_RIGHT) != 0) {
-//                    ret = Math.min(0, Math.max(left, -child.getWidth()));
-//                }
-//                return ret;
-//            }
-//
-//            @Override
-//            public int clampViewPositionVertical(View child, int top, int dy) {
-//                int ret = 0;
-//                if ((edgeTracking & ViewDragHelper.EDGE_TOP) != 0) {
-//                    ret = Math.min(child.getHeight(), Math.max(top, 0));
-//                } else if ((edgeTracking & ViewDragHelper.EDGE_BOTTOM) != 0) {
-//                    ret = Math.min(0, Math.max(top, -child.getHeight()));
-//                }
-//                return ret;
-//            }
-//
-//            @Override
-//            public void onViewPositionChanged(@NonNull View changedView, int left, int top, int dx, int dy) {
-//                super.onViewPositionChanged(changedView, left, top, dx, dy);
-//
-//                if ((edgeTracking & ViewDragHelper.EDGE_LEFT) != 0) {
+
+            @Override
+            public int clampViewPositionHorizontal(View child, int left, int dx) {
+                int ret = 0;
+                if ((edgeTracking & SwipeUtils.EDGE_LEFT) != 0) {
+                    ret = Math.min(child.getWidth(), Math.max(left, 0));
+                } else if ((edgeTracking & SwipeUtils.EDGE_RIGHT) != 0) {
+                    ret = Math.min(0, Math.max(left, -child.getWidth()));
+                }
+                return ret;
+            }
+
+            @Override
+            public int clampViewPositionVertical(View child, int top, int dy) {
+                int ret = 0;
+                if ((edgeTracking & SwipeUtils.EDGE_TOP) != 0) {
+                    ret = Math.min(child.getHeight(), Math.max(top, 0));
+                } else if ((edgeTracking & SwipeUtils.EDGE_BOTTOM) != 0) {
+                    ret = Math.min(0, Math.max(top, -child.getHeight()));
+                }
+                return ret;
+            }
+
+            @Override
+            public void onViewPositionChanged(@NonNull View changedView, int left, int top, int dx, int dy) {
+                super.onViewPositionChanged(changedView, left, top, dx, dy);
+
+//                if ((edgeTracking & SwipeUtils.EDGE_LEFT) != 0) {
 //                    scrollPercent = Math.abs((float) left
 //                            / (contentView.getWidth() + drawable_shadow_left.getIntrinsicWidth()));
-//                } else if ((edgeTracking & ViewDragHelper.EDGE_TOP) != 0) {
+//                } else if ((edgeTracking & SwipeUtils.EDGE_TOP) != 0) {
 //                    scrollPercent = Math.abs((float) top
 //                            / (contentView.getHeight() + drawable_shadow_top.getIntrinsicHeight()));
-//                } else if ((edgeTracking & ViewDragHelper.EDGE_RIGHT) != 0) {
+//                } else if ((edgeTracking & SwipeUtils.EDGE_RIGHT) != 0) {
 //                    scrollPercent = Math.abs((float) left
 //                            / (contentView.getWidth() + drawable_shadow_right.getIntrinsicWidth()));
-//                } else if ((edgeTracking & ViewDragHelper.EDGE_BOTTOM) != 0) {
+//                } else if ((edgeTracking & SwipeUtils.EDGE_BOTTOM) != 0) {
 //                    scrollPercent = Math.abs((float) top
 //                            / (contentView.getHeight() + drawable_shadow_bottom.getIntrinsicHeight()));
 //                }
-////                float scale = 1 - 0.2f * scrollPercent;
-////                contentView.setScaleX(scale);
-////                contentView.setScaleY(scale);
+//
 //                left_content = left;
 //                top_content = top;
 //                LogUtils.log("scrollPercent", scrollPercent);
 //                invalidate();
 //                if (callback != null) callback.onDragScrolled(scrollPercent);
-//            }
-//
-//
-//            @Override
-//            public void onViewReleased(@NonNull View releasedChild, float xvel, float yvel) {
-//                final int childWidth = releasedChild.getWidth();
-//                final int childHeight = releasedChild.getHeight();
-//                int left = 0, top = 0;
-//                if ((edgeTracking & ViewDragHelper.EDGE_LEFT) != 0) {
-//                    left = xvel > 0 || xvel == 0 && scrollPercent > scrollFinishThreshold ? childWidth
-//                            + drawable_shadow_left.getIntrinsicWidth() + OVERSCROLL_DISTANCE : 0;
-//                } else if ((edgeTracking & ViewDragHelper.EDGE_TOP) != 0) {
-//                    top = yvel > 0 || yvel == 0 && scrollPercent > scrollFinishThreshold ? childHeight
-//                            + drawable_shadow_bottom.getIntrinsicHeight() + OVERSCROLL_DISTANCE : 0;
-//                } else if ((edgeTracking & ViewDragHelper.EDGE_RIGHT) != 0) {
-//                    left = xvel < 0 || xvel == 0 && scrollPercent > scrollFinishThreshold ? -(childWidth
-//                            + drawable_shadow_right.getIntrinsicWidth() + OVERSCROLL_DISTANCE) : 0;
-//                } else if ((edgeTracking & ViewDragHelper.EDGE_BOTTOM) != 0) {
-//                    top = yvel < 0 || yvel == 0 && scrollPercent > scrollFinishThreshold ? -(childHeight
-//                            + drawable_shadow_bottom.getIntrinsicHeight() + OVERSCROLL_DISTANCE) : 0;
-//                }
-//                viewDragHelper.settleCapturedViewAt(left, top);
-//                invalidate();
-//            }
-//
-//            @Override
-//            public void onViewDragStateChanged(int state) {
-//                super.onViewDragStateChanged(state);
-//                if (callback != null) callback.onDragStateChange(state);
-//            }
-//
-//            @Override
-//            public void onEdgeTouched(int edgeFlags, int pointerId) {
-//                super.onEdgeTouched(edgeFlags, pointerId);
-//            }
+            }
+
+
+            @Override
+            public void onViewReleased(@NonNull View releasedChild, float xvel, float yvel) {
+                final int childWidth = releasedChild.getWidth();
+                final int childHeight = releasedChild.getHeight();
+                int left = 0, top = 0;
+                if ((edgeTracking & SwipeUtils.EDGE_LEFT) != 0) {
+                    left = xvel > 0 || xvel == 0 && scrollPercent > scrollFinishThreshold ? childWidth
+                            + drawable_shadow_left.getIntrinsicWidth() + OVERSCROLL_DISTANCE : 0;
+                } else if ((edgeTracking & SwipeUtils.EDGE_TOP) != 0) {
+                    top = yvel > 0 || yvel == 0 && scrollPercent > scrollFinishThreshold ? childHeight
+                            + drawable_shadow_bottom.getIntrinsicHeight() + OVERSCROLL_DISTANCE : 0;
+                } else if ((edgeTracking & SwipeUtils.EDGE_RIGHT) != 0) {
+                    left = xvel < 0 || xvel == 0 && scrollPercent > scrollFinishThreshold ? -(childWidth
+                            + drawable_shadow_right.getIntrinsicWidth() + OVERSCROLL_DISTANCE) : 0;
+                } else if ((edgeTracking & SwipeUtils.EDGE_BOTTOM) != 0) {
+                    top = yvel < 0 || yvel == 0 && scrollPercent > scrollFinishThreshold ? -(childHeight
+                            + drawable_shadow_bottom.getIntrinsicHeight() + OVERSCROLL_DISTANCE) : 0;
+                }
+                swipeUtils.settleCapturedViewAt(left, top);
+                invalidate();
+            }
+
+            @Override
+            public void onViewDragStateChanged(int state) {
+                super.onViewDragStateChanged(state);
+                if (callback != null) callback.onDragStateChange(state);
+            }
+
+            @Override
+            public void onEdgeTouched(int edgeFlags, int pointerId) {
+                super.onEdgeTouched(edgeFlags, pointerId);
+            }
         });
-        viewDragHelper.setEdgeTrackingEnabled(edgeFlag);
+        swipeUtils.setEdgeTrackingEnabled(edgeFlag);
+        swipeUtils.setmEdgeSize(200);
     }
 
     /**
@@ -185,26 +185,43 @@ public class SwipeLayout extends FrameLayout {
     @Override
     public void computeScroll() {
         scrimOpacity = 1 - scrollPercent;
-        if (viewDragHelper.continueSettling(true)) {
+        if (swipeUtils.continueSettling(true)) {
             ViewCompat.postInvalidateOnAnimation(this);
         }
     }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        if (contentView != null)
+        LogUtils.log("onLayout");
+        if (contentView != null){
+            // 设置缩放中心为内容视图中心
+//            contentView.setPivotX(getWidth()/ 2f);
+//            contentView.setPivotY(getHeight() / 2f);
+//            // 控制缩放比例（最小缩放到 0.9）
+//            float scale = 1 - 0.1f * scrollPercent;
+//            contentView.setScaleX(scale);
+//            contentView.setScaleY(scale);
+
             contentView.layout(left_content, top_content,
                     left_content + contentView.getMeasuredWidth(),
                     top_content + contentView.getMeasuredHeight());
+        }
     }
+
 
     @Override
     protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
         final boolean drawContent = child == contentView;
+        scale = 1 - 0.2f * scrollPercent;
+
+//        matrix.reset();
+//        matrix.postScale(scale, scale, 0.5f * contentView.getMeasuredWidth(), 0.5f * contentView.getMeasuredHeight());
+//        canvas.setMatrix(matrix);
+        
         boolean ret = super.drawChild(canvas, child, drawingTime);
-        if (scrimOpacity > 0 && drawContent && viewDragHelper.getViewDragState() != ViewDragHelper.STATE_IDLE) {
-            drawShadow(canvas, child);
-            drawScrim(canvas, child);
+        if (scrimOpacity > 0 && drawContent && swipeUtils.getViewDragState() != SwipeUtils.STATE_IDLE) {
+//            drawShadow(canvas, child);
+//            drawScrim(canvas, child);
         }
         return ret;
     }
@@ -214,13 +231,13 @@ public class SwipeLayout extends FrameLayout {
         final int alpha = (int) (baseAlpha * scrimOpacity);
         final int color = alpha << 24 | (scrimColor & 0xffffff);
 
-        if ((edgeTracking & ViewDragHelper.EDGE_LEFT) != 0) {
+        if ((edgeTracking & SwipeUtils.EDGE_LEFT) != 0) {
             canvas.clipRect(0, 0, child.getLeft(), getHeight());
-        } else if ((edgeTracking & ViewDragHelper.EDGE_RIGHT) != 0) {
+        } else if ((edgeTracking & SwipeUtils.EDGE_RIGHT) != 0) {
             canvas.clipRect(child.getRight(), 0, getRight(), getHeight());
-        } else if ((edgeTracking & ViewDragHelper.EDGE_TOP) != 0) {
+        } else if ((edgeTracking & SwipeUtils.EDGE_TOP) != 0) {
             canvas.clipRect(child.getLeft(), 0, getRight(), child.getTop());
-        } else if ((edgeTracking & ViewDragHelper.EDGE_BOTTOM) != 0) {
+        } else if ((edgeTracking & SwipeUtils.EDGE_BOTTOM) != 0) {
             canvas.clipRect(child.getLeft(), child.getBottom(), getRight(), getHeight());
         }
         canvas.drawColor(color);
@@ -228,7 +245,7 @@ public class SwipeLayout extends FrameLayout {
 
     private void drawShadow(Canvas canvas, View child) {
         child.getHitRect(childRect);
-        if ((edgeFlag & ViewDragHelper.EDGE_LEFT) != 0) {
+        if ((edgeFlag & SwipeUtils.EDGE_LEFT) != 0) {
             drawable_shadow_left.setBounds(childRect.left - drawable_shadow_left.getIntrinsicWidth(),
                     childRect.top,
                     childRect.left,
@@ -237,7 +254,7 @@ public class SwipeLayout extends FrameLayout {
             drawable_shadow_left.draw(canvas);
         }
 
-        if ((edgeFlag & ViewDragHelper.EDGE_RIGHT) != 0) {
+        if ((edgeFlag & SwipeUtils.EDGE_RIGHT) != 0) {
             drawable_shadow_right.setBounds(childRect.right,
                     childRect.top,
                     childRect.right + drawable_shadow_right.getIntrinsicWidth(),
@@ -246,7 +263,7 @@ public class SwipeLayout extends FrameLayout {
             drawable_shadow_right.draw(canvas);
         }
 
-        if ((edgeFlag & ViewDragHelper.EDGE_TOP) != 0) {
+        if ((edgeFlag & SwipeUtils.EDGE_TOP) != 0) {
             drawable_shadow_top.setBounds(childRect.left,
                     childRect.top - drawable_shadow_bottom.getIntrinsicHeight(),
                     childRect.right,
@@ -254,7 +271,7 @@ public class SwipeLayout extends FrameLayout {
             drawable_shadow_top.setAlpha((int) (scrimOpacity * 255));
             drawable_shadow_top.draw(canvas);
         }
-        if ((edgeFlag & ViewDragHelper.EDGE_BOTTOM) != 0) {
+        if ((edgeFlag & SwipeUtils.EDGE_BOTTOM) != 0) {
             drawable_shadow_bottom.setBounds(childRect.left,
                     childRect.bottom,
                     childRect.right,
@@ -266,12 +283,12 @@ public class SwipeLayout extends FrameLayout {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return viewDragHelper.shouldInterceptTouchEvent(ev);
+        return swipeUtils.shouldInterceptTouchEvent(ev);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        viewDragHelper.processTouchEvent(event);
+        swipeUtils.processTouchEvent(event);
         return true;
     }
 
