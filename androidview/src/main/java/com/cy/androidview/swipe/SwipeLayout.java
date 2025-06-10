@@ -19,8 +19,8 @@ import com.cy.androidview.R;
 
 public class SwipeLayout extends FrameLayout {
     private View contentView;
-    private int left_content;
-    private int top_content;
+//    private int left_content;
+//    private int top_content;
     private Drawable drawable_shadow_left;
     private Drawable drawable_shadow_top;
     private Drawable drawable_shadow_right;
@@ -98,8 +98,10 @@ public class SwipeLayout extends FrameLayout {
             public int clampViewPositionHorizontal(View child, int left, int dx) {
                 int ret = 0;
                 if ((edgeTracking & SwipeUtils.EDGE_LEFT) != 0) {
+                    LogUtils.log("clampViewPositionHorizontal","EDGE_LEFT");
                     ret = Math.min(child.getWidth(), Math.max(left, 0));
                 } else if ((edgeTracking & SwipeUtils.EDGE_RIGHT) != 0) {
+                    LogUtils.log("clampViewPositionHorizontal","EDGE_RIGHT");
                     ret = Math.min(0, Math.max(left, -child.getWidth()));
                 }
                 return ret;
@@ -109,8 +111,10 @@ public class SwipeLayout extends FrameLayout {
             public int clampViewPositionVertical(View child, int top, int dy) {
                 int ret = 0;
                 if ((edgeTracking & SwipeUtils.EDGE_TOP) != 0) {
+                    LogUtils.log("clampViewPositionVertical","EDGE_TOP");
                     ret = Math.min(child.getHeight(), Math.max(top, 0));
                 } else if ((edgeTracking & SwipeUtils.EDGE_BOTTOM) != 0) {
+                    LogUtils.log("clampViewPositionVertical","EDGE_BOTTOM");
                     ret = Math.min(0, Math.max(top, -child.getHeight()));
                 }
                 return ret;
@@ -120,25 +124,25 @@ public class SwipeLayout extends FrameLayout {
             public void onViewPositionChanged(@NonNull View changedView, int left, int top, int dx, int dy) {
                 super.onViewPositionChanged(changedView, left, top, dx, dy);
 
-//                if ((edgeTracking & SwipeUtils.EDGE_LEFT) != 0) {
-//                    scrollPercent = Math.abs((float) left
-//                            / (contentView.getWidth() + drawable_shadow_left.getIntrinsicWidth()));
-//                } else if ((edgeTracking & SwipeUtils.EDGE_TOP) != 0) {
-//                    scrollPercent = Math.abs((float) top
-//                            / (contentView.getHeight() + drawable_shadow_top.getIntrinsicHeight()));
-//                } else if ((edgeTracking & SwipeUtils.EDGE_RIGHT) != 0) {
-//                    scrollPercent = Math.abs((float) left
-//                            / (contentView.getWidth() + drawable_shadow_right.getIntrinsicWidth()));
-//                } else if ((edgeTracking & SwipeUtils.EDGE_BOTTOM) != 0) {
-//                    scrollPercent = Math.abs((float) top
-//                            / (contentView.getHeight() + drawable_shadow_bottom.getIntrinsicHeight()));
-//                }
+                if ((edgeTracking & SwipeUtils.EDGE_LEFT) != 0) {
+                    scrollPercent = Math.abs((float) left
+                            / (contentView.getWidth() + drawable_shadow_left.getIntrinsicWidth()));
+                } else if ((edgeTracking & SwipeUtils.EDGE_TOP) != 0) {
+                    scrollPercent = Math.abs((float) top
+                            / (contentView.getHeight() + drawable_shadow_top.getIntrinsicHeight()));
+                } else if ((edgeTracking & SwipeUtils.EDGE_RIGHT) != 0) {
+                    scrollPercent = Math.abs((float) left
+                            / (contentView.getWidth() + drawable_shadow_right.getIntrinsicWidth()));
+                } else if ((edgeTracking & SwipeUtils.EDGE_BOTTOM) != 0) {
+                    scrollPercent = Math.abs((float) top
+                            / (contentView.getHeight() + drawable_shadow_bottom.getIntrinsicHeight()));
+                }
 //
 //                left_content = left;
 //                top_content = top;
 //                LogUtils.log("scrollPercent", scrollPercent);
-//                invalidate();
-//                if (callback != null) callback.onDragScrolled(scrollPercent);
+                invalidate();
+                if (callback != null) callback.onDragScrolled(scrollPercent);
             }
 
 
@@ -192,19 +196,8 @@ public class SwipeLayout extends FrameLayout {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        LogUtils.log("onLayout");
         if (contentView != null){
-            // 设置缩放中心为内容视图中心
-//            contentView.setPivotX(getWidth()/ 2f);
-//            contentView.setPivotY(getHeight() / 2f);
-//            // 控制缩放比例（最小缩放到 0.9）
-//            float scale = 1 - 0.1f * scrollPercent;
-//            contentView.setScaleX(scale);
-//            contentView.setScaleY(scale);
-
-            contentView.layout(left_content, top_content,
-                    left_content + contentView.getMeasuredWidth(),
-                    top_content + contentView.getMeasuredHeight());
+            contentView.layout(0, 0, contentView.getMeasuredWidth(),contentView.getMeasuredHeight());
         }
     }
 
@@ -212,11 +205,11 @@ public class SwipeLayout extends FrameLayout {
     @Override
     protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
         final boolean drawContent = child == contentView;
-        scale = 1 - 0.2f * scrollPercent;
+        scale = 1 - scrollPercent;
 
-//        matrix.reset();
-//        matrix.postScale(scale, scale, 0.5f * contentView.getMeasuredWidth(), 0.5f * contentView.getMeasuredHeight());
-//        canvas.setMatrix(matrix);
+        matrix.reset();
+        matrix.postScale(scale, scale, 0.5f * contentView.getMeasuredWidth(), 0.5f * contentView.getMeasuredHeight());
+        canvas.setMatrix(matrix);
         
         boolean ret = super.drawChild(canvas, child, drawingTime);
         if (scrimOpacity > 0 && drawContent && swipeUtils.getViewDragState() != SwipeUtils.STATE_IDLE) {
@@ -319,13 +312,13 @@ public class SwipeLayout extends FrameLayout {
         this.contentView = contentView;
     }
 
-    public void setLeft_content(int left_content) {
-        this.left_content = left_content;
-    }
-
-    public void setTop_content(int top_content) {
-        this.top_content = top_content;
-    }
+//    public void setLeft_content(int left_content) {
+//        this.left_content = left_content;
+//    }
+//
+//    public void setTop_content(int top_content) {
+//        this.top_content = top_content;
+//    }
 
     public static interface Callback {
         public boolean convertActivityToTranslucent();

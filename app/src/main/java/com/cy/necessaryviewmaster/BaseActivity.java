@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.cy.androidview.swipe.SwipeBackLayout;
 import com.cy.androidview.swipe.SwipeLayout;
 import com.cy.androidview.swipe.TransparentUtils;
 
@@ -23,8 +24,9 @@ import com.cy.androidview.swipe.TransparentUtils;
  */
 
 public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener {
-    private SwipeLayout swipeLayout;
+    //    private SwipeLayout swipeLayout;
     private ViewGroup decorChild;
+    private SwipeBackLayout swipeBackLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,20 +34,18 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         getWindow().getDecorView().setBackgroundDrawable(null);
 
-        swipeLayout = new SwipeLayout(this);
-        swipeLayout.setCallback(new SwipeLayout.Callback() {
+        swipeBackLayout = new SwipeBackLayout(this);
+        swipeBackLayout.setCallback(new SwipeBackLayout.Callback() {
             @Override
             public boolean convertActivityToTranslucent() {
                 return TransparentUtils.convertActivityToTranslucent(BaseActivity.this);
             }
 
             @Override
-            public void onDragScrolled(float scrollPercent) {
-                if (scrollPercent >= 1) {
-                    if (!isFinishing()) {
-                        finish();
-                        overridePendingTransition(0, 0);
-                    }
+            public void onFinishActivity(float dx, float dy) {
+                if (!isFinishing()) {
+                    finish();
+                    overridePendingTransition(0, 0);
                 }
             }
 
@@ -69,10 +69,11 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         decorChild = (ViewGroup) decor.getChildAt(0);
         decorChild.setBackgroundResource(background);
         decor.removeView(decorChild);
-        swipeLayout.addView(decorChild, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        swipeLayout.setContentView(decorChild);
-        decor.addView(swipeLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        swipeBackLayout.addView(decorChild, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        swipeBackLayout.setContentView(decorChild);
+        decor.addView(swipeBackLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
+
     public void showToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
