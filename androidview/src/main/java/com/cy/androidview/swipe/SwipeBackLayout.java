@@ -15,6 +15,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
@@ -47,16 +48,22 @@ public class SwipeBackLayout extends FrameLayout {
     private float end_y;
     private boolean onScaling = false;
     private Activity activity;
-
+    private float downX;
+    private float downY;
+    private float touchSlop;
     public SwipeBackLayout(@NonNull final Activity activity) {
         super(activity);
         this.activity = activity;
+        final ViewConfiguration viewConfiguration = ViewConfiguration.get(getContext());
+        touchSlop = viewConfiguration.getScaledTouchSlop();
         gestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
             //注意：多指触摸缩放的时候，这里也会回调
             @Override
             public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
                 translate_x = Math.max(-getWidth(), Math.min(getWidth(), translate_x - distanceX));
                 translate_y = Math.max(-getHeight(), Math.min(getHeight(), translate_y - distanceY));
+                LogUtils.log("onScroll",distanceX);
+                LogUtils.log("onScroll  translate_y",distanceY);
                 if (dragState == STATE_IDLE && (Math.abs(translate_x) > edgeSize || Math.abs(translate_y) > edgeSize)) {
                     //convertActivityToTranslucent 这里也是必须得，苟泽GG
                     dragState = TransparentUtils.convertActivityToTranslucent(activity) ? STATE_DRAGGING : STATE_IDLE;
@@ -66,7 +73,7 @@ public class SwipeBackLayout extends FrameLayout {
                         // 方法一：使用 Math.hypot（推荐）
                         double distance = Math.hypot(Math.abs(translate_x) - getWidth() * 0.5, Math.abs(translate_y) - getHeight() * 0.5);
 //                        double distance = Math.sqrt(Math.pow(Math.abs(translate_x) - getWidth() * 0.5, 2) + Math.pow(Math.abs(translate_y) - getHeight() * 0.5, 2));
-                        zoom = (float) (distance / Math.hypot(0 - getWidth() * 0.5, 0 - getHeight() * 0.5));
+//                        zoom = (float) (distance / Math.hypot(0 - getWidth() * 0.5, 0 - getHeight() * 0.5));
                     }
                     invalidate();
                 }
@@ -110,6 +117,127 @@ public class SwipeBackLayout extends FrameLayout {
         canvas.translate(translate_x, translate_y);
         super.dispatchDraw(canvas);
     }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        LogUtils.log("dispatchTouchEvent");
+        //处理多指触摸，这2个玩意是不能少的，否则贼复杂，还搞不定
+        scaleGestureDetector.onTouchEvent(event);
+        gestureDetector.onTouchEvent(event);
+        switch (event.getActionMasked()) {
+            case MotionEvent.ACTION_DOWN:
+                translate_x = 0;
+                translate_y = 0;
+                dragState = STATE_IDLE;
+                onScaling = false;
+                break;
+            case MotionEvent.ACTION_POINTER_DOWN:
+                break;
+            case MotionEvent.ACTION_MOVE:
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_POINTER_UP:
+            case MotionEvent.ACTION_CANCEL:
+                if (dragState != STATE_DRAGGING) {
+                    translate_x = 0;
+                    translate_y = 0;
+                }
+                start_x = translate_x;
+                start_y = translate_y;
+                end_x = 0;
+                end_y = 0;
+                finishActivity = false;
+                if (!onScaling && (Math.abs(translate_x) > getWidth() * 0.5f || Math.abs(translate_y) > getWidth() * 0.5f)) {
+                    finishActivity = true;
+                    if (Math.abs(translate_x) / getWidth() > Math.abs(translate_y) / getHeight()) {
+                        end_x = translate_x > 0 ? getWidth() : -getWidth();
+                        end_y = translate_y;
+                    } else {
+                        end_x = translate_x;
+                        end_y = translate_y > 0 ? getHeight() : -getHeight();
+                    }
+                }
+                float start;
+                float end;
+                if (Math.abs(end_x - start_x) > Math.abs(end_y - start_y)) {
+                    start = start_x;
+                    end = end_x;
+                } else {
+                    start = start_y;
+                    end = end_y;
+                }
+                final float tx = translate_x;
+                final float ty = translate_y;
+                final float z = zoom;
+                ValueAnimator valueAnimator = ValueAnimator.ofFloat(start, end);
+                valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        translate_x = tx + animation.getAnimatedFraction() * (end_x - start_x);
+                        translate_y = ty + animation.getAnimatedFraction() * (end_y - start_y);
+                        //退出做缩放会导致动画太快，贼丑
+                        if (!finishActivity) zoom = z + animation.getAnimatedFraction() * (1 - z);
+                        invalidate();
+                    }
+                });
+
+                valueAnimator.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        if (finishActivity) {
+                            if (!activity.isFinishing()) {
+                                activity.finish();
+                                activity.overridePendingTransition(0, 0);
+                            }
+                        }
+                    }
+                });
+                valueAnimator.setDuration(300);
+                valueAnimator.setInterpolator(new DecelerateInterpolator());
+                valueAnimator.setEvaluator(new FloatEvaluator());
+                valueAnimator.start();
+                break;
+        }
+        return super.dispatchTouchEvent(event);
+    }
+//    @Override
+//    public boolean onInterceptTouchEvent(MotionEvent event) {
+//        switch (event.getActionMasked()) {
+//            case MotionEvent.ACTION_DOWN:
+//                translate_x = 0;
+//                translate_y = 0;
+//                dragState = STATE_IDLE;
+//                onScaling = false;
+//
+//                downX = event.getX();
+//                downY = event.getY();
+//                break;
+//            case MotionEvent.ACTION_POINTER_DOWN:
+//                downX = event.getX();
+//                downY = event.getY();
+//                break;
+//            case MotionEvent.ACTION_MOVE:
+//                float moveX = event.getX();
+//                float moveY = event.getY();
+//                float dx = Math.abs(moveX - downX);
+//                float dy = Math.abs(moveY - downY);
+//                downX = moveX;
+//                downY = moveY;
+//                boolean moveH = dx > touchSlop*0.5 && dx >= dy;
+//                LogUtils.log("moveH",dx);
+//                LogUtils.log("moveH  dy",dy);
+//                if (moveH && !contentView.canScrollHorizontally(-1)) return true;
+////                if (dx > dy && !canScrollHorizontal(this, false, 1, moveX, moveY)) return true;
+////                if (dx < dy && !canScrollVertical(this, false, 1, moveX, moveY)) return true;
+//                break;
+//            case MotionEvent.ACTION_UP:
+//            case MotionEvent.ACTION_POINTER_UP:
+//            case MotionEvent.ACTION_CANCEL:
+//                break;
+//        }
+//        return super.onInterceptTouchEvent(event);
+//    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -191,7 +319,7 @@ public class SwipeBackLayout extends FrameLayout {
                 valueAnimator.start();
                 break;
         }
-        //必须true 否则GG
+        //必须是true ,否则GG
         return true;
     }
 
@@ -208,6 +336,49 @@ public class SwipeBackLayout extends FrameLayout {
         addView(decorChild, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         contentView = decorChild;
         decor.addView(this, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+    }
+
+    private boolean canScrollHorizontal(@NonNull View v, boolean checkV, float dx, float x, float y) {
+        if (v instanceof ViewGroup) {
+            final ViewGroup group = (ViewGroup) v;
+            final int scrollX = v.getScrollX();
+            final int scrollY = v.getScrollY();
+            final int count = group.getChildCount();
+            // Count backwards - let topmost views consume scroll distance first.
+            for (int i = count - 1; i >= 0; i--) {
+                // TODO: Add versioned support here for transformed views.
+                // This will not work for transformed views in Honeycomb+
+                final View child = group.getChildAt(i);
+                if (x + scrollX >= child.getLeft() && x + scrollX < child.getRight()
+                        && y + scrollY >= child.getTop() && y + scrollY < child.getBottom()
+                        && canScrollHorizontal(child, true, dx, x + scrollX - child.getLeft(),
+                        y + scrollY - child.getTop())) {
+                    return true;
+                }
+            }
+        }
+        return checkV && v.canScrollHorizontally((int) -dx);
+    }
+    private boolean canScrollVertical(@NonNull View v, boolean checkV, float dy, float x, float y) {
+        if (v instanceof ViewGroup) {
+            final ViewGroup group = (ViewGroup) v;
+            final int scrollX = v.getScrollX();
+            final int scrollY = v.getScrollY();
+            final int count = group.getChildCount();
+            // Count backwards - let topmost views consume scroll distance first.
+            for (int i = count - 1; i >= 0; i--) {
+                // TODO: Add versioned support here for transformed views.
+                // This will not work for transformed views in Honeycomb+
+                final View child = group.getChildAt(i);
+                if (x + scrollX >= child.getLeft() && x + scrollX < child.getRight()
+                        && y + scrollY >= child.getTop() && y + scrollY < child.getBottom()
+                        && canScrollVertical(child, true, dy, x + scrollX - child.getLeft(),
+                        y + scrollY - child.getTop())) {
+                    return true;
+                }
+            }
+        }
+        return checkV && v.canScrollVertically((int) -dy);
     }
 
     public void setEdgeSize(float edgeSize) {
