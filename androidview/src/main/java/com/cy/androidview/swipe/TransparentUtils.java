@@ -3,6 +3,8 @@ package com.cy.androidview.swipe;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 
 import java.lang.reflect.Method;
@@ -44,43 +46,47 @@ public class TransparentUtils {
      * This call has no effect on non-translucent activities or on activities
      * with the {@link android.R.attr#windowIsFloating} attribute.
      */
-    public static boolean convertActivityToTranslucent(Activity activity) {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        return     convertActivityToTranslucentAfterL(activity);
-//        } else {
-//            return    convertActivityToTranslucentBeforeL(activity);
-//        }
-    }
+//    public static boolean convertActivityToTranslucent(Activity activity) {
+////        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//        return convertActivityToTranslucentAfterL(activity);
+////        } else {
+////            return    convertActivityToTranslucentBeforeL(activity);
+////        }
+//    }
 
     /**
      * Calling the convertToTranslucent method on platforms before Android 5.0
      */
-    public static boolean convertActivityToTranslucentBeforeL(Activity activity) {
-        try {
-            Class<?>[] classes = Activity.class.getDeclaredClasses();
-            Class<?> translucentConversionListenerClazz = null;
-            for (Class clazz : classes) {
-                if (clazz.getSimpleName().contains("TranslucentConversionListener")) {
-                    translucentConversionListenerClazz = clazz;
-                }
-            }
-            Method method = Activity.class.getDeclaredMethod("convertToTranslucent",
-                    translucentConversionListenerClazz);
-            method.setAccessible(true);
-            method.invoke(activity, new Object[]{
-                    null
-            });
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
+//    public static boolean convertActivityToTranslucentBeforeL(Activity activity) {
+//        try {
+//            Class<?>[] classes = Activity.class.getDeclaredClasses();
+//            Class<?> translucentConversionListenerClazz = null;
+//            for (Class clazz : classes) {
+//                if (clazz.getSimpleName().contains("TranslucentConversionListener")) {
+//                    translucentConversionListenerClazz = clazz;
+//                }
+//            }
+//            Method method = Activity.class.getDeclaredMethod("convertToTranslucent",
+//                    translucentConversionListenerClazz);
+//            method.setAccessible(true);
+//            method.invoke(activity, new Object[]{
+//                    null
+//            });
+//        } catch (Exception e) {
+//            return false;
+//        }
+//        return true;
+//    }
 
     /**
      * Calling the convertToTranslucent method on platforms after Android 5.0
      */
-    private static boolean convertActivityToTranslucentAfterL(Activity activity) {
+    public static boolean convertActivityToTranslucent(Activity activity) {
         try {
+            //不能少，否则不灵
+            activity.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            activity.getWindow().getDecorView().setBackgroundDrawable(null);
+
             Method getActivityOptions = Activity.class.getDeclaredMethod("getActivityOptions");
             getActivityOptions.setAccessible(true);
             Object options = getActivityOptions.invoke(activity);
