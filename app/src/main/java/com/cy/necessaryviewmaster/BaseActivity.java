@@ -9,8 +9,6 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.cy.androidview.LogUtils;
 import com.cy.androidview.swipeview.SwipeBackLayout;
 import com.cy.androidview.swipeview.TransparentUtils;
 

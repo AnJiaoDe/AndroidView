@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.Px;
 
-import com.cy.androidview.LogUtils;
 import com.cy.androidview.R;
 import com.cy.androidview.ScreenUtils;
 import com.cy.androidview.rectangleview.IRectangle;

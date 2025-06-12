@@ -89,9 +89,7 @@ public class BitmapUtils {
 //            exifInterface.saveAttributes();
         } catch (IOException e) {
             e.printStackTrace();
-            LogUtils.log("getPicDegree", e.getMessage());
         }
-        LogUtils.log("getPicDegree", degree);
         return degree;
     }
 
@@ -566,7 +564,6 @@ public class BitmapUtils {
         BitmapFactory.decodeFile(path, options);
         // Calculate inSampleSize
         options.inSampleSize = calculateInSampleSize(options, reqWidthxreqHeight);
-        LogUtils.log("inSampleSize", options.inSampleSize);
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;//如此，方可decode bitmap
 
