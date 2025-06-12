@@ -1,16 +1,12 @@
-package com.cy.androidview.swipe;
+package com.cy.androidview.swipeview;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.FloatEvaluator;
-import android.animation.IntEvaluator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
-import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.telecom.Call;
-import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -20,14 +16,8 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.view.ViewCompat;
-
-import com.cy.androidview.LogUtils;
-import com.cy.androidview.R;
 
 public class SwipeBackLayout extends FrameLayout {
     private View contentView;
@@ -38,7 +28,6 @@ public class SwipeBackLayout extends FrameLayout {
     private float translate_x, translate_y;
     private GestureDetector gestureDetector;
     private ScaleGestureDetector scaleGestureDetector;
-
     public static final int STATE_IDLE = 0;
     public static final int STATE_DRAGGING = 1;
     public static final int STATE_SETTLING = 2;
@@ -50,44 +39,28 @@ public class SwipeBackLayout extends FrameLayout {
     private float end_y;
     private boolean onScaling = false;
     private Activity activity;
-    private float downX;
-    private float downY;
-    private float touchSlop;
-    private float moveX;
-    private float moveY;
     private VelocityTracker velocityTracker;
     private float maxVelocity;
     private float minVelocity;
-
-    private float dx;
-    private float dy;
 
     public SwipeBackLayout(@NonNull final Activity activity) {
         super(activity);
         this.activity = activity;
         final ViewConfiguration viewConfiguration = ViewConfiguration.get(getContext());
-        touchSlop = viewConfiguration.getScaledTouchSlop();
         maxVelocity = viewConfiguration.getScaledMaximumFlingVelocity();
         minVelocity = viewConfiguration.getScaledMinimumFlingVelocity();
-
-//        LogUtils.log("minVelocity", minVelocity);
-//        LogUtils.log("maxVelocity", maxVelocity);
         gestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
-            //注意：多指触摸缩放的时候，这里也会回调
+            //注意：多指触摸缩放的时候，这里也会回调,e1是down ,e2是move
             @Override
             public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-                dx = distanceX;
-                dy = distanceY;
-                if (distanceX < 0 && !canScrollHorizontal(SwipeBackLayout.this, false, 1, moveX, moveY)
-                        || distanceX > 0 && !canScrollHorizontal(SwipeBackLayout.this, false, -1, moveX, moveY)) {
+                if (distanceX < 0 && !canScrollHorizontal(SwipeBackLayout.this, false, 1, e1.getX(), e1.getY())
+                        || distanceX > 0 && !canScrollHorizontal(SwipeBackLayout.this, false, -1, e1.getX(), e1.getY())) {
                     translate_x = Math.max(-getWidth(), Math.min(getWidth(), translate_x - distanceX));
                 }
-                if (distanceY < 0 && !canScrollVertical(SwipeBackLayout.this, false, 1, moveX, moveY)
-                        || distanceY > 0 && !canScrollVertical(SwipeBackLayout.this, false, -1, moveX, moveY)) {
+                if (distanceY < 0 && !canScrollVertical(SwipeBackLayout.this, false, 1, e1.getX(), e1.getY())
+                        || distanceY > 0 && !canScrollVertical(SwipeBackLayout.this, false, -1, e1.getX(), e1.getY())) {
                     translate_y = Math.max(-getHeight(), Math.min(getHeight(), translate_y - distanceY));
                 }
-//                LogUtils.log("onScroll", distanceX);
-//                LogUtils.log("onScroll  translate_y", distanceY);
                 if (dragState == STATE_IDLE && (Math.abs(translate_x) > edgeSize || Math.abs(translate_y) > edgeSize)) {
                     //convertActivityToTranslucent 这里也是必须得，苟泽GG
                     dragState = TransparentUtils.convertActivityToTranslucent(activity) ? STATE_DRAGGING : STATE_IDLE;
@@ -97,7 +70,7 @@ public class SwipeBackLayout extends FrameLayout {
                         // 方法一：使用 Math.hypot（推荐）
                         double distance = Math.hypot(Math.abs(translate_x) - getWidth() * 0.5, Math.abs(translate_y) - getHeight() * 0.5);
 //                        double distance = Math.sqrt(Math.pow(Math.abs(translate_x) - getWidth() * 0.5, 2) + Math.pow(Math.abs(translate_y) - getHeight() * 0.5, 2));
-//                        zoom = (float) (distance / Math.hypot(0 - getWidth() * 0.5, 0 - getHeight() * 0.5));
+                        zoom = (float) (distance / Math.hypot(0 - getWidth() * 0.5, 0 - getHeight() * 0.5));
                     }
                     invalidate();
                 }
@@ -124,7 +97,7 @@ public class SwipeBackLayout extends FrameLayout {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        if (edgeSize < 0) edgeSize = w * 0.3f;
+        if (edgeSize < 0) edgeSize = w * 0.4f;
     }
 
     @Override
@@ -149,7 +122,6 @@ public class SwipeBackLayout extends FrameLayout {
             velocityTracker = VelocityTracker.obtain();
         }
         velocityTracker.addMovement(event);
-        final int actionIndex = event.getActionIndex();
         //处理多指触摸，这2个玩意是不能少的，否则贼复杂，还搞不定
         scaleGestureDetector.onTouchEvent(event);
         gestureDetector.onTouchEvent(event);
@@ -163,20 +135,13 @@ public class SwipeBackLayout extends FrameLayout {
             case MotionEvent.ACTION_POINTER_DOWN:
                 break;
             case MotionEvent.ACTION_MOVE:
-                moveX = event.getX();
-                moveY = event.getY();
-//                if (Math.abs(dx) >= Math.abs(dy) && (dx < 0 && !canScrollHorizontal(SwipeBackLayout.this, false, 1, moveX, moveY)
-//                        || dx > 0 && !canScrollHorizontal(SwipeBackLayout.this, false, -1, moveX, moveY)))
-//                    return true;
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_POINTER_UP:
             case MotionEvent.ACTION_CANCEL:
                 velocityTracker.computeCurrentVelocity(1000, maxVelocity);
-//                int pointerId=event.getPointerId(actionIndex);
                 final float xvel = clampMag(velocityTracker.getXVelocity(), minVelocity, maxVelocity);
                 final float yvel = clampMag(velocityTracker.getYVelocity(), minVelocity, maxVelocity);
-
                 velocityTracker.recycle();
                 velocityTracker = null;
 
@@ -189,10 +154,8 @@ public class SwipeBackLayout extends FrameLayout {
                 end_x = 0;
                 end_y = 0;
                 finishActivity = false;
-//                LogUtils.log("xvel", xvel);
-//                LogUtils.log("yvel", yvel);
                 if (!onScaling && dragState == STATE_DRAGGING) {
-                    if (Math.abs(xvel) > minVelocity || Math.abs(yvel) > minVelocity) {
+                    if (Math.abs(xvel) > minVelocity + (maxVelocity - minVelocity) * 0.2 || Math.abs(yvel) > minVelocity + (maxVelocity - minVelocity) * 0.2) {
                         finishActivity = true;
                         if (Math.abs(xvel) > Math.abs(yvel)) {
                             end_x = xvel > minVelocity ? getWidth() : -getWidth();
@@ -229,6 +192,7 @@ public class SwipeBackLayout extends FrameLayout {
                 valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                     @Override
                     public void onAnimationUpdate(ValueAnimator animation) {
+                        dragState = STATE_SETTLING;
                         translate_x = tx + animation.getAnimatedFraction() * (end_x - start_x);
                         translate_y = ty + animation.getAnimatedFraction() * (end_y - start_y);
                         //退出做缩放会导致动画太快，贼丑
@@ -241,6 +205,7 @@ public class SwipeBackLayout extends FrameLayout {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         super.onAnimationEnd(animation);
+                        dragState = STATE_IDLE;
                         if (finishActivity) {
                             if (!activity.isFinishing()) {
                                 activity.finish();
@@ -260,109 +225,9 @@ public class SwipeBackLayout extends FrameLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-//        LogUtils.log("onTouchEvent");
-//        if (velocityTracker == null) {
-//            velocityTracker = VelocityTracker.obtain();
-//        }
-//        velocityTracker.addMovement(event);
-//        final int actionIndex = event.getActionIndex();
         //处理多指触摸，这2个玩意是不能少的，否则贼复杂，还搞不定
         scaleGestureDetector.onTouchEvent(event);
         gestureDetector.onTouchEvent(event);
-//        switch (event.getActionMasked()) {
-//            case MotionEvent.ACTION_DOWN:
-//                translate_x = 0;
-//                translate_y = 0;
-//                dragState = STATE_IDLE;
-//                onScaling = false;
-//                break;
-//            case MotionEvent.ACTION_POINTER_DOWN:
-//                break;
-//            case MotionEvent.ACTION_MOVE:
-//                break;
-//            case MotionEvent.ACTION_UP:
-//            case MotionEvent.ACTION_POINTER_UP:
-//            case MotionEvent.ACTION_CANCEL:
-//                velocityTracker.computeCurrentVelocity(1000, maxVelocity);
-////                int pointerId=event.getPointerId(actionIndex);
-//                final float xvel = clampMag(velocityTracker.getXVelocity(), minVelocity, maxVelocity);
-//                final float yvel = clampMag(velocityTracker.getYVelocity(), minVelocity, maxVelocity);
-//
-//                velocityTracker.recycle();
-//                velocityTracker = null;
-//
-//                if (dragState != STATE_DRAGGING) {
-//                    translate_x = 0;
-//                    translate_y = 0;
-//                }
-//                start_x = translate_x;
-//                start_y = translate_y;
-//                end_x = 0;
-//                end_y = 0;
-//                finishActivity = false;
-//                LogUtils.log("xvel", xvel);
-//                LogUtils.log("yvel", yvel);
-//                if (xvel > minVelocity) {
-//                    finishActivity = true;
-////                    if (Math.abs(translate_x) / getWidth() > Math.abs(translate_y) / getHeight()) {
-//                    end_x = translate_x > 0 ? getWidth() : -getWidth();
-//                    end_y = translate_y;
-////                    } else {
-////                        end_x = translate_x;
-////                        end_y = translate_y > 0 ? getHeight() : -getHeight();
-////                    }
-//                } else if (!onScaling && (Math.abs(translate_x) > getWidth() * 0.5f || Math.abs(translate_y) > getWidth() * 0.5f)) {
-//                    finishActivity = true;
-//                    if (Math.abs(translate_x) / getWidth() > Math.abs(translate_y) / getHeight()) {
-//                        end_x = translate_x > 0 ? getWidth() : -getWidth();
-//                        end_y = translate_y;
-//                    } else {
-//                        end_x = translate_x;
-//                        end_y = translate_y > 0 ? getHeight() : -getHeight();
-//                    }
-//                }
-//                float start;
-//                float end;
-//                if (Math.abs(end_x - start_x) > Math.abs(end_y - start_y)) {
-//                    start = start_x;
-//                    end = end_x;
-//                } else {
-//                    start = start_y;
-//                    end = end_y;
-//                }
-//                final float tx = translate_x;
-//                final float ty = translate_y;
-//                final float z = zoom;
-//                ValueAnimator valueAnimator = ValueAnimator.ofFloat(start, end);
-//                valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-//                    @Override
-//                    public void onAnimationUpdate(ValueAnimator animation) {
-//                        translate_x = tx + animation.getAnimatedFraction() * (end_x - start_x);
-//                        translate_y = ty + animation.getAnimatedFraction() * (end_y - start_y);
-//                        //退出做缩放会导致动画太快，贼丑
-//                        if (!finishActivity) zoom = z + animation.getAnimatedFraction() * (1 - z);
-//                        invalidate();
-//                    }
-//                });
-//
-//                valueAnimator.addListener(new AnimatorListenerAdapter() {
-//                    @Override
-//                    public void onAnimationEnd(Animator animation) {
-//                        super.onAnimationEnd(animation);
-//                        if (finishActivity) {
-//                            if (!activity.isFinishing()) {
-//                                activity.finish();
-//                                activity.overridePendingTransition(0, 0);
-//                            }
-//                        }
-//                    }
-//                });
-//                valueAnimator.setDuration(300);
-//                valueAnimator.setInterpolator(new DecelerateInterpolator());
-//                valueAnimator.setEvaluator(new FloatEvaluator());
-//                valueAnimator.start();
-//                break;
-//        }
         //必须是true ,否则GG
         return true;
     }

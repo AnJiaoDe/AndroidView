@@ -13,13 +13,13 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="400dp">
+            android:layout_height="300dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="蛋糕打得我\n蛋\n糕蛋糕打得我\n蛋糕打得我\n蛋糕打得我\n蛋糕打得我\n蛋糕打得我\n蛋糕打得我\n蛋糕打得我\n蛋糕打得我\n蛋糕打得我\n打\n得我蛋\n糕打得我\n蛋糕打\n得我蛋糕\n打得我\n蛋糕打得我\n蛋糕打得我\n蛋糕打得我\n蛋糕打得我\n蛋糕打得我\n蛋糕打得我\n"
+                android:text="蛋糕打得我\n蛋\n糕蛋糕打得我\n\n糕蛋糕打得我\n\n糕蛋糕打得我\n\n糕蛋糕打得我\n\n糕蛋糕打得我\n\n糕蛋糕打得我\n\n糕蛋糕打得我\n\n糕蛋糕打得我\n\n糕蛋糕打得我\n\n糕蛋糕打得我\n\n糕蛋糕打得我\n\n糕蛋糕打得我\n\n糕蛋糕打得我\n\n糕蛋糕打得我\n\n糕蛋糕打得我\n\n糕蛋糕打得我\n\n糕蛋糕打得我\n\n糕蛋糕打得我\n\n糕蛋糕打得我\n蛋糕打得我\n蛋糕打得我\n蛋糕打得我\n蛋糕打得我\n蛋糕打得我\n蛋糕打得我\n蛋糕打得我\n蛋糕打得我\n打\n得我蛋\n糕打得我\n蛋糕打\n得我蛋糕\n打得我\n蛋糕打得我\n蛋糕打得我\n蛋糕打得我\n蛋糕打得我\n蛋糕打得我\n蛋糕打得我\n"
                 android:textSize="20sp" />
         </ScrollView>
 

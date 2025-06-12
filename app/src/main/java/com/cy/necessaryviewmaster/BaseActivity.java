@@ -1,23 +1,18 @@
 package com.cy.necessaryviewmaster;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.cy.androidview.LogUtils;
-import com.cy.androidview.swipe.SwipeBackLayout;
-import com.cy.androidview.swipe.SwipeLayout;
-import com.cy.androidview.swipe.TransparentUtils;
+import com.cy.androidview.swipeview.SwipeBackLayout;
+import com.cy.androidview.swipeview.TransparentUtils;
 
 
 /**
@@ -30,7 +25,8 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //必须，否则GG
+        //必须，否则GG，然而滑动过程中，Mainactivty会桌面背景变黑，但能看到桌面图标，原因不明，
+        // gayhub上的SwipeBackLayout没有这个毛病
         if (TransparentUtils.convertActivityToTranslucent(this))
             swipeBackLayout = new SwipeBackLayout(this);
     }

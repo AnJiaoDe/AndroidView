@@ -1,11 +1,10 @@
 
-package com.cy.androidview.swipe;
+package com.cy.androidview.swipeview;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 
 import java.lang.reflect.Method;
 
