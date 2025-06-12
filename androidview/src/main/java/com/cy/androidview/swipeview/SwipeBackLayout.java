@@ -50,6 +50,18 @@ public class SwipeBackLayout extends FrameLayout {
         maxVelocity = viewConfiguration.getScaledMaximumFlingVelocity();
         minVelocity = viewConfiguration.getScaledMinimumFlingVelocity();
         gestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
+            /**
+             * 计算两个 MotionEvent 之间的距离（基于 pointer index 0）
+             * @param e1 第一个事件
+             * @param e2 第二个事件
+             * @return 两点之间的欧几里得距离
+             */
+            private float getDistance(MotionEvent e1, MotionEvent e2) {
+                float dx = e2.getX() - e1.getX();
+                float dy = e2.getY() - e1.getY();
+                return (float) Math.hypot(dx, dy);
+            }
+
             //注意：多指触摸缩放的时候，这里也会回调,e1是down ,e2是move
             @Override
             public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
@@ -68,9 +80,11 @@ public class SwipeBackLayout extends FrameLayout {
                 if (dragState == STATE_DRAGGING) {
                     if (!onScaling) {
                         // 方法一：使用 Math.hypot（推荐）
-                        double distance = Math.hypot(Math.abs(translate_x) - getWidth() * 0.5, Math.abs(translate_y) - getHeight() * 0.5);
-//                        double distance = Math.sqrt(Math.pow(Math.abs(translate_x) - getWidth() * 0.5, 2) + Math.pow(Math.abs(translate_y) - getHeight() * 0.5, 2));
-                        zoom = (float) (distance / Math.hypot(0 - getWidth() * 0.5, 0 - getHeight() * 0.5));
+//                        double distance = Math.hypot(Math.abs(translate_x) - getWidth() * 0.5, Math.abs(translate_y) - getHeight() * 0.5);
+//                        double distance = Math.hypot(Math.abs(translate_x) - getWidth() * 0.5, Math.abs(translate_y) - getHeight() * 0.5);
+//                        double distance = Math.sqrt(Math.pow(Math.abs(translate_x) - getWidth() * 0.5, 2)
+//                                + Math.pow(Math.abs(translate_y) - getHeight() * 0.5, 2));
+                        zoom = Math.min(1, Math.max(0, 1 - getDistance(e1, e2) / Math.max(getWidth(), getHeight())));
                     }
                     invalidate();
                 }
@@ -225,9 +239,13 @@ public class SwipeBackLayout extends FrameLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        //处理多指触摸，这2个玩意是不能少的，否则贼复杂，还搞不定
-        scaleGestureDetector.onTouchEvent(event);
-        gestureDetector.onTouchEvent(event);
+        switch (event.getActionMasked()) {
+            case MotionEvent.ACTION_MOVE:
+                //处理多指触摸，这2个玩意是不能少的，否则贼复杂，还搞不定
+                scaleGestureDetector.onTouchEvent(event);
+                gestureDetector.onTouchEvent(event);
+                break;
+        }
         //必须是true ,否则GG
         return true;
     }
