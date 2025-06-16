@@ -9,30 +9,15 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import com.cy.androidview.swipeview.SwipeBackLayout;
-import com.cy.androidview.swipeview.TransparentUtils;
-
 
 /**
  * Created by lenovo on 2017/4/25.
  */
 
 public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener {
-    private SwipeBackLayout swipeBackLayout;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //必须，否则GG，然而滑动过程中，Mainactivty会桌面背景变黑，但能看到桌面图标，原因不明，
-        // gayhub上的SwipeBackLayout没有这个毛病
-        if (TransparentUtils.convertActivityToTranslucent(this))
-            swipeBackLayout = new SwipeBackLayout(this);
-    }
-
-    @Override
-    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        if (swipeBackLayout != null) swipeBackLayout.attachActivity(this);
     }
 
     @Override
