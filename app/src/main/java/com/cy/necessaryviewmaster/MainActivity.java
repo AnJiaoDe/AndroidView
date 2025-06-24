@@ -30,7 +30,6 @@ public class MainActivity extends BaseActivity {
         findViewById(R.id.btn_selector).setOnClickListener(this);
         findViewById(R.id.btn_shadow).setOnClickListener(this);
         findViewById(R.id.btn_progress).setOnClickListener(this);
-        findViewById(R.id.btn_swipe_activity).setOnClickListener(this);
 
         String str = "各个大哥更";
         for (String s : str.split("")) {
@@ -105,10 +104,6 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.btn_progress:
                 startActivity(ProgressActivity.class);
-                break;
-            case R.id.btn_swipe_activity:
-                startActivity(AnimateActivity.class);
-//                overridePendingTransition(R.anim.slide_in_right, 0); // 进入动画
                 break;
         }
     }
