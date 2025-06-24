@@ -76,4 +76,18 @@
         android:layout_marginTop="20dp"
         android:id="@+id/ProgressWeightView"
         android:layout_height="10dp"/>
+    <com.cy.necessaryviewmaster.RoundedCornerLayout
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="10dp"
+        android:background="#EEEEEE">
+
+        <ImageView
+            android:src="@drawable/hg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"/>
+
+    </com.cy.necessaryviewmaster.RoundedCornerLayout>
+
 </LinearLayout>
