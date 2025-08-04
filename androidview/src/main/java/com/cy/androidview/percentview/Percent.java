@@ -15,8 +15,8 @@ public class Percent {
     public Percent(View view, TypedArray typedArray) {
         this.view = view;
         this.typedArray = typedArray;
-        width_percent = typedArray.getFloat(R.styleable.PercentFrameLayout_cy_width_percent, width_percent);
-        height_percent = typedArray.getFloat(R.styleable.PercentFrameLayout_cy_height_percent, height_percent);
+        width_percent = typedArray.getFloat(R.styleable.AttrsPercent_cy_width_percent, width_percent);
+        height_percent = typedArray.getFloat(R.styleable.AttrsPercent_cy_height_percent, height_percent);
     }
 
     public float getWidth_percent() {
