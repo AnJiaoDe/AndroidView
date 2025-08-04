@@ -9,12 +9,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".AnimateActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".StickActivity"
-            android:exported="false" />
-        <activity
             android:name=".ProgressActivity"
             android:exported="false" />
         <activity

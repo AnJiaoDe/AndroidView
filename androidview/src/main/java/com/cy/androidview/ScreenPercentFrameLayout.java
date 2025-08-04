@@ -3,6 +3,7 @@ package com.cy.androidview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.widget.FrameLayout;
 
 import com.cy.androidview.rippleview.FrameLayoutRipple;
 
@@ -15,7 +16,7 @@ import com.cy.androidview.rippleview.FrameLayoutRipple;
  * @UpdateRemark:
  * @Version:
  */
-public class ScreenPercentFrameLayout extends FrameLayoutRipple {
+public class ScreenPercentFrameLayout extends FrameLayout {
     private float width_percent=0;
     private float height_percent=0;
 
