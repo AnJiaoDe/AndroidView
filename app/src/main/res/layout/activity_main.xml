@@ -53,15 +53,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="progress" />
-    <com.cy.androidview.ScreenPercentFrameLayout
+    <com.cy.androidview.percentview.PercentFrameLayout
         android:layout_width="wrap_content"
         app:cy_width_percent="0.8"
+        android:background="#f00"
         android:layout_height="wrap_content">
         <TextView
             android:layout_width="match_parent"
             android:text="瓜皮"
             android:layout_height="wrap_content"/>
-    </com.cy.androidview.ScreenPercentFrameLayout>
+    </com.cy.androidview.percentview.PercentFrameLayout>
     <TextView
         android:layout_width="match_parent"
         android:id="@+id/tv"
