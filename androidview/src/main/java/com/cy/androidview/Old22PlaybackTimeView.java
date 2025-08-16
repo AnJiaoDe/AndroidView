@@ -16,10 +16,10 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
-public class PlaybackTimeView extends View {
+public class Old22PlaybackTimeView extends View {
     private Paint paintText;
     private Paint paintLine;
     private Paint paintIndicator;
@@ -52,16 +52,12 @@ public class PlaybackTimeView extends View {
     private int s_current;
     private int fps_current;
 
-    private List<DrawBean> listDrawBean;
-
-    public PlaybackTimeView(Context context) {
+    public Old22PlaybackTimeView(Context context) {
         this(context, null);
     }
 
-    public PlaybackTimeView(Context context, @Nullable AttributeSet attrs) {
+    public Old22PlaybackTimeView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-
-        listDrawBean = new ArrayList<>();
 
         listDivisors60 = MyMathUtils.getDivisors(60);
 
@@ -262,105 +258,63 @@ public class PlaybackTimeView extends View {
         return fps_current;
     }
 
-    private void updateBean() {
-        listDrawBean.clear();
-        float x = getWidth() * 0.5f;
-        sPerUnit = Math.max(sPerUnit, 60 * 60);
-        int h = h_current;
-        int m = m_current;
-        int dm = sPerUnit / 60 / fps;
-
-        listDrawBean.add(new DrawBean(h, m, 0, fps, x));
-        for (int dir = -1; dir <= 1; dir += 2) { // -1 向左, +1 向右
-            while (x >= 0&&x<=getWidth()) {
-                listDrawBean.add(new DrawBean(h, m, 0, fps, x));
-                if (m >= dm) {
-                    m -= dm;
-                } else {
-                    m = 60 - dm % 60;
-                    h -= 1 + dm / 60;
-                }
-                x -= inter;
-            }
-        }
-    }
-
     @Override
     protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
         //防止尚未scale inter为0
         inter = Math.max(inter, inter_min);
-//        sPerUnit = Math.max(sPerUnit, 60 * 60);
-
-        updateBean();
-
-        float startY = 0;
-        for (DrawBean drawBean : listDrawBean) {
-            if (drawBean.m % 60 == 0) {
-                //当前刻度不用绘制，反正被指针挡住了
-//                if (dir != 0)
-                canvas.drawLine(drawBean.x, startY, drawBean.x, height_line_long, paintLine);
-                String text = (drawBean.h < 10 ? "0" + drawBean.h : drawBean.h) + ":00:00";
-                RectF rectF_text = TextUtils.getTextRectF(false, 1, paintText, text, drawBean.x, height_line_long + tv_margin_top);
-                TextUtils.drawText(false, 1, canvas, paintText, text, drawBean.x, height_line_long + tv_margin_top, rectF_text);
-            } else {
-                canvas.drawLine(drawBean.x, startY, drawBean.x, height_line_short, paintLine);
-            }
-        }
-
-
-//        switch (unit) {
-//            case UNIT_H:
-//                if (inter > inter_max) {
-//                    unit = UNIT_M;
-//                }
-//                break;
-//            case UNIT_M:
-//                //由于每小时，每分钟都是最多绘制fps格，当格子宽度超过inter_max,就开始往分秒细化，故而用fps判断
-////                if (inter > inter_max * fps) {
-////                    unit = UNIT_S;
-////                } else if (inter <= inter_max) {
-////                    unit = UNIT_H;
-////                }
-//                break;
-//            case UNIT_S:
-//                if (inter <= inter_max) {
+        sPerUnit = Math.max(sPerUnit, 60 * 30);
+        switch (unit) {
+            case UNIT_H:
+                if (inter > inter_max) {
+                    unit = UNIT_M;
+                }
+                break;
+            case UNIT_M:
+                //由于每小时，每分钟都是最多绘制fps格，当格子宽度超过inter_max,就开始往分秒细化，故而用fps判断
+//                if (inter > inter_max * fps) {
+//                    unit = UNIT_S;
+//                } else if (inter <= inter_max) {
 //                    unit = UNIT_H;
-//                } else if (inter <= inter_max * fps) {
-//                    unit = UNIT_M;
 //                }
-//                break;
-//        }
+                break;
+            case UNIT_S:
+                if (inter <= inter_max) {
+                    unit = UNIT_H;
+                } else if (inter <= inter_max * fps) {
+                    unit = UNIT_M;
+                }
+                break;
+        }
+        float startX = getWidth() * 0.5f;
+        float startY = 0;
+        switch (unit) {
+            case UNIT_H:
+                for (int dir = -1; dir <= 1; dir += 1) { // -1 向左, +1 向右
+                    for (int i = 1; ; i++) {
+                        float x = startX + dir * inter * i;
+                        int m = m_current - m_current % (sPerUnit / 60 / fps) + sPerUnit / 60 / fps * i * dir;
+                        //超出边界的不能绘制，不然容易卡顿，超出0-24小时的也不能绘制
+                        if (x < 0 || x > getWidth() || h_current + m / 60.f < 0 || h_current + m / 60.f > 24)
+                            break;
 
-//        float startX = getWidth() * 0.5f;
-//        float startY = 0;
-//        switch (unit) {
-//            case UNIT_H:
-//                for (int dir = -1; dir <= 1; dir += 1) { // -1 向左, +1 向右
-//                    for (int i = 1; ; i++) {
-//                        float x = startX + dir * inter * i;
-//                        int m = m_current - m_current % (sPerUnit / 60 / fps) + sPerUnit / 60 / fps * i * dir;
-//                        //超出边界的不能绘制，不然容易卡顿，超出0-24小时的也不能绘制
-//                        if (x < 0 || x > getWidth() || h_current + m / 60.f < 0 || h_current + m / 60.f > 24)
-//                            break;
-//
-//                        int h = h_current + m / 60;
-//                        if (m % 60 == 0) {
-//                            //当前刻度不用绘制，反正被指针挡住了
-//                            if (dir != 0)
-//                                canvas.drawLine(x, startY, x, height_line_long, paintLine);
-//                            String text = (h < 10 ? "0" + h : h) + ":00:00";
-//                            RectF rectF_text = TextUtils.getTextRectF(false, 1, paintText, text, x, height_line_long + tv_margin_top);
-//                            TextUtils.drawText(false, 1, canvas, paintText, text, x, height_line_long + tv_margin_top, rectF_text);
-//                        } else {
-//                            canvas.drawLine(x, startY, x, height_line_short, paintLine);
-//                        }
-//                        //指针指向的当前刻度，绘制完后结束循环
-//                        if (dir == 0) break;
-//                    }
-//                }
-//                break;
-//            case UNIT_M:
+                        int h = h_current + m / 60;
+                        if (m % 60 == 0) {
+                            //当前刻度不用绘制，反正被指针挡住了
+                            if (dir != 0)
+                                canvas.drawLine(x, startY, x, height_line_long, paintLine);
+                            String text = (h < 10 ? "0" + h : h) + ":00:00";
+                            RectF rectF_text = TextUtils.getTextRectF(false, 1, paintText, text, x, height_line_long + tv_margin_top);
+                            TextUtils.drawText(false, 1, canvas, paintText, text, x, height_line_long + tv_margin_top, rectF_text);
+                        } else {
+                            canvas.drawLine(x, startY, x, height_line_short, paintLine);
+                        }
+                        //指针指向的当前刻度，绘制完后结束循环
+                        if (dir == 0) break;
+                    }
+                }
+                break;
+            case UNIT_M:
 //                for (int dir = -1; dir <= 1; dir += 1) { // -1 向左, +1 向右
 //                    for (int i = 1; ; i++) {
 //                        float x = startX + dir * inter * i;
@@ -406,12 +360,12 @@ public class PlaybackTimeView extends View {
 //                        if (dir == 0) break;
 //                    }
 //                }
-//                break;
-//            case UNIT_S:
-//                break;
-//        }
-//        canvas.drawLine(getWidth() * 0.5f, 0, getWidth() * 0.5f, getHeight() * 0.5f, paintIndicator);
-//        canvas.drawCircle(getWidth() * 0.5f, getHeight() * 0.5f, radius_indicator, paintIndicator);
+                break;
+            case UNIT_S:
+                break;
+        }
+        canvas.drawLine(getWidth() * 0.5f, 0, getWidth() * 0.5f, getHeight() * 0.5f, paintIndicator);
+        canvas.drawCircle(getWidth() * 0.5f, getHeight() * 0.5f, radius_indicator, paintIndicator);
     }
 
     @Override
@@ -437,59 +391,4 @@ public class PlaybackTimeView extends View {
         return true;
     }
 
-    private class DrawBean {
-        private int h;
-        private int m;
-        private int s;
-        private int fps;
-        private float x;
-
-        public DrawBean(int h, int m, int s, int fps, float x) {
-            this.h = h;
-            this.m = m;
-            this.s = s;
-            this.fps = fps;
-            this.x = x;
-        }
-
-        public int getH() {
-            return h;
-        }
-
-        public void setH(int h) {
-            this.h = h;
-        }
-
-        public int getM() {
-            return m;
-        }
-
-        public void setM(int m) {
-            this.m = m;
-        }
-
-        public int getS() {
-            return s;
-        }
-
-        public void setS(int s) {
-            this.s = s;
-        }
-
-        public int getFps() {
-            return fps;
-        }
-
-        public void setFps(int fps) {
-            this.fps = fps;
-        }
-
-        public float getX() {
-            return x;
-        }
-
-        public void setX(float x) {
-            this.x = x;
-        }
-    }
 }
