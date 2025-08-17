@@ -36,7 +36,7 @@ public class PlaybackTimeView extends View {
     private final int UNIT_S = 2;
     private int unit = UNIT_H;
     //每fps个格子有多少秒
-    private int sPerUnit;
+    private int sPerUnit=3600;
     private GestureDetector gestureDetector;
     private ScaleGestureDetector scaleGestureDetector;
     //    private float dx;
@@ -49,10 +49,10 @@ public class PlaybackTimeView extends View {
     private float zoom_h_ratio;
     private List<Integer> listDivisors60;
     private float inter;
-    private int h_current = 5;
-    private int m_current;
-    private int s_current;
-    private int fps_current;
+    private int h_current = 23;
+    private int m_current = 59;
+    private int s_current = 0;
+    private int fps_current = 4;
 
     public PlaybackTimeView(Context context) {
         this(context, null);
@@ -94,55 +94,51 @@ public class PlaybackTimeView extends View {
         gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
             private void culculate(float distanceX) {
                 LogUtils.log("distanceX", distanceX);
-
                 switch (unit) {
                     case UNIT_H:
-                        //每fps个格子有多少秒
-                        sPerUnit = 60 * 60;
-                        //偏移了多少分钟
-                        int dm = (int) (distanceX / inter / fps * sPerUnit / 60);
-                        //用这种方式算会把猪脑阔算晕
-//                        float dm = h_current * 60 + m_current + m;
-                        if (m_current + dm < 60) {
-                            m_current += dm;
-                        } else {
-                            h_current += (m_current + dm) / 60;
-                            m_current = (m_current + dm) % 60;
-                        }
+                        float cm = h_current * 60 + m_current
+                                + distanceX / inter / fps * sPerUnit / 60;
+                        cm = Math.max(0, cm);
+
+                        h_current = (int) (cm / 60);
+
+                        // 到 24:00:00，分钟必须为 0
+                        m_current = (h_current == 24) ? 0 : (int) (cm % 60);
+
+                        s_current = 0; // 小时模式下不关心秒
+                        fps_current = 0;
+
                         break;
+
                     case UNIT_M:
-                        float s = distanceX / inter / fps * 60;
-                        float ds = h_current * 60 * 60 + m_current * 60 + s_current + s;
+                        float cs = h_current * 3600 + m_current * 60 + s_current
+                                + distanceX / inter / fps * sPerUnit;
+                        cs = Math.max(0, cs);
 
-                        h_current = (int) (ds / 60 / 60);
-                        h_current = Math.max(0, Math.min(24, h_current));
+                        h_current = (int) (cs / 3600);
 
-                        //都已经指到24:00:00刻度了，分钟必须为0
-                        m_current = h_current == 24 ? 0 : (int) (ds % 3600 / 60);
-                        m_current = Math.max(0, Math.min(60, m_current));
+                        m_current = (h_current == 24) ? 0 : (int) ((cs % 3600) / 60);
+                        s_current = (h_current == 24) ? 0 : (int) (cs % 60);
+                        fps_current = 0;
 
-                        //都已经指到24:00:00刻度了，秒必须为0
-                        s_current = h_current == 24 ? 0 : (int) (ds % 3600 % 60);
-                        s_current = Math.max(0, Math.min(60, s_current));
-
-                        //1小时可以分多少格分钟，n=2就分出 :30:  n=3 就分出 :20: :40:
-                        int n = (int) (inter / inter_min);
-                        for (int ll = listDivisors60.size() - 1; ll >= 0; ll--) {
-                            if (n >= listDivisors60.get(ll)) {
-                                n = listDivisors60.get(ll);
-                                break;
-                            }
-                        }
-                        //每fps个格子有多少秒
-                        sPerUnit = 60 / n * 60;
                         break;
                     case UNIT_S:
+                        float cfps = h_current * 3600 * fps + m_current * 60 * fps + s_current * fps + fps_current
+                                + distanceX / inter / fps * sPerUnit * fps;
+                        cfps = Math.max(0, cfps);
 
+                        h_current = (int) (cfps / fps / 3600);
+
+                        m_current = (h_current == 24) ? 0 : (int) ((cfps / fps % 3600) / 60);
+                        s_current = (h_current == 24) ? 0 : (int) (cfps / fps % 60);
+                        fps_current = (h_current == 24) ? 0 : (int) (cfps % fps);
                         break;
                 }
 
                 LogUtils.log("h_current", h_current);
                 LogUtils.log("m_current", m_current);
+                LogUtils.log("s_current", s_current);
+                LogUtils.log("fps_current", fps_current);
             }
 
             @Override
@@ -157,15 +153,14 @@ public class PlaybackTimeView extends View {
             @Override
             public boolean onFling(@Nullable MotionEvent e1, @NonNull MotionEvent e2, float velocityX, float velocityY) {
                 if (!onScaling && Math.abs(velocityX) > Math.abs(velocityThreshold)) {
-//                    ValueAnimator animator = ValueAnimator.ofFloat(1, 0);
-//                    animator.setDuration(1000);
-//                    animator.addUpdateListener(animation -> {
-//                        float distanceX = 70 * (float) animation.getAnimatedValue();
-//                        LogUtils.log("velocityX", velocityX);
-//                        culculate(velocityX > 0 ? -distanceX : distanceX);
-//                        invalidate();
-//                    });
-//                    animator.start();
+                    ValueAnimator animator = ValueAnimator.ofFloat(1, 0);
+                    animator.setDuration(1000);
+                    animator.addUpdateListener(animation -> {
+                        float distanceX = 70 * (float) animation.getAnimatedValue();
+                        culculate(velocityX > 0 ? -distanceX : distanceX);
+                        invalidate();
+                    });
+                    animator.start();
                 }
                 return super.onFling(e1, e2, velocityX, velocityY);
             }
@@ -173,17 +168,54 @@ public class PlaybackTimeView extends View {
         scaleGestureDetector = new ScaleGestureDetector(getContext(), new ScaleGestureDetector.SimpleOnScaleGestureListener() {
             @Override
             public boolean onScale(ScaleGestureDetector detector) {
-//                onScaling = true;
-//
-//                float z = zoom;
-//                zoom *= detector.getScaleFactor();
-//                zoom = Math.max(1, zoom);
-//                //zoom_h_ratio后面改成用帧率计算
-//                inter = Math.min(inter_max * 60 * 60, zoom <= 1 ? inter_min : (inter_min + zoom * zoom_h_ratio));
-//                //unit为秒时，不能无限增大zoom，否则会导致超过放大限制后再放小，需要双指缩放很久才能放小
-//                if (inter >= inter_max * 60 * 60) zoom = z;
-//
-//                invalidate();
+                onScaling = true;
+
+                float z = zoom;
+                zoom *= detector.getScaleFactor();
+                zoom = Math.max(1, zoom);
+                //zoom_h_ratio后面改成用帧率计算
+                inter = Math.min(inter_max * 60 * 60, zoom <= 1 ? inter_min : (inter_min + zoom * zoom_h_ratio));
+                //unit为秒时，不能无限增大zoom，否则会导致超过放大限制后再放小，需要双指缩放很久才能放小
+                if (inter >= inter_max * 60 * 60) zoom = z;
+
+                switch (unit) {
+                    case UNIT_H:
+                        if (inter > inter_max) {
+                            unit = UNIT_M;
+                        }
+                        break;
+                    case UNIT_M:
+                        //由于每小时，每分钟都是最多绘制fps格，当格子宽度超过inter_max,就开始往分秒细化，故而用fps判断
+                        if (inter > inter_max * fps) {
+                            unit = UNIT_S;
+                        } else if (inter <= inter_max) {
+                            unit = UNIT_H;
+                        }
+                        break;
+                    case UNIT_S:
+                        if (inter <= inter_max) {
+                            unit = UNIT_H;
+                        } else if (inter <= inter_max * fps) {
+                            unit = UNIT_M;
+                        }
+                        break;
+                }
+
+                switch (unit) {
+                    case UNIT_H:
+                        // 每 fps 个格子有多少秒 → 1小时 = 3600 秒
+                        sPerUnit = 60 * 60;
+                        break;
+                    case UNIT_M:
+                        // 每 fps 个格子有多少秒 → 1分钟 = 60 秒
+                        sPerUnit = 60;
+                        break;
+                    case UNIT_S:
+                        // 每 fps 个格子有多少秒 → 1秒 = 1 秒
+                        sPerUnit = 1;
+                        break;
+                }
+                invalidate();
                 return true;
             }
         });
@@ -260,173 +292,93 @@ public class PlaybackTimeView extends View {
         return fps_current;
     }
 
-    private void drawTime(Canvas canvas, int h, int m, int s, float startX, float startY) {
+    private void drawTime(Canvas canvas, int h, int m, int s, int frame, float startX, float startY) {
         switch (unit) {
-            case UNIT_H:
-                if (m % 60 == 0) {
+            case UNIT_H: // 绘制小时刻度
+                //不够一小格了，当然是指向小时
+                if (m % 60 < sPerUnit / fps / 60) {
                     canvas.drawLine(startX, startY, startX, height_line_long, paintLine);
-                    String text = (h < 10 ? "0" + h : h) + ":00:00";
+                    String text = String.format("%02d:00:00", h);
                     RectF rectF_text = TextUtils.getTextRectF(false, 1, paintText, text, startX, height_line_long + tv_margin_top);
                     TextUtils.drawText(false, 1, canvas, paintText, text, startX, height_line_long + tv_margin_top, rectF_text);
                 } else {
                     canvas.drawLine(startX, startY, startX, height_line_short, paintLine);
                 }
                 break;
-            case UNIT_M:
+
+            case UNIT_M: // 绘制分钟刻度
+                //不够一小格了，当然是指向分钟
+                if (s % 60 < sPerUnit / fps) {
+                    canvas.drawLine(startX, startY, startX, height_line_long, paintLine);
+                    String text = String.format("%02d:%02d:00", h, m);
+                    RectF rectF_text = TextUtils.getTextRectF(false, 1, paintText, text, startX, height_line_long + tv_margin_top);
+                    TextUtils.drawText(false, 1, canvas, paintText, text, startX, height_line_long + tv_margin_top, rectF_text);
+                } else {
+                    canvas.drawLine(startX, startY, startX, height_line_short, paintLine);
+                }
                 break;
-            case UNIT_S:
+
+            case UNIT_S: // 绘制秒刻度
+                //不够一小格了，当然是指向秒
+                if (frame % fps < sPerUnit) {
+                    canvas.drawLine(startX, startY, startX, height_line_long, paintLine);
+                    String text = String.format("%02d:%02d:%02d", h, m, s);
+                    RectF rectF_text = TextUtils.getTextRectF(false, 1, paintText, text, startX, height_line_long + tv_margin_top);
+                    TextUtils.drawText(false, 1, canvas, paintText, text, startX, height_line_long + tv_margin_top, rectF_text);
+                } else { // 秒以下只画短线（帧）
+                    canvas.drawLine(startX, startY, startX, height_line_short, paintLine);
+                }
                 break;
         }
     }
+
 
     @Override
     protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
         //防止尚未scale inter为0
         inter = Math.max(inter, inter_min);
-//        sPerUnit = Math.max(sPerUnit, 60 * 60);
 
-
-        sPerUnit = Math.max(sPerUnit, 60 * 60);
         float startX = getWidth() * 0.5f;
         float startY = 0;
-        int h = h_current;
-        int m = m_current;
-        int s = s_current;
-        int m_inter = sPerUnit / 60 / fps;
-
-        //绘制当前时间
-        drawTime(canvas, h, m, s, startX, startY);
-        //绘制当前时间左边的时间
-        while (startX >= 0) {
-            if (m >= m_inter) {
-                m -= m_inter;
-            } else {
-                h -= 1 + m_inter / 60;
-                m = 60 - m_inter % 60;
-            }
-            startX -= inter;
-            drawTime(canvas, h, m, s, startX, startY);
+// 每格多少帧
+        int frameStep = sPerUnit;   // 因为 sPerUnit 已经是 fps * 秒数
+// 转换为总帧数
+        int totalFrames = (h_current * 3600 + m_current * 60 + s_current) * fps + fps_current;
+// 绘制当前时间
+        drawTime(canvas,
+                totalFrames / (3600 * fps),                 // 小时
+                (totalFrames / (60 * fps)) % 60,            // 分钟
+                (totalFrames / fps) % 60,                   // 秒
+                totalFrames % fps,                          // 帧
+                startX, startY);
+// 绘制左边
+        for (float x = startX - inter; x >= 0; x -= inter) {
+            totalFrames -= frameStep;
+            if (totalFrames < 0) break;
+            drawTime(canvas,
+                    totalFrames / (3600 * fps),
+                    (totalFrames / (60 * fps)) % 60,
+                    (totalFrames / fps) % 60,
+                    totalFrames % fps,
+                    x, startY);
         }
-        startX = getWidth() * 0.5f;
-        h = h_current;
-        m = m_current;
-        //绘制当前时间右边的时间
-        while (startX <= getWidth()) {
-            if (m + m_inter < 60) {
-                m += m_inter;
-            } else {
-                h += (m + m_inter) / 60;
-                m = (m + m_inter) % 60;
-            }
-            startX += inter;
-            drawTime(canvas, h, m, s, startX, startY);
+// 绘制右边
+        totalFrames = (h_current * 3600 + m_current * 60 + s_current) * fps + fps_current;
+        for (float x = startX + inter; x <= getWidth(); x += inter) {
+            totalFrames += frameStep;
+            if (totalFrames > 24 * 3600 * fps) break;
+
+            int h = totalFrames / (3600 * fps);
+            int m = (totalFrames / (60 * fps)) % 60;
+            int s = (totalFrames / fps) % 60;
+            int f = totalFrames % fps;
+
+            drawTime(canvas, h, m, s, f, x, startY);
         }
 
-
-//        switch (unit) {
-//            case UNIT_H:
-//                if (inter > inter_max) {
-//                    unit = UNIT_M;
-//                }
-//                break;
-//            case UNIT_M:
-//                //由于每小时，每分钟都是最多绘制fps格，当格子宽度超过inter_max,就开始往分秒细化，故而用fps判断
-////                if (inter > inter_max * fps) {
-////                    unit = UNIT_S;
-////                } else if (inter <= inter_max) {
-////                    unit = UNIT_H;
-////                }
-//                break;
-//            case UNIT_S:
-//                if (inter <= inter_max) {
-//                    unit = UNIT_H;
-//                } else if (inter <= inter_max * fps) {
-//                    unit = UNIT_M;
-//                }
-//                break;
-//        }
-
-//        float startX = getWidth() * 0.5f;
-//        float startY = 0;
-//        switch (unit) {
-//            case UNIT_H:
-//                for (int dir = -1; dir <= 1; dir += 1) { // -1 向左, +1 向右
-//                    for (int i = 1; ; i++) {
-//                        float startX = startX + dir * inter * i;
-//                        int m = m_current - m_current % (sPerUnit / 60 / fps) + sPerUnit / 60 / fps * i * dir;
-//                        //超出边界的不能绘制，不然容易卡顿，超出0-24小时的也不能绘制
-//                        if (startX < 0 || startX > getWidth() || h_current + m / 60.f < 0 || h_current + m / 60.f > 24)
-//                            break;
-//
-//                        int h = h_current + m / 60;
-//                        if (m % 60 == 0) {
-//                            //当前刻度不用绘制，反正被指针挡住了
-//                            if (dir != 0)
-//                                canvas.drawLine(startX, startY, startX, height_line_long, paintLine);
-//                            String text = (h < 10 ? "0" + h : h) + ":00:00";
-//                            RectF rectF_text = TextUtils.getTextRectF(false, 1, paintText, text, startX, height_line_long + tv_margin_top);
-//                            TextUtils.drawText(false, 1, canvas, paintText, text, startX, height_line_long + tv_margin_top, rectF_text);
-//                        } else {
-//                            canvas.drawLine(startX, startY, startX, height_line_short, paintLine);
-//                        }
-//                        //指针指向的当前刻度，绘制完后结束循环
-//                        if (dir == 0) break;
-//                    }
-//                }
-//                break;
-//            case UNIT_M:
-//                for (int dir = -1; dir <= 1; dir += 1) { // -1 向左, +1 向右
-//                    for (int i = 1; ; i++) {
-//                        float startX = startX + dir * inter * i;
-//                        LogUtils.log("sPerUnit", sPerUnit);
-//                        int h;
-//                        if (sPerUnit / 60 / fps > 0) {
-//                            //每一小格>=1分钟，格数分得还不够细，还是用分钟计算,
-//                            int m = m_current - m_current % (sPerUnit / 60 / fps) + sPerUnit / 60 / fps * i * dir;
-//                            int s = s_current - s_current % (sPerUnit / fps) + sPerUnit / fps * i * dir;
-//                            h = h_current + (m * 60 + s) / 3600;
-//                        } else {
-//                            int s = s_current - s_current % (sPerUnit / fps) + sPerUnit / fps * i * dir;
-//                            h = h_current + (m_current * 60 + s) / 3600;
-//                        }
-//
-////                        int m=m_current+s/60;
-//                        //超出边界的不能绘制，不然容易卡顿，超出0-24小时的也不能绘制
-//                        if (startX < 0 || startX > getWidth() || h_current + m_current / 60.f + s_current / 3600.f < 0 || h_current + m_current / 60.f + s_current / 3600.f > 24)
-//                            break;
-//
-//                        if ((m_current * 60 + s) % 3600 == 0) {
-//                            //当前刻度不用绘制，反正被指针挡住了
-//                            if (dir != 0)
-//                                canvas.drawLine(startX, startY, startX, height_line_long, paintLine);
-//                            String text = (h < 10 ? "0" + h : h) + ":00:00";
-//                            RectF rectF_text = TextUtils.getTextRectF(false, 1, paintText, text, startX, height_line_long + tv_margin_top);
-//                            TextUtils.drawText(false, 1, canvas, paintText, text, startX, height_line_long + tv_margin_top, rectF_text);
-//                        } else {
-//                            LogUtils.log("ssss", s);
-//                            if ((m_current * 60 + s) % sPerUnit == 0) {
-//                                //当前刻度不用绘制，反正被指针挡住了
-//                                if (dir != 0)
-//                                    canvas.drawLine(startX, startY, startX, height_line_long * 0.8f, paintLine);
-//                                int m = m_current + s / 60;
-//                                String text = (h < 10 ? "0" + h : h) + ":" + (m < 10 ? "0" + m : m) + ":00";
-//                                RectF rectF_text = TextUtils.getTextRectF(false, 1, paintText, text, startX, height_line_long + tv_margin_top);
-//                                TextUtils.drawText(false, 1, canvas, paintText, text, startX, height_line_long + tv_margin_top, rectF_text);
-//                            } else {
-//                                canvas.drawLine(startX, startY, startX, height_line_short, paintLine);
-//                            }
-//                        }
-//                        //指针指向的当前刻度，绘制完后结束循环
-//                        if (dir == 0) break;
-//                    }
-//                }
-//                break;
-//            case UNIT_S:
-//                break;
-//        }
-//        canvas.drawLine(getWidth() * 0.5f, 0, getWidth() * 0.5f, getHeight() * 0.5f, paintIndicator);
-//        canvas.drawCircle(getWidth() * 0.5f, getHeight() * 0.5f, radius_indicator, paintIndicator);
+        canvas.drawLine(getWidth() * 0.5f, 0, getWidth() * 0.5f, getHeight() * 0.5f, paintIndicator);
+        canvas.drawCircle(getWidth() * 0.5f, getHeight() * 0.5f, radius_indicator, paintIndicator);
     }
 
     @Override
