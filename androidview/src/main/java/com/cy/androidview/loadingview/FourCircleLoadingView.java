@@ -4,17 +4,14 @@ import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
 
-import com.cy.androidview.LogUtils;
 import com.cy.androidview.ScreenUtils;
 
 public class FourCircleLoadingView extends View {
@@ -22,6 +19,9 @@ public class FourCircleLoadingView extends View {
     private int[] colors;
     private float radius;
     private float rotation;
+    private float trans;
+    private AnimatorSet animatorSet;
+
     public FourCircleLoadingView(Context context) {
         this(context, null);
     }
@@ -31,7 +31,7 @@ public class FourCircleLoadingView extends View {
         paint = new Paint();
         paint.setAntiAlias(true);
 
-        setColors(new int[]{Color.RED, Color.GREEN, Color.BLUE, Color.BLACK});
+        setColors(new int[]{0xff1bb7ac,0xff9b92ef,0xffea4642,0xffb7e234});
         setRadius(ScreenUtils.dpAdapt(context, 4));
 
         ValueAnimator valueAnimatorScale = ValueAnimator.ofFloat(radius*0.5f,radius,radius*0.5f);
@@ -60,9 +60,28 @@ public class FourCircleLoadingView extends View {
         });
         valueAnimatorRotation.start();
 
-        AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.playTogether(valueAnimatorScale, valueAnimatorRotation); // 同时执行
+        ValueAnimator valueAnimatorTrans = ValueAnimator.ofFloat(0,1,0);
+        valueAnimatorTrans.setRepeatCount(ValueAnimator.INFINITE);
+        valueAnimatorTrans.setInterpolator(new AccelerateDecelerateInterpolator());
+        valueAnimatorTrans.setDuration(4000);
+        valueAnimatorTrans.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                trans = (float) animation.getAnimatedValue();
+                invalidate();
+            }
+        });
+        valueAnimatorTrans.start();
+
+        animatorSet = new AnimatorSet();
+        animatorSet.playTogether(valueAnimatorScale, valueAnimatorRotation,valueAnimatorTrans); // 同时执行
         animatorSet.start();
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        animatorSet.cancel();
     }
 
     public void setColors(@ColorInt int[] colors) {
@@ -83,8 +102,8 @@ public class FourCircleLoadingView extends View {
         float cx, cy;
         for (int i = 0; i < 4; i++) {
             paint.setColor(colors[i]);
-            cx = getWidth() * 0.5f + radius * 2 * (i <= 1 ? -1 : 1);
-            cy = getHeight() * 0.5f + radius * 2 * (i == 0 || i == 3 ? -1 : 1);
+            cx = getWidth() * 0.5f + radius * 2 * (i <= 1 ? -1 : 1)* trans;
+            cy = getHeight() * 0.5f + radius * 2 * (i == 0 || i == 3 ? -1 : 1)* trans;
             canvas.drawCircle(cx, cy, radius, paint);
         }
     }
