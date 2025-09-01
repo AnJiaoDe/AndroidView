@@ -32,9 +32,9 @@ public class FourCircleLoadingView extends View {
         paint.setAntiAlias(true);
 
         setColors(new int[]{0xff1bb7ac,0xff9b92ef,0xffea4642,0xffb7e234});
-        setRadius(ScreenUtils.dpAdapt(context, 4));
+        setRadius(ScreenUtils.dpAdapt(context, 3));
 
-        ValueAnimator valueAnimatorScale = ValueAnimator.ofFloat(radius*0.5f,radius,radius*0.5f);
+        ValueAnimator valueAnimatorScale = ValueAnimator.ofFloat(radius,1.5f*radius,radius);
         valueAnimatorScale.setRepeatCount(ValueAnimator.INFINITE);
         valueAnimatorScale.setInterpolator(new AccelerateDecelerateInterpolator());
         valueAnimatorScale.setDuration(4000);
@@ -60,7 +60,7 @@ public class FourCircleLoadingView extends View {
         });
         valueAnimatorRotation.start();
 
-        ValueAnimator valueAnimatorTrans = ValueAnimator.ofFloat(0,1,0);
+        ValueAnimator valueAnimatorTrans = ValueAnimator.ofFloat(0.5f,1,0.5f);
         valueAnimatorTrans.setRepeatCount(ValueAnimator.INFINITE);
         valueAnimatorTrans.setInterpolator(new AccelerateDecelerateInterpolator());
         valueAnimatorTrans.setDuration(4000);
