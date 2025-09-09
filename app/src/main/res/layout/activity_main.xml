@@ -88,5 +88,13 @@
    <com.cy.androidview.loadingview.FourCircleLoadingView
        android:layout_width="match_parent"
        android:layout_marginTop="10dp"
-       android:layout_height="100dp"/>
+       android:layout_gravity="center"
+       android:background="#fefefe"
+       android:layout_height="40dp"/>
+   <com.cy.androidview.loadingview.Four2
+       android:layout_width="match_parent"
+       android:layout_marginTop="10dp"
+       android:layout_gravity="center"
+       android:background="#fefefe"
+       android:layout_height="match_parent"/>
 </LinearLayout>
