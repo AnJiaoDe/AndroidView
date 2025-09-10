@@ -65,7 +65,7 @@ public class FourCircleLoadingView extends View {
         ValueAnimator rainbow = ValueAnimator.ofFloat(0, 360);
         rainbow.setRepeatCount(ValueAnimator.INFINITE);
         //不让颜色变化太快，亮瞎狗眼
-        rainbow.setDuration(20000);
+        rainbow.setDuration(10000);
         rainbow.setInterpolator(new AccelerateDecelerateInterpolator());
         rainbow.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -82,12 +82,6 @@ public class FourCircleLoadingView extends View {
         animatorSet = new AnimatorSet();
         animatorSet.playTogether(valueAnimatorRotation, valueAnimatorTrans, rainbow);
         animatorSet.start();
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                stopAnim();
-            }
-        });
     }
 
     public void startAnim() {
