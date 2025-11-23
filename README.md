@@ -1129,8 +1129,3 @@ public class RecShapeFrameLayout extends FrameLayout {
 
 [简书_https://www.jianshu.com/u/b8159d455c69](https://www.jianshu.com/u/b8159d455c69)
 
- 微信公众号
- ![这里写图片描述](http://upload-images.jianshu.io/upload_images/11866078-fcfbb45175f99de0?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-QQ群
-![这里写图片描述](http://upload-images.jianshu.io/upload_images/11866078-a31ff40ac6850a6d?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
