@@ -85,6 +85,7 @@ public class FourCircleLoadingView extends View {
     }
 
     public void startAnim() {
+        stopAnim();
         animatorSet.start();
     }
 
