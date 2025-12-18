@@ -12,6 +12,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 
 import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.cy.androidview.LogUtils;
@@ -72,7 +73,7 @@ public class FourCircleLoadingView extends View {
             public void onAnimationUpdate(ValueAnimator animation) {
                 float globalHue = (float) animation.getAnimatedValue();
                 for (int i = 0; i < 4; i++) {
-                    float hue = (globalHue+ i * 90) % 360;
+                    float hue = (globalHue + i * 90) % 360;
                     colors[i] = Color.HSVToColor(new float[]{hue, 0.7f, 0.9f});
                 }
                 invalidate();
@@ -81,7 +82,6 @@ public class FourCircleLoadingView extends View {
 
         animatorSet = new AnimatorSet();
         animatorSet.playTogether(valueAnimatorRotation, valueAnimatorTrans, rainbow);
-        animatorSet.start();
     }
 
     public void startAnim() {
@@ -94,11 +94,26 @@ public class FourCircleLoadingView extends View {
     }
 
     @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        startAnim();
+    }
+
+    @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         stopAnim();
     }
 
+    @Override
+    protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
+        super.onVisibilityChanged(changedView, visibility);
+        if (visibility == VISIBLE) {
+            startAnim();
+        } else {
+            stopAnim();
+        }
+    }
 //    public void setColors(@ColorInt int[] colors) {
 //        if (colors.length != 4)
 //            throw new IllegalArgumentException("The length of colors must be 4");
