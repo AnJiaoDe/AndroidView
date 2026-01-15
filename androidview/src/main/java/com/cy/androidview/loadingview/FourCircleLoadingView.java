@@ -94,6 +94,10 @@ public class FourCircleLoadingView extends View {
         animatorSet.cancel();
     }
 
+    public boolean isAniming() {
+        return animatorSet.isRunning();
+    }
+
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
