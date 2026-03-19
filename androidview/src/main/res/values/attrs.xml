@@ -93,6 +93,8 @@
     <attr name="cy_backgroundChecked" format="reference|color" />
     <attr name="cy_textColorUnChecked" format="reference|color" />
     <attr name="cy_textColorChecked" format="reference|color" />
+    <attr name="cy_textUnChecked" format="reference|string" />
+    <attr name="cy_textChecked" format="reference|string" />
     <attr name="cy_buttonUnChecked" format="reference" />
     <attr name="cy_buttonChecked" format="reference" />
     <attr name="cy_mask_type">
@@ -587,6 +589,8 @@
         <attr name="cy_bgChecked" />
         <attr name="cy_textColorUnChecked" />
         <attr name="cy_textColorChecked" />
+        <attr name="cy_textUnChecked" />
+        <attr name="cy_textChecked" />
         <attr name="cy_checked" />
 
     </declare-styleable>

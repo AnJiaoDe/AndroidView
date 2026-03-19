@@ -26,6 +26,7 @@ import com.cy.androidview.R;
 public class TextViewSelector extends AppCompatTextView {
     private int backgroundID, backgroundCheckedID, bg_color, bg_checked_color;
     private int tv_color, tv_color_checked;
+    private String str_checked, str_unchecked;
 
     private TextViewSelector.OnCheckedChangeListener onCheckedChangeListener;
     private boolean isChecked = false;
@@ -39,13 +40,14 @@ public class TextViewSelector extends AppCompatTextView {
         TypedArray arr = context.obtainStyledAttributes(attrs, R.styleable.TextViewSelector);
         backgroundID = arr.getResourceId(R.styleable.TextViewSelector_cy_bgUnChecked, -1);//未选中时的背景
         backgroundCheckedID = arr.getResourceId(R.styleable.TextViewSelector_cy_bgChecked, -1);//选中时的背景
-
         if (backgroundID == -1) {
             bg_color = arr.getColor(R.styleable.TextViewSelector_cy_bgUnChecked, 0x00000000);//未选中时的背景颜色
         }
         if (backgroundCheckedID == -1) {
             bg_checked_color = arr.getColor(R.styleable.TextViewSelector_cy_bgChecked, 0x00000000);//选中时的背景颜色
         }
+        str_checked = arr.getString(R.styleable.TextViewSelector_cy_textChecked);
+        str_unchecked = arr.getString(R.styleable.TextViewSelector_cy_textUnChecked);
 
         tv_color_checked = arr.getColor(R.styleable.TextViewSelector_cy_textColorChecked, -1);
         tv_color = arr.getColor(R.styleable.TextViewSelector_cy_textColorUnChecked, -1);
@@ -97,7 +99,7 @@ public class TextViewSelector extends AppCompatTextView {
 
     //设置是否选中
     public void setChecked(boolean checked) {
-        if(isChecked==checked)return;
+        if (isChecked == checked) return;
         isChecked = checked;
         if (checked) {
             setResOnChecked();
@@ -117,6 +119,7 @@ public class TextViewSelector extends AppCompatTextView {
             setBackgroundColor(bg_checked_color);
         }
         setTextColor(tv_color_checked);
+        setText(str_checked);
     }
 
     //设置未选中时的背景，Src等
@@ -126,6 +129,7 @@ public class TextViewSelector extends AppCompatTextView {
         } else {
             setBackgroundColor(bg_color);
         }
-       setTextColor(tv_color);
+        setTextColor(tv_color);
+        setText(str_unchecked);
     }
 }
