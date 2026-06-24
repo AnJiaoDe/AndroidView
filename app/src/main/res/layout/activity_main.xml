@@ -32,6 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="roundView" />
+
     <Button
         android:id="@+id/btn_card"
         android:layout_width="match_parent"
@@ -43,35 +44,42 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="selectorView" />
+
     <Button
         android:id="@+id/btn_shadow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="shadow" />
+
     <Button
         android:id="@+id/btn_progress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="progress" />
+
     <com.cy.androidview.percentview.PercentFrameLayout
         android:layout_width="wrap_content"
-        app:cy_width_percent="0.8"
+        android:layout_height="wrap_content"
         android:background="#f00"
-        android:layout_height="wrap_content">
+        app:cy_width_percent="0.8">
+
         <TextView
             android:layout_width="match_parent"
-            android:text="瓜皮"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="瓜皮" />
     </com.cy.androidview.percentview.PercentFrameLayout>
+
     <TextView
-        android:layout_width="match_parent"
         android:id="@+id/tv"
-        android:layout_height="wrap_content"/>
-    <com.cy.androidview.progress.ProgressWeightView
         android:layout_width="match_parent"
-        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content" />
+
+    <com.cy.androidview.progress.ProgressWeightView
         android:id="@+id/ProgressWeightView"
-        android:layout_height="10dp"/>
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_marginTop="20dp" />
+
     <com.cy.necessaryviewmaster.RoundedCornerLayout
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -79,22 +87,44 @@
         android:background="#EEEEEE">
 
         <ImageView
-            android:src="@drawable/hg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            android:src="@drawable/hg" />
 
     </com.cy.necessaryviewmaster.RoundedCornerLayout>
-   <com.cy.androidview.loadingview.FourCircleLoadingView
-       android:layout_width="match_parent"
-       android:layout_marginTop="10dp"
-       android:layout_gravity="center"
-       android:background="#fefefe"
-       android:layout_height="40dp"/>
-   <com.cy.androidview.loadingview.Four2
-       android:layout_width="match_parent"
-       android:layout_marginTop="10dp"
-       android:layout_gravity="center"
-       android:background="#fefefe"
-       android:layout_height="match_parent"/>
+
+    <com.cy.androidview.loadingview.FourCircleLoadingView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="#fefefe" />
+
+    <com.cy.androidview.progress.ProgressTextView
+        android:id="@+id/tvProgress"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="发送中，请稍候"
+        android:textStyle="bold"
+        android:layout_margin="10dp"
+
+        app:cy_progress="40"
+        app:cy_maxProgress="100"
+
+        app:cy_progressColor="#33A8FF"
+        app:cy_bgColor="#FFFFFF"
+
+        app:cy_leftTextColor="#FFFFFF"
+        app:cy_rightTextColor="#33A8FF"
+
+        app:cy_cornerRadius="20dp"/>
+
+    <com.cy.androidview.loadingview.Four2
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="#fefefe" />
 </LinearLayout>
