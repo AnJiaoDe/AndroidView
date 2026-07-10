@@ -98,11 +98,12 @@ public class FourCircleLoadingView extends View {
         return animatorSet.isRunning();
     }
 
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        startAnim();
-    }
+    //不要这么整，大坑
+//    @Override
+//    protected void onAttachedToWindow() {
+//        super.onAttachedToWindow();
+//        startAnim();
+//    }
 
     @Override
     protected void onDetachedFromWindow() {
@@ -110,15 +111,16 @@ public class FourCircleLoadingView extends View {
         stopAnim();
     }
 
-    @Override
-    protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
-        super.onVisibilityChanged(changedView, visibility);
-        if (visibility == VISIBLE) {
-            startAnim();
-        } else {
-            stopAnim();
-        }
-    }
+    //不要这么整，大坑
+//    @Override
+//    protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
+//        super.onVisibilityChanged(changedView, visibility);
+//        if (visibility == VISIBLE) {
+//            startAnim();
+//        } else {
+//            stopAnim();
+//        }
+//    }
 //    public void setColors(@ColorInt int[] colors) {
 //        if (colors.length != 4)
 //            throw new IllegalArgumentException("The length of colors must be 4");
