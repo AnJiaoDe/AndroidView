@@ -15,7 +15,7 @@ import com.cy.androidview.R;
  * Created by lenovo on 2017/8/30.
  */
 
-public class ImageViewSelector extends AppCompatImageView {
+public class  ImageViewSelector extends AppCompatImageView {
     private int backgroundID, backgroundCheckedID, bg_color, bg_checked_color,
             srcCheckedID, srcUncheckedID;
 
@@ -58,7 +58,7 @@ public class ImageViewSelector extends AppCompatImageView {
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                setChecked(!isChecked);
+                setChecked___(!isChecked,true);
             }
         });
 
@@ -79,7 +79,7 @@ public class ImageViewSelector extends AppCompatImageView {
     }
 
     public static interface OnCheckedChangeListener {
-        void onCheckedChanged(ImageViewSelector iv, boolean isChecked);
+        void onCheckedChanged(ImageViewSelector iv, boolean isChecked,boolean byTouch);
     }
 
     //判断是否选中
@@ -89,6 +89,9 @@ public class ImageViewSelector extends AppCompatImageView {
 
     //设置是否选中
     public void setChecked(boolean checked) {
+        setChecked___(checked,false);
+    }
+    private void setChecked___(boolean checked,boolean byTouch) {
         if(isChecked==checked)return;
         isChecked = checked;
         if (checked) {
@@ -97,7 +100,7 @@ public class ImageViewSelector extends AppCompatImageView {
             setResOnUnChecked();
         }
         if (onCheckedChangeListener != null) {
-            onCheckedChangeListener.onCheckedChanged(ImageViewSelector.this, isChecked);
+            onCheckedChangeListener.onCheckedChanged(ImageViewSelector.this, isChecked,byTouch);
         }
     }
     //设置选中时的背景，Src等

@@ -68,7 +68,7 @@ public class TextViewSelector extends AppCompatTextView {
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                setChecked(!isChecked);
+                setChecked___(!isChecked,true);
             }
         });
 
@@ -89,7 +89,7 @@ public class TextViewSelector extends AppCompatTextView {
     }
 
     public static interface OnCheckedChangeListener {
-        void onCheckedChanged(TextViewSelector iv, boolean isChecked);
+        void onCheckedChanged(TextViewSelector iv, boolean isChecked,boolean byTouch);
     }
 
     //判断是否选中
@@ -99,6 +99,9 @@ public class TextViewSelector extends AppCompatTextView {
 
     //设置是否选中
     public void setChecked(boolean checked) {
+        setChecked___(checked,false);
+    }
+    private void setChecked___(boolean checked,boolean byTouch) {
         if (isChecked == checked) return;
         isChecked = checked;
         if (checked) {
@@ -107,7 +110,7 @@ public class TextViewSelector extends AppCompatTextView {
             setResOnUnChecked();
         }
         if (onCheckedChangeListener != null) {
-            onCheckedChangeListener.onCheckedChanged(TextViewSelector.this, isChecked);
+            onCheckedChangeListener.onCheckedChanged(TextViewSelector.this, isChecked,byTouch);
         }
     }
     //设置选中时的背景，Src等

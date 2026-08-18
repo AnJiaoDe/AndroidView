@@ -59,7 +59,7 @@ public class FrameLayoutSelector extends FrameLayout {
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                setChecked(!isChecked);
+                setChecked___(!isChecked,true);
             }
         });
 
@@ -80,7 +80,7 @@ public class FrameLayoutSelector extends FrameLayout {
     }
 
     public static interface OnCheckedChangeListener {
-        void onCheckedChanged(FrameLayoutSelector iv, boolean isChecked);
+        void onCheckedChanged(FrameLayoutSelector iv, boolean isChecked,boolean byTouch);
     }
 
     //判断是否选中
@@ -90,6 +90,9 @@ public class FrameLayoutSelector extends FrameLayout {
 
     //设置是否选中
     public void setChecked(boolean checked) {
+      setChecked___(checked,false);
+    }
+    private void setChecked___(boolean checked,boolean byTouch) {
         if(isChecked==checked)return;
         isChecked = checked;
         if (checked) {
@@ -98,7 +101,7 @@ public class FrameLayoutSelector extends FrameLayout {
             setResOnUnChecked();
         }
         if (onCheckedChangeListener != null) {
-            onCheckedChangeListener.onCheckedChanged(FrameLayoutSelector.this, isChecked);
+            onCheckedChangeListener.onCheckedChanged(FrameLayoutSelector.this, isChecked,byTouch);
         }
     }
     //设置选中时的背景，Src等

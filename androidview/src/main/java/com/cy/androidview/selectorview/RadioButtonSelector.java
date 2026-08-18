@@ -73,9 +73,8 @@ public class RadioButtonSelector extends AppCompatRadioButton {
     }
 
     @Override
-    public void setOnCheckedChangeListener(OnCheckedChangeListener listener) {
+    public final void setOnCheckedChangeListener(OnCheckedChangeListener listener) {
         if (myListener) {
-
             super.setOnCheckedChangeListener(listener);
             myListener = false;
         }

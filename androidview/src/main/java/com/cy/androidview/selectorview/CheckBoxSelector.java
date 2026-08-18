@@ -49,7 +49,6 @@ public class CheckBoxSelector extends AppCompatCheckBox {
         arr.recycle();
 
         if (isChecked()) {
-
             setResOnChecked();
 
         } else {
