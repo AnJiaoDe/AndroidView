@@ -158,7 +158,7 @@ public class ImageViewShadowSelector extends View {
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                setChecked(!isChecked);
+                setChecked___(!isChecked,true);
             }
         });
     }
@@ -280,10 +280,7 @@ public class ImageViewShadowSelector extends View {
     }
 
     public interface OnCheckedChangeListener {
-        void onCheckedChanged(
-                ImageViewShadowSelector view,
-                boolean isChecked
-        );
+        void onCheckedChanged(ImageViewShadowSelector view, boolean isChecked, boolean byTouch);
     }
 
     public void setOnCheckedChangeListener(
@@ -297,21 +294,21 @@ public class ImageViewShadowSelector extends View {
     }
 
     public void setChecked(boolean checked) {
+        setChecked___(checked, false);
+    }
 
+    private void setChecked___(boolean checked, boolean byTouch) {
         if (isChecked == checked) return;
-
         isChecked = checked;
-
         if (checked) {
             setResOnChecked();
         } else {
             setResOnUnChecked();
         }
-
         if (onCheckedChangeListener != null) {
             onCheckedChangeListener.onCheckedChanged(
                     this,
-                    isChecked
+                    isChecked, byTouch
             );
         }
     }
