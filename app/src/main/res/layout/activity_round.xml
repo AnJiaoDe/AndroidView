@@ -12,11 +12,29 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="10dp">
-
+        <com.cy.androidview.roundview.LinearLayoutRound
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            app:cy_stroke_color="#f00"
+            app:cy_stroke_width="4dp"
+            app:cy_radiusTopLeft="8dp"
+            android:background="#006"
+            app:cy_radiusTopRight="16dp"
+            app:cy_stroke_bottom="false"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:text="tv"
+                android:textSize="50sp"
+                android:textColor="#fff"
+                android:layout_height="match_parent"
+                android:gravity="center" />
+        </com.cy.androidview.roundview.LinearLayoutRound>
         <com.cy.androidview.roundview.TextViewRound
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:background="#eee"
+            android:layout_marginTop="20dp"
+            android:background="#444"
             android:gravity="center"
             android:padding="20dp"
             android:text="stroke"

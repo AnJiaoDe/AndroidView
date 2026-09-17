@@ -8,8 +8,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.graphics.Region;
 import android.os.Build;
@@ -17,22 +15,33 @@ import android.view.View;
 import android.widget.Checkable;
 
 import com.cy.androidview.R;
+import com.cy.androidview.roundview.helper.RCAttrs;
 
 import java.util.ArrayList;
 
 public class RCHelper {
 
-    public float[] radii = new float[8];   // top-left, top-right, bottom-right, bottom-left
-    public Path mClipPath;                 // 剪裁区域路径
-    public Paint mPaint;                   // 画笔
-    public boolean mRoundAsCircle = false; // 圆形
-    public int mDefaultStrokeColor;        // 默认描边颜色
-    public int mStrokeColor;               // 描边颜色
-    public ColorStateList mStrokeColorStateList;// 描边颜色的状态
-    public int mStrokeWidth;               // 描边宽度
-    public boolean mClipBackground;        // 是否剪裁背景
-    public Region mAreaRegion;             // 内容区域
-    public RectF mLayer;                   // 画布图层大小
+    public float[] radii = new float[8];
+
+    public Path mClipPath;
+
+    public Paint mPaint;
+
+    public boolean mRoundAsCircle = false;
+
+    public int mDefaultStrokeColor;
+
+    public int mStrokeColor;
+
+    public ColorStateList mStrokeColorStateList;
+
+    public int mStrokeWidth;
+
+    public boolean mClipBackground;
+
+    public Region mAreaRegion;
+
+    public RectF mLayer;
 
     // Stroke 四边开关
     public boolean mStrokeTop = true;
@@ -40,7 +49,9 @@ public class RCHelper {
     public boolean mStrokeBottom = true;
     public boolean mStrokeLeft = true;
 
+
     public void initAttrs(Context context, TypedArray typedArray) {
+
         mRoundAsCircle = typedArray.getBoolean(
                 R.styleable.AttrsRound_cy_round_as_circle,
                 false
@@ -50,7 +61,7 @@ public class RCHelper {
                 R.styleable.AttrsRound_cy_stroke_color
         );
 
-        if (null != mStrokeColorStateList) {
+        if (mStrokeColorStateList != null) {
             mStrokeColor = mStrokeColorStateList.getDefaultColor();
             mDefaultStrokeColor = mStrokeColorStateList.getDefaultColor();
         } else {
@@ -105,7 +116,7 @@ public class RCHelper {
         radii[6] = roundCornerBottomLeft;
         radii[7] = roundCornerBottomLeft;
 
-        // Stroke 四边开关
+
         mStrokeTop = typedArray.getBoolean(
                 R.styleable.AttrsRound_cy_stroke_top,
                 true
@@ -126,34 +137,42 @@ public class RCHelper {
                 true
         );
 
+
         mLayer = new RectF();
+
         mClipPath = new Path();
+
         mAreaRegion = new Region();
 
-        mPaint = new Paint();
+        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
         mPaint.setColor(Color.WHITE);
-        mPaint.setAntiAlias(true);
+        mPaint.setStyle(Paint.Style.FILL);
     }
 
+
     public void onSizeChanged(View view, int w, int h) {
-        mLayer.set(0, 0, w, h);
+
+        mLayer.set(
+                0,
+                0,
+                w,
+                h
+        );
+
         refreshRegion(view);
     }
 
+
     public void refreshRegion(View view) {
+
         int w = (int) mLayer.width();
         int h = (int) mLayer.height();
 
-        /*
-         * 注意：
-         *
-         * 这里不能使用 View 的 padding。
-         *
-         * padding 只负责 TextView 内容区域，
-         * 不能影响 RoundView 本身的圆角、背景和 Stroke。
-         *
-         * 所以 mClipPath 必须覆盖整个 View。
-         */
+        if (w <= 0 || h <= 0) {
+            return;
+        }
+
         RectF areas = new RectF(
                 0,
                 0,
@@ -186,9 +205,6 @@ public class RCHelper {
                         Path.Direction.CW
                 );
 
-                /*
-                 * 保留原来的 Android 8.1 兼容处理
-                 */
                 mClipPath.moveTo(0, 0);
                 mClipPath.moveTo(w, h);
 
@@ -218,11 +234,7 @@ public class RCHelper {
             );
         }
 
-        /*
-         * 点击区域也使用整个 View 的圆角区域。
-         *
-         * 不能再使用 padding 后的 Rect。
-         */
+
         Region clip = new Region(
                 0,
                 0,
@@ -236,6 +248,17 @@ public class RCHelper {
         );
     }
 
+
+    /**
+     * 绘制圆角 View。
+     *
+     * 重点：
+     *
+     * Stroke 不再使用 DST_OUT。
+     *
+     * Stroke 中心线向 View 内缩 halfStroke，
+     * 从而保证整个 Stroke 都位于 View 内部。
+     */
     public void onClipDraw(Canvas canvas) {
 
         if (mStrokeWidth > 0) {
@@ -245,398 +268,276 @@ public class RCHelper {
                     && mStrokeBottom
                     && mStrokeLeft) {
 
-                // 四边全部绘制，保持原来的逻辑
-                mPaint.setXfermode(
-                        new PorterDuffXfermode(
-                                PorterDuff.Mode.DST_OUT
-                        )
-                );
-
-                mPaint.setColor(Color.WHITE);
-                mPaint.setStrokeWidth(mStrokeWidth * 2);
-                mPaint.setStyle(Paint.Style.STROKE);
-
-                canvas.drawPath(
-                        mClipPath,
-                        mPaint
-                );
-
-                mPaint.setXfermode(
-                        new PorterDuffXfermode(
-                                PorterDuff.Mode.SRC_OVER
-                        )
-                );
-
-                mPaint.setColor(mStrokeColor);
-                mPaint.setStrokeWidth(mStrokeWidth);
-                mPaint.setStyle(Paint.Style.STROKE);
-
-                canvas.drawPath(
-                        mClipPath,
-                        mPaint
-                );
+                drawFullStroke(canvas);
 
             } else {
 
-                // 部分边绘制
                 drawPartialStroke(canvas);
             }
         }
-
-        mPaint.setColor(Color.WHITE);
-        mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setXfermode(null);
-
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
-            mPaint.setXfermode(
-                    new PorterDuffXfermode(
-                            PorterDuff.Mode.DST_IN
-                    )
-            );
-
-            canvas.drawPath(
-                    mClipPath,
-                    mPaint
-            );
-        } else {
-            mPaint.setXfermode(
-                    new PorterDuffXfermode(
-                            PorterDuff.Mode.DST_OUT
-                    )
-            );
-
-            final Path path = new Path();
-
-            path.addRect(
-                    0,
-                    0,
-                    (int) mLayer.width(),
-                    (int) mLayer.height(),
-                    Path.Direction.CW
-            );
-
-            path.op(
-                    mClipPath,
-                    Path.Op.DIFFERENCE
-            );
-
-            canvas.drawPath(
-                    path,
-                    mPaint
-            );
-        }
-
-        mPaint.setXfermode(null);
     }
 
+
     /**
-     * 绘制部分边 Stroke
-     *
-     * 不再通过 clipRect 截 mClipPath。
-     *
-     * 原来的 clipRect 会把圆角弧线截断，例如：
-     *
-     *   Top + Left
-     *
-     * 左上角的圆弧只能显示一小部分。
-     *
-     * 这里直接根据圆角半径构造四条独立的 Path，
-     * 每一条 Path 都包含对应边以及两侧的圆角。
+     * 四边完整 Stroke
+     */
+    private void drawFullStroke(Canvas canvas) {
+
+        float half = mStrokeWidth / 2f;
+
+        Path path = createInsetRoundPath(
+                half
+        );
+
+        mPaint.setXfermode(null);
+
+        mPaint.setColor(mStrokeColor);
+
+        mPaint.setStyle(Paint.Style.STROKE);
+
+        mPaint.setStrokeWidth(mStrokeWidth);
+
+        mPaint.setStrokeJoin(Paint.Join.ROUND);
+
+        mPaint.setStrokeCap(Paint.Cap.BUTT);
+
+        canvas.drawPath(
+                path,
+                mPaint
+        );
+    }
+
+
+    /**
+     * 部分边 Stroke
      */
     private void drawPartialStroke(Canvas canvas) {
 
-        RectF bounds = new RectF();
-        mClipPath.computeBounds(bounds, true);
-
-        float left = bounds.left;
-        float top = bounds.top;
-        float right = bounds.right;
-        float bottom = bounds.bottom;
-
-        /*
-         * mClipPath 使用的是 radii，
-         * 所以这里直接使用 radii。
-         *
-         * radii:
-         *
-         * [0] [1] = 左上
-         * [2] [3] = 右上
-         * [4] [5] = 右下
-         * [6] [7] = 左下
-         */
-        float topLeftRadius = Math.min(
-                Math.min(radii[0], radii[1]),
-                Math.min(bounds.width(), bounds.height()) / 2f
-        );
-
-        float topRightRadius = Math.min(
-                Math.min(radii[2], radii[3]),
-                Math.min(bounds.width(), bounds.height()) / 2f
-        );
-
-        float bottomRightRadius = Math.min(
-                Math.min(radii[4], radii[5]),
-                Math.min(bounds.width(), bounds.height()) / 2f
-        );
-
-        float bottomLeftRadius = Math.min(
-                Math.min(radii[6], radii[7]),
-                Math.min(bounds.width(), bounds.height()) / 2f
-        );
-
-        /*
-         * 如果是圆形，
-         * 四个角实际上是一整条圆。
-         *
-         * 圆形情况下，直接使用完整 Path，
-         * 再根据四个方向截取对应圆弧。
-         */
         if (mRoundAsCircle) {
+
             drawCirclePartialStroke(
-                    canvas,
-                    bounds
+                    canvas
             );
+
             return;
         }
 
+        float half = mStrokeWidth / 2f;
+
+        RectF bounds = new RectF(
+                half,
+                half,
+                mLayer.width() - half,
+                mLayer.height() - half
+        );
+
+        float maxRadius = Math.min(
+                bounds.width(),
+                bounds.height()
+        ) / 2f;
+
+
+        float topLeftRadius = Math.min(
+                Math.min(
+                        radii[0],
+                        radii[1]
+                ),
+                maxRadius
+        );
+
+        float topRightRadius = Math.min(
+                Math.min(
+                        radii[2],
+                        radii[3]
+                ),
+                maxRadius
+        );
+
+        float bottomRightRadius = Math.min(
+                Math.min(
+                        radii[4],
+                        radii[5]
+                ),
+                maxRadius
+        );
+
+        float bottomLeftRadius = Math.min(
+                Math.min(
+                        radii[6],
+                        radii[7]
+                ),
+                maxRadius
+        );
+
+
         /*
-         * =========================================================
-         * 构造四条 Stroke Path
-         * =========================================================
+         * 因为整个 Path 向内缩 half，
+         * 所以圆角半径也要相应减少 half。
          */
+        topLeftRadius = Math.max(
+                0,
+                topLeftRadius - half
+        );
+
+        topRightRadius = Math.max(
+                0,
+                topRightRadius - half
+        );
+
+        bottomRightRadius = Math.max(
+                0,
+                bottomRightRadius - half
+        );
+
+        bottomLeftRadius = Math.max(
+                0,
+                bottomLeftRadius - half
+        );
+
 
         Path topPath = new Path();
         Path rightPath = new Path();
         Path bottomPath = new Path();
         Path leftPath = new Path();
 
+
         /*
-         * ---------------------------------------------------------
          * Top
-         *
-         * 左上圆弧
-         * +
-         * 上边
-         * +
-         * 右上圆弧
-         * ---------------------------------------------------------
          */
         topPath.moveTo(
-                left + topLeftRadius,
-                top
+                bounds.left + topLeftRadius,
+                bounds.top
         );
 
         topPath.lineTo(
-                right - topRightRadius,
-                top
+                bounds.right - topRightRadius,
+                bounds.top
         );
 
         if (topRightRadius > 0) {
-            RectF topRightRect = new RectF(
-                    right - topRightRadius * 2,
-                    top,
-                    right,
-                    top + topRightRadius * 2
+
+            RectF rect = new RectF(
+                    bounds.right - topRightRadius * 2,
+                    bounds.top,
+                    bounds.right,
+                    bounds.top + topRightRadius * 2
             );
 
             topPath.arcTo(
-                    topRightRect,
+                    rect,
                     -90,
                     90
             );
         }
 
+
         /*
-         * ---------------------------------------------------------
          * Right
-         *
-         * 右上圆弧
-         * +
-         * 右边
-         * +
-         * 右下圆弧
-         * ---------------------------------------------------------
          */
         rightPath.moveTo(
-                right,
-                top + topRightRadius
+                bounds.right,
+                bounds.top + topRightRadius
         );
 
         rightPath.lineTo(
-                right,
-                bottom - bottomRightRadius
+                bounds.right,
+                bounds.bottom - bottomRightRadius
         );
 
         if (bottomRightRadius > 0) {
-            RectF bottomRightRect = new RectF(
-                    right - bottomRightRadius * 2,
-                    bottom - bottomRightRadius * 2,
-                    right,
-                    bottom
+
+            RectF rect = new RectF(
+                    bounds.right - bottomRightRadius * 2,
+                    bounds.bottom - bottomRightRadius * 2,
+                    bounds.right,
+                    bounds.bottom
             );
 
             rightPath.arcTo(
-                    bottomRightRect,
+                    rect,
                     0,
                     90
             );
         }
 
+
         /*
-         * ---------------------------------------------------------
          * Bottom
-         *
-         * 右下圆弧
-         * +
-         * 下边
-         * +
-         * 左下圆弧
-         * ---------------------------------------------------------
          */
         bottomPath.moveTo(
-                right - bottomRightRadius,
-                bottom
+                bounds.right - bottomRightRadius,
+                bounds.bottom
         );
 
         bottomPath.lineTo(
-                left + bottomLeftRadius,
-                bottom
+                bounds.left + bottomLeftRadius,
+                bounds.bottom
         );
 
         if (bottomLeftRadius > 0) {
-            RectF bottomLeftRect = new RectF(
-                    left,
-                    bottom - bottomLeftRadius * 2,
-                    left + bottomLeftRadius * 2,
-                    bottom
+
+            RectF rect = new RectF(
+                    bounds.left,
+                    bounds.bottom - bottomLeftRadius * 2,
+                    bounds.left + bottomLeftRadius * 2,
+                    bounds.bottom
             );
 
             bottomPath.arcTo(
-                    bottomLeftRect,
+                    rect,
                     90,
                     90
             );
         }
 
+
         /*
-         * ---------------------------------------------------------
          * Left
-         *
-         * 左下圆弧
-         * +
-         * 左边
-         * +
-         * 左上圆弧
-         * ---------------------------------------------------------
          */
         leftPath.moveTo(
-                left,
-                bottom - bottomLeftRadius
+                bounds.left,
+                bounds.bottom - bottomLeftRadius
         );
 
         leftPath.lineTo(
-                left,
-                top + topLeftRadius
+                bounds.left,
+                bounds.top + topLeftRadius
         );
 
         if (topLeftRadius > 0) {
-            RectF topLeftRect = new RectF(
-                    left,
-                    top,
-                    left + topLeftRadius * 2,
-                    top + topLeftRadius * 2
+
+            RectF rect = new RectF(
+                    bounds.left,
+                    bounds.top,
+                    bounds.left + topLeftRadius * 2,
+                    bounds.top + topLeftRadius * 2
             );
 
             leftPath.arcTo(
-                    topLeftRect,
+                    rect,
                     180,
                     90
             );
         }
 
-        /*
-         * =========================================================
-         * 第一阶段：
-         * DST_OUT
-         *
-         * 把原内容中的 Stroke 区域挖掉。
-         * =========================================================
-         */
 
-        mPaint.setXfermode(
-                new PorterDuffXfermode(
-                        PorterDuff.Mode.DST_OUT
-                )
-        );
-
-        mPaint.setColor(Color.WHITE);
-        mPaint.setStyle(Paint.Style.STROKE);
-
-        /*
-         * 这里仍然保持你原来的逻辑：
-         *
-         * Stroke 实际宽度 = mStrokeWidth
-         *
-         * 清理区域使用 2 倍。
-         */
-        mPaint.setStrokeWidth(
-                mStrokeWidth * 2f
-        );
-
-        if (mStrokeTop) {
-            canvas.drawPath(
-                    topPath,
-                    mPaint
-            );
-        }
-
-        if (mStrokeRight) {
-            canvas.drawPath(
-                    rightPath,
-                    mPaint
-            );
-        }
-
-        if (mStrokeBottom) {
-            canvas.drawPath(
-                    bottomPath,
-                    mPaint
-            );
-        }
-
-        if (mStrokeLeft) {
-            canvas.drawPath(
-                    leftPath,
-                    mPaint
-            );
-        }
-
-        /*
-         * =========================================================
-         * 第二阶段：
-         * SRC_OVER
-         *
-         * 绘制真正的 Stroke。
-         * =========================================================
-         */
-
-        mPaint.setXfermode(
-                new PorterDuffXfermode(
-                        PorterDuff.Mode.SRC_OVER
-                )
-        );
+        mPaint.setXfermode(null);
 
         mPaint.setColor(mStrokeColor);
+
         mPaint.setStyle(Paint.Style.STROKE);
 
-        /*
-         * 这里是实际 Stroke 宽度。
-         */
         mPaint.setStrokeWidth(
                 mStrokeWidth
         );
 
+        mPaint.setStrokeJoin(Paint.Join.ROUND);
+
+        mPaint.setStrokeCap(Paint.Cap.BUTT);
+
+
         if (mStrokeTop) {
+
             canvas.drawPath(
                     topPath,
                     mPaint
@@ -644,6 +545,7 @@ public class RCHelper {
         }
 
         if (mStrokeRight) {
+
             canvas.drawPath(
                     rightPath,
                     mPaint
@@ -651,6 +553,7 @@ public class RCHelper {
         }
 
         if (mStrokeBottom) {
+
             canvas.drawPath(
                     bottomPath,
                     mPaint
@@ -658,47 +561,172 @@ public class RCHelper {
         }
 
         if (mStrokeLeft) {
+
             canvas.drawPath(
                     leftPath,
                     mPaint
             );
         }
-
-        mPaint.setXfermode(null);
     }
 
+
     /**
-     * 圆形情况下绘制部分 Stroke
+     * 创建向内缩 half 的完整圆角 Path。
+     *
+     * 原始：
+     *
+     * 0 ---------------- width
+     *
+     * Stroke 中心在线上，
+     * 会有一半跑到 View 外面。
+     *
+     * 现在：
+     *
+     * half ---------------- width-half
+     *
+     * Stroke 整体都在 View 内。
      */
-    private void drawCirclePartialStroke(
-            Canvas canvas,
-            RectF bounds
-    ) {
+    private Path createInsetRoundPath(float half) {
 
-        float centerX = bounds.centerX();
-        float centerY = bounds.centerY();
+        float width = mLayer.width();
+        float height = mLayer.height();
 
-        float radius = Math.min(
-                bounds.width(),
-                bounds.height()
+        RectF rect = new RectF(
+                half,
+                half,
+                width - half,
+                height - half
+        );
+
+        Path path = new Path();
+
+        if (mRoundAsCircle) {
+
+            float radius = Math.min(
+                    rect.width(),
+                    rect.height()
+            ) / 2f;
+
+            path.addCircle(
+                    rect.centerX(),
+                    rect.centerY(),
+                    radius,
+                    Path.Direction.CW
+            );
+
+            return path;
+        }
+
+
+        float maxRadius = Math.min(
+                rect.width(),
+                rect.height()
         ) / 2f;
 
+
+        float topLeft = Math.min(
+                Math.min(
+                        radii[0],
+                        radii[1]
+                ),
+                maxRadius
+        );
+
+        float topRight = Math.min(
+                Math.min(
+                        radii[2],
+                        radii[3]
+                ),
+                maxRadius
+        );
+
+        float bottomRight = Math.min(
+                Math.min(
+                        radii[4],
+                        radii[5]
+                ),
+                maxRadius
+        );
+
+        float bottomLeft = Math.min(
+                Math.min(
+                        radii[6],
+                        radii[7]
+                ),
+                maxRadius
+        );
+
+
         /*
-         * Android Canvas 角度：
-         *
-         *      -90
-         *        |
-         *        |
-         * 180 ---+--- 0
-         *        |
-         *        |
-         *       90
-         *
-         * Top    = -90 -> 0
-         * Right  = 0 -> 90
-         * Bottom = 90 -> 180
-         * Left   = 180 -> 270
+         * Stroke 中心线向内移动 half，
+         * 对应圆角也减少 half。
          */
+        topLeft = Math.max(
+                0,
+                topLeft - half
+        );
+
+        topRight = Math.max(
+                0,
+                topRight - half
+        );
+
+        bottomRight = Math.max(
+                0,
+                bottomRight - half
+        );
+
+        bottomLeft = Math.max(
+                0,
+                bottomLeft - half
+        );
+
+
+        float[] insetRadii = new float[]{
+                topLeft,
+                topLeft,
+
+                topRight,
+                topRight,
+
+                bottomRight,
+                bottomRight,
+
+                bottomLeft,
+                bottomLeft
+        };
+
+
+        path.addRoundRect(
+                rect,
+                insetRadii,
+                Path.Direction.CW
+        );
+
+        return path;
+    }
+
+
+    /**
+     * 圆形情况下的部分 Stroke
+     */
+    private void drawCirclePartialStroke(Canvas canvas) {
+
+        float half = mStrokeWidth / 2f;
+
+        float centerX = mLayer.centerX();
+        float centerY = mLayer.centerY();
+
+        float radius = Math.min(
+                mLayer.width(),
+                mLayer.height()
+        ) / 2f - half;
+
+
+        if (radius <= 0) {
+            return;
+        }
+
 
         RectF circleRect = new RectF(
                 centerX - radius,
@@ -707,170 +735,153 @@ public class RCHelper {
                 centerY + radius
         );
 
-        Path topPath = new Path();
-        Path rightPath = new Path();
-        Path bottomPath = new Path();
-        Path leftPath = new Path();
 
-        if (mStrokeTop) {
-            topPath.addArc(
-                    circleRect,
-                    -90,
-                    90
-            );
-        }
-
-        if (mStrokeRight) {
-            rightPath.addArc(
-                    circleRect,
-                    0,
-                    90
-            );
-        }
-
-        if (mStrokeBottom) {
-            bottomPath.addArc(
-                    circleRect,
-                    90,
-                    90
-            );
-        }
-
-        if (mStrokeLeft) {
-            leftPath.addArc(
-                    circleRect,
-                    180,
-                    90
-            );
-        }
-
-        /*
-         * DST_OUT
-         */
-        mPaint.setXfermode(
-                new PorterDuffXfermode(
-                        PorterDuff.Mode.DST_OUT
-                )
-        );
-
-        mPaint.setColor(Color.WHITE);
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeWidth(
-                mStrokeWidth * 2f
-        );
-
-        if (mStrokeTop) {
-            canvas.drawPath(topPath, mPaint);
-        }
-
-        if (mStrokeRight) {
-            canvas.drawPath(rightPath, mPaint);
-        }
-
-        if (mStrokeBottom) {
-            canvas.drawPath(bottomPath, mPaint);
-        }
-
-        if (mStrokeLeft) {
-            canvas.drawPath(leftPath, mPaint);
-        }
-
-        /*
-         * SRC_OVER
-         */
-        mPaint.setXfermode(
-                new PorterDuffXfermode(
-                        PorterDuff.Mode.SRC_OVER
-                )
-        );
+        mPaint.setXfermode(null);
 
         mPaint.setColor(mStrokeColor);
+
         mPaint.setStyle(Paint.Style.STROKE);
+
         mPaint.setStrokeWidth(
                 mStrokeWidth
         );
 
+        mPaint.setStrokeJoin(Paint.Join.ROUND);
+
+        mPaint.setStrokeCap(Paint.Cap.BUTT);
+
+
         if (mStrokeTop) {
-            canvas.drawPath(topPath, mPaint);
+
+            canvas.drawArc(
+                    circleRect,
+                    -90,
+                    90,
+                    false,
+                    mPaint
+            );
         }
 
         if (mStrokeRight) {
-            canvas.drawPath(rightPath, mPaint);
+
+            canvas.drawArc(
+                    circleRect,
+                    0,
+                    90,
+                    false,
+                    mPaint
+            );
         }
 
         if (mStrokeBottom) {
-            canvas.drawPath(bottomPath, mPaint);
+
+            canvas.drawArc(
+                    circleRect,
+                    90,
+                    90,
+                    false,
+                    mPaint
+            );
         }
 
         if (mStrokeLeft) {
-            canvas.drawPath(leftPath, mPaint);
-        }
 
-        mPaint.setXfermode(null);
+            canvas.drawArc(
+                    circleRect,
+                    180,
+                    90,
+                    false,
+                    mPaint
+            );
+        }
     }
 
-    //--- Selector 支持 ----------------------------------------------------------------------------
+
+    //--- Selector 支持 -------------------------------------------------------------
 
     public boolean mChecked;
+
     public OnCheckedChangeListener mOnCheckedChangeListener;
 
+
     public void drawableStateChanged(View view) {
+
         if (view instanceof RCAttrs) {
-            ArrayList<Integer> stateListArray = new ArrayList<>();
+
+            ArrayList<Integer> stateListArray =
+                    new ArrayList<>();
+
 
             if (view instanceof Checkable) {
+
                 stateListArray.add(
                         android.R.attr.state_checkable
                 );
 
                 if (((Checkable) view).isChecked()) {
+
                     stateListArray.add(
                             android.R.attr.state_checked
                     );
                 }
             }
 
+
             if (view.isEnabled()) {
+
                 stateListArray.add(
                         android.R.attr.state_enabled
                 );
             }
 
+
             if (view.isFocused()) {
+
                 stateListArray.add(
                         android.R.attr.state_focused
                 );
             }
 
+
             if (view.isPressed()) {
+
                 stateListArray.add(
                         android.R.attr.state_pressed
                 );
             }
 
+
             if (view.isHovered()) {
+
                 stateListArray.add(
                         android.R.attr.state_hovered
                 );
             }
 
+
             if (view.isSelected()) {
+
                 stateListArray.add(
                         android.R.attr.state_selected
                 );
             }
 
+
             if (view.isActivated()) {
+
                 stateListArray.add(
                         android.R.attr.state_activated
                 );
             }
 
+
             if (view.hasWindowFocus()) {
+
                 stateListArray.add(
                         android.R.attr.state_window_focused
                 );
             }
+
 
             if (mStrokeColorStateList != null
                     && mStrokeColorStateList.isStateful()) {
@@ -878,15 +889,21 @@ public class RCHelper {
                 int[] stateList =
                         new int[stateListArray.size()];
 
-                for (int i = 0; i < stateListArray.size(); i++) {
-                    stateList[i] = stateListArray.get(i);
+                for (int i = 0;
+                     i < stateListArray.size();
+                     i++) {
+
+                    stateList[i] =
+                            stateListArray.get(i);
                 }
+
 
                 int stateColor =
                         mStrokeColorStateList.getColorForState(
                                 stateList,
                                 mDefaultStrokeColor
                         );
+
 
                 ((RCAttrs) view).setStrokeColor(
                         stateColor
@@ -895,10 +912,13 @@ public class RCHelper {
         }
     }
 
+
     public interface OnCheckedChangeListener {
+
         void onCheckedChanged(
                 View view,
                 boolean isChecked
         );
     }
 }
+
