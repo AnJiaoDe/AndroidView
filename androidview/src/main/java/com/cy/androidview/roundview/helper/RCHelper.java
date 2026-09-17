@@ -144,24 +144,41 @@ public class RCHelper {
         int w = (int) mLayer.width();
         int h = (int) mLayer.height();
 
-        RectF areas = new RectF();
-        areas.left = view.getPaddingLeft();
-        areas.top = view.getPaddingTop();
-        areas.right = w - view.getPaddingRight();
-        areas.bottom = h - view.getPaddingBottom();
+        /*
+         * 注意：
+         *
+         * 这里不能使用 View 的 padding。
+         *
+         * padding 只负责 TextView 内容区域，
+         * 不能影响 RoundView 本身的圆角、背景和 Stroke。
+         *
+         * 所以 mClipPath 必须覆盖整个 View。
+         */
+        RectF areas = new RectF(
+                0,
+                0,
+                w,
+                h
+        );
 
         mClipPath.reset();
 
         if (mRoundAsCircle) {
-            float d = areas.width() >= areas.height()
-                    ? areas.height()
-                    : areas.width();
 
-            float r = d / 2;
+            float d = Math.min(
+                    areas.width(),
+                    areas.height()
+            );
 
-            PointF center = new PointF(w / 2f, h / 2f);
+            float r = d / 2f;
+
+            PointF center = new PointF(
+                    w / 2f,
+                    h / 2f
+            );
 
             if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
+
                 mClipPath.addCircle(
                         center.x,
                         center.y,
@@ -169,9 +186,14 @@ public class RCHelper {
                         Path.Direction.CW
                 );
 
+                /*
+                 * 保留原来的 Android 8.1 兼容处理
+                 */
                 mClipPath.moveTo(0, 0);
                 mClipPath.moveTo(w, h);
+
             } else {
+
                 float y = h / 2f - r;
 
                 mClipPath.moveTo(
@@ -186,7 +208,9 @@ public class RCHelper {
                         Path.Direction.CW
                 );
             }
+
         } else {
+
             mClipPath.addRoundRect(
                     areas,
                     radii,
@@ -194,11 +218,16 @@ public class RCHelper {
             );
         }
 
+        /*
+         * 点击区域也使用整个 View 的圆角区域。
+         *
+         * 不能再使用 padding 后的 Rect。
+         */
         Region clip = new Region(
-                (int) areas.left,
-                (int) areas.top,
-                (int) areas.right,
-                (int) areas.bottom
+                0,
+                0,
+                w,
+                h
         );
 
         mAreaRegion.setPath(
