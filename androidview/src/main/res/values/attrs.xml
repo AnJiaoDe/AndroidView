@@ -12,6 +12,10 @@
     <attr name="cy_stroke_color" format="color|reference" />
     <attr name="cy_stroke_width" format="integer|dimension" />
 
+    <attr name="cy_stroke_top" format="boolean" />
+    <attr name="cy_stroke_right" format="boolean" />
+    <attr name="cy_stroke_bottom" format="boolean" />
+    <attr name="cy_stroke_left" format="boolean" />
     <!-- 是否剪裁 RCLayout 的背景 -->
     <attr name="cy_clip_background" format="boolean" />
 
@@ -249,6 +253,12 @@
         <attr name="cy_stroke_color" />
         <attr name="cy_stroke_width" />
         <attr name="cy_clip_background" />
+
+        <attr name="cy_stroke_top"  />
+        <attr name="cy_stroke_right"  />
+        <attr name="cy_stroke_bottom"  />
+        <attr name="cy_stroke_left" />
+
     </declare-styleable>
     <declare-styleable name="FrameLayoutRound">
         <attr name="cy_colorRipple" />

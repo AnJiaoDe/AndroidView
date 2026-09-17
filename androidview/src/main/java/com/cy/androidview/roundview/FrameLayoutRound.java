@@ -159,7 +159,25 @@ public class FrameLayoutRound extends FrameLayout implements Checkable, RCAttrs,
         mRCHelper.mStrokeColor = strokeColor;
         invalidate();
     }
+    public void setStrokeTop(boolean enable) {
+        mRCHelper.mStrokeTop = enable;
+        invalidate();
+    }
 
+    public void setStrokeRight(boolean enable) {
+        mRCHelper.mStrokeRight = enable;
+        invalidate();
+    }
+
+    public void setStrokeBottom(boolean enable) {
+        mRCHelper.mStrokeBottom = enable;
+        invalidate();
+    }
+
+    public void setStrokeLeft(boolean enable) {
+        mRCHelper.mStrokeLeft = enable;
+        invalidate();
+    }
     @Override
     public void invalidate() {
         if (null != mRCHelper)

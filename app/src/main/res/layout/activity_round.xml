@@ -13,6 +13,19 @@
         android:orientation="vertical"
         android:padding="10dp">
 
+        <com.cy.androidview.roundview.TextViewRound
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="#eee"
+            android:gravity="center"
+            android:text="stroke"
+            android:textSize="15sp"
+            app:cy_radiusTopLeft="10dp"
+            app:cy_radiusTopRight="20dp"
+            app:cy_stroke_color="#f00"
+            app:cy_stroke_bottom="false"
+            app:cy_stroke_width="2dp" />
+
         <com.cy.androidview.roundview.ImageViewRound
             android:layout_width="70dp"
             android:layout_height="70dp"
@@ -78,6 +91,7 @@
                 android:text="视频"
                 android:textSize="14sp" />
         </com.cy.androidview.roundview.LinearLayoutRound>
+
         <com.cy.androidview.roundview.FrameLayoutRound
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -85,12 +99,13 @@
             android:background="#ff0"
             app:cy_heightWidthRatio="1.6"
             app:cy_radiusCorner="10dp">
+
             <RelativeLayout
                 android:id="@+id/layout_ad"
                 android:layout_width="match_parent"
-                android:background="#00f"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:background="#00f"
                 android:gravity="center">
 
                 <TextView
