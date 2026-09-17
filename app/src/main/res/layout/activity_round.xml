@@ -19,6 +19,7 @@
             app:cy_stroke_width="4dp"
             app:cy_radiusTopLeft="8dp"
             android:background="#006"
+            app:cy_stroke_top="false"
             app:cy_radiusTopRight="16dp"
             app:cy_stroke_bottom="false"
             android:orientation="vertical">

@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.Checkable;
 
 import com.cy.androidview.R;
-import com.cy.androidview.roundview.helper.RCAttrs;
 
 import java.util.ArrayList;
 
@@ -50,7 +49,9 @@ public class RCHelper {
     public boolean mStrokeLeft = true;
 
 
-    public void initAttrs(Context context, TypedArray typedArray) {
+    public void initAttrs(
+            Context context,
+            TypedArray typedArray) {
 
         mRoundAsCircle = typedArray.getBoolean(
                 R.styleable.AttrsRound_cy_round_as_circle,
@@ -62,47 +63,66 @@ public class RCHelper {
         );
 
         if (mStrokeColorStateList != null) {
-            mStrokeColor = mStrokeColorStateList.getDefaultColor();
-            mDefaultStrokeColor = mStrokeColorStateList.getDefaultColor();
+
+            mStrokeColor =
+                    mStrokeColorStateList.getDefaultColor();
+
+            mDefaultStrokeColor =
+                    mStrokeColorStateList.getDefaultColor();
+
         } else {
+
             mStrokeColor = Color.WHITE;
             mDefaultStrokeColor = Color.WHITE;
         }
+
 
         mStrokeWidth = typedArray.getDimensionPixelSize(
                 R.styleable.AttrsRound_cy_stroke_width,
                 0
         );
 
+
         mClipBackground = typedArray.getBoolean(
                 R.styleable.AttrsRound_cy_clip_background,
                 true
         );
 
-        int roundCorner = typedArray.getDimensionPixelSize(
-                R.styleable.AttrsRound_cy_radiusCorner,
-                0
-        );
 
-        int roundCornerTopLeft = typedArray.getDimensionPixelSize(
-                R.styleable.AttrsRound_cy_radiusTopLeft,
-                roundCorner
-        );
+        int roundCorner =
+                typedArray.getDimensionPixelSize(
+                        R.styleable.AttrsRound_cy_radiusCorner,
+                        0
+                );
 
-        int roundCornerTopRight = typedArray.getDimensionPixelSize(
-                R.styleable.AttrsRound_cy_radiusTopRight,
-                roundCorner
-        );
 
-        int roundCornerBottomLeft = typedArray.getDimensionPixelSize(
-                R.styleable.AttrsRound_cy_radiusBottomLeft,
-                roundCorner
-        );
+        int roundCornerTopLeft =
+                typedArray.getDimensionPixelSize(
+                        R.styleable.AttrsRound_cy_radiusTopLeft,
+                        roundCorner
+                );
 
-        int roundCornerBottomRight = typedArray.getDimensionPixelSize(
-                R.styleable.AttrsRound_cy_radiusBottomRight,
-                roundCorner
-        );
+
+        int roundCornerTopRight =
+                typedArray.getDimensionPixelSize(
+                        R.styleable.AttrsRound_cy_radiusTopRight,
+                        roundCorner
+                );
+
+
+        int roundCornerBottomLeft =
+                typedArray.getDimensionPixelSize(
+                        R.styleable.AttrsRound_cy_radiusBottomLeft,
+                        roundCorner
+                );
+
+
+        int roundCornerBottomRight =
+                typedArray.getDimensionPixelSize(
+                        R.styleable.AttrsRound_cy_radiusBottomRight,
+                        roundCorner
+                );
+
 
         radii[0] = roundCornerTopLeft;
         radii[1] = roundCornerTopLeft;
@@ -147,11 +167,15 @@ public class RCHelper {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
         mPaint.setColor(Color.WHITE);
+
         mPaint.setStyle(Paint.Style.FILL);
     }
 
 
-    public void onSizeChanged(View view, int w, int h) {
+    public void onSizeChanged(
+            View view,
+            int w,
+            int h) {
 
         mLayer.set(
                 0,
@@ -173,6 +197,7 @@ public class RCHelper {
             return;
         }
 
+
         RectF areas = new RectF(
                 0,
                 0,
@@ -180,7 +205,9 @@ public class RCHelper {
                 h
         );
 
+
         mClipPath.reset();
+
 
         if (mRoundAsCircle) {
 
@@ -196,7 +223,9 @@ public class RCHelper {
                     h / 2f
             );
 
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
+
+            if (Build.VERSION.SDK_INT
+                    <= Build.VERSION_CODES.O_MR1) {
 
                 mClipPath.addCircle(
                         center.x,
@@ -242,6 +271,7 @@ public class RCHelper {
                 h
         );
 
+
         mAreaRegion.setPath(
                 mClipPath,
                 clip
@@ -250,30 +280,25 @@ public class RCHelper {
 
 
     /**
-     * 绘制圆角 View。
-     *
-     * 重点：
-     *
-     * Stroke 不再使用 DST_OUT。
-     *
-     * Stroke 中心线向 View 内缩 halfStroke，
-     * 从而保证整个 Stroke 都位于 View 内部。
+     * 绘制 Stroke
      */
     public void onClipDraw(Canvas canvas) {
 
-        if (mStrokeWidth > 0) {
+        if (mStrokeWidth <= 0) {
+            return;
+        }
 
-            if (mStrokeTop
-                    && mStrokeRight
-                    && mStrokeBottom
-                    && mStrokeLeft) {
 
-                drawFullStroke(canvas);
+        if (mStrokeTop
+                && mStrokeRight
+                && mStrokeBottom
+                && mStrokeLeft) {
 
-            } else {
+            drawFullStroke(canvas);
 
-                drawPartialStroke(canvas);
-            }
+        } else {
+
+            drawPartialStroke(canvas);
         }
     }
 
@@ -285,21 +310,9 @@ public class RCHelper {
 
         float half = mStrokeWidth / 2f;
 
-        Path path = createInsetRoundPath(
-                half
-        );
+        Path path = createInsetRoundPath(half);
 
-        mPaint.setXfermode(null);
-
-        mPaint.setColor(mStrokeColor);
-
-        mPaint.setStyle(Paint.Style.STROKE);
-
-        mPaint.setStrokeWidth(mStrokeWidth);
-
-        mPaint.setStrokeJoin(Paint.Join.ROUND);
-
-        mPaint.setStrokeCap(Paint.Cap.BUTT);
+        prepareStrokePaint();
 
         canvas.drawPath(
                 path,
@@ -310,230 +323,261 @@ public class RCHelper {
 
     /**
      * 部分边 Stroke
+     *
+     * 核心：
+     *
+     * 某一条边关闭后，相邻的 Stroke 延伸到 View 的真实边界。
+     *
+     * bottom=false：
+     *
+     * left/right -> y = height
+     *
+     * top=false：
+     *
+     * left/right -> y = 0
+     *
+     * left=false：
+     *
+     * top/bottom -> x = 0
+     *
+     * right=false：
+     *
+     * top/bottom -> x = width
      */
     private void drawPartialStroke(Canvas canvas) {
 
         if (mRoundAsCircle) {
-
-            drawCirclePartialStroke(
-                    canvas
-            );
-
+            drawCirclePartialStroke(canvas);
             return;
         }
 
+
+        float width = mLayer.width();
+        float height = mLayer.height();
+
+        if (width <= 0 || height <= 0) {
+            return;
+        }
+
+
         float half = mStrokeWidth / 2f;
 
+
+        /*
+         * 默认：
+         *
+         * Stroke 中心线向 View 内缩 half。
+         */
+        float left = half;
+        float top = half;
+        float right = width - half;
+        float bottom = height - half;
+
+
+        /*
+         * 关键逻辑：
+         *
+         * 如果某条边关闭，
+         * 与它相邻的 Stroke 延伸到 View 边界。
+         */
+
+
+        // top 关闭
+        if (!mStrokeTop) {
+            top = 0;
+        }
+
+
+        // bottom 关闭
+        if (!mStrokeBottom) {
+            bottom = height;
+        }
+
+
+        // left 关闭
+        if (!mStrokeLeft) {
+            left = 0;
+        }
+
+
+        // right 关闭
+        if (!mStrokeRight) {
+            right = width;
+        }
+
+
         RectF bounds = new RectF(
-                half,
-                half,
-                mLayer.width() - half,
-                mLayer.height() - half
-        );
-
-        float maxRadius = Math.min(
-                bounds.width(),
-                bounds.height()
-        ) / 2f;
-
-
-        float topLeftRadius = Math.min(
-                Math.min(
-                        radii[0],
-                        radii[1]
-                ),
-                maxRadius
-        );
-
-        float topRightRadius = Math.min(
-                Math.min(
-                        radii[2],
-                        radii[3]
-                ),
-                maxRadius
-        );
-
-        float bottomRightRadius = Math.min(
-                Math.min(
-                        radii[4],
-                        radii[5]
-                ),
-                maxRadius
-        );
-
-        float bottomLeftRadius = Math.min(
-                Math.min(
-                        radii[6],
-                        radii[7]
-                ),
-                maxRadius
+                left,
+                top,
+                right,
+                bottom
         );
 
 
         /*
-         * 因为整个 Path 向内缩 half，
-         * 所以圆角半径也要相应减少 half。
+         * 计算圆角。
          */
-        topLeftRadius = Math.max(
-                0,
-                topLeftRadius - half
-        );
-
-        topRightRadius = Math.max(
-                0,
-                topRightRadius - half
-        );
-
-        bottomRightRadius = Math.max(
-                0,
-                bottomRightRadius - half
-        );
-
-        bottomLeftRadius = Math.max(
-                0,
-                bottomLeftRadius - half
-        );
+        float maxRadius =
+                Math.min(
+                        width,
+                        height
+                ) / 2f;
 
 
-        Path topPath = new Path();
-        Path rightPath = new Path();
-        Path bottomPath = new Path();
-        Path leftPath = new Path();
+        float topLeftRadius =
+                Math.min(
+                        Math.min(
+                                radii[0],
+                                radii[1]
+                        ),
+                        maxRadius
+                );
+
+
+        float topRightRadius =
+                Math.min(
+                        Math.min(
+                                radii[2],
+                                radii[3]
+                        ),
+                        maxRadius
+                );
+
+
+        float bottomRightRadius =
+                Math.min(
+                        Math.min(
+                                radii[4],
+                                radii[5]
+                        ),
+                        maxRadius
+                );
+
+
+        float bottomLeftRadius =
+                Math.min(
+                        Math.min(
+                                radii[6],
+                                radii[7]
+                        ),
+                        maxRadius
+                );
 
 
         /*
-         * Top
+         * 只有正常的 Stroke 边界才需要减 half。
+         *
+         * 例如 bottom=false：
+         *
+         * bottom = height
+         *
+         * 这时候底部已经是 View 边界，
+         * 不再减 half。
          */
-        topPath.moveTo(
-                bounds.left + topLeftRadius,
-                bounds.top
-        );
+        if (mStrokeTop) {
 
-        topPath.lineTo(
-                bounds.right - topRightRadius,
-                bounds.top
-        );
+            topLeftRadius =
+                    Math.max(
+                            0,
+                            topLeftRadius - half
+                    );
 
-        if (topRightRadius > 0) {
+            topRightRadius =
+                    Math.max(
+                            0,
+                            topRightRadius - half
+                    );
+        }
 
-            RectF rect = new RectF(
-                    bounds.right - topRightRadius * 2,
-                    bounds.top,
-                    bounds.right,
-                    bounds.top + topRightRadius * 2
-            );
 
-            topPath.arcTo(
-                    rect,
-                    -90,
-                    90
-            );
+        if (mStrokeBottom) {
+
+            bottomRightRadius =
+                    Math.max(
+                            0,
+                            bottomRightRadius - half
+                    );
+
+            bottomLeftRadius =
+                    Math.max(
+                            0,
+                            bottomLeftRadius - half
+                    );
         }
 
 
         /*
-         * Right
+         * 如果相邻边关闭，
+         * 当前边必须直接到达 View 边界。
+         *
+         * 因此这个角不能再保留圆角。
          */
-        rightPath.moveTo(
-                bounds.right,
-                bounds.top + topRightRadius
-        );
 
-        rightPath.lineTo(
-                bounds.right,
-                bounds.bottom - bottomRightRadius
-        );
 
-        if (bottomRightRadius > 0) {
+        // Top 关闭
+        if (!mStrokeTop) {
 
-            RectF rect = new RectF(
-                    bounds.right - bottomRightRadius * 2,
-                    bounds.bottom - bottomRightRadius * 2,
-                    bounds.right,
-                    bounds.bottom
-            );
+            topLeftRadius = 0;
+            topRightRadius = 0;
+        }
 
-            rightPath.arcTo(
-                    rect,
-                    0,
-                    90
-            );
+
+        // Bottom 关闭
+        if (!mStrokeBottom) {
+
+            bottomLeftRadius = 0;
+            bottomRightRadius = 0;
+        }
+
+
+        // Left 关闭
+        if (!mStrokeLeft) {
+
+            topLeftRadius = 0;
+            bottomLeftRadius = 0;
+        }
+
+
+        // Right 关闭
+        if (!mStrokeRight) {
+
+            topRightRadius = 0;
+            bottomRightRadius = 0;
         }
 
 
         /*
-         * Bottom
+         * 创建四条边。
          */
-        bottomPath.moveTo(
-                bounds.right - bottomRightRadius,
-                bounds.bottom
+        Path topPath = createTopPath(
+                bounds,
+                topLeftRadius,
+                topRightRadius
         );
 
-        bottomPath.lineTo(
-                bounds.left + bottomLeftRadius,
-                bounds.bottom
+
+        Path rightPath = createRightPath(
+                bounds,
+                topRightRadius,
+                bottomRightRadius
         );
 
-        if (bottomLeftRadius > 0) {
 
-            RectF rect = new RectF(
-                    bounds.left,
-                    bounds.bottom - bottomLeftRadius * 2,
-                    bounds.left + bottomLeftRadius * 2,
-                    bounds.bottom
-            );
-
-            bottomPath.arcTo(
-                    rect,
-                    90,
-                    90
-            );
-        }
-
-
-        /*
-         * Left
-         */
-        leftPath.moveTo(
-                bounds.left,
-                bounds.bottom - bottomLeftRadius
+        Path bottomPath = createBottomPath(
+                bounds,
+                bottomRightRadius,
+                bottomLeftRadius
         );
 
-        leftPath.lineTo(
-                bounds.left,
-                bounds.top + topLeftRadius
+
+        Path leftPath = createLeftPath(
+                bounds,
+                bottomLeftRadius,
+                topLeftRadius
         );
 
-        if (topLeftRadius > 0) {
 
-            RectF rect = new RectF(
-                    bounds.left,
-                    bounds.top,
-                    bounds.left + topLeftRadius * 2,
-                    bounds.top + topLeftRadius * 2
-            );
-
-            leftPath.arcTo(
-                    rect,
-                    180,
-                    90
-            );
-        }
-
-
-        mPaint.setXfermode(null);
-
-        mPaint.setColor(mStrokeColor);
-
-        mPaint.setStyle(Paint.Style.STROKE);
-
-        mPaint.setStrokeWidth(
-                mStrokeWidth
-        );
-
-        mPaint.setStrokeJoin(Paint.Join.ROUND);
-
-        mPaint.setStrokeCap(Paint.Cap.BUTT);
+        prepareStrokePaint();
 
 
         if (mStrokeTop) {
@@ -544,6 +588,7 @@ public class RCHelper {
             );
         }
 
+
         if (mStrokeRight) {
 
             canvas.drawPath(
@@ -552,6 +597,7 @@ public class RCHelper {
             );
         }
 
+
         if (mStrokeBottom) {
 
             canvas.drawPath(
@@ -559,6 +605,7 @@ public class RCHelper {
                     mPaint
             );
         }
+
 
         if (mStrokeLeft) {
 
@@ -571,25 +618,349 @@ public class RCHelper {
 
 
     /**
+     * Top Stroke
+     */
+    private Path createTopPath(
+            RectF bounds,
+            float topLeftRadius,
+            float topRightRadius) {
+
+        Path path = new Path();
+
+
+        /*
+         * 左上角
+         */
+        if (topLeftRadius > 0) {
+
+            path.moveTo(
+                    bounds.left,
+                    bounds.top + topLeftRadius
+            );
+
+            RectF rect = new RectF(
+                    bounds.left,
+                    bounds.top,
+                    bounds.left + topLeftRadius * 2,
+                    bounds.top + topLeftRadius * 2
+            );
+
+            path.arcTo(
+                    rect,
+                    180,
+                    90
+            );
+
+        } else {
+
+            path.moveTo(
+                    bounds.left,
+                    bounds.top
+            );
+        }
+
+
+        /*
+         * 顶边
+         */
+        path.lineTo(
+                bounds.right - topRightRadius,
+                bounds.top
+        );
+
+
+        /*
+         * 右上角
+         */
+        if (topRightRadius > 0) {
+
+            RectF rect = new RectF(
+                    bounds.right - topRightRadius * 2,
+                    bounds.top,
+                    bounds.right,
+                    bounds.top + topRightRadius * 2
+            );
+
+            path.arcTo(
+                    rect,
+                    -90,
+                    90
+            );
+        }
+
+
+        return path;
+    }
+
+
+    /**
+     * Right Stroke
+     */
+    private Path createRightPath(
+            RectF bounds,
+            float topRightRadius,
+            float bottomRightRadius) {
+
+        Path path = new Path();
+
+
+        /*
+         * 右上角
+         */
+        if (topRightRadius > 0) {
+
+            path.moveTo(
+                    bounds.right - topRightRadius,
+                    bounds.top
+            );
+
+            RectF rect = new RectF(
+                    bounds.right - topRightRadius * 2,
+                    bounds.top,
+                    bounds.right,
+                    bounds.top + topRightRadius * 2
+            );
+
+            path.arcTo(
+                    rect,
+                    -90,
+                    90
+            );
+
+        } else {
+
+            path.moveTo(
+                    bounds.right,
+                    bounds.top
+            );
+        }
+
+
+        /*
+         * 右边
+         */
+        path.lineTo(
+                bounds.right,
+                bounds.bottom - bottomRightRadius
+        );
+
+
+        /*
+         * 右下角
+         */
+        if (bottomRightRadius > 0) {
+
+            RectF rect = new RectF(
+                    bounds.right - bottomRightRadius * 2,
+                    bounds.bottom - bottomRightRadius * 2,
+                    bounds.right,
+                    bounds.bottom
+            );
+
+            path.arcTo(
+                    rect,
+                    0,
+                    90
+            );
+        }
+
+
+        return path;
+    }
+
+
+    /**
+     * Bottom Stroke
+     */
+    private Path createBottomPath(
+            RectF bounds,
+            float bottomRightRadius,
+            float bottomLeftRadius) {
+
+        Path path = new Path();
+
+
+        /*
+         * 右下角
+         */
+        if (bottomRightRadius > 0) {
+
+            path.moveTo(
+                    bounds.right,
+                    bounds.bottom - bottomRightRadius
+            );
+
+            RectF rect = new RectF(
+                    bounds.right - bottomRightRadius * 2,
+                    bounds.bottom - bottomRightRadius * 2,
+                    bounds.right,
+                    bounds.bottom
+            );
+
+            path.arcTo(
+                    rect,
+                    0,
+                    90
+            );
+
+        } else {
+
+            path.moveTo(
+                    bounds.right,
+                    bounds.bottom
+            );
+        }
+
+
+        /*
+         * 底边
+         */
+        path.lineTo(
+                bounds.left + bottomLeftRadius,
+                bounds.bottom
+        );
+
+
+        /*
+         * 左下角
+         */
+        if (bottomLeftRadius > 0) {
+
+            RectF rect = new RectF(
+                    bounds.left,
+                    bounds.bottom - bottomLeftRadius * 2,
+                    bounds.left + bottomLeftRadius * 2,
+                    bounds.bottom
+            );
+
+            path.arcTo(
+                    rect,
+                    90,
+                    90
+            );
+        }
+
+
+        return path;
+    }
+
+
+    /**
+     * Left Stroke
+     */
+    private Path createLeftPath(
+            RectF bounds,
+            float bottomLeftRadius,
+            float topLeftRadius) {
+
+        Path path = new Path();
+
+
+        /*
+         * 左下角
+         */
+        if (bottomLeftRadius > 0) {
+
+            path.moveTo(
+                    bounds.left,
+                    bounds.bottom - bottomLeftRadius
+            );
+
+            RectF rect = new RectF(
+                    bounds.left,
+                    bounds.bottom - bottomLeftRadius * 2,
+                    bounds.left + bottomLeftRadius * 2,
+                    bounds.bottom
+            );
+
+            path.arcTo(
+                    rect,
+                    90,
+                    90
+            );
+
+        } else {
+
+            path.moveTo(
+                    bounds.left,
+                    bounds.bottom
+            );
+        }
+
+
+        /*
+         * 左边
+         */
+        path.lineTo(
+                bounds.left,
+                bounds.top + topLeftRadius
+        );
+
+
+        /*
+         * 左上角
+         */
+        if (topLeftRadius > 0) {
+
+            RectF rect = new RectF(
+                    bounds.left,
+                    bounds.top,
+                    bounds.left + topLeftRadius * 2,
+                    bounds.top + topLeftRadius * 2
+            );
+
+            path.arcTo(
+                    rect,
+                    180,
+                    90
+            );
+        }
+
+
+        return path;
+    }
+
+
+    /**
+     * Stroke Paint
+     */
+    private void prepareStrokePaint() {
+
+        mPaint.setXfermode(null);
+
+        mPaint.setColor(
+                mStrokeColor
+        );
+
+        mPaint.setStyle(
+                Paint.Style.STROKE
+        );
+
+        mPaint.setStrokeWidth(
+                mStrokeWidth
+        );
+
+        mPaint.setStrokeJoin(
+                Paint.Join.ROUND
+        );
+
+        mPaint.setStrokeCap(
+                Paint.Cap.BUTT
+        );
+    }
+
+
+    /**
      * 创建向内缩 half 的完整圆角 Path。
      *
-     * 原始：
-     *
-     * 0 ---------------- width
-     *
-     * Stroke 中心在线上，
-     * 会有一半跑到 View 外面。
-     *
-     * 现在：
-     *
-     * half ---------------- width-half
-     *
-     * Stroke 整体都在 View 内。
+     * 四边都开启时使用。
      */
-    private Path createInsetRoundPath(float half) {
+    private Path createInsetRoundPath(
+            float half) {
 
         float width = mLayer.width();
         float height = mLayer.height();
+
 
         RectF rect = new RectF(
                 half,
@@ -598,14 +969,18 @@ public class RCHelper {
                 height - half
         );
 
+
         Path path = new Path();
+
 
         if (mRoundAsCircle) {
 
-            float radius = Math.min(
-                    rect.width(),
-                    rect.height()
-            ) / 2f;
+            float radius =
+                    Math.min(
+                            rect.width(),
+                            rect.height()
+                    ) / 2f;
+
 
             path.addCircle(
                     rect.centerX(),
@@ -618,49 +993,53 @@ public class RCHelper {
         }
 
 
-        float maxRadius = Math.min(
-                rect.width(),
-                rect.height()
-        ) / 2f;
-
-
-        float topLeft = Math.min(
+        float maxRadius =
                 Math.min(
-                        radii[0],
-                        radii[1]
-                ),
-                maxRadius
-        );
+                        rect.width(),
+                        rect.height()
+                ) / 2f;
 
-        float topRight = Math.min(
+
+        float topLeft =
                 Math.min(
-                        radii[2],
-                        radii[3]
-                ),
-                maxRadius
-        );
+                        Math.min(
+                                radii[0],
+                                radii[1]
+                        ),
+                        maxRadius
+                );
 
-        float bottomRight = Math.min(
+
+        float topRight =
                 Math.min(
-                        radii[4],
-                        radii[5]
-                ),
-                maxRadius
-        );
+                        Math.min(
+                                radii[2],
+                                radii[3]
+                        ),
+                        maxRadius
+                );
 
-        float bottomLeft = Math.min(
+
+        float bottomRight =
                 Math.min(
-                        radii[6],
-                        radii[7]
-                ),
-                maxRadius
-        );
+                        Math.min(
+                                radii[4],
+                                radii[5]
+                        ),
+                        maxRadius
+                );
 
 
-        /*
-         * Stroke 中心线向内移动 half，
-         * 对应圆角也减少 half。
-         */
+        float bottomLeft =
+                Math.min(
+                        Math.min(
+                                radii[6],
+                                radii[7]
+                        ),
+                        maxRadius
+                );
+
+
         topLeft = Math.max(
                 0,
                 topLeft - half
@@ -703,6 +1082,7 @@ public class RCHelper {
                 Path.Direction.CW
         );
 
+
         return path;
     }
 
@@ -710,17 +1090,25 @@ public class RCHelper {
     /**
      * 圆形情况下的部分 Stroke
      */
-    private void drawCirclePartialStroke(Canvas canvas) {
+    private void drawCirclePartialStroke(
+            Canvas canvas) {
 
-        float half = mStrokeWidth / 2f;
+        float half =
+                mStrokeWidth / 2f;
 
-        float centerX = mLayer.centerX();
-        float centerY = mLayer.centerY();
 
-        float radius = Math.min(
-                mLayer.width(),
-                mLayer.height()
-        ) / 2f - half;
+        float centerX =
+                mLayer.centerX();
+
+        float centerY =
+                mLayer.centerY();
+
+
+        float radius =
+                Math.min(
+                        mLayer.width(),
+                        mLayer.height()
+                ) / 2f - half;
 
 
         if (radius <= 0) {
@@ -736,19 +1124,7 @@ public class RCHelper {
         );
 
 
-        mPaint.setXfermode(null);
-
-        mPaint.setColor(mStrokeColor);
-
-        mPaint.setStyle(Paint.Style.STROKE);
-
-        mPaint.setStrokeWidth(
-                mStrokeWidth
-        );
-
-        mPaint.setStrokeJoin(Paint.Join.ROUND);
-
-        mPaint.setStrokeCap(Paint.Cap.BUTT);
+        prepareStrokePaint();
 
 
         if (mStrokeTop) {
@@ -762,6 +1138,7 @@ public class RCHelper {
             );
         }
 
+
         if (mStrokeRight) {
 
             canvas.drawArc(
@@ -773,6 +1150,7 @@ public class RCHelper {
             );
         }
 
+
         if (mStrokeBottom) {
 
             canvas.drawArc(
@@ -783,6 +1161,7 @@ public class RCHelper {
                     mPaint
             );
         }
+
 
         if (mStrokeLeft) {
 
@@ -797,7 +1176,9 @@ public class RCHelper {
     }
 
 
-    //--- Selector 支持 -------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // Selector 支持
+    // -------------------------------------------------------------------------
 
     public boolean mChecked;
 
@@ -817,6 +1198,7 @@ public class RCHelper {
                 stateListArray.add(
                         android.R.attr.state_checkable
                 );
+
 
                 if (((Checkable) view).isChecked()) {
 
@@ -889,6 +1271,7 @@ public class RCHelper {
                 int[] stateList =
                         new int[stateListArray.size()];
 
+
                 for (int i = 0;
                      i < stateListArray.size();
                      i++) {
@@ -921,4 +1304,3 @@ public class RCHelper {
         );
     }
 }
-
