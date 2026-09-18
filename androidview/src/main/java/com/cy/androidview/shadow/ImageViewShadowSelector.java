@@ -254,21 +254,6 @@ public class ImageViewShadowSelector extends View {
         }
     }
 
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-
-        if (bitmap != null && !bitmap.isRecycled()) {
-            bitmap.recycle();
-        }
-        bitmap = null;
-
-        if (bitmapAlpha != null && !bitmapAlpha.isRecycled()) {
-            bitmapAlpha.recycle();
-        }
-        bitmapAlpha = null;
-    }
-
     //================ selector ================
 
     @Override

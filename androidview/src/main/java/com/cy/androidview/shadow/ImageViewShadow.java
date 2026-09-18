@@ -140,15 +140,6 @@ public class ImageViewShadow extends View {
         }
     }
 
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        if (bitmap != null) bitmap.recycle();
-        bitmap = null;
-        if (bitmapAlpha != null) bitmapAlpha.recycle();
-        bitmapAlpha = null;
-    }
-
     //判断是否选中
 //    public boolean isChecked() {
 //        return isChecked;
