@@ -70,13 +70,27 @@ public class RelativeLayoutRound extends RelativeLayout implements Checkable, RC
         super.onSizeChanged(w, h, oldw, oldh);
         mRCHelper.onSizeChanged(this, w, h);
     }
-
     @Override
     protected void dispatchDraw(Canvas canvas) {
-        canvas.saveLayer(mRCHelper.mLayer, null, Canvas.ALL_SAVE_FLAG);
+        canvas.save();
+
+        if (mRCHelper.mClipBackground) {
+            canvas.clipPath(mRCHelper.mClipPath);
+        }
+
+        canvas.saveLayer(
+                mRCHelper.mLayer,
+                null,
+                Canvas.ALL_SAVE_FLAG
+        );
+
         super.dispatchDraw(canvas);
-        mRCHelper.onClipDraw(canvas);
+
         canvas.restore();
+        canvas.restore();
+
+        // Stroke 不参与圆角裁剪
+        mRCHelper.onClipDraw(canvas);
     }
 
     @Override
@@ -90,6 +104,7 @@ public class RelativeLayoutRound extends RelativeLayout implements Checkable, RC
             super.draw(canvas);
         }
     }
+
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {

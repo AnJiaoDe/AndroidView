@@ -72,12 +72,28 @@ public class FrameLayoutRound extends FrameLayout implements Checkable, RCAttrs,
         mRCHelper.onSizeChanged(this, w, h);
     }
 
+
     @Override
     protected void dispatchDraw(Canvas canvas) {
-        canvas.saveLayer(mRCHelper.mLayer, null, Canvas.ALL_SAVE_FLAG);
+        canvas.save();
+
+        if (mRCHelper.mClipBackground) {
+            canvas.clipPath(mRCHelper.mClipPath);
+        }
+
+        canvas.saveLayer(
+                mRCHelper.mLayer,
+                null,
+                Canvas.ALL_SAVE_FLAG
+        );
+
         super.dispatchDraw(canvas);
-        mRCHelper.onClipDraw(canvas);
+
         canvas.restore();
+        canvas.restore();
+
+        // Stroke 不参与圆角裁剪
+        mRCHelper.onClipDraw(canvas);
     }
 
     @Override
