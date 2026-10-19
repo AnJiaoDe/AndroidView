@@ -44,7 +44,7 @@ public class Four2 extends View {
 
     public Four2(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        setLayerType(LAYER_TYPE_SOFTWARE, null);
+        setLayerType(LAYER_TYPE_HARDWARE, null);
 
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);

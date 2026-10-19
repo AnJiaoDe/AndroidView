@@ -45,7 +45,7 @@ public class ImageViewShadowSelector extends View {
     public ImageViewShadowSelector(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
-        setLayerType(LAYER_TYPE_SOFTWARE, null);
+        setLayerType(LAYER_TYPE_HARDWARE, null);
 
         TypedArray typedArray = context.obtainStyledAttributes(
                 attrs,

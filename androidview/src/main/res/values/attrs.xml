@@ -884,4 +884,18 @@
         <attr name="cy_rightTextColor" format="color|reference"/>
         <attr name="cy_cornerRadius" format="dimension|reference"/>
     </declare-styleable>
+    <declare-styleable name="RingProgressBarView">
+
+        <attr name="cy_ringProgress" format="integer" />
+        <attr name="cy_ringMax" format="integer" />
+
+        <attr name="cy_ringProgressColor" format="color" />
+        <attr name="cy_ringBackgroundColor" format="color" />
+
+        <attr name="cy_ringStrokeWidth" format="dimension" />
+
+        <attr name="cy_ringTextColor" format="color" />
+        <attr name="cy_ringTextSize" format="dimension" />
+
+    </declare-styleable>
 </resources>

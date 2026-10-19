@@ -38,7 +38,7 @@ public class ImageViewShadow extends View {
 
     public ImageViewShadow(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        setLayerType(LAYER_TYPE_SOFTWARE, null);
+        setLayerType(LAYER_TYPE_HARDWARE, null);
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ImageViewShadow);
         drawableSrc = typedArray.getResourceId(R.styleable.ImageViewShadow_cy_src, -1);

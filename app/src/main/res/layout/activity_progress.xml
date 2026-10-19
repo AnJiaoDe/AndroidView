@@ -4,20 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#000"
+    android:orientation="vertical"
     android:padding="10dp">
+
     <com.cy.androidview.roundview.FrameLayoutRound
         android:layout_width="match_parent"
         android:layout_height="200dp">
         <!--    //31  50  81  100-->
         <com.cy.androidview.progress.VCutProgressView
-            android:layout_width="match_parent"
-            app:cy_progress="70"
-            android:padding="10dp"
-            app:cy_radiusCorner="0dp"
             android:id="@+id/VCutProgressView"
-            android:layout_height="match_parent" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            app:cy_progress="70"
+            app:cy_radiusCorner="0dp" />
     </com.cy.androidview.roundview.FrameLayoutRound>
 
+    <com.cy.androidview.progress.RingProgressBarView
+        android:id="@+id/ringProgress"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="20dp"
+        app:cy_ringBackgroundColor="#EAEAEA"
+        app:cy_ringMax="100"
+        app:cy_ringProgress="5"
+        app:cy_ringProgressColor="#48C9B0"
+        app:cy_ringStrokeWidth="8dp"
+        app:cy_ringTextColor="#fff"
+        app:cy_ringTextSize="20sp" />
 </LinearLayout>
