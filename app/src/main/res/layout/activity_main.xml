@@ -56,6 +56,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="progress" />
+    <Button
+        android:id="@+id/btn_picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="picker" />
 
     <com.cy.androidview.percentview.PercentFrameLayout
         android:layout_width="wrap_content"

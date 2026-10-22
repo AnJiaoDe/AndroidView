@@ -898,4 +898,9 @@
         <attr name="cy_ringTextSize" format="dimension" />
 
     </declare-styleable>
+    <declare-styleable name="DateWheelPicker">
+        <attr name="dwpDividerColor" format="color" />
+        <attr name="dwpSelectedTextColor" format="color" />
+        <attr name="dwpNormalTextColor" format="color" />
+    </declare-styleable>
 </resources>
