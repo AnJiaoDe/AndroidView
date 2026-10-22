@@ -21,10 +21,11 @@ public class PickerActivity extends AppCompatActivity {
                 getMillis(1025, 10, 1),
                 getMillis(2026, 10, 31)
         );
-        picker.setDateRange(
-                2025, 10, 1,
-                2026, 10, 31
-        );
+//        picker.setDateRange(
+//                2025, 10, 1,
+//                2026, 10, 31
+//        );
+        picker.setSelectedDate(2026, 10, 21);
 //        picker.setSelectedDate(getMillis(2026, 10, 21));
 
 // 设置分割线颜色

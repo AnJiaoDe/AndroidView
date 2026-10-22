@@ -174,6 +174,14 @@ public class DateWheelPickerView extends LinearLayout {
         clampSelectedDate();
         updateWheels(false);
     }
+    public void setSelectedDate(int year, int month, int day) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear();
+        calendar.set(year, month - 1, day);
+        normalize(calendar);
+
+        setSelectedDate(calendar.getTimeInMillis());
+    }
     public void setSelectedDate(long millis) {
         selectedDate.setTimeInMillis(millis);
         normalize(selectedDate);
@@ -476,6 +484,7 @@ public class DateWheelPickerView extends LinearLayout {
 
     // ==================== 日期滚轮 ====================
 
+
     private class WheelColumn extends View {
 
         private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -505,10 +514,10 @@ public class DateWheelPickerView extends LinearLayout {
 
         WheelColumn(Context context) {
             super(context);
+            setClickable(true);
         }
 
-        void setColors(int line, int selected, int normal,
-                       int background) {
+        void setColors(int line, int selected, int normal, int background) {
             lineColor = line;
             selectedColor = selected;
             normalColor = normal;
@@ -516,8 +525,7 @@ public class DateWheelPickerView extends LinearLayout {
             invalidate();
         }
 
-        void setSizes(float normal, float selected,
-                      float rowHeight, float divider) {
+        void setSizes(float normal, float selected, float rowHeight, float divider) {
             normalSize = normal;
             selectedSize = selected;
             row = rowHeight;
@@ -528,11 +536,10 @@ public class DateWheelPickerView extends LinearLayout {
         void setValues(String[] values, int index, boolean notify) {
             cancelAnimation();
 
-            this.values = values == null
-                    ? new String[0] : values.clone();
-
+            this.values = values == null ? new String[0] : values.clone();
             selectedIndex = clamp(index);
             offset = 0;
+            dragging = false;
             invalidate();
 
             if (notify && listener != null) {
@@ -548,7 +555,6 @@ public class DateWheelPickerView extends LinearLayout {
             if (values.length == 0) {
                 return 0;
             }
-
             return Math.max(0, Math.min(index, values.length - 1));
         }
 
@@ -559,15 +565,27 @@ public class DateWheelPickerView extends LinearLayout {
             }
         }
 
+        private void recycleVelocityTracker() {
+            if (velocityTracker != null) {
+                velocityTracker.recycle();
+                velocityTracker = null;
+            }
+        }
+
         private void settle(int target) {
             cancelAnimation();
 
+            if (values.length == 0 || row <= 0) {
+                selectedIndex = clamp(target);
+                offset = 0;
+                invalidate();
+                return;
+            }
+
             final int targetIndex = clamp(target);
-            final float targetOffset =
-                    (selectedIndex - targetIndex) * row;
+            final float targetOffset = (selectedIndex - targetIndex) * row;
             final float startOffset = offset;
-            final float distance =
-                    Math.abs(targetOffset - startOffset);
+            final float distance = Math.abs(targetOffset - startOffset);
 
             if (distance < 1f) {
                 selectedIndex = targetIndex;
@@ -580,25 +598,20 @@ public class DateWheelPickerView extends LinearLayout {
                 return;
             }
 
-            long duration = (long) Math.max(
-                    180, Math.min(650, 180 + distance * 0.30f));
+            long duration = (long) Math.max(150,
+                    Math.min(500, 150 + distance * 0.25f));
 
-            animator = ValueAnimator.ofFloat(
-                    startOffset, targetOffset);
-
+            animator = ValueAnimator.ofFloat(startOffset, targetOffset);
             animator.setDuration(duration);
-            animator.setInterpolator(
-                    new DecelerateInterpolator(2.0f));
+            animator.setInterpolator(new DecelerateInterpolator(2f));
 
-            animator.addUpdateListener(
-                    new ValueAnimator.AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(
-                                ValueAnimator animation) {
-                            offset = (float) animation.getAnimatedValue();
-                            invalidate();
-                        }
-                    });
+            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    offset = (float) animation.getAnimatedValue();
+                    invalidate();
+                }
+            });
 
             animator.addListener(new AnimatorListenerAdapter() {
                 private boolean cancelled;
@@ -610,7 +623,7 @@ public class DateWheelPickerView extends LinearLayout {
 
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    if (cancelled) {
+                    if (cancelled || animator != animation) {
                         return;
                     }
 
@@ -640,54 +653,49 @@ public class DateWheelPickerView extends LinearLayout {
             float centerX = getWidth() / 2f;
 
             paint.setStyle(Paint.Style.FILL);
+            paint.setAlpha(255);
             paint.setColor(selectionBackground);
 
             canvas.drawRect(
-                    0, centerY - row / 2,
-                    getWidth(), centerY + row / 2, paint);
+                    0, centerY - row / 2f,
+                    getWidth(), centerY + row / 2f, paint);
 
-            paint.setColor(lineColor);
-            paint.setStrokeWidth(lineHeight);
+            if (lineHeight > 0) {
+                paint.setColor(lineColor);
+                paint.setStrokeWidth(lineHeight);
 
-            canvas.drawLine(
-                    0, centerY - row / 2,
-                    getWidth(), centerY - row / 2, paint);
+                canvas.drawLine(
+                        0, centerY - row / 2f,
+                        getWidth(), centerY - row / 2f, paint);
 
-            canvas.drawLine(
-                    0, centerY + row / 2,
-                    getWidth(), centerY + row / 2, paint);
+                canvas.drawLine(
+                        0, centerY + row / 2f,
+                        getWidth(), centerY + row / 2f, paint);
+            }
 
             paint.setTextAlign(Paint.Align.CENTER);
 
             for (int i = 0; i < values.length; i++) {
-                float y = centerY
-                        + (i - selectedIndex) * row + offset;
+                float y = centerY + (i - selectedIndex) * row + offset;
 
                 if (y < -row || y > getHeight() + row) {
                     continue;
                 }
 
-                boolean selected = i == selectedIndex
-                        && Math.abs(offset) < row / 2;
+                boolean selected = i == selectedIndex && Math.abs(offset) < row / 2f;
 
-                paint.setColor(
-                        selected ? selectedColor : normalColor);
-
-                paint.setTextSize(
-                        selected ? selectedSize : normalSize);
-
+                paint.setColor(selected ? selectedColor : normalColor);
+                paint.setTextSize(selected ? selectedSize : normalSize);
                 paint.setAlpha(selected ? 255 : Math.max(
-                        50, 180 - (int) (
-                                Math.abs(y - centerY) / row * 45)));
+                        50, 180 - (int) (Math.abs(y - centerY) / row * 45)));
 
                 Paint.FontMetrics fm = paint.getFontMetrics();
+                float baseline = y - (fm.ascent + fm.descent) / 2f;
 
-                float baseline = y
-                        - (fm.ascent + fm.descent) / 2;
-
-                canvas.drawText(
-                        values[i], centerX, baseline, paint);
+                canvas.drawText(values[i], centerX, baseline, paint);
             }
+
+            paint.setAlpha(255);
         }
 
         @Override
@@ -695,21 +703,17 @@ public class DateWheelPickerView extends LinearLayout {
             switch (event.getActionMasked()) {
                 case MotionEvent.ACTION_DOWN:
                     cancelAnimation();
+                    recycleVelocityTracker();
 
                     downY = lastY = event.getY();
                     downX = event.getX();
                     dragging = false;
 
-                    if (velocityTracker != null) {
-                        velocityTracker.recycle();
-                    }
-
                     velocityTracker = VelocityTracker.obtain();
                     velocityTracker.addMovement(event);
 
                     if (getParent() != null) {
-                        getParent().requestDisallowInterceptTouchEvent(
-                                true);
+                        getParent().requestDisallowInterceptTouchEvent(true);
                     }
                     return true;
 
@@ -726,38 +730,26 @@ public class DateWheelPickerView extends LinearLayout {
 
                     if (totalY > dp_3 && totalY > totalX) {
                         dragging = true;
-
-                        if (getParent() != null) {
-                            getParent()
-                                    .requestDisallowInterceptTouchEvent(
-                                            true);
-                        }
                     }
 
-                    if (dragging && row > 0) {
+                    if (dragging && row > 0 && values.length > 0) {
                         offset += dy;
 
-                        while (offset >= row) {
-                            if (selectedIndex <= 0) {
-                                selectedIndex = 0;
-                                offset = 0;
-                                break;
-                            }
-
+                        while (offset >= row && selectedIndex > 0) {
                             offset -= row;
                             selectedIndex--;
                         }
 
-                        while (offset <= -row) {
-                            if (selectedIndex >= values.length - 1) {
-                                selectedIndex = Math.max(
-                                        0, values.length - 1);
-                                offset = 0;
-                                break;
-                            }
-
+                        while (offset <= -row && selectedIndex < values.length - 1) {
                             offset += row;
                             selectedIndex++;
+                        }
+
+                        // 首项不能继续向下拖，末项不能继续向上拖
+                        if (selectedIndex == 0 && offset > 0) {
+                            offset = 0;
+                        } else if (selectedIndex == values.length - 1 && offset < 0) {
+                            offset = 0;
                         }
 
                         invalidate();
@@ -768,9 +760,7 @@ public class DateWheelPickerView extends LinearLayout {
 
                 case MotionEvent.ACTION_UP:
                 case MotionEvent.ACTION_CANCEL:
-                    boolean cancelled = event.getActionMasked()
-                            == MotionEvent.ACTION_CANCEL;
-
+                    boolean cancelled = event.getActionMasked() == MotionEvent.ACTION_CANCEL;
                     float velocityY = 0;
 
                     if (velocityTracker != null) {
@@ -781,41 +771,56 @@ public class DateWheelPickerView extends LinearLayout {
                             velocityY = velocityTracker.getYVelocity();
                         }
 
-                        velocityTracker.recycle();
-                        velocityTracker = null;
+                        recycleVelocityTracker();
                     }
 
-                    if (row > 0 && dragging && !cancelled) {
-                        float projectedOffset =
-                                offset + velocityY * 0.18f;
+                    if (row > 0 && values.length > 0) {
+                        int target;
 
-                        int target = selectedIndex
-                                - Math.round(projectedOffset / row);
+                        if (dragging && !cancelled) {
+                            float projectedOffset = offset;
 
-                        target = Math.max(
-                                selectedIndex - 12,
-                                Math.min(selectedIndex + 12, target));
+                            // 手指向边界外滑动时，不再叠加惯性
+                            boolean atFirst = selectedIndex == 0;
+                            boolean atLast = selectedIndex == values.length - 1;
 
-                        target = clamp(target);
-                        settle(target);
+                            if (!(atFirst && velocityY > 0)
+                                    && !(atLast && velocityY < 0)) {
+                                projectedOffset += velocityY * 0.18f;
+                            }
+
+                            target = selectedIndex - Math.round(projectedOffset / row);
+
+                            // 限制单次惯性滚动距离
+                            target = Math.max(selectedIndex - 12,
+                                    Math.min(selectedIndex + 12, target));
+                        } else {
+                            target = selectedIndex - Math.round(offset / row);
+                        }
+
+                        settle(clamp(target));
                     } else {
-                        int target = row > 0
-                                ? selectedIndex - Math.round(offset / row)
-                                : selectedIndex;
-
-                        settle(target);
+                        offset = 0;
+                        invalidate();
                     }
 
                     dragging = false;
 
                     if (getParent() != null) {
-                        getParent()
-                                .requestDisallowInterceptTouchEvent(false);
+                        getParent().requestDisallowInterceptTouchEvent(false);
                     }
                     return true;
             }
 
             return true;
         }
+
+        @Override
+        protected void onDetachedFromWindow() {
+            cancelAnimation();
+            recycleVelocityTracker();
+            super.onDetachedFromWindow();
+        }
     }
+
 }
