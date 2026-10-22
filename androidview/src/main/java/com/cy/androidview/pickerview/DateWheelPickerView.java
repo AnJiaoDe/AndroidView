@@ -50,6 +50,7 @@ public class DateWheelPickerView extends LinearLayout {
     private int rowHeight;
 
     private int dp_3;
+
     public DateWheelPickerView(Context context) {
         this(context, null);
     }
@@ -65,7 +66,7 @@ public class DateWheelPickerView extends LinearLayout {
     }
 
     private void init(AttributeSet attrs) {
-        dp_3=ScreenUtils.dpAdapt(getContext(),3);
+        dp_3 = ScreenUtils.dpAdapt(getContext(), 3);
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(
                     attrs, R.styleable.DateWheelPickerView);
@@ -133,12 +134,26 @@ public class DateWheelPickerView extends LinearLayout {
                 normalTextColor,
                 selectedBackgroundColor);
 
-        wheel.setSizes(textSize,selectedTextSize,rowHeight,dividerHeight);
+        wheel.setSizes(textSize, selectedTextSize, rowHeight, dividerHeight);
 
         return wheel;
     }
 
     // ==================== 日期接口 ====================
+    public void setDateRange(int year_start, int month_start, int day_start,
+                             int year_end, int month_end, int day_end) {
+        Calendar start = Calendar.getInstance();
+        start.clear();
+        start.set(year_start, month_start - 1, day_start);
+        normalize(start);
+
+        Calendar end = Calendar.getInstance();
+        end.clear();
+        end.set(year_end, month_end - 1, day_end);
+        normalize(end);
+
+        setDateRange(start.getTimeInMillis(), end.getTimeInMillis());
+    }
 
     public void setDateRange(long startMillis, long endMillis) {
         Calendar start = Calendar.getInstance();
@@ -159,7 +174,6 @@ public class DateWheelPickerView extends LinearLayout {
         clampSelectedDate();
         updateWheels(false);
     }
-
     public void setSelectedDate(long millis) {
         selectedDate.setTimeInMillis(millis);
         normalize(selectedDate);
@@ -256,7 +270,7 @@ public class DateWheelPickerView extends LinearLayout {
                     normalTextColor,
                     selectedBackgroundColor);
 
-            wheel.setSizes(textSize,selectedTextSize,rowHeight,dividerHeight);
+            wheel.setSizes(textSize, selectedTextSize, rowHeight, dividerHeight);
         }
     }
 
@@ -710,7 +724,7 @@ public class DateWheelPickerView extends LinearLayout {
                     float totalY = Math.abs(y - downY);
                     float totalX = Math.abs(event.getX() - downX);
 
-                    if (totalY > dp_3&& totalY > totalX) {
+                    if (totalY > dp_3 && totalY > totalX) {
                         dragging = true;
 
                         if (getParent() != null) {
