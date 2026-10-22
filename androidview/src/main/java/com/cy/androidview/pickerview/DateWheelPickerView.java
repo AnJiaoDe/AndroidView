@@ -1,16 +1,18 @@
 package com.cy.androidview.pickerview;
 
+import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.VelocityTracker;
+import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 
@@ -37,16 +39,17 @@ public class DateWheelPickerView extends LinearLayout {
     private Callback callback;
     private boolean updating;
 
-    private int dividerColor = Color.parseColor("#eeeeee");
-    private int selectedTextColor = Color.parseColor("#222222");
+    private int dividerColor = Color.parseColor("#EEEEEE");
+    private int selectedTextColor = Color.parseColor("#2B2B2B");
     private int normalTextColor = Color.parseColor("#999999");
     private int selectedBackgroundColor = Color.TRANSPARENT;
 
-    private float dividerHeight = 0.1f;
-    private float textSize = 20f;
-    private float selectedTextSize = 22f;
-    private float rowHeight = 40f;
+    private int dividerHeight;
+    private int textSize;
+    private int selectedTextSize;
+    private int rowHeight;
 
+    private int dp_3;
     public DateWheelPickerView(Context context) {
         this(context, null);
     }
@@ -62,51 +65,80 @@ public class DateWheelPickerView extends LinearLayout {
     }
 
     private void init(AttributeSet attrs) {
+        dp_3=ScreenUtils.dpAdapt(getContext(),3);
         if (attrs != null) {
-            android.content.res.TypedArray a = getContext().obtainStyledAttributes(
+            TypedArray a = getContext().obtainStyledAttributes(
                     attrs, R.styleable.DateWheelPickerView);
+
             dividerColor = a.getColor(
                     R.styleable.DateWheelPickerView_cy_dividerColor,
                     dividerColor);
+
             selectedTextColor = a.getColor(
                     R.styleable.DateWheelPickerView_cy_selectedTextColor,
                     selectedTextColor);
+
             normalTextColor = a.getColor(
                     R.styleable.DateWheelPickerView_cy_normalTextColor,
                     normalTextColor);
+
+            selectedBackgroundColor = a.getColor(
+                    R.styleable.DateWheelPickerView_cy_selectedBackgroundColor,
+                    selectedBackgroundColor);
+
+            dividerHeight = a.getDimensionPixelSize(R.styleable.DateWheelPickerView_cy_dividerHeight, ScreenUtils.dpAdapt(getContext(), 0.1f));
+
+            textSize = a.getDimensionPixelSize(R.styleable.DateWheelPickerView_cy_textSize, ScreenUtils.dpAdapt(getContext(), 14f));
+
+            selectedTextSize = a.getDimensionPixelSize(R.styleable.DateWheelPickerView_cy_selectedTextSize, ScreenUtils.dpAdapt(getContext(), 14f));
+
+            rowHeight = a.getDimensionPixelSize(R.styleable.DateWheelPickerView_cy_rowHeight, ScreenUtils.dpAdapt(getContext(), 40f));
+
             a.recycle();
         }
+
         setOrientation(HORIZONTAL);
-        setGravity(android.view.Gravity.CENTER);
+        setGravity(Gravity.CENTER);
 
         minDate.set(1900, Calendar.JANUARY, 1, 0, 0, 0);
         maxDate.set(2100, Calendar.DECEMBER, 31, 0, 0, 0);
         normalize(minDate);
         normalize(maxDate);
 
+        normalize(selectedDate);
+
         Calendar today = Calendar.getInstance();
         normalize(today);
         selectedDate.setTimeInMillis(today.getTimeInMillis());
+
+        clampSelectedDate();
 
         yearWheel = createWheel();
         monthWheel = createWheel();
         dayWheel = createWheel();
 
-        addView(yearWheel, new LayoutParams(0, dp(200), 1.4f));
-        addView(monthWheel, new LayoutParams(0, dp(200), 1f));
-        addView(dayWheel, new LayoutParams(0, dp(200), 1f));
+        addView(yearWheel, new LayoutParams(0, ScreenUtils.dpAdapt(getContext(), 200), 1.4f));
+        addView(monthWheel, new LayoutParams(0, ScreenUtils.dpAdapt(getContext(), 200), 1f));
+        addView(dayWheel, new LayoutParams(0, ScreenUtils.dpAdapt(getContext(), 200), 1f));
 
         updateWheels(false);
     }
 
     private WheelColumn createWheel() {
         WheelColumn wheel = new WheelColumn(getContext());
-        wheel.setColors(dividerColor, selectedTextColor,
-                normalTextColor, selectedBackgroundColor);
-        wheel.setSizes(sp(textSize), sp(selectedTextSize),
-                dp(rowHeight), dp(dividerHeight));
+
+        wheel.setColors(
+                dividerColor,
+                selectedTextColor,
+                normalTextColor,
+                selectedBackgroundColor);
+
+        wheel.setSizes(textSize,selectedTextSize,rowHeight,dividerHeight);
+
         return wheel;
     }
+
+    // ==================== 日期接口 ====================
 
     public void setDateRange(long startMillis, long endMillis) {
         Calendar start = Calendar.getInstance();
@@ -118,8 +150,7 @@ public class DateWheelPickerView extends LinearLayout {
         normalize(end);
 
         if (start.after(end)) {
-            throw new IllegalArgumentException(
-                    "开始日期不能晚于结束日期");
+            throw new IllegalArgumentException("开始日期不能晚于结束日期");
         }
 
         minDate.setTimeInMillis(start.getTimeInMillis());
@@ -156,13 +187,10 @@ public class DateWheelPickerView extends LinearLayout {
         return selectedDate.getTimeInMillis();
     }
 
+    // ==================== 样式 set 方法 ====================
+
     public void setDividerColor(int color) {
         dividerColor = color;
-        refreshStyle();
-    }
-
-    public void setDividerHeight(float dp) {
-        dividerHeight = Math.max(0, dp);
         refreshStyle();
     }
 
@@ -181,38 +209,58 @@ public class DateWheelPickerView extends LinearLayout {
         refreshStyle();
     }
 
-    public void setTextSize(float sp) {
-        textSize = sp;
-        refreshStyle();
+
+    public int getDividerColor() {
+        return dividerColor;
     }
 
-    public void setSelectedTextSize(float sp) {
-        selectedTextSize = sp;
-        refreshStyle();
+    public int getSelectedTextColor() {
+        return selectedTextColor;
     }
 
-    public void setRowHeight(float dp) {
-        rowHeight = dp;
-        refreshStyle();
+    public int getNormalTextColor() {
+        return normalTextColor;
+    }
+
+    public int getSelectedBackgroundColor() {
+        return selectedBackgroundColor;
+    }
+
+    public float getDividerHeight() {
+        return dividerHeight;
+    }
+
+    public float getTextSize() {
+        return textSize;
+    }
+
+    public float getSelectedTextSize() {
+        return selectedTextSize;
+    }
+
+    public float getRowHeight() {
+        return rowHeight;
     }
 
     private void refreshStyle() {
-        if (yearWheel == null) return;
+        if (yearWheel == null) {
+            return;
+        }
 
-        yearWheel.setColors(dividerColor, selectedTextColor,
-                normalTextColor, selectedBackgroundColor);
-        monthWheel.setColors(dividerColor, selectedTextColor,
-                normalTextColor, selectedBackgroundColor);
-        dayWheel.setColors(dividerColor, selectedTextColor,
-                normalTextColor, selectedBackgroundColor);
+        WheelColumn[] wheels = {yearWheel, monthWheel, dayWheel};
 
-        yearWheel.setSizes(sp(textSize), sp(selectedTextSize),
-                dp(rowHeight), dp(dividerHeight));
-        monthWheel.setSizes(sp(textSize), sp(selectedTextSize),
-                dp(rowHeight), dp(dividerHeight));
-        dayWheel.setSizes(sp(textSize), sp(selectedTextSize),
-                dp(rowHeight), dp(dividerHeight));
+        for (WheelColumn wheel : wheels) {
+            wheel.setColors(
+                    dividerColor,
+                    selectedTextColor,
+                    normalTextColor,
+                    selectedBackgroundColor);
+
+            wheel.setSizes(textSize,selectedTextSize,rowHeight,dividerHeight);
+        }
     }
+
+    // ==================== 日期处理 ====================
 
     private void clampSelectedDate() {
         if (selectedDate.before(minDate)) {
@@ -223,7 +271,9 @@ public class DateWheelPickerView extends LinearLayout {
     }
 
     private void updateWheels(boolean notify) {
-        if (yearWheel == null) return;
+        if (yearWheel == null) {
+            return;
+        }
 
         updating = true;
 
@@ -234,11 +284,14 @@ public class DateWheelPickerView extends LinearLayout {
         int minYear = minDate.get(Calendar.YEAR);
         int maxYear = maxDate.get(Calendar.YEAR);
 
-        yearWheel.setValues(makeYears(minYear, maxYear),
-                year - minYear, false);
+        yearWheel.setValues(
+                makeYears(minYear, maxYear),
+                year - minYear,
+                false);
 
         int minMonth = year == minYear
                 ? minDate.get(Calendar.MONTH) + 1 : 1;
+
         int maxMonth = year == maxYear
                 ? maxDate.get(Calendar.MONTH) + 1 : 12;
 
@@ -252,12 +305,16 @@ public class DateWheelPickerView extends LinearLayout {
         int maxDay = target.getActualMaximum(Calendar.DAY_OF_MONTH);
         int minDay = 1;
 
-        if (year == minYear && month == minDate.get(Calendar.MONTH) + 1) {
+        if (year == minYear
+                && month == minDate.get(Calendar.MONTH) + 1) {
             minDay = minDate.get(Calendar.DAY_OF_MONTH);
         }
 
-        if (year == maxYear && month == maxDate.get(Calendar.MONTH) + 1) {
-            maxDay = Math.min(maxDay, maxDate.get(Calendar.DAY_OF_MONTH));
+        if (year == maxYear
+                && month == maxDate.get(Calendar.MONTH) + 1) {
+            maxDay = Math.min(
+                    maxDay,
+                    maxDate.get(Calendar.DAY_OF_MONTH));
         }
 
         day = Math.max(minDay, Math.min(day, maxDay));
@@ -266,6 +323,7 @@ public class DateWheelPickerView extends LinearLayout {
         selectedDate.set(Calendar.MILLISECOND, 0);
 
         String[] months = new String[maxMonth - minMonth + 1];
+
         for (int i = 0; i < months.length; i++) {
             months[i] = String.format(
                     Locale.getDefault(), "%02d", minMonth + i);
@@ -274,6 +332,7 @@ public class DateWheelPickerView extends LinearLayout {
         monthWheel.setValues(months, month - minMonth, false);
 
         String[] days = new String[maxDay - minDay + 1];
+
         for (int i = 0; i < days.length; i++) {
             days[i] = String.format(
                     Locale.getDefault(), "%02d", minDay + i);
@@ -284,20 +343,23 @@ public class DateWheelPickerView extends LinearLayout {
         yearWheel.setOnSelectedListener(new SelectedListener() {
             @Override
             public void onSelected(int index) {
-                if (updating) return;
+                if (updating) {
+                    return;
+                }
 
                 int newYear = minDate.get(Calendar.YEAR) + index;
                 int oldMonth = selectedDate.get(Calendar.MONTH);
                 int oldDay = selectedDate.get(Calendar.DAY_OF_MONTH);
 
-                // 先将日期设为 1 号，避免年月切换导致 Calendar 溢出
                 selectedDate.set(Calendar.DAY_OF_MONTH, 1);
                 selectedDate.set(Calendar.YEAR, newYear);
                 selectedDate.set(Calendar.MONTH, oldMonth);
 
                 int lastDay = selectedDate.getActualMaximum(
                         Calendar.DAY_OF_MONTH);
-                selectedDate.set(Calendar.DAY_OF_MONTH,
+
+                selectedDate.set(
+                        Calendar.DAY_OF_MONTH,
                         Math.min(oldDay, lastDay));
 
                 clampSelectedDate();
@@ -308,21 +370,26 @@ public class DateWheelPickerView extends LinearLayout {
         monthWheel.setOnSelectedListener(new SelectedListener() {
             @Override
             public void onSelected(int index) {
-                if (updating) return;
+                if (updating) {
+                    return;
+                }
 
                 int currentYear = selectedDate.get(Calendar.YEAR);
+
                 int minM = currentYear == minDate.get(Calendar.YEAR)
                         ? minDate.get(Calendar.MONTH) + 1 : 1;
+
                 int newMonth = minM + index;
                 int oldDay = selectedDate.get(Calendar.DAY_OF_MONTH);
 
-                // 必须先设为 1 号，再修改月份
                 selectedDate.set(Calendar.DAY_OF_MONTH, 1);
                 selectedDate.set(Calendar.MONTH, newMonth - 1);
 
                 int lastDay = selectedDate.getActualMaximum(
                         Calendar.DAY_OF_MONTH);
-                selectedDate.set(Calendar.DAY_OF_MONTH,
+
+                selectedDate.set(
+                        Calendar.DAY_OF_MONTH,
                         Math.min(oldDay, lastDay));
 
                 clampSelectedDate();
@@ -333,17 +400,23 @@ public class DateWheelPickerView extends LinearLayout {
         dayWheel.setOnSelectedListener(new SelectedListener() {
             @Override
             public void onSelected(int index) {
-                if (updating) return;
+                if (updating) {
+                    return;
+                }
 
                 int currentYear = selectedDate.get(Calendar.YEAR);
-                int currentMonth = selectedDate.get(Calendar.MONTH) + 1;
+                int currentMonth =
+                        selectedDate.get(Calendar.MONTH) + 1;
+
                 int minM = currentYear == minDate.get(Calendar.YEAR)
                         ? minDate.get(Calendar.MONTH) + 1 : 1;
+
                 int minD = currentYear == minDate.get(Calendar.YEAR)
                         && currentMonth == minDate.get(Calendar.MONTH) + 1
                         ? minDate.get(Calendar.DAY_OF_MONTH) : 1;
 
                 selectedDate.set(Calendar.DAY_OF_MONTH, minD + index);
+
                 clampSelectedDate();
                 updateWheels(true);
             }
@@ -351,21 +424,27 @@ public class DateWheelPickerView extends LinearLayout {
 
         updating = false;
 
-        if (notify) notifyDate();
+        if (notify) {
+            notifyDate();
+        }
     }
 
     private String[] makeYears(int min, int max) {
         String[] years = new String[max - min + 1];
+
         for (int i = 0; i < years.length; i++) {
             years[i] = String.valueOf(min + i);
         }
+
         return years;
     }
 
     private void notifyDate() {
         if (callback != null) {
             callback.onDateSelected(
-                    getYear(), getMonth(), getDay(),
+                    getYear(),
+                    getMonth(),
+                    getDay(),
                     getSelectedTimeMillis());
         }
     }
@@ -377,23 +456,16 @@ public class DateWheelPickerView extends LinearLayout {
         calendar.set(Calendar.MILLISECOND, 0);
     }
 
-    private int dp(float value) {
-        return ScreenUtils.dpAdapt(getContext(),value);
-    }
-
-    private float sp(float value) {
-        return TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_SP, value,
-                getResources().getDisplayMetrics());
-    }
-
     private interface SelectedListener {
         void onSelected(int index);
     }
 
+    // ==================== 日期滚轮 ====================
+
     private class WheelColumn extends View {
 
         private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
         private String[] values = new String[0];
         private int selectedIndex;
 
@@ -421,7 +493,8 @@ public class DateWheelPickerView extends LinearLayout {
             super(context);
         }
 
-        void setColors(int line, int selected, int normal, int background) {
+        void setColors(int line, int selected, int normal,
+                       int background) {
             lineColor = line;
             selectedColor = selected;
             normalColor = normal;
@@ -429,8 +502,8 @@ public class DateWheelPickerView extends LinearLayout {
             invalidate();
         }
 
-        void setSizes(float normal, float selected, float rowHeight,
-                      float divider) {
+        void setSizes(float normal, float selected,
+                      float rowHeight, float divider) {
             normalSize = normal;
             selectedSize = selected;
             row = rowHeight;
@@ -440,7 +513,10 @@ public class DateWheelPickerView extends LinearLayout {
 
         void setValues(String[] values, int index, boolean notify) {
             cancelAnimation();
-            this.values = values == null ? new String[0] : values.clone();
+
+            this.values = values == null
+                    ? new String[0] : values.clone();
+
             selectedIndex = clamp(index);
             offset = 0;
             invalidate();
@@ -455,10 +531,12 @@ public class DateWheelPickerView extends LinearLayout {
         }
 
         private int clamp(int index) {
-            if (values.length == 0) return 0;
+            if (values.length == 0) {
+                return 0;
+            }
+
             return Math.max(0, Math.min(index, values.length - 1));
         }
-
 
         private void cancelAnimation() {
             if (animator != null) {
@@ -471,46 +549,56 @@ public class DateWheelPickerView extends LinearLayout {
             cancelAnimation();
 
             final int targetIndex = clamp(target);
-            final float targetOffset = (selectedIndex - targetIndex) * row;
+            final float targetOffset =
+                    (selectedIndex - targetIndex) * row;
             final float startOffset = offset;
-            final float distance = Math.abs(targetOffset - startOffset);
+            final float distance =
+                    Math.abs(targetOffset - startOffset);
 
             if (distance < 1f) {
                 selectedIndex = targetIndex;
                 offset = 0;
                 invalidate();
+
                 if (listener != null) {
                     listener.onSelected(selectedIndex);
                 }
                 return;
             }
 
-            long duration = (long) Math.max(180,
-                    Math.min(650, 180 + distance * 0.30f));
+            long duration = (long) Math.max(
+                    180, Math.min(650, 180 + distance * 0.30f));
 
-            animator = ValueAnimator.ofFloat(startOffset, targetOffset);
+            animator = ValueAnimator.ofFloat(
+                    startOffset, targetOffset);
+
             animator.setDuration(duration);
-            animator.setInterpolator(new DecelerateInterpolator(2.0f));
+            animator.setInterpolator(
+                    new DecelerateInterpolator(2.0f));
 
-            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    offset = (float) animation.getAnimatedValue();
-                    invalidate();
-                }
-            });
+            animator.addUpdateListener(
+                    new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(
+                                ValueAnimator animation) {
+                            offset = (float) animation.getAnimatedValue();
+                            invalidate();
+                        }
+                    });
 
             animator.addListener(new AnimatorListenerAdapter() {
                 private boolean cancelled;
 
                 @Override
-                public void onAnimationCancel(android.animation.Animator animation) {
+                public void onAnimationCancel(Animator animation) {
                     cancelled = true;
                 }
 
                 @Override
-                public void onAnimationEnd(android.animation.Animator animation) {
-                    if (cancelled) return;
+                public void onAnimationEnd(Animator animation) {
+                    if (cancelled) {
+                        return;
+                    }
 
                     selectedIndex = targetIndex;
                     offset = 0;
@@ -529,41 +617,62 @@ public class DateWheelPickerView extends LinearLayout {
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
-            if (values.length == 0 || row <= 0) return;
+
+            if (values.length == 0 || row <= 0) {
+                return;
+            }
 
             float centerY = getHeight() / 2f;
             float centerX = getWidth() / 2f;
 
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(selectionBackground);
-            canvas.drawRect(0, centerY - row / 2,
+
+            canvas.drawRect(
+                    0, centerY - row / 2,
                     getWidth(), centerY + row / 2, paint);
 
             paint.setColor(lineColor);
             paint.setStrokeWidth(lineHeight);
-            canvas.drawLine(0, centerY - row / 2,
+
+            canvas.drawLine(
+                    0, centerY - row / 2,
                     getWidth(), centerY - row / 2, paint);
-            canvas.drawLine(0, centerY + row / 2,
+
+            canvas.drawLine(
+                    0, centerY + row / 2,
                     getWidth(), centerY + row / 2, paint);
 
             paint.setTextAlign(Paint.Align.CENTER);
 
             for (int i = 0; i < values.length; i++) {
-                float y = centerY + (i - selectedIndex) * row + offset;
-                if (y < -row || y > getHeight() + row) continue;
+                float y = centerY
+                        + (i - selectedIndex) * row + offset;
+
+                if (y < -row || y > getHeight() + row) {
+                    continue;
+                }
 
                 boolean selected = i == selectedIndex
                         && Math.abs(offset) < row / 2;
 
-                paint.setColor(selected ? selectedColor : normalColor);
-                paint.setTextSize(selected ? selectedSize : normalSize);
-                paint.setAlpha(selected ? 255 :
-                        Math.max(50, 180 - (int) (
+                paint.setColor(
+                        selected ? selectedColor : normalColor);
+
+                paint.setTextSize(
+                        selected ? selectedSize : normalSize);
+
+                paint.setAlpha(selected ? 255 : Math.max(
+                        50, 180 - (int) (
                                 Math.abs(y - centerY) / row * 45)));
 
                 Paint.FontMetrics fm = paint.getFontMetrics();
-                float baseline = y - (fm.ascent + fm.descent) / 2;
-                canvas.drawText(values[i], centerX, baseline, paint);
+
+                float baseline = y
+                        - (fm.ascent + fm.descent) / 2;
+
+                canvas.drawText(
+                        values[i], centerX, baseline, paint);
             }
         }
 
@@ -580,11 +689,13 @@ public class DateWheelPickerView extends LinearLayout {
                     if (velocityTracker != null) {
                         velocityTracker.recycle();
                     }
+
                     velocityTracker = VelocityTracker.obtain();
                     velocityTracker.addMovement(event);
 
                     if (getParent() != null) {
-                        getParent().requestDisallowInterceptTouchEvent(true);
+                        getParent().requestDisallowInterceptTouchEvent(
+                                true);
                     }
                     return true;
 
@@ -595,13 +706,17 @@ public class DateWheelPickerView extends LinearLayout {
 
                     float y = event.getY();
                     float dy = y - lastY;
+
                     float totalY = Math.abs(y - downY);
                     float totalX = Math.abs(event.getX() - downX);
 
-                    if (totalY > dp(3) && totalY > totalX) {
+                    if (totalY > dp_3&& totalY > totalX) {
                         dragging = true;
+
                         if (getParent() != null) {
-                            getParent().requestDisallowInterceptTouchEvent(true);
+                            getParent()
+                                    .requestDisallowInterceptTouchEvent(
+                                            true);
                         }
                     }
 
@@ -614,16 +729,19 @@ public class DateWheelPickerView extends LinearLayout {
                                 offset = 0;
                                 break;
                             }
+
                             offset -= row;
                             selectedIndex--;
                         }
 
                         while (offset <= -row) {
                             if (selectedIndex >= values.length - 1) {
-                                selectedIndex = Math.max(0, values.length - 1);
+                                selectedIndex = Math.max(
+                                        0, values.length - 1);
                                 offset = 0;
                                 break;
                             }
+
                             offset += row;
                             selectedIndex++;
                         }
@@ -638,39 +756,47 @@ public class DateWheelPickerView extends LinearLayout {
                 case MotionEvent.ACTION_CANCEL:
                     boolean cancelled = event.getActionMasked()
                             == MotionEvent.ACTION_CANCEL;
+
                     float velocityY = 0;
 
                     if (velocityTracker != null) {
                         velocityTracker.addMovement(event);
                         velocityTracker.computeCurrentVelocity(1000);
+
                         if (!cancelled) {
                             velocityY = velocityTracker.getYVelocity();
                         }
+
                         velocityTracker.recycle();
                         velocityTracker = null;
                     }
 
                     if (row > 0 && dragging && !cancelled) {
-                        // Predict the distance from the finger's release velocity.
-                        float projectedOffset = offset + velocityY * 0.18f;
+                        float projectedOffset =
+                                offset + velocityY * 0.18f;
+
                         int target = selectedIndex
                                 - Math.round(projectedOffset / row);
 
-                        // Avoid an excessive jump from an unusually fast swipe.
-                        target = Math.max(selectedIndex - 12,
+                        target = Math.max(
+                                selectedIndex - 12,
                                 Math.min(selectedIndex + 12, target));
+
                         target = clamp(target);
                         settle(target);
                     } else {
                         int target = row > 0
                                 ? selectedIndex - Math.round(offset / row)
                                 : selectedIndex;
+
                         settle(target);
                     }
 
                     dragging = false;
+
                     if (getParent() != null) {
-                        getParent().requestDisallowInterceptTouchEvent(false);
+                        getParent()
+                                .requestDisallowInterceptTouchEvent(false);
                     }
                     return true;
             }

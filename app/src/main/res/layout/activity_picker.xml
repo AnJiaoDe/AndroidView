@@ -11,6 +11,13 @@
     <com.cy.androidview.pickerview.DateWheelPickerView
         android:id="@+id/datePicker"
         android:layout_width="match_parent"
-
+        app:cy_selectedTextColor="#f00"
+        app:cy_dividerColor="#00f"
+        app:cy_normalTextColor="#0f0"
+        app:cy_rowHeight="60dp"
+        app:cy_selectedBackgroundColor="#999999"
+        app:cy_textSize="12sp"
+        app:cy_selectedTextSize="18sp"
+        app:cy_dividerHeight="4dp"
         android:layout_height="200dp" />
 </LinearLayout>

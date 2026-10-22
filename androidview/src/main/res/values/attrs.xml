@@ -121,16 +121,16 @@
     <declare-styleable name="ImageViewShadowSelector">
 
         <attr name="cy_mask_type" />
-        <attr name="cy_blur_radius"  />
-        <attr name="cy_shadow_limit"  />
+        <attr name="cy_blur_radius" />
+        <attr name="cy_shadow_limit" />
         <attr name="cy_src" />
         <!--        <attr name="cy_src_checked" format="reference" />-->
-        <attr name="cy_color_filter"  />
+        <attr name="cy_color_filter" />
         <!--        <attr name="cy_checked" />-->
         <attr name="cy_color_shadow" />
 
         <attr name="cy_srcChecked" />
-        <attr name="cy_srcUnChecked"/>
+        <attr name="cy_srcUnChecked" />
         <attr name="cy_checked" />
     </declare-styleable>
 
@@ -254,9 +254,9 @@
         <attr name="cy_stroke_width" />
         <attr name="cy_clip_background" />
 
-        <attr name="cy_stroke_top"  />
-        <attr name="cy_stroke_right"  />
-        <attr name="cy_stroke_bottom"  />
+        <attr name="cy_stroke_top" />
+        <attr name="cy_stroke_right" />
+        <attr name="cy_stroke_bottom" />
         <attr name="cy_stroke_left" />
 
     </declare-styleable>
@@ -877,12 +877,12 @@
 
     <declare-styleable name="ProgressTextView">
         <attr name="cy_progress" />
-        <attr name="cy_maxProgress" format="integer"/>
-        <attr name="cy_progressColor" format="color|reference"/>
-        <attr name="cy_bgColor" format="color|reference"/>
-        <attr name="cy_leftTextColor" format="color|reference"/>
-        <attr name="cy_rightTextColor" format="color|reference"/>
-        <attr name="cy_cornerRadius" format="dimension|reference"/>
+        <attr name="cy_maxProgress" format="integer" />
+        <attr name="cy_progressColor" format="color|reference" />
+        <attr name="cy_bgColor" format="color|reference" />
+        <attr name="cy_leftTextColor" format="color|reference" />
+        <attr name="cy_rightTextColor" format="color|reference" />
+        <attr name="cy_cornerRadius" format="dimension|reference" />
     </declare-styleable>
     <declare-styleable name="RingProgressBarView">
 
@@ -898,9 +898,16 @@
         <attr name="cy_ringTextSize" format="dimension" />
 
     </declare-styleable>
+
     <declare-styleable name="DateWheelPickerView">
         <attr name="cy_dividerColor" format="color" />
         <attr name="cy_selectedTextColor" format="color" />
         <attr name="cy_normalTextColor" format="color" />
+        <attr name="cy_selectedBackgroundColor" format="color" />
+
+        <attr name="cy_dividerHeight" format="dimension" />
+        <attr name="cy_textSize" format="dimension" />
+        <attr name="cy_selectedTextSize" format="dimension" />
+        <attr name="cy_rowHeight" format="dimension" />
     </declare-styleable>
 </resources>
