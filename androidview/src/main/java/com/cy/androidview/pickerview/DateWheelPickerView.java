@@ -89,7 +89,7 @@ public class DateWheelPickerView extends LinearLayout {
                     R.styleable.DateWheelPickerView_cy_selectedBackgroundColor,
                     selectedBackgroundColor);
 
-            dividerHeight = a.getDimensionPixelSize(R.styleable.DateWheelPickerView_cy_dividerHeight, ScreenUtils.dpAdapt(getContext(), 0.1f));
+            dividerHeight = a.getDimensionPixelSize(R.styleable.DateWheelPickerView_cy_dividerHeight, ScreenUtils.dpAdapt(getContext(), 0.6f));
 
             textSize = a.getDimensionPixelSize(R.styleable.DateWheelPickerView_cy_textSize, ScreenUtils.dpAdapt(getContext(), 14f));
 
