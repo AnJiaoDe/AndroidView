@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".PickerActivity">
 
-    <com.cy.androidview.pickerview.DateWheelPicker
+    <com.cy.androidview.pickerview.DateWheelPickerView
         android:id="@+id/datePicker"
         android:layout_width="match_parent"
 

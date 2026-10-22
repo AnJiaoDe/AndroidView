@@ -1,13 +1,10 @@
 package com.cy.necessaryviewmaster;
 
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import com.cy.androidview.pickerview.DateWheelPicker;
+import com.cy.androidview.pickerview.DateWheelPickerView;
 
 import java.util.Calendar;
 
@@ -18,7 +15,7 @@ public class PickerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_picker);
 
-        DateWheelPicker picker = findViewById(R.id.datePicker);
+        DateWheelPickerView picker = findViewById(R.id.datePicker);
 
         picker.setDateRange(
                 getMillis(1025, 10, 1),

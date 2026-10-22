@@ -20,7 +20,7 @@ import com.cy.androidview.ScreenUtils;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class DateWheelPicker extends LinearLayout {
+public class DateWheelPickerView extends LinearLayout {
 
     public interface Callback {
         void onDateSelected(int year, int month, int day, long timeMillis);
@@ -47,16 +47,16 @@ public class DateWheelPicker extends LinearLayout {
     private float selectedTextSize = 22f;
     private float rowHeight = 40f;
 
-    public DateWheelPicker(Context context) {
+    public DateWheelPickerView(Context context) {
         this(context, null);
     }
 
-    public DateWheelPicker(Context context, AttributeSet attrs) {
+    public DateWheelPickerView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public DateWheelPicker(Context context, AttributeSet attrs,
-                           int defStyleAttr) {
+    public DateWheelPickerView(Context context, AttributeSet attrs,
+                               int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(attrs);
     }
@@ -64,15 +64,15 @@ public class DateWheelPicker extends LinearLayout {
     private void init(AttributeSet attrs) {
         if (attrs != null) {
             android.content.res.TypedArray a = getContext().obtainStyledAttributes(
-                    attrs, R.styleable.DateWheelPicker);
+                    attrs, R.styleable.DateWheelPickerView);
             dividerColor = a.getColor(
-                    R.styleable.DateWheelPicker_dwpDividerColor,
+                    R.styleable.DateWheelPickerView_cy_dividerColor,
                     dividerColor);
             selectedTextColor = a.getColor(
-                    R.styleable.DateWheelPicker_dwpSelectedTextColor,
+                    R.styleable.DateWheelPickerView_cy_selectedTextColor,
                     selectedTextColor);
             normalTextColor = a.getColor(
-                    R.styleable.DateWheelPicker_dwpNormalTextColor,
+                    R.styleable.DateWheelPickerView_cy_normalTextColor,
                     normalTextColor);
             a.recycle();
         }
