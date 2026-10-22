@@ -50,7 +50,9 @@ public class DateWheelPickerView extends LinearLayout {
     private int rowHeight;
 
     private int dp_3;
-
+    private int lastCallbackYear = -1;
+    private int lastCallbackMonth = -1;
+    private int lastCallbackDay = -1;
     public DateWheelPickerView(Context context) {
         this(context, null);
     }
@@ -182,11 +184,13 @@ public class DateWheelPickerView extends LinearLayout {
 
         setSelectedDate(calendar.getTimeInMillis());
     }
+
     public void setSelectedDate(long millis) {
         selectedDate.setTimeInMillis(millis);
         normalize(selectedDate);
         clampSelectedDate();
         updateWheels(false);
+        notifyDate();
     }
 
     public void setCallback(Callback callback) {
@@ -462,11 +466,25 @@ public class DateWheelPickerView extends LinearLayout {
     }
 
     private void notifyDate() {
+        int year = getYear();
+        int month = getMonth();
+        int day = getDay();
+
+        if (year == lastCallbackYear
+                && month == lastCallbackMonth
+                && day == lastCallbackDay) {
+            return;
+        }
+
+        lastCallbackYear = year;
+        lastCallbackMonth = month;
+        lastCallbackDay = day;
+
         if (callback != null) {
             callback.onDateSelected(
-                    getYear(),
-                    getMonth(),
-                    getDay(),
+                    year,
+                    month,
+                    day,
                     getSelectedTimeMillis());
         }
     }

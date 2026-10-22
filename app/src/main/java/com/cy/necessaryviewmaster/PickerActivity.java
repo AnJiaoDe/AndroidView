@@ -25,9 +25,17 @@ public class PickerActivity extends AppCompatActivity {
 //                2025, 10, 1,
 //                2026, 10, 31
 //        );
+
         picker.setSelectedDate(2026, 10, 21);
 //        picker.setSelectedDate(getMillis(2026, 10, 21));
 
+        // 日期变化回调
+        picker.setCallback((year, month, day, timeMillis) -> {
+            // 获取当前选中的日期
+            LogUtils.log("setCallback",year);
+            LogUtils.log("setCallback  ",month);
+            LogUtils.log("setCallback   ",day);
+        });
 // 设置分割线颜色
 //        picker.setDividerColor(Color.parseColor("#E0E0E0"));
 //
@@ -38,13 +46,7 @@ public class PickerActivity extends AppCompatActivity {
 //        picker.setSelectedTextColor(Color.BLACK);
 //        picker.setNormalTextColor(Color.GRAY);
 
-// 日期变化回调
-        picker.setCallback((year, month, day, timeMillis) -> {
-            // 获取当前选中的日期
-            LogUtils.log("setCallback",year);
-            LogUtils.log("setCallback  ",month);
-            LogUtils.log("setCallback   ",day);
-        });
+
     }
 
     private long getMillis(int year, int month, int day) {
