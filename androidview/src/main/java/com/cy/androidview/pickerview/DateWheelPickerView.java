@@ -144,6 +144,14 @@ public class DateWheelPickerView extends LinearLayout {
     // ==================== 日期接口 ====================
     public void setDateRange(int year_start, int month_start, int day_start,
                              int year_end, int month_end, int day_end) {
+        setDateRange(year_start, month_start, day_start,
+                year_end, month_end, day_end, true);
+    }
+
+    /** 设置日期范围，notify 控制是否触发日期回调。 */
+    public void setDateRange(int year_start, int month_start, int day_start,
+                             int year_end, int month_end, int day_end,
+                             boolean notify) {
         Calendar start = Calendar.getInstance();
         start.clear();
         start.set(year_start, month_start - 1, day_start);
@@ -154,10 +162,15 @@ public class DateWheelPickerView extends LinearLayout {
         end.set(year_end, month_end - 1, day_end);
         normalize(end);
 
-        setDateRange(start.getTimeInMillis(), end.getTimeInMillis());
+        setDateRange(start.getTimeInMillis(), end.getTimeInMillis(), notify);
     }
 
     public void setDateRange(long startMillis, long endMillis) {
+        setDateRange(startMillis, endMillis, true);
+    }
+
+    /** 设置日期范围，notify 控制是否触发日期回调。 */
+    public void setDateRange(long startMillis, long endMillis, boolean notify) {
         Calendar start = Calendar.getInstance();
         start.setTimeInMillis(startMillis);
         normalize(start);
@@ -175,22 +188,39 @@ public class DateWheelPickerView extends LinearLayout {
 
         clampSelectedDate();
         updateWheels(false);
+
+        if (notify) {
+            notifyDate(true);
+        }
     }
+
     public void setSelectedDate(int year, int month, int day) {
+        setSelectedDate(year, month, day, true);
+    }
+
+    public void setSelectedDate(int year, int month, int day, boolean notify) {
         Calendar calendar = Calendar.getInstance();
         calendar.clear();
         calendar.set(year, month - 1, day);
         normalize(calendar);
 
-        setSelectedDate(calendar.getTimeInMillis());
+        setSelectedDate(calendar.getTimeInMillis(), notify);
     }
 
     public void setSelectedDate(long millis) {
+        setSelectedDate(millis, true);
+    }
+
+    /** 设置选中日期，notify 控制是否触发日期回调。 */
+    public void setSelectedDate(long millis, boolean notify) {
         selectedDate.setTimeInMillis(millis);
         normalize(selectedDate);
         clampSelectedDate();
         updateWheels(false);
-        notifyDate();
+
+        if (notify) {
+            notifyDate();
+        }
     }
 
     public void setCallback(Callback callback) {
@@ -466,11 +496,15 @@ public class DateWheelPickerView extends LinearLayout {
     }
 
     private void notifyDate() {
+        notifyDate(false);
+    }
+
+    private void notifyDate(boolean force) {
         int year = getYear();
         int month = getMonth();
         int day = getDay();
 
-        if (year == lastCallbackYear
+        if (!force && year == lastCallbackYear
                 && month == lastCallbackMonth
                 && day == lastCallbackDay) {
             return;

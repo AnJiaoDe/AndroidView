@@ -17,18 +17,6 @@ public class PickerActivity extends AppCompatActivity {
 
         DateWheelPickerView picker = findViewById(R.id.datePicker);
 
-        picker.setDateRange(
-                getMillis(1025, 10, 1),
-                getMillis(2026, 10, 31)
-        );
-//        picker.setDateRange(
-//                2025, 10, 1,
-//                2026, 10, 31
-//        );
-
-        picker.setSelectedDate(2026, 10, 21);
-//        picker.setSelectedDate(getMillis(2026, 10, 21));
-
         // 日期变化回调
         picker.setCallback((year, month, day, timeMillis) -> {
             // 获取当前选中的日期
@@ -36,6 +24,20 @@ public class PickerActivity extends AppCompatActivity {
             LogUtils.log("setCallback  ",month);
             LogUtils.log("setCallback   ",day);
         });
+
+        picker.setDateRange(
+                getMillis(2026, 11, 1),
+                getMillis(2026, 12, 31)
+        );
+//        picker.setDateRange(
+//                2025, 10, 1,
+//                2026, 10, 31
+//        );
+
+        picker.setSelectedDate(2026, 11, 21);
+//        picker.setSelectedDate(getMillis(2026, 10, 21));
+
+
 // 设置分割线颜色
 //        picker.setDividerColor(Color.parseColor("#E0E0E0"));
 //
